@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Đánh giá mức độ nghiêm trọng sự cố</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#3d4947",
+                        "surface-container-high": "#e6e8ea",
+                        "tertiary-fixed-dim": "#bcc9c6",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "on-primary-fixed-variant": "#004d62",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "secondary": "#505f76",
+                        "surface": "#f7f9fb",
+                        "on-tertiary": "#ffffff",
+                        "background": "#f7f9fb",
+                        "on-surface-variant": "#3f484c",
+                        "inverse-surface": "#2d3133",
+                        "tertiary-container": "#616d6b",
+                        "secondary-fixed": "#d3e4fe",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#b9eaff",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "primary-fixed-dim": "#81d1f0",
+                        "surface-container": "#eceef0",
+                        "on-secondary-container": "#54647a",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "primary-container": "#0e7490",
+                        "tertiary": "#495553",
+                        "primary": "#005a71",
+                        "surface-dim": "#d8dadc",
+                        "error": "#ba1a1a",
+                        "on-primary-container": "#d3f1ff",
+                        "tertiary-fixed": "#d8e5e2",
+                        "surface-container-highest": "#e0e3e5",
+                        "outline-variant": "#bec8cd",
+                        "inverse-primary": "#81d1f0",
+                        "surface-tint": "#006781",
+                        "outline": "#6f787d",
+                        "on-surface": "#191c1e",
+                        "on-background": "#191c1e",
+                        "surface-variant": "#e0e3e5",
+                        "surface-bright": "#f7f9fb",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-tertiary-fixed": "#121e1c",
+                        "on-primary-fixed": "#001f29",
+                        "secondary-container": "#d0e1fb",
+                        "on-tertiary-container": "#e2efec",
+                        "inverse-on-surface": "#eff1f3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "margin-tablet": "24px",
+                        "margin-mobile": "16px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "gutter": "16px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "safe": "env(safe-area-inset-bottom)"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "label-lg": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "headline-lg-mobile": ["Be Vietnam Pro"],
+                        "title-lg": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "title-lg": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-container-high h-screen w-full flex items-end justify-center sm:items-center relative font-body-md text-on-surface">
+<!-- Scrim (Overlay) -->
+<div aria-hidden="true" class="fixed inset-0 bg-on-surface/40 z-40"></div>
+<!-- Bottom Sheet / Dialog -->
+<div class="w-full max-w-md bg-surface rounded-t-3xl sm:rounded-3xl shadow-lg z-50 flex flex-col overflow-hidden pb-safe animate-[slideUp_0.3s_ease-out]">
+<!-- Drag Handle (Mobile only indicator) -->
+<div class="w-full flex justify-center pt-4 pb-2 sm:hidden">
+<div class="w-8 h-1 bg-outline-variant rounded-full"></div>
+</div>
+<!-- Header -->
+<div class="px-margin-mobile pt-2 sm:pt-6 pb-4">
+<h2 class="font-title-lg text-title-lg text-on-surface">Đánh giá mức độ</h2>
+</div>
+<!-- Content -->
+<div class="px-margin-mobile flex-1 overflow-y-auto pb-6 space-y-6">
+<!-- Severity Selection -->
+<div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-3">Mức độ nghiêm trọng</p>
+<div class="flex gap-3 mb-2 flex-wrap">
+<label class="cursor-pointer">
+<input class="peer sr-only" name="severity" type="radio" value="low"/>
+<div class="px-4 py-2 rounded-lg border border-outline-variant text-on-surface-variant peer-checked:bg-secondary-container peer-checked:text-on-secondary-container peer-checked:border-transparent transition-colors font-label-lg text-label-lg flex items-center justify-center min-h-[44px]">
+                            Thấp
+                        </div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="severity" type="radio" value="medium"/>
+<div class="px-4 py-2 rounded-lg border border-outline-variant text-on-surface-variant peer-checked:bg-secondary-container peer-checked:text-on-secondary-container peer-checked:border-transparent transition-colors font-label-lg text-label-lg flex items-center justify-center min-h-[44px]">
+                            Trung bình
+                        </div>
+</label>
+<label class="cursor-pointer">
+<input checked="" class="peer sr-only" name="severity" type="radio" value="high"/>
+<div class="px-4 py-2 rounded-lg border border-error text-error bg-error-container/20 peer-checked:bg-error peer-checked:text-on-error transition-colors font-label-lg text-label-lg flex items-center justify-center min-h-[44px]">
+                            Cao
+                        </div>
+</label>
+</div>
+<div class="flex items-start gap-2 mt-2 p-3 bg-error-container/30 rounded-lg">
+<span class="material-symbols-outlined text-error text-[20px] mt-0.5" style="font-variation-settings: 'FILL' 1;">info</span>
+<p class="font-body-sm text-sm text-error">Gợi ý: Mức Cao (Dựa trên 5 ca bệnh).</p>
+</div>
+</div>
+<!-- Action Plan Input -->
+<div>
+<label class="block font-body-md text-body-md text-on-surface-variant mb-2" for="action-plan">Kế hoạch hành động khẩn cấp ban đầu</label>
+<div class="relative">
+<textarea class="w-full bg-surface border border-outline rounded-lg px-4 py-3 text-on-surface font-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-shadow resize-none" id="action-plan" placeholder="VD: Niêm phong mẫu thức ăn, đưa học sinh đi cấp cứu..." rows="3"></textarea>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="px-margin-mobile py-4 flex flex-col-reverse sm:flex-row justify-end gap-3 border-t border-outline-variant/30">
+<button class="px-6 py-3 min-h-[48px] rounded-lg text-primary font-label-lg text-label-lg hover:bg-primary/10 transition-colors flex items-center justify-center" type="button">
+                Hủy
+            </button>
+<button class="px-6 py-3 min-h-[48px] rounded-lg bg-error text-on-error font-label-lg text-label-lg hover:bg-error/90 shadow-sm transition-colors flex items-center justify-center" type="button">
+                Lưu đánh giá
+            </button>
+</div>
+</div>
+<style>
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</body></html>

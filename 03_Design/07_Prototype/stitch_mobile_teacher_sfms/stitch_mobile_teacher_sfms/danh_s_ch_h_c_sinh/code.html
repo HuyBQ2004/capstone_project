@@ -1,0 +1,312 @@
+<!DOCTYPE html><html class="light" lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
+<title>SFMS Teacher - Danh sách Học sinh</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#d3e4fe",
+                    "on-primary-container": "#d3f1ff",
+                    "secondary-container": "#3fe1fd",
+                    "primary-fixed-dim": "#81d1f0",
+                    "inverse-primary": "#81d1f0",
+                    "primary": "#005a71",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "secondary": "#006877",
+                    "inverse-on-surface": "#eaf1ff",
+                    "primary-container": "#0e7490",
+                    "error-container": "#ffdad6",
+                    "surface-container": "#e5eeff",
+                    "on-tertiary-container": "#e5eef4",
+                    "surface-dim": "#cbdbf5",
+                    "on-tertiary-fixed-variant": "#3f484d",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#006781",
+                    "tertiary-fixed": "#dbe4ea",
+                    "primary-fixed": "#b9eaff",
+                    "outline": "#6f787d",
+                    "on-primary-fixed": "#001f29",
+                    "secondary-fixed": "#a2eeff",
+                    "on-secondary-container": "#00616f",
+                    "surface-bright": "#f8f9ff",
+                    "outline-variant": "#bec8cd",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#dce9ff",
+                    "background": "#f8f9ff",
+                    "surface": "#f8f9ff",
+                    "secondary-fixed-dim": "#2fd9f4",
+                    "tertiary": "#4b5459",
+                    "tertiary-fixed-dim": "#bfc8ce",
+                    "tertiary-container": "#636c71",
+                    "on-tertiary-fixed": "#141d21",
+                    "inverse-surface": "#213145",
+                    "on-primary-fixed-variant": "#004d62",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-surface-variant": "#3f484c",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#001f25",
+                    "on-secondary": "#ffffff",
+                    "surface-container-low": "#eff4ff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#004e5a",
+                    "on-background": "#0b1c30",
+                    "on-surface": "#0b1c30"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "gutter": "12px",
+                    "stack-gap": "12px",
+                    "section-margin": "24px",
+                    "container-padding": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Be Vietnam Pro"],
+                    "headline-lg": ["Be Vietnam Pro"],
+                    "headline-md": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "label-lg": ["Be Vietnam Pro"],
+                    "label-sm": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["22px", {"lineHeight": "30px", "fontWeight": "700"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-24">
+<!-- Top App Bar -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-container-padding h-14 bg-surface-bright dark:bg-surface-dim shadow-sm dark:shadow-none">
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/50 transition-colors duration-200 text-primary">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md-mobile text-primary font-bold">SFMS Teacher</h1>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a friendly school teacher in a bright, modern educational setting. The teacher is smiling, wearing a smart-casual outfit in tones of teal and white. The background is a blurred classroom with soft natural lighting, reflecting a warm, trustworthy, and expert persona in a clean, high-end UI design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJFse0WwJv_VPMijYhEY4LjmOb5CNuPvrcjakSADoZfih1Z7aJoeMj8lZC9u3hqTBYFQfevwnjEv_figBUjdKDf30chlv11ZwNRiAfOmxCi-Q94hYOC3JD5JhXkT1r-jgs4rssknEr5-TXvSlu17n027db8GIXA7KbMvkJx4dj--c5FUo6i28rWct7ZAtfj2Nu_2vXE6vpeHn4mTQ1GPji5q_L2y7kYotMcgiWew1gUs8mOniwYyKi6PcU-BjdxN-czglHL7tQGQg">
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-16 px-container-padding max-w-md mx-auto">
+<!-- Search & Filter Section -->
+<section class="mt-4 sticky top-14 bg-background pt-2 pb-4 z-40">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="w-full h-12 pl-10 pr-4 bg-surface-container-lowest border border-outline-variant rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-body-md text-body-md-mobile" placeholder="Tìm kiếm học sinh..." type="text">
+</div>
+<div class="flex gap-2 mt-4 overflow-x-auto hide-scrollbar pb-2">
+<button class="flex-none px-5 py-2 bg-primary text-on-primary rounded-full font-label-lg text-label-lg-mobile transition-all shadow-sm">
+                    Tất cả
+                </button>
+<button class="flex-none px-5 py-2 bg-surface-container-high text-on-surface-variant rounded-full font-label-lg text-label-lg-mobile hover:bg-surface-variant transition-all border border-transparent">
+                    Dị ứng
+                </button>
+<button class="flex-none px-5 py-2 bg-surface-container-high text-on-surface-variant rounded-full font-label-lg text-label-lg-mobile hover:bg-surface-variant transition-all border border-transparent">
+                    Ăn kiêng
+                </button>
+<button class="flex-none px-5 py-2 bg-surface-container-high text-on-surface-variant rounded-full font-label-lg text-label-lg-mobile hover:bg-surface-variant transition-all border border-transparent">
+                    Lớp 1A
+                </button>
+</div>
+</section>
+<!-- Student List -->
+<section class="mt-2 space-y-3">
+<!-- Student Item 1 -->
+<div class="bg-surface-container-lowest p-3 rounded-xl flex items-center gap-4 shadow-[0_2px_8px_rgba(14,116,144,0.06)] border border-transparent active:border-primary/20 transition-all">
+<div class="w-14 h-14 rounded-full overflow-hidden flex-none border-2 border-surface-variant">
+<img class="w-full h-full object-cover" data-alt="Close-up portrait of a young primary school boy with a bright smile. He is wearing a neat white polo school uniform. The lighting is bright and cheerful, with a soft teal-tinted background consistent with a professional educational app. The visual style is crisp, clean, and optimistic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAE0EZtoShhoJ4QTfbyBB5ZsXv3PNCNIvlpTX94OMRmZmY1Uzbng7VD6SFoiQ0zHcvA9TVYZbq5rEGU2NdusToCUysHZVDoR6j0tWAqViPF832yirK4GKmaQZBWhvrPamu2r2ctP4KpdzcV8ulz5N4TWHWJAgo7pWezxnzYC4Hu5iJEkEDBC2GX7N8dS65q5Z1VFVILB3SburWAEJCQX0pF2wx2LzkWcONmDtpzoZR6Mmw_Ql7EyD4t-5vOyH9FnGZa8uMdhVfWAmg">
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md-mobile text-on-surface truncate">Nguyễn Minh Quân</h3>
+<span class="font-label-sm text-label-sm-mobile text-outline">Lớp 1A</span>
+</div>
+<div class="flex flex-wrap gap-2 mt-1">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-error-container text-on-error-container rounded-md font-label-sm text-label-sm-mobile">
+<span class="material-symbols-outlined text-[14px]" data-icon="warning" style="font-variation-settings: 'FILL' 1;">warning</span>
+                            Dị ứng đậu phộng
+                        </span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</div>
+<!-- Student Item 2 -->
+<div class="bg-surface-container-lowest p-3 rounded-xl flex items-center gap-4 shadow-[0_2px_8px_rgba(14,116,144,0.06)] border border-transparent active:border-primary/20 transition-all">
+<div class="w-14 h-14 rounded-full overflow-hidden flex-none border-2 border-surface-variant">
+<img class="w-full h-full object-cover" data-alt="Portrait of a young primary school girl with pig-tails and a gentle smile. She is in a tidy school uniform. The environment is a brightly lit school hallway with soft pastel accents of blue and white, maintaining a minimalist and corporate modern aesthetic for a healthcare/education platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0QIbaVMu0BRrWei7B5DQmjzMvedzgm3iL1o303L6vzA02KG8H4kVVXy5GLzkVsWzHP592dtcyrp_VQhrGY0k77cPXZicUu_TMTANRSgiaIOuGzd_jL6YdNki-JgAxiJ57STqe9KUEWmHdSgAAFYwj-wDPFka2znkoAbUPDbtSD3DYAN8cVcr7HwmUflRueJes7oJmAjvS5ZJtKjdpnyUUyBAGFXzWJ4J8AoXrPPsu8US7_amtpKSgxSMYwzvfe3VbRNnOCcMDg38">
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md-mobile text-on-surface truncate">Trần Lê Vy</h3>
+<span class="font-label-sm text-label-sm-mobile text-outline">Lớp 1A</span>
+</div>
+<div class="flex flex-wrap gap-2 mt-1">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-secondary-container/30 text-on-secondary-container rounded-md font-label-sm text-label-sm-mobile">
+<span class="material-symbols-outlined text-[14px]" data-icon="restaurant" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+                            Ăn kiêng đường
+                        </span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</div>
+<!-- Student Item 3 -->
+<div class="bg-surface-container-lowest p-3 rounded-xl flex items-center gap-4 shadow-[0_2px_8px_rgba(14,116,144,0.06)] border border-transparent active:border-primary/20 transition-all">
+<div class="w-14 h-14 rounded-full overflow-hidden flex-none border-2 border-surface-variant">
+<img class="w-full h-full object-cover" data-alt="A young school student with glasses looking curiously at the camera. Soft, high-key lighting creates a professional and clean appearance. The background features blurred educational elements in shades of white and light teal. High-quality digital photography for a teacher's management interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDd6_M7bh2GUXGPodvDZA-c6XOlWTqIR3h1yDsfVC6hzR82VsWS7-6ebzsuUfrdmU6XcPMGhvPiQx-38XBgOjmUIZZftAOQHGlrunUDpEW3ol6sP3P5QNpbk7w4ZeZC-YmzBHWVNX3ox7W-ds1DGJW8UcJ5Jj1ik32W_twVMbOEIGiGKW6GQJECRSQdx_vkJ30jzyhqZcMcvqMIEjmzPXEiKON_JZXl5-mG2xZv0S9vBItDqj3WD8u1iqxZymDLHFfu8wjfHrmGBps">
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md-mobile text-on-surface truncate">Lê Hoàng Nam</h3>
+<span class="font-label-sm text-label-sm-mobile text-outline">Lớp 1B</span>
+</div>
+<div class="flex flex-wrap gap-2 mt-1">
+<span class="text-outline font-label-sm text-label-sm-mobile italic">Không có ghi chú đặc biệt</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</div>
+<!-- Student Item 4 -->
+<div class="bg-surface-container-lowest p-3 rounded-xl flex items-center gap-4 shadow-[0_2px_8px_rgba(14,116,144,0.06)] border border-transparent active:border-primary/20 transition-all">
+<div class="w-14 h-14 rounded-full overflow-hidden flex-none border-2 border-surface-variant">
+<img class="w-full h-full object-cover" data-alt="Portrait of a smiling young boy with short black hair. Professional lighting, vibrant yet clean colors, school setting with a focus on trust and safety. The image is framed perfectly for a circle avatar in a modern mobile UI application for teachers." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBVcxCDkKCaU6FDhjeTBxiYrPzsz3cseFWolVtWyg9ShEuhu5PaBChK8vSCuPadbPEFV20z-eh8aS0WTRJFI3z7fvv5255N7Zj3uSY-Tjnd21ZMz_74vIps9gZ2ZvKyH9x5u-cLLxM_qCiJprrbwGF4iZGx5luxk3qVaPIBIKS4wTLUG4Xl0tR8IwY5Xzu_67Q_yQuGZ-MPB71WQL9nFzW1omcYGQJ672ZcAl7HKtTCH1l3gWRCxtRGNQPvSQHwEx_Vl1tyjD1Tfc">
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md-mobile text-on-surface truncate">Phạm Gia Bảo</h3>
+<span class="font-label-sm text-label-sm-mobile text-outline">Lớp 1A</span>
+</div>
+<div class="flex flex-wrap gap-2 mt-1">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-error-container text-on-error-container rounded-md font-label-sm text-label-sm-mobile">
+<span class="material-symbols-outlined text-[14px]" data-icon="warning" style="font-variation-settings: 'FILL' 1;">warning</span>
+                            Dị ứng hải sản
+                        </span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-secondary-container/30 text-on-secondary-container rounded-md font-label-sm text-label-sm-mobile">
+<span class="material-symbols-outlined text-[14px]" data-icon="restaurant" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+                            Ăn chay
+                        </span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</div>
+<!-- Student Item 5 -->
+<div class="bg-surface-container-lowest p-3 rounded-xl flex items-center gap-4 shadow-[0_2px_8px_rgba(14,116,144,0.06)] border border-transparent active:border-primary/20 transition-all">
+<div class="w-14 h-14 rounded-full overflow-hidden flex-none border-2 border-surface-variant">
+<img class="w-full h-full object-cover" data-alt="Friendly face of a primary student girl. Sharp focus, professional studio-quality lighting on a soft neutral background with teal accents. The aesthetic is clean and focused on individual student identity for a modern school management dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXsnAxkS540Nn5kZXKhcjxhc24pjTAaO1WRzXqvapohCF_K2SiliGugLoXp_wyAwUncU-2plSMXKUveb3V0Bd1lkhbKVuhuzRqyuzGSzJvX73Rcw4RX3lRH3xtvqANejwp2XSVc-PSFDUnwIfXD5taOuMerM4hOd5o6ut5Ti5IKcLURHL9JVu1q9qW_zYh2HRtP3w4iqu6VdafO7b_u-9o7in6NS5H-7-AwL7PwQtpFbViWqPViPQTpi8NSpAQI2qKTuhHk8aNfD8">
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md-mobile text-on-surface truncate">Võ Thu Thảo</h3>
+<span class="font-label-sm text-label-sm-mobile text-outline">Lớp 1B</span>
+</div>
+<div class="flex flex-wrap gap-2 mt-1">
+<span class="text-outline font-label-sm text-label-sm-mobile italic">Không có ghi chú đặc biệt</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</div>
+<!-- Student Item 6 -->
+<div class="bg-surface-container-lowest p-3 rounded-xl flex items-center gap-4 shadow-[0_2px_8px_rgba(14,116,144,0.06)] border border-transparent active:border-primary/20 transition-all">
+<div class="w-14 h-14 rounded-full overflow-hidden flex-none border-2 border-surface-variant">
+<img class="w-full h-full object-cover" data-alt="A primary student boy looking happy. Clean, bright, and modern style consistent with medical and educational software. Teal and white tones dominate the lighting and soft-focus classroom background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlwzPG3ahCqRg4cVrCx1rWQkpIKYBYu64f29BXqBNwR1c-S5c9zd2ABdRnQxotfcazC1N4HDgfBj_K1TRsQN9kVtI99PhlF9SBNIqA8KuCvZkVNdZzoxKL3_U-1X2eMGoPwZEJhu14a9RV20ROAcyOnkzqUBI3EBHPe8OhmjH_DU7n-PLVHX_ncTpYQyFtcFoYj11JpPTheOhOq4waiuwR0fHQKbbCNZOYrSvAERzljSBosRNOFQT9uQV_H-7tCKGtveVO8Eldg9g">
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md-mobile text-on-surface truncate">Đặng Quốc Trung</h3>
+<span class="font-label-sm text-label-sm-mobile text-outline">Lớp 1A</span>
+</div>
+<div class="flex flex-wrap gap-2 mt-1">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-secondary-container/30 text-on-secondary-container rounded-md font-label-sm text-label-sm-mobile">
+<span class="material-symbols-outlined text-[14px]" data-icon="restaurant" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+                            Dị ứng trứng
+                        </span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-14 px-2 pb-safe backdrop-blur-md bg-surface/90 dark:bg-inverse-surface/90 shadow-[0_-1px_10px_rgba(14,116,144,0.04)]">
+<!-- Home -->
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant px-4 py-1 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-[10px] mt-0.5">Trang chủ</span>
+</a>
+<!-- Students (Active) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-xl px-4 py-1 scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="group" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-label-sm text-[10px] mt-0.5">Học sinh</span>
+</a>
+<!-- Meals -->
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant px-4 py-1 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
+<span class="font-label-sm text-[10px] mt-0.5">Bữa ăn</span>
+</a>
+<!-- Notifications -->
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant px-4 py-1 hover:text-primary transition-colors relative" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="font-label-sm text-[10px] mt-0.5">Thông báo</span>
+<div class="absolute top-1 right-5 w-2 h-2 bg-error rounded-full"></div>
+</a>
+</nav>
+<script>
+        // Micro-interaction: Filter Chips Toggle
+        const filterChips = document.querySelectorAll('section button');
+        filterChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                filterChips.forEach(c => {
+                    c.classList.remove('bg-primary', 'text-on-primary');
+                    c.classList.add('bg-surface-container-high', 'text-on-surface-variant');
+                });
+                chip.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+                chip.classList.add('bg-primary', 'text-on-primary');
+            });
+        });
+
+        // Student Item Click Effect
+        const studentItems = document.querySelectorAll('section.space-y-3 > div');
+        studentItems.forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.add('scale-[0.98]');
+                setTimeout(() => item.classList.remove('scale-[0.98]'), 150);
+            });
+        });
+    </script>
+</body></html>

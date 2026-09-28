@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thống kê sử dụng - SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "tertiary": "#794602",
+                        "error-container": "#ffdad6",
+                        "on-background": "#181c1e",
+                        "on-primary-fixed-variant": "#004d62",
+                        "on-surface-variant": "#3f484c",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f1f4f6",
+                        "primary-fixed": "#b9eaff",
+                        "surface-tint": "#006781",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#ffdcbd",
+                        "surface-container-high": "#e6e8eb",
+                        "on-tertiary-fixed-variant": "#693c00",
+                        "tertiary-fixed-dim": "#ffb86f",
+                        "surface-variant": "#e0e3e5",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#81d1f0",
+                        "surface-container": "#ebeef0",
+                        "on-error": "#ffffff",
+                        "primary": "#005a71",
+                        "tertiary-container": "#965e1c",
+                        "surface-bright": "#f7fafc",
+                        "inverse-on-surface": "#eef1f3",
+                        "surface-dim": "#d7dadd",
+                        "on-tertiary-container": "#ffe8d6",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#181c1e",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#81d1f0",
+                        "background": "#f7fafc",
+                        "outline-variant": "#bec8cd",
+                        "on-secondary-container": "#54647a",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "inverse-surface": "#2d3133",
+                        "on-secondary-fixed": "#0b1c30",
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary-container": "#d0e1fb",
+                        "on-tertiary-fixed": "#2c1600",
+                        "on-primary-fixed": "#001f29",
+                        "secondary": "#505f76",
+                        "on-primary-container": "#d3f1ff",
+                        "surface": "#f7fafc",
+                        "outline": "#6f787d",
+                        "primary-container": "#0e7490"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base-unit": "4px",
+                        "container-padding": "2rem",
+                        "gutter": "1rem",
+                        "section-gap": "1.5rem",
+                        "sidebar-width": "260px"
+                    },
+                    "fontFamily": {
+                        "body-base": ["Be Vietnam Pro"],
+                        "h3": ["Be Vietnam Pro"],
+                        "h1": ["Be Vietnam Pro"],
+                        "body-medium": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "h2": ["Be Vietnam Pro"],
+                        "code": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-base": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "h3": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "h1": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-medium": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "code": ["13px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-base antialiased min-h-screen flex">
+<!-- SideNavBar -->
+<nav class="bg-surface-container-lowest dark:bg-inverse-surface fixed left-0 top-0 h-screen w-[260px] border-r border-outline-variant dark:border-on-surface-variant z-50 flex flex-col py-6">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container font-h2 font-bold">s</div>
+<div>
+<h1 class="font-h2 text-h2 font-bold text-primary dark:text-primary-fixed">sfms</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">System Administration</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto px-4 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out font-body-medium text-body-medium" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Tổng quan
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out font-body-medium text-body-medium" href="#">
+<span class="material-symbols-outlined">manage_accounts</span>
+                Người dùng &amp; Vai trò
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out font-body-medium text-body-medium" href="#">
+<span class="material-symbols-outlined">school</span>
+                Trường học
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out font-body-medium text-body-medium" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Cấu hình hệ thống
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary/10 text-primary font-semibold border-r-4 border-primary transition-colors duration-200 ease-in-out font-body-medium text-body-medium" href="#">
+<span class="material-symbols-outlined fill-icon">monitor_heart</span>
+                Giám sát &amp; Audit
+            </a>
+</div>
+<div class="mt-auto px-4 space-y-2 pt-4 border-t border-outline-variant/30">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out font-body-medium text-body-medium" href="#">
+<span class="material-symbols-outlined">help</span>
+                Hỗ trợ
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-error hover:bg-error-container/20 transition-colors duration-200 ease-in-out font-body-medium text-body-medium" href="#">
+<span class="material-symbols-outlined">logout</span>
+                Đăng xuất
+            </a>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="ml-[260px] flex-1 flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-surface-bright/80 dark:bg-on-background/80 backdrop-blur-md fixed top-0 right-0 w-[calc(100%-260px)] z-40 flex justify-between items-center h-16 px-8 border-b border-outline-variant dark:border-on-surface-variant transition-all duration-300">
+<div class="flex gap-6 items-center">
+<a class="font-body-base text-body-base text-on-surface-variant hover:text-primary transition-colors" href="#">Nhật ký hệ thống</a>
+<a class="font-body-base text-body-base text-on-surface-variant hover:text-primary transition-colors" href="#">Giám sát hoạt động</a>
+<a class="font-body-base text-body-base text-on-surface-variant hover:text-primary transition-colors" href="#">Trạng thái &amp; Sao lưu</a>
+<a class="font-body-base text-body-base text-on-surface-variant hover:text-primary transition-colors" href="#">Nhật ký lỗi</a>
+<a class="font-body-base text-body-base text-primary font-bold border-b-2 border-primary pb-2 hover:text-primary transition-colors pt-2" href="#">Thống kê sử dụng</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors text-primary dark:text-primary-fixed">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors text-primary dark:text-primary-fixed">
+<span class="material-symbols-outlined">settings_suggest</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container border border-outline-variant ml-2">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="A close up professional headshot of an administrator in a modern office setting. Soft, natural lighting. Professional corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIik4AJPEFRzWPPm6C6m2R9WxccwGBWESaVEI6ereAdBonaO6A1ZTdaaoCf7A2-dqPtqEqu6wQex4wu7_4BIRT_kAPQAw8tAlBwqKYLa1qg_u8qZfjY1K7F5QsyPfeTAmUT0ibsNEaoxfBjx46izUcA_eyBi3QT3tjC5u5nm-Tq3DZ5s25YNIysRqT55fTjYQCPMVaYWfoe4VePfvxHEZoZmpO86TOCE1VVIpeUj2pQfjsiVT3-6a87YCPS7Ub0HAyTFK1oMH7T383"/>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 mt-16 p-container-padding space-y-section-gap max-w-7xl mx-auto w-full">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+<div>
+<h2 class="font-h1 text-h1 text-on-surface">Thống kê sử dụng</h2>
+<p class="font-body-base text-body-base text-on-surface-variant mt-1">Giám sát mức độ hoạt động và tài nguyên hệ thống (UC-150).</p>
+</div>
+<!-- Filters -->
+<div class="flex flex-wrap items-center gap-3">
+<div class="relative">
+<select class="appearance-none bg-surface border border-outline-variant rounded-lg pl-4 pr-10 py-2 font-body-base text-body-base text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-sm h-10">
+<option>7 ngày qua</option>
+<option>30 ngày qua</option>
+<option>Tháng này</option>
+<option>Năm nay</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-on-surface-variant pointer-events-none text-sm">calendar_today</span>
+</div>
+<div class="relative">
+<select class="appearance-none bg-surface border border-outline-variant rounded-lg pl-4 pr-10 py-2 font-body-base text-body-base text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-sm h-10">
+<option>Tất cả vai trò</option>
+<option>System Admin</option>
+<option>School Admin</option>
+<option>Teacher</option>
+<option>Parent</option>
+<option>Caterer</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-on-surface-variant pointer-events-none text-sm">filter_list</span>
+</div>
+</div>
+</div>
+<!-- Bento Grid Dashboard -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Bar Chart: Active Users (Span 2 columns) -->
+<div class="lg:col-span-2 bg-surface border border-outline-variant rounded-xl p-6 flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-h3 text-h3 text-on-surface">Người dùng hoạt động theo ngày</h3>
+<button class="text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<!-- Chart Placeholder (Mockup using HTML/CSS) -->
+<div class="flex-1 flex items-end gap-2 h-64 mt-auto border-b border-l border-outline-variant pb-2 pl-2">
+<!-- Y-axis labels -->
+<div class="flex flex-col justify-between h-full -ml-8 py-2 text-xs text-on-surface-variant mr-2">
+<span>10k</span>
+<span>7.5k</span>
+<span>5k</span>
+<span>2.5k</span>
+<span>0</span>
+</div>
+<!-- Bars -->
+<div class="w-full flex justify-around items-end h-full pt-4">
+<div class="w-12 bg-primary/40 hover:bg-primary transition-colors rounded-t-sm h-[40%] relative group">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs px-2 py-1 rounded">4,200</div>
+</div>
+<div class="w-12 bg-primary/40 hover:bg-primary transition-colors rounded-t-sm h-[65%] relative group">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs px-2 py-1 rounded">6,800</div>
+</div>
+<div class="w-12 bg-primary/40 hover:bg-primary transition-colors rounded-t-sm h-[55%] relative group">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs px-2 py-1 rounded">5,500</div>
+</div>
+<div class="w-12 bg-primary/40 hover:bg-primary transition-colors rounded-t-sm h-[80%] relative group">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs px-2 py-1 rounded">8,200</div>
+</div>
+<div class="w-12 bg-primary-container hover:bg-primary transition-colors rounded-t-sm h-[90%] relative group">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs px-2 py-1 rounded">9,500</div>
+</div>
+<div class="w-12 bg-primary/40 hover:bg-primary transition-colors rounded-t-sm h-[30%] relative group">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs px-2 py-1 rounded">3,100</div>
+</div>
+<div class="w-12 bg-primary/40 hover:bg-primary transition-colors rounded-t-sm h-[25%] relative group">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs px-2 py-1 rounded">2,800</div>
+</div>
+</div>
+</div>
+<!-- X-axis labels -->
+<div class="flex justify-around ml-6 mt-2 text-xs text-on-surface-variant">
+<span>T2</span>
+<span>T3</span>
+<span>T4</span>
+<span>T5</span>
+<span>T6</span>
+<span>T7</span>
+<span>CN</span>
+</div>
+</div>
+<!-- Storage Donut Chart (Span 1 column) -->
+<div class="bg-surface border border-outline-variant rounded-xl p-6 flex flex-col">
+<h3 class="font-h3 text-h3 text-on-surface mb-6">Lưu trữ tệp tin</h3>
+<div class="flex-1 flex flex-col items-center justify-center relative">
+<!-- CSS Donut Chart approximation -->
+<div class="w-48 h-48 rounded-full border-[16px] border-surface-container relative flex items-center justify-center">
+<!-- Overlay ring for 65% -->
+<div class="absolute inset-0 rounded-full border-[16px] border-primary" style="clip-path: polygon(50% 0, 100% 0, 100% 100%, 0 100%, 0 50%, 50% 50%); border-right-color: transparent; border-bottom-color: transparent; transform: rotate(45deg);"></div>
+<div class="absolute inset-0 rounded-full border-[16px] border-primary" style="clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);"></div>
+<div class="text-center z-10 flex flex-col items-center justify-center bg-surface w-36 h-36 rounded-full">
+<span class="font-h1 text-h1 text-primary">65%</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Đã sử dụng</span>
+</div>
+</div>
+</div>
+<div class="mt-6 flex justify-between items-center text-sm">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="text-on-surface">Đã dùng: 325 GB</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-surface-container"></div>
+<span class="text-on-surface-variant">Trống: 175 GB</span>
+</div>
+</div>
+</div>
+<!-- Top 5 Features Table (Span full width) -->
+<div class="lg:col-span-3 bg-surface border border-outline-variant rounded-xl overflow-hidden">
+<div class="p-6 border-b border-outline-variant/50 flex justify-between items-center bg-surface-bright">
+<h3 class="font-h3 text-h3 text-on-surface">Top 5 tính năng sử dụng nhiều nhất</h3>
+<button class="flex items-center gap-2 text-primary font-body-medium text-body-medium hover:underline">
+                            Xem chi tiết <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-lowest border-b border-outline-variant/30 text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3 px-6 font-medium w-12 text-center">#</th>
+<th class="py-3 px-6 font-medium">Use Case / Tính năng</th>
+<th class="py-3 px-6 font-medium text-right">Lượt gọi (7 ngày)</th>
+<th class="py-3 px-6 font-medium text-right w-48">Xu hướng</th>
+</tr>
+</thead>
+<tbody class="font-body-base text-body-base text-on-surface divide-y divide-outline-variant/10">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 px-6 text-center font-code text-on-surface-variant">1</td>
+<td class="py-4 px-6 font-medium">Ghi nhận điểm danh (UC-082)</td>
+<td class="py-4 px-6 text-right font-code">142,503</td>
+<td class="py-4 px-6">
+<div class="flex items-center justify-end gap-2 text-primary">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="text-xs font-medium">+12.5%</span>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 px-6 text-center font-code text-on-surface-variant">2</td>
+<td class="py-4 px-6 font-medium">Xem thực đơn tuần (UC-045)</td>
+<td class="py-4 px-6 text-right font-code">98,210</td>
+<td class="py-4 px-6">
+<div class="flex items-center justify-end gap-2 text-primary">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="text-xs font-medium">+8.2%</span>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 px-6 text-center font-code text-on-surface-variant">3</td>
+<td class="py-4 px-6 font-medium">Nhắn tin nội bộ (UC-110)</td>
+<td class="py-4 px-6 text-right font-code">76,450</td>
+<td class="py-4 px-6">
+<div class="flex items-center justify-end gap-2 text-error">
+<span class="material-symbols-outlined text-sm">trending_down</span>
+<span class="text-xs font-medium">-2.4%</span>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 px-6 text-center font-code text-on-surface-variant">4</td>
+<td class="py-4 px-6 font-medium">Thanh toán học phí (UC-067)</td>
+<td class="py-4 px-6 text-right font-code">45,120</td>
+<td class="py-4 px-6">
+<div class="flex items-center justify-end gap-2 text-primary">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="text-xs font-medium">+45.1%</span>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 px-6 text-center font-code text-on-surface-variant">5</td>
+<td class="py-4 px-6 font-medium">Đăng ký suất ăn (UC-032)</td>
+<td class="py-4 px-6 text-right font-code">32,890</td>
+<td class="py-4 px-6">
+<div class="flex items-center justify-end gap-2 text-outline">
+<span class="material-symbols-outlined text-sm">trending_flat</span>
+<span class="text-xs font-medium">0.0%</span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

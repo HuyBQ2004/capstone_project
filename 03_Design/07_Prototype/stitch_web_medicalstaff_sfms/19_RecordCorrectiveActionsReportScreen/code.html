@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Báo cáo khắc phục CAPA Web - SFMS Medical</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#006781",
+                    "tertiary-fixed-dim": "#c4c7c9",
+                    "on-error-container": "#93000a",
+                    "surface-variant": "#dae2fd",
+                    "surface": "#faf8ff",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "surface-container": "#eaedff",
+                    "secondary-container": "#d0e1fb",
+                    "on-primary": "#ffffff",
+                    "on-surface": "#131b2e",
+                    "primary-container": "#0e7490",
+                    "tertiary-fixed": "#e0e3e5",
+                    "surface-bright": "#faf8ff",
+                    "surface-dim": "#d2d9f4",
+                    "on-secondary-fixed": "#0b1c30",
+                    "on-error": "#ffffff",
+                    "background": "#faf8ff",
+                    "error": "#ba1a1a",
+                    "surface-container-highest": "#dae2fd",
+                    "surface-container-lowest": "#ffffff",
+                    "outline-variant": "#bec8cd",
+                    "secondary": "#505f76",
+                    "primary-fixed": "#b9eaff",
+                    "on-tertiary-container": "#eaecee",
+                    "inverse-surface": "#283044",
+                    "tertiary-container": "#686b6d",
+                    "surface-container-high": "#e2e7ff",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "primary": "#005a71",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-container": "#54647a",
+                    "secondary-fixed": "#d3e4fe",
+                    "on-primary-fixed": "#001f29",
+                    "tertiary": "#505355",
+                    "on-primary-container": "#d3f1ff",
+                    "outline": "#6f787d",
+                    "on-tertiary-fixed": "#191c1e",
+                    "on-background": "#131b2e",
+                    "on-tertiary-fixed-variant": "#444749",
+                    "error-container": "#ffdad6",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed-variant": "#004d62",
+                    "inverse-on-surface": "#eef0ff",
+                    "inverse-primary": "#81d1f0",
+                    "primary-fixed-dim": "#81d1f0",
+                    "surface-container-low": "#f2f3ff",
+                    "on-surface-variant": "#3f484c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "xl": "32px",
+                    "column-gutter": "16px",
+                    "md": "16px",
+                    "sm": "8px",
+                    "xs": "4px",
+                    "lg": "24px",
+                    "container-padding": "24px"
+            },
+            "fontFamily": {
+                    "body-md": [
+                            "Be Vietnam Pro"
+                    ],
+                    "title-sm": [
+                            "Be Vietnam Pro"
+                    ],
+                    "display-lg": [
+                            "Be Vietnam Pro"
+                    ],
+                    "label-caps": [
+                            "Be Vietnam Pro"
+                    ],
+                    "display-lg-mobile": [
+                            "Be Vietnam Pro"
+                    ],
+                    "body-sm": [
+                            "Be Vietnam Pro"
+                    ],
+                    "data-tabular": [
+                            "Be Vietnam Pro"
+                    ],
+                    "headline-md": [
+                            "Be Vietnam Pro"
+                    ]
+            },
+            "fontSize": {
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "title-sm": [
+                            "18px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "display-lg": [
+                            "36px",
+                            {
+                                    "lineHeight": "44px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "label-caps": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "display-lg-mobile": [
+                            "28px",
+                            {
+                                    "lineHeight": "34px",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-sm": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "data-tabular": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings:
+          'FILL' 0,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24
+        }
+        /* Shadcn/UI inspired focus ring */
+        .focus-ring {
+            @apply focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:border-primary-container;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-screen flex flex-col p-md z-40 bg-surface dark:bg-surface-dim border-r border-outline-variant dark:border-outline docked left-0 h-full w-64">
+<div class="mb-lg px-sm">
+<h1 class="font-headline-md text-headline-md font-bold text-primary-container dark:text-primary-fixed">SFMS Medical</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Hệ thống y tế học đường</p>
+</div>
+<div class="flex-1 overflow-y-auto space-y-sm">
+<a class="flex items-center gap-md text-on-surface-variant dark:text-on-secondary-fixed-variant px-md py-sm hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-all rounded-lg cursor-pointer duration-200 ease-in-out font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+                Trang chủ
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant dark:text-on-secondary-fixed-variant px-md py-sm hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-all rounded-lg cursor-pointer duration-200 ease-in-out font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="medical_services">medical_services</span>
+                Hồ sơ sức khỏe
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant dark:text-on-secondary-fixed-variant px-md py-sm hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-all rounded-lg cursor-pointer duration-200 ease-in-out font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
+                Suất ăn đặc biệt
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant dark:text-on-secondary-fixed-variant px-md py-sm hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-all rounded-lg cursor-pointer duration-200 ease-in-out font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="sanitizer">sanitizer</span>
+                Kiểm tra vệ sinh
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant dark:text-on-secondary-fixed-variant px-md py-sm hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-all rounded-lg cursor-pointer duration-200 ease-in-out font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
+                Quản lý vi phạm
+            </a>
+<a class="flex items-center gap-md bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-lg px-md py-sm font-semibold cursor-pointer duration-200 ease-in-out font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="report_problem">report_problem</span>
+                Quản lý sự cố
+            </a>
+</div>
+<div class="mt-auto border-t border-outline-variant pt-sm space-y-sm">
+<a class="flex items-center gap-md text-on-surface-variant dark:text-on-secondary-fixed-variant px-md py-sm hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-all rounded-lg cursor-pointer duration-200 ease-in-out font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+                Hỗ trợ
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant dark:text-on-secondary-fixed-variant px-md py-sm hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-all rounded-lg cursor-pointer duration-200 ease-in-out font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                Đăng xuất
+            </a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 ml-64 bg-background min-h-screen">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-lg py-sm w-full sticky top-0 z-50 bg-surface-lowest border-b border-outline-variant dark:border-outline docked full-width top-0 bg-surface-lowest dark:bg-surface-container-lowest">
+<div class="flex items-center gap-md">
+<!-- Search (on_left as per JSON) -->
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-lg text-body-sm focus-ring w-64 h-10 transition-all duration-200 text-on-surface" placeholder="Tìm kiếm..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors rounded-full cursor-pointer transition-all duration-200 active:scale-95">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors rounded-full cursor-pointer transition-all duration-200 active:scale-95">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest border border-outline-variant overflow-hidden cursor-pointer">
+<img alt="Doctor Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a doctor in a modern clinical setting, bright lighting, crisp focus, wearing a white coat, subtle teal accents in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBb_-FpmQ3LciN_5nbJ9SFH3l_THSKpT9zucAbOrALN8RX5WWTMtQ_e1t_Md8o4hdysrbTrs36GpZ-DOo-v5K1LUg95ae1qBYSmjfm9fsldbCxRpiBGIAQg2QXpSF4vklvZHOKVeZ2kscnxj9yBvPpd5e75a1GMs_Fje-5BVlaWIhxWi7gCGTF3zkabZ1dMXmbFCSm2KWmYxhaGMFuLK7OR1totBwBwJA5A2Usy6KkpwolMZ9YB_23-oCK-Ymlcz72uHjNQ5t8S5oU"/>
+</div>
+</div>
+</header>
+<!-- Page Content Canvas -->
+<div class="p-container-padding max-w-4xl mx-auto mt-lg">
+<div class="mb-lg">
+<h2 class="font-display-lg text-display-lg text-on-background mb-xs">Báo cáo khắc phục CAPA</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Ghi nhận và lên kế hoạch cho các hành động khắc phục và phòng ngừa (CAPA) liên quan đến sự cố an toàn.</p>
+</div>
+<!-- CAPA Form Card -->
+<div class="bg-surface-lowest border border-outline-variant rounded-xl p-lg shadow-[0_4px_6px_-1px_rgb(0,0,0,0.1),0_2px_4px_-2px_rgb(0,0,0,0.1)]">
+<h3 class="font-title-sm text-title-sm text-on-background mb-md pb-sm border-b border-outline-variant">Lập kế hoạch khắc phục CAPA</h3>
+<form class="space-y-lg">
+<!-- Incident Reference -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-column-gutter">
+<div class="space-y-xs">
+<label class="font-data-tabular text-data-tabular text-on-surface-variant" for="incident_id">Mã sự cố liên quan *</label>
+<input class="w-full px-3 py-2 bg-surface-container-low border border-outline-variant rounded-md text-body-sm text-on-surface focus-ring cursor-not-allowed" id="incident_id" readonly="" type="text" value="INC-2023-0891"/>
+</div>
+<div class="space-y-xs">
+<label class="font-data-tabular text-data-tabular text-on-surface-variant" for="priority">Độ ưu tiên *</label>
+<select class="w-full px-3 py-2 bg-surface-lowest border border-outline-variant rounded-md text-body-sm text-on-surface focus-ring h-10" id="priority">
+<option value="high">Cao (Cần xử lý ngay)</option>
+<option selected="" value="medium">Trung bình</option>
+<option value="low">Thấp</option>
+</select>
+</div>
+</div>
+<!-- Description -->
+<div class="space-y-xs">
+<label class="font-data-tabular text-data-tabular text-on-surface-variant" for="description">Mô tả chi tiết biện pháp khắc phục *</label>
+<textarea class="w-full px-3 py-2 bg-surface-lowest border border-outline-variant rounded-md text-body-sm text-on-surface focus-ring resize-y" id="description" placeholder="Nhập chi tiết các bước cần thực hiện để khắc phục sự cố..." rows="4"></textarea>
+</div>
+<!-- Assignment & Deadline -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-column-gutter">
+<div class="space-y-xs">
+<label class="font-data-tabular text-data-tabular text-on-surface-variant" for="assignee">Gán trách nhiệm *</label>
+<select class="w-full px-3 py-2 bg-surface-lowest border border-outline-variant rounded-md text-body-sm text-on-surface focus-ring h-10" id="assignee">
+<option disabled="" selected="" value="">Chọn đơn vị phụ trách...</option>
+<option value="kitchen">Nhà bếp</option>
+<option value="supplier">Nhà cung cấp</option>
+</select>
+</div>
+<div class="space-y-xs">
+<label class="font-data-tabular text-data-tabular text-on-surface-variant" for="deadline">Hạn hoàn thành (Mặc định +12h) *</label>
+<div class="relative">
+<input class="w-full pl-3 pr-10 py-2 bg-surface-lowest border border-outline-variant rounded-md text-body-sm text-on-surface focus-ring h-10" id="deadline" type="datetime-local"/>
+</div>
+<p class="text-[12px] text-on-surface-variant mt-1">Cần hoàn thành trước: 14/11/2023 20:00</p>
+</div>
+</div>
+<!-- Actions -->
+<div class="pt-md border-t border-outline-variant flex justify-end gap-md">
+<button class="px-4 py-2 border border-outline rounded-md text-body-sm font-medium text-primary-container hover:bg-surface-container-low transition-colors h-10" type="button">
+                            Hủy bỏ
+                        </button>
+<button class="px-4 py-2 bg-primary-container text-on-primary rounded-md text-body-sm font-medium hover:bg-primary transition-colors h-10 shadow-sm flex items-center gap-2" type="submit">
+<span class="material-symbols-outlined text-[18px]" data-icon="send">send</span>
+                            Gửi yêu cầu CAPA
+                        </button>
+</div>
+</form>
+</div>
+<!-- Optional: Contextual Information Panel (Bento style hint) -->
+<div class="mt-lg grid grid-cols-1 md:grid-cols-3 gap-md">
+<div class="col-span-2 bg-surface-bright border border-outline-variant rounded-lg p-md">
+<h4 class="font-data-tabular text-data-tabular text-on-background mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="info">info</span>
+                        Thông tin sự cố INC-2023-0891
+                    </h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+                        Báo cáo về việc phát hiện nhiệt độ bảo quản thực phẩm (thịt gà) tại kho lạnh số 2 không đạt tiêu chuẩn (đo được 8°C thay vì &lt; 4°C). Nguy cơ vi sinh cao.
+                    </p>
+</div>
+<div class="col-span-1 bg-surface-bright border border-outline-variant rounded-lg p-md flex flex-col justify-center items-center text-center">
+<div class="w-10 h-10 rounded-full bg-error-container text-on-error-container flex items-center justify-center mb-2">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Mức độ nghiêm trọng</span>
+<span class="font-title-sm text-title-sm text-error">Nghiêm trọng</span>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Simple script to set default datetime to +12 hours
+        document.addEventListener("DOMContentLoaded", () => {
+            const deadlineInput = document.getElementById('deadline');
+            if(deadlineInput) {
+                const now = new Date();
+                now.setHours(now.getHours() + 12);
+                // Format for datetime-local: YYYY-MM-DDThh:mm
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                
+                deadlineInput.value = `${year}-${month}-${day}T${hours}:${minutes}`;
+            }
+        });
+    </script>
+</body></html>

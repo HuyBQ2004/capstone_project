@@ -1,0 +1,2719 @@
+// ═══════════════════════════════════════════════════════════════════════════════
+// SFMS — School Food Safety Management Support System
+// Full database schema (DBML) — dán vào https://dbdiagram.io/d để xem sơ đồ
+//
+// Nguồn sự thật: 04_Development/Backend/src/main/resources/db/migration/V1..V33
+// (Flyway, PostgreSQL 16 + pgcrypto). Sinh lại khi có migration mới.
+// Quy ước 00_Common_Conventions.md:
+//   D1  PK là UUID nội bộ; cột `code` là mã nghiệp vụ công khai (JSON trả dưới tên "id"),
+//       UNIQUE(school_id, code) với bảng thuộc trường, UNIQUE(code) với bảng cấp nền tảng.
+//   D4  Mốc thời gian = timestamptz (ISO-8601); ngày thuần = date.
+//   D6  Enum lưu SCREAMING_SNAKE (riêng roles.role_key là kebab-case).
+//   D9  4 cột audit created_at/updated_at/created_by/updated_by do BaseEntity điền.
+//   D10 File riêng tư lưu storage_key, KHÔNG lưu URL công khai.
+// ═══════════════════════════════════════════════════════════════════════════════
+
+Project SFMS {
+  database_type: 'PostgreSQL'
+  Note: '''
+    SFMS — Hệ thống hỗ trợ quản lý an toàn thực phẩm trường học (SEP490_G8).
+    105 bảng / 13 module nghiệp vụ MF01–MF13 + 7 view báo cáo read-only.
+    Sinh từ Flyway migration V1__init_schema.sql .. V33__mf05_template_grade_dish_media_diet_unique.sql.
+  '''
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// COMMON — hạ tầng dùng chung
+// ═══════════════════════════════════════════════════════════════════════════════
+
+Table code_sequences {
+  scope varchar(64) [pk, note: 'Phạm vi sinh mã: users | staff | mf09_distribution | report_schedules_2026 ...']
+  next_value bigint [not null, default: 1]
+
+  Note: 'Sinh mã nghiệp vụ có khoá (D1) bằng INSERT ... RETURNING, tránh trùng mã khi 2 request song song (ADR-M11-5).'
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MF01 — User Management & Access Control  (V1, V2, V25)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+Table roles {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, unique, note: 'D1: ROLE-01..ROLE-07, ROLE-08 (custom)']
+  name varchar(100) [not null, unique, note: 'UC-098: tên role duy nhất']
+  description varchar(255) [not null]
+  role_key varchar(32) [note: 'BR-007/D6 kebab-case: system-admin | school-admin | teacher | parent | medical-staff | service-caterers | supplier. NULL với role custom']
+  system boolean [not null, default: false, note: 'BR-008: role hệ thống bất khả xoá/đổi tên']
+  permissions jsonb [not null, default: `'[]'`, note: 'ADR-M04: list PERM-id, KHÔNG dùng bảng nối']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    role_key [unique, name: 'ux_role_key', note: 'partial: WHERE role_key IS NOT NULL']
+  }
+  Note: 'CHECK ck_role_system_has_key: system=TRUE bắt buộc có role_key; role custom bắt buộc NULL. KHÔNG có cột user_count — dẫn xuất runtime.'
+}
+
+Table permissions {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, unique, note: 'D1: PERM-001..PERM-016']
+  name varchar(80) [not null, unique]
+  module varchar(60) [not null]
+  description varchar(255) [not null]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  Note: 'UC-129 — danh mục cố định, chỉ đọc.'
+}
+
+Table user_accounts {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: mã trên resource /users, VD U-0001']
+  staff_code varchar(32) [note: 'D1: mã trên resource /staff, VD STF-001. NULL nếu không phải nhân viên cấp trường']
+  account_scope varchar(16) [not null, default: 'PLATFORM', note: 'PLATFORM | SCHOOL_STAFF (lời mời nhân viên chưa thành tài khoản nền tảng)']
+  name varchar(150) [not null]
+  email varchar(180) [not null, unique, note: 'BR-012 — bất biến ở tầng DB']
+  phone varchar(20) [note: 'BR-012: +84 / 0xx']
+  password_hash varchar(72) [note: 'BR-001 CHECK LIKE $2% — chỉ BCrypt, NULL khi PENDING hoặc Google-only']
+  google_sub varchar(64) [unique, note: 'BR-218']
+  role_id uuid [not null, note: 'BR-007']
+  school_id uuid [note: 'BR-013 — NULL với System Admin / Supplier']
+  partner_id uuid [note: 'ADR-M04-6 — khoá cascade đình chỉ đối tác kéo theo khoá tài khoản']
+  status varchar(24) [not null, default: 'PENDING_VERIFICATION', note: 'ADR-M03: PENDING_VERIFICATION | ACTIVE | INACTIVE | SUSPENDED']
+  email_verified boolean [not null, default: false, note: 'BR-010']
+  failed_login_count int [not null, default: 0, note: 'BR-002, CHECK >= 0']
+  locked_until timestamptz [note: 'BR-002']
+  terms_accepted_at timestamptz [note: 'BR-009']
+  last_login timestamptz
+  primary_admin boolean [not null, default: false, note: 'UC-003: System Admin gốc — không bao giờ được vô hiệu hoá']
+  avatar_url varchar(500) [note: 'UC-097']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'ux_user_school_code']
+    staff_code [unique, name: 'ux_user_staff_code', note: 'partial: WHERE staff_code IS NOT NULL']
+    code [unique, name: 'ux_user_code_global', note: 'partial: WHERE school_id IS NULL']
+    role_id [name: 'ix_user_role']
+    status [name: 'ix_user_status']
+    school_id [name: 'ix_user_school']
+    partner_id [name: 'ix_user_partner']
+  }
+  Note: 'MỘT hàng, HAI mã (code cho /users, staff_code cho /staff). Bảng `staff` KHÔNG tồn tại riêng — StaffMember là view nghiệp vụ lọc theo school_id + role_key.'
+}
+
+Table security_policies {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, unique, note: 'D1: SEC-DEFAULT']
+  max_login_attempts int [not null, note: 'BR-002']
+  lockout_minutes int [not null, note: 'BR-002']
+  session_timeout_minutes int [not null, note: 'BR-004 access TTL']
+  password_min_length int [not null, note: 'BR-006']
+  require_special_char boolean [not null]
+  require_number boolean [not null]
+  require_mixed_case boolean [not null]
+  no_reuse_last3 boolean [not null, note: 'BR-015']
+  active boolean [not null, default: false]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    active [unique, name: 'ux_policy_single_active', note: 'partial: WHERE active = TRUE — đúng 1 chính sách áp dụng']
+  }
+  Note: 'BR-002/004/006 — tham số đọc từ DB, KHÔNG hardcode.'
+}
+
+Table refresh_tokens {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id uuid [not null]
+  token_hash varchar(88) [not null, unique, note: 'CHỈ lưu hash, không bao giờ token thô']
+  expires_at timestamptz [not null, note: 'sliding: mỗi lần rotate = now + 14 ngày']
+  revoked_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    user_id [name: 'ix_rt_user']
+    user_id [unique, name: 'ux_rt_one_active_per_user', note: 'partial: WHERE revoked_at IS NULL — BR-005 single session']
+  }
+}
+
+Table account_activation_tokens {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id uuid [not null]
+  token_hash varchar(88) [not null, unique]
+  expires_at timestamptz [not null]
+  used_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  Note: 'BR-011 — hiệu lực 48h, dùng 1 lần.'
+}
+
+Table password_reset_tokens {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id uuid [not null]
+  token_hash varchar(88) [not null, unique]
+  expires_at timestamptz [not null]
+  used_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (user_id, created_at) [name: 'ix_prt_user_created', note: 'BR-003 rate-limit 1 req/15 phút/email']
+  }
+  Note: 'BR-003 — hiệu lực 1h, dùng 1 lần.'
+}
+
+Table password_history {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id uuid [not null]
+  password_hash varchar(72) [not null, note: 'CHECK LIKE $2%']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  Note: 'BR-006 / BR-015 — giữ 3 hash gần nhất.'
+}
+
+Table audit_logs {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [note: 'D1 (tuỳ chọn)']
+  timestamp timestamptz [not null, default: `now()`]
+  actor varchar(180) [not null]
+  ip varchar(45) [note: 'UC-106']
+  action varchar(255) [not null]
+  resource varchar(120) [not null]
+  result varchar(16) [not null, note: 'SUCCESS | BLOCKED']
+  actor_user_id uuid [note: 'MF12 thêm (V23) — nullable vì V1/V2 đã sinh dòng trước đó']
+  prev_hash varchar(64) [note: 'ADR-M12-02 chuỗi hash chống sửa']
+  entry_hash varchar(64) [note: 'ADR-M12-02']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    actor [name: 'ix_audit_actor']
+    timestamp [name: 'ix_audit_ts']
+    action [name: 'ix_audit_action']
+    (actor_user_id, timestamp) [name: 'ix_audit_actor_user']
+    (resource, timestamp) [name: 'ix_audit_resource']
+    ip [name: 'ix_audit_ip']
+  }
+  Note: 'UC-106 / BR-162 — append-only, bảo đảm bằng @Immutable + không expose PUT/DELETE + chuỗi hash.'
+}
+
+Ref: user_accounts.role_id > roles.id
+Ref: user_accounts.school_id > schools.id
+Ref: user_accounts.partner_id > partners.id
+Ref: refresh_tokens.user_id > user_accounts.id [delete: cascade]
+Ref: account_activation_tokens.user_id > user_accounts.id [delete: cascade]
+Ref: password_reset_tokens.user_id > user_accounts.id [delete: cascade]
+Ref: password_history.user_id > user_accounts.id [delete: cascade]
+Ref: audit_logs.actor_user_id > user_accounts.id
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MF02 — School & Class Management  (V1 stub + V3)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+Table schools {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, unique, note: 'D1: SCH-HN-0042']
+  name varchar(200) [not null]
+  address varchar(255)
+  email varchar(180)
+  registered_at timestamptz [default: `now()`, note: 'V3 đổi từ DATE sang TIMESTAMPTZ (D4)']
+  status varchar(24) [not null, default: 'PENDING', note: 'PENDING | ACTIVE | INACTIVE — UC-070 Guest đăng ký chờ duyệt']
+  tax_id varchar(20) [not null, note: 'BR-028 — UNIQUE partial WHERE tax_id <> ""']
+  lat numeric(9,6) [note: 'BR-028 [-90, 90]']
+  lng numeric(9,6) [note: 'BR-028 [-180, 180]']
+  coordinate_locked boolean [not null, default: false, note: 'BR-028']
+  operating_hours varchar(80)
+  emergency_contact varchar(120)
+  meals_per_day int [not null, default: 0]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    tax_id [unique, name: 'ux_school_tax_id', note: 'partial: WHERE tax_id <> ""']
+  }
+}
+
+Table school_config {
+  id uuid [pk, default: `gen_random_uuid()`]
+  school_id uuid [not null, unique]
+  cost_ceiling numeric(12,2) [note: 'BR-080 — miền MF05']
+  geofence_radius int [not null, default: 200, note: 'BR-028, CHECK 50..500']
+  report_emails jsonb [not null, default: `'[]'`]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  Note: 'UC-095 — cấu hình 1 dòng / trường.'
+}
+
+Table academic_years {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: AY-2025']
+  school_id uuid [not null, note: 'BR-191 per-school (ADR-M02-4)']
+  name varchar(60) [not null]
+  start_date date [not null]
+  end_date date [not null, note: 'CHECK end_date > start_date']
+  status varchar(16) [not null, default: 'DRAFT', note: 'DRAFT | ACTIVE | CLOSED | ARCHIVED']
+  copy_structure boolean [not null, default: false, note: 'BR-194']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_ay_school_code']
+    (school_id, name) [unique, name: 'uq_ay_school_name']
+    (school_id, status) [name: 'ix_ay_school_status']
+    school_id [unique, name: 'uq_ay_one_active_per_school', note: 'partial: WHERE status = ACTIVE — BR-191 ≤1 năm học Active/trường']
+  }
+}
+
+Table classrooms {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(20) [not null, note: 'D1: "3A" (= name)']
+  school_id uuid [not null]
+  academic_year_id uuid [not null, note: 'BR-192']
+  name varchar(20) [not null]
+  grade int [not null, note: 'BR-024 CHECK 1..12']
+  capacity int [not null, default: 50, note: 'BR-025 CHECK 1..50']
+  homeroom_teacher_id uuid [note: 'BR-020 — trỏ user_accounts (ADR-M02-5: KHÔNG có bảng staff riêng)']
+  read_only boolean [not null, default: false, note: 'BR-193']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (academic_year_id, code) [unique, name: 'uq_class_ay_code']
+    (academic_year_id, name) [unique, name: 'uq_class_ay_name']
+    (academic_year_id, grade) [name: 'ix_class_ay_grade']
+    (academic_year_id, homeroom_teacher_id) [unique, name: 'uq_homeroom_teacher_per_year', note: 'partial: WHERE homeroom_teacher_id IS NOT NULL — BR-020']
+  }
+}
+
+Ref: school_config.school_id - schools.id
+Ref: academic_years.school_id > schools.id
+Ref: classrooms.school_id > schools.id
+Ref: classrooms.academic_year_id > academic_years.id
+Ref: classrooms.homeroom_teacher_id > user_accounts.id
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MF03 — Student & Parent Management  (V4, V5, V28)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+Table students {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: HS-3A-001 — MSG-012 khi trùng']
+  registration_no varchar(32) [not null, unique, note: 'UC-025 — unique TOÀN HỆ THỐNG']
+  name varchar(120) [not null]
+  dob date [not null]
+  school_id uuid [not null]
+  classroom_id uuid [not null, note: 'BR-025']
+  status varchar(16) [not null, default: 'ACTIVE']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_student_school_code']
+    (school_id, classroom_id) [name: 'ix_student_school_class']
+  }
+  Note: 'ADR-M03-3: KHÔNG có cột allergies / special_diet / health_status / has_allergy — dẫn xuất từ bảng khai báo.'
+}
+
+Table student_parents {
+  id uuid [pk, default: `gen_random_uuid()`]
+  student_id uuid [not null]
+  parent_user_id uuid [not null, note: 'MF01, role Parent']
+  relationship varchar(40)
+  is_primary boolean [not null, default: false]
+  linked_at timestamptz [not null, default: `now()`]
+
+  indexes {
+    (student_id, parent_user_id) [unique, name: 'uq_student_parent']
+  }
+  Note: 'ADR-M03-1 / BR-030 / BR-201. TRIGGER check_parent_link_limit: ≤5 HS / tài khoản phụ huynh.'
+}
+
+Table health_documents {
+  id uuid [pk, default: `gen_random_uuid()`]
+  student_id uuid [not null]
+  file_name varchar(255) [not null]
+  storage_key varchar(512) [not null, note: 'ADR-M03-5 / D10 — KHÔNG public URL']
+  content_type varchar(80) [not null]
+  size_bytes bigint [not null]
+  uploaded_by_user_id uuid [not null]
+  uploaded_at timestamptz [not null, default: `now()`]
+}
+
+Table allergy_declarations {
+  id uuid [pk, default: `gen_random_uuid()`]
+  student_id uuid [not null]
+  category varchar(80) [not null]
+  allergen varchar(80) [not null]
+  severity varchar(16) [not null, note: 'MILD | MODERATE | SEVERE']
+  declared_at timestamptz [not null, default: `now()`]
+  declared_by_user_id uuid [not null]
+  status varchar(16) [not null, default: 'PENDING', note: 'BR-031: PENDING | VERIFIED | NEEDS_INFO']
+  proof_file_id uuid
+  review_note varchar(500)
+  verified_by_user_id uuid
+  verified_at timestamptz
+
+  indexes {
+    (student_id, status) [name: 'ix_alg_student_status']
+  }
+  Note: 'ADR-M03-2 — NGUỒN SỰ THẬT về dị ứng. CHECK ck_severe_needs_proof: SEVERE + VERIFIED bắt buộc có minh chứng.'
+}
+
+Table chronic_condition_declarations {
+  id uuid [pk, default: `gen_random_uuid()`]
+  student_id uuid [not null]
+  category varchar(80) [not null]
+  condition_name varchar(160) [not null]
+  severity varchar(16) [not null, note: 'MILD | MODERATE | SEVERE']
+  notes varchar(1000)
+  declared_at timestamptz [not null, default: `now()`]
+  declared_by_user_id uuid [not null]
+  status varchar(16) [not null, default: 'PENDING', note: 'PENDING | VERIFIED | NEEDS_INFO']
+  proof_file_id uuid
+  review_note varchar(500)
+  verified_by_user_id uuid
+  verified_at timestamptz
+
+  indexes {
+    (student_id, status) [name: 'ix_chronic_student_status']
+  }
+}
+
+Table special_meal_requests {
+  id uuid [pk, default: `gen_random_uuid()`]
+  student_id uuid [not null]
+  dietary_type varchar(60) [not null, note: 'BR-066/BR-220 — danh mục MỞ, không CHECK']
+  duration varchar(120) [not null]
+  justification varchar(1000) [not null]
+  document_id uuid
+  requested_by_user_id uuid [not null]
+  requested_at timestamptz [not null, default: `now()`]
+  status varchar(16) [not null, default: 'PENDING', note: 'PENDING | APPROVED | REJECTED | NEEDS_INFO']
+  review_note varchar(500)
+  reviewed_by_user_id uuid
+  reviewed_at timestamptz
+
+  indexes {
+    (student_id, status) [name: 'ix_smr_student_status']
+  }
+  Note: 'Bảng thuộc MF03 (V4). MF05 chỉ ĐỌC qua SpecialMealLookupPort — M05-D04.'
+}
+
+Table student_health_records {
+  id uuid [pk, default: `gen_random_uuid()`]
+  student_id uuid [not null, unique]
+  height_cm numeric(5,1) [note: 'CHECK 50..220']
+  weight_kg numeric(5,1) [note: 'CHECK 5..150']
+  blood_type varchar(4)
+  status varchar(16) [not null, default: 'PENDING', note: 'PENDING | VERIFIED | NEEDS_INFO']
+  proof_file_id uuid
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  Note: 'ADR-M03-3: bmi KHÔNG lưu — dẫn xuất weight_kg / (height_cm/100)^2.'
+}
+
+Table student_clinical_files {
+  id uuid [pk, default: `gen_random_uuid()`]
+  student_id uuid [not null, unique]
+  medical_conditions varchar(2000)
+  medications varchar(2000)
+  emergency_contact varchar(200)
+  emergency_instructions varchar(2000)
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  Note: 'UC-051 / UC-094 — chỉ 4 field lâm sàng.'
+}
+
+Table health_history_events {
+  id uuid [pk, default: `gen_random_uuid()`]
+  student_id uuid [not null]
+  at timestamptz [not null, default: `now()`]
+  type varchar(24) [not null, note: 'KHAI_BAO | XAC_MINH | GHI_CHU_LAM_SANG | SU_CO | CAP_NHAT_THUOC']
+  event varchar(1000) [not null]
+  by_user_id uuid [not null]
+
+  indexes {
+    (student_id, at) [name: 'ix_hh_student_at']
+  }
+  Note: 'BR-172 / ADR-M03-4 — APPEND-ONLY, chặn bằng RULE hh_no_update + hh_no_delete ở tầng DB.'
+}
+
+Table student_imports {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, unique, note: 'D1: IMP-2026-0007']
+  school_id uuid [not null]
+  status varchar(16) [not null, default: 'VALIDATED', note: 'VALIDATED | COMMITTED']
+  total_count int [not null]
+  valid_count int [not null]
+  invalid_count int [not null]
+  duplicate_count int [not null, default: 0]
+  rows_json text [not null, note: 'Toàn bộ hàng đã parse (JSON)']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  Note: 'ADR-M03-6 / UC-010 / BR-032 — bulk import 2 pha validate() rồi commit().'
+}
+
+Ref: students.school_id > schools.id
+Ref: students.classroom_id > classrooms.id
+Ref: student_parents.student_id > students.id [delete: cascade]
+Ref: student_parents.parent_user_id > user_accounts.id
+Ref: health_documents.student_id > students.id
+Ref: allergy_declarations.student_id > students.id [delete: cascade]
+Ref: allergy_declarations.proof_file_id > health_documents.id
+Ref: chronic_condition_declarations.student_id > students.id [delete: cascade]
+Ref: chronic_condition_declarations.proof_file_id > health_documents.id
+Ref: special_meal_requests.student_id > students.id [delete: cascade]
+Ref: special_meal_requests.document_id > health_documents.id
+Ref: student_health_records.student_id - students.id [delete: cascade]
+Ref: student_health_records.proof_file_id > health_documents.id
+Ref: student_clinical_files.student_id - students.id [delete: cascade]
+Ref: health_history_events.student_id > students.id
+Ref: student_imports.school_id > schools.id
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MF04 — Supplier & Partner Management  (V1 stub + V6, V7)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+Table partners {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, unique, note: 'D1: SUP-001']
+  name varchar(200) [not null]
+  partner_type varchar(32) [not null, note: 'D6: RAW_FOOD_SUPPLIER | SERVICE_CATERER']
+  status varchar(24) [not null, default: 'PENDING', note: 'BR-041/ADR-M04-6: PENDING | APPROVED | REJECTED | SUSPENDED']
+  tax_id varchar(20) [not null]
+  address varchar(255) [not null]
+  contact varchar(180) [not null]
+  email varchar(180) [not null, note: 'MSG-006 — UNIQUE']
+  phone varchar(20) [note: 'BR-012']
+  description varchar(1000) [note: 'UC-049']
+  performance_score numeric(5,2) [note: 'CF-M04-4 — chỉ lưu, không tự tính']
+  site_inspection_score numeric(5,2) [note: 'UC-108 — CHECK chỉ có nghĩa với SERVICE_CATERER']
+  applied_at timestamptz [not null, default: `now()`]
+  reject_reason varchar(1000) [note: 'BR-048 — bắt buộc khi status = REJECTED']
+  suspend_reason varchar(1000) [note: 'ADR-M04-6 — bắt buộc khi status = SUSPENDED']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    tax_id [unique, name: 'ux_partner_tax_id', note: 'partial: WHERE tax_id <> ""']
+    email [unique, name: 'ux_partner_email']
+    status [name: 'ix_partner_status']
+    partner_type [name: 'ix_partner_type']
+  }
+  Note: 'Bảng cấp NỀN TẢNG — KHÔNG có school_id. Phạm vi trường đến từ supplier_partnerships.'
+}
+
+Table partner_documents {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, unique, note: 'D1']
+  partner_id uuid [not null]
+  name varchar(180) [not null]
+  document_type varchar(24) [not null, note: 'FOOD_SAFETY_CERT | PRODUCT_ORIGIN | BUSINESS_LICENSE | SELF_DECLARATION']
+  number varchar(60) [not null]
+  issued_by varchar(180) [not null]
+  issued_date date [not null]
+  expiry_date date [note: 'NULL = Không thời hạn. CHECK FOOD_SAFETY_CERT bắt buộc có hạn (UC-101 AF1)']
+  file_key varchar(255) [not null, note: 'D10-BIS — storageKey riêng tư, KHÔNG phải URL công khai']
+  file_size bigint [not null, note: 'MSG-008 CHECK <= 10 MB']
+  content_type varchar(60) [not null, note: 'MSG-009: application/pdf | image/jpeg | image/png']
+  superseded_by_document_id uuid [note: 'UC-091 — bản thay thế']
+  uploaded_at timestamptz [not null, default: `now()`]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (partner_id, document_type, number) [unique, name: 'uq_doc_partner_number', note: 'UC-101 AF3']
+    (partner_id, document_type) [name: 'ix_doc_partner_type']
+    expiry_date [name: 'ix_doc_expiry', note: 'job cảnh báo hết hạn BR-047']
+  }
+}
+
+Table delivery_persons {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, unique, note: 'D1']
+  partner_id uuid [not null]
+  full_name varchar(120) [not null]
+  national_id_enc bytea [not null, note: 'pgcrypto — PDPD, ADR-M04-5']
+  national_id_hash varchar(64) [not null, unique, note: 'BR-050 — duy nhất toàn hệ thống']
+  phone varchar(20) [not null]
+  vehicle_plate varchar(16) [not null]
+  biometric_status varchar(24) [not null, default: 'NOT_REGISTERED', note: 'BR-051: NOT_REGISTERED | PENDING_REGISTRATION | REGISTERED']
+  face_id varchar(64) [note: 'BR-051/M04-D03: CHỈ tồn tại khi biometric_status = REGISTERED']
+  biometric_registered_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    partner_id [name: 'ix_dp_partner']
+  }
+}
+
+Table partnership_applications {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, unique, note: 'D1']
+  partner_id uuid [not null]
+  school_id uuid [not null]
+  company_name varchar(180) [not null]
+  tax_id varchar(20) [not null]
+  address varchar(255) [not null]
+  submitted_at timestamptz [not null, default: `now()`]
+  status varchar(20) [not null, default: 'PENDING', note: 'PENDING | APPROVED | REJECTED | ACTION_REQUIRED']
+  comment varchar(1000) [note: 'BR-048 — bắt buộc khi REJECTED / ACTION_REQUIRED']
+  reviewed_by uuid [note: 'Field NGHIỆP VỤ: School Admin nào duyệt (khác updated_by của BaseEntity)']
+  reviewed_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (partner_id, school_id) [unique, name: 'uq_app_open_per_partner_school', note: 'partial: WHERE status IN (PENDING, ACTION_REQUIRED) — 1 đơn đang mở/cặp']
+    (school_id, status) [name: 'ix_app_school_status']
+  }
+}
+
+Table partnership_application_documents {
+  application_id uuid [not null]
+  document_id uuid [not null]
+
+  indexes {
+    (application_id, document_id) [pk]
+  }
+  Note: 'CF-M04-9 — tài liệu đính kèm đơn hợp tác.'
+}
+
+Table supplier_partnerships {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, unique, note: 'D1']
+  partner_id uuid [not null]
+  school_id uuid [not null]
+  delivery_address varchar(255)
+  since date [note: 'JSON: startDate']
+  until date [note: 'JSON: endDate; NULL = còn hiệu lực (M04-D04)']
+  status varchar(16) [not null, default: 'PENDING', note: 'PENDING | APPROVED | SUSPENDED']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (partner_id, school_id) [unique, name: 'uq_ptn_partner_school']
+  }
+}
+
+Ref: partner_documents.partner_id > partners.id
+Ref: partner_documents.superseded_by_document_id > partner_documents.id
+Ref: delivery_persons.partner_id > partners.id
+Ref: partnership_applications.partner_id > partners.id
+Ref: partnership_applications.school_id > schools.id
+Ref: partnership_application_documents.application_id > partnership_applications.id [delete: cascade]
+Ref: partnership_application_documents.document_id > partner_documents.id
+Ref: supplier_partnerships.partner_id > partners.id
+Ref: supplier_partnerships.school_id > schools.id
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MF05 — Menu & Diet Management  (V8, V9)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+Table diet_groups {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, unique, note: 'VEGETARIAN | HALAL | DIABETIC ...']
+  label varchar(64) [not null]
+  match_diet varchar(64) [note: 'Khớp special_meal_requests.dietary_type — danh mục MỞ, KHÔNG CHECK (M05-D05)']
+  exclude_allergens jsonb [not null, default: `'[]'`]
+  exclude_ingredient_keywords jsonb [not null, default: `'[]'`]
+  note varchar(300)
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  Note: 'Danh mục TOÀN HỆ THỐNG — không gắn school_id.'
+}
+
+Table dishes {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(64) [not null, unique, note: 'slug: ca-basa-sot-ca-chua']
+  name varchar(160) [not null]
+  category varchar(24) [not null, note: 'MON_CHINH | MON_MAN | CANH | RAU | BUA_PHU | TRANG_MIENG']
+  kcal numeric(8,2) [not null]
+  protein numeric(8,2) [not null]
+  fat numeric(8,2) [not null]
+  carb numeric(8,2) [not null]
+  manual_allergens jsonb [not null, default: `'[]'`]
+  is_active boolean [not null, default: true]
+  default_substitute_id uuid [note: 'CHECK không tự thay chính mình']
+  image_url varchar(500) [note: 'V33 — ảnh món ăn']
+  description varchar(2000) [note: 'V33 — mô tả món']
+  cooking_instructions text [note: 'V33 — hướng dẫn chế biến']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  Note: 'Danh mục TOÀN HỆ THỐNG — không gắn school_id.'
+}
+
+Table menus {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: MENU-2026-30']
+  school_id uuid [not null]
+  week_label varchar(64) [not null]
+  name varchar(160) [not null]
+  grade varchar(16) [not null]
+  menu_date date [not null]
+  meal_type varchar(16) [not null, note: 'D6: BREAKFAST | LUNCH | SNACK']
+  status varchar(24) [not null, default: 'DRAFT', note: 'DRAFT | PENDING_APPROVAL | APPROVED | PUBLISHED | REJECTED']
+  audience varchar(32) [not null, default: 'ALL', note: 'ALL hoặc mã nhóm chế độ ăn (ADR-M05-01)']
+  diet_group_id uuid [note: 'CHECK audience <> ALL bắt buộc có diet_group_id']
+  estimated_cost numeric(12,2)
+  cost_ceiling numeric(12,2) [note: 'BR-080']
+  submitted_at timestamptz
+  servings int
+  created_by_supplier_id uuid [note: 'Chủ sở hữu nghiệp vụ — partners.id']
+  approved_by_user_id uuid [note: 'BR-068 — APPROVED/PUBLISHED bắt buộc có người duyệt']
+  approval_signature varchar(256)
+  approved_at timestamptz
+  reject_reason varchar(1000) [note: 'BR-067 — bắt buộc khi REJECTED']
+  reason varchar(500)
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_menus_school_code']
+    (school_id, menu_date, grade) [name: 'ix_menus_school_date_grade']
+    status [name: 'ix_menus_status']
+    audience [name: 'ix_menus_audience']
+    (school_id, menu_date, grade, meal_type) [unique, name: 'ux_menu_all_per_slot', note: 'partial: WHERE audience = ALL AND status <> REJECTED']
+    (school_id, menu_date, grade, meal_type, diet_group_id) [unique, name: 'ux_menu_diet_per_slot', note: 'V33 — partial: WHERE diet_group_id IS NOT NULL AND status <> REJECTED. Không chồng lấn ux_menu_all_per_slot (loại trừ nhau theo diet_group_id NULL / NOT NULL)']
+  }
+}
+
+Table dish_ingredients {
+  id uuid [pk, default: `gen_random_uuid()`]
+  dish_id uuid [not null]
+  ingredient_code varchar(64) [note: 'FK trỏ catalog_ingredients.code (nối ở V11) — NULL = ngoài danh mục']
+  name varchar(160) [not null]
+  quantity varchar(32) [not null]
+  unit varchar(16) [not null, default: 'g']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    dish_id [name: 'ix_dish_ing_dish']
+  }
+}
+
+Table menu_dishes {
+  id uuid [pk, default: `gen_random_uuid()`]
+  menu_id uuid [not null]
+  dish_id uuid [not null]
+  serving_order int [not null, default: 0]
+  portions int [not null, default: 0, note: 'CHECK >= 0']
+  is_special_dish boolean [not null, default: false]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (menu_id, dish_id) [unique, name: 'uq_menu_dish']
+  }
+}
+
+Table menu_dish_substitutes {
+  id uuid [pk, default: `gen_random_uuid()`]
+  menu_dish_id uuid [not null]
+  substitute_dish_id uuid [not null]
+  portions int [not null, default: 0]
+  note varchar(300)
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+}
+
+Table menu_templates {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null]
+  school_id uuid [not null]
+  name varchar(160) [not null]
+  meal_type varchar(16) [not null, note: 'BREAKFAST | LUNCH | SNACK']
+  audience varchar(32) [not null, default: 'ALL']
+  grade varchar(16) [note: 'V33 — NULLABLE: khối trống = mẫu dùng chung cho mọi khối']
+  note varchar(300)
+  is_active boolean [not null, default: true]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_menu_templates_school_code']
+  }
+}
+
+Table menu_template_dishes {
+  id uuid [pk, default: `gen_random_uuid()`]
+  template_id uuid [not null]
+  dish_id uuid [not null]
+  serving_order int [not null, default: 0]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (template_id, dish_id) [unique, name: 'uq_template_dish']
+  }
+}
+
+Ref: dishes.default_substitute_id > dishes.id
+Ref: menus.school_id > schools.id
+Ref: menus.diet_group_id > diet_groups.id
+Ref: menus.created_by_supplier_id > partners.id
+Ref: menus.approved_by_user_id > user_accounts.id
+Ref: dish_ingredients.dish_id > dishes.id [delete: cascade]
+Ref: dish_ingredients.ingredient_code > catalog_ingredients.code
+Ref: menu_dishes.menu_id > menus.id [delete: cascade]
+Ref: menu_dishes.dish_id > dishes.id
+Ref: menu_dish_substitutes.menu_dish_id > menu_dishes.id [delete: cascade]
+Ref: menu_dish_substitutes.substitute_dish_id > dishes.id
+Ref: menu_templates.school_id > schools.id
+Ref: menu_template_dishes.template_id > menu_templates.id [delete: cascade]
+Ref: menu_template_dishes.dish_id > dishes.id
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MF06 — Ingredient & Inventory Management  (V10, V11)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+Table catalog_ingredients {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(64) [not null, unique, note: 'D1: ING-THIT-LON-VAI']
+  name varchar(180) [not null]
+  unit varchar(12) [not null, note: 'kg | lít | quả | hộp']
+  storage_zone varchar(10) [not null, note: 'BR-202: DRY | CHILLED | FROZEN']
+  refuse_factor numeric(4,3) [not null, default: 0, note: 'CHECK 0 <= x < 1 — tỉ lệ thải bỏ']
+  active boolean [not null, default: true]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  Note: 'M06-D04 — danh mục nguyên liệu dùng chung toàn hệ thống.'
+}
+
+Table supplier_products {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'SP-GF-014']
+  partner_id uuid [not null]
+  ingredient_id uuid [not null]
+  unit_price numeric(14,2)
+  active boolean [not null, default: true]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (partner_id, code) [unique, name: 'uq_sp_partner_code']
+  }
+}
+
+Table purchase_requests {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: PR-2026-0815']
+  school_id uuid [not null]
+  supplier_id uuid
+  requested_by_user_id uuid
+  requested_date date [not null]
+  delivery_date date [not null]
+  total_value numeric(14,2) [note: 'NULL khi chưa báo giá']
+  status varchar(20) [not null, default: 'PENDING', note: 'PENDING | QUOTED | PRICE_ACCEPTED | APPROVED | COMPLETED | CANCELLED | REJECTED']
+  source_menu_id uuid [note: 'BR-077 — đơn sinh từ shortage của thực đơn']
+  source_meal_type varchar(12)
+  service_date date
+  quoted_at timestamptz
+  quote_note varchar(500)
+  price_accepted_at timestamptz
+  accepted_at timestamptz
+  confirmed_delivery_at timestamptz [note: 'UC-015']
+  rejected_at timestamptz
+  cancelled_at timestamptz
+  cancel_reason varchar(500) [note: 'CHECK bắt buộc khi status = CANCELLED']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_pr_school_code']
+    (supplier_id, status) [name: 'ix_pr_supplier_status']
+    (school_id, requested_date) [name: 'ix_pr_school_date']
+  }
+}
+
+Table purchase_items {
+  id uuid [pk, default: `gen_random_uuid()`]
+  purchase_request_id uuid [not null]
+  ingredient_id uuid [not null]
+  ingredient_label varchar(180) [not null, note: 'nhãn snapshot']
+  quantity numeric(12,3) [not null, note: 'CHECK > 0']
+  unit varchar(12) [not null]
+  unit_price numeric(14,2)
+  note varchar(255)
+  supplier_batch_id uuid [note: 'BR-071 — gán lô NCC lúc xác nhận lịch giao']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+}
+
+Table supplier_batches {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: BATCH-GF-4412']
+  partner_id uuid [not null]
+  product_id uuid [not null]
+  lot_number varchar(60) [not null]
+  manufacturing_date date [not null]
+  packaging_date date [not null, note: 'CHECK >= manufacturing_date']
+  expiration_date date [not null, note: 'CHECK > manufacturing_date']
+  quantity numeric(12,3) [not null, note: 'CHECK > 0']
+  unit varchar(12) [not null]
+  status varchar(16) [not null, default: 'ACTIVE', note: 'ACTIVE | DELIVERED | EXPIRED']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (partner_id, code) [unique, name: 'uq_sb_partner_code']
+    (product_id, lot_number) [unique, name: 'uq_sb_product_lot']
+  }
+  Note: 'BR-071 — lô hàng phía nhà cung cấp.'
+}
+
+Table batch_certificates {
+  batch_id uuid [not null]
+  document_id uuid [not null]
+
+  indexes {
+    (batch_id, document_id) [pk]
+  }
+  Note: 'BR-071 / UC-100 — chứng nhận kèm lô.'
+}
+
+Table deliveries {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: DLV-2026-1105']
+  school_id uuid [not null]
+  purchase_request_id uuid
+  scheduled_at timestamptz [not null]
+  driver_id uuid [note: 'delivery_persons.id (MF04)']
+  vehicle_plate varchar(20) [not null]
+  status varchar(16) [not null, default: 'SCHEDULED', note: 'SCHEDULED | DISPATCHED | IN_TRANSIT | DELAYED | DELIVERED | CANCELLED | COMPLETED']
+  status_updated_at timestamptz [note: 'UC-092 audit trail']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_dlv_school_code']
+    (school_id, scheduled_at) [name: 'ix_dlv_school_sched']
+  }
+}
+
+Table delivery_batches {
+  delivery_id uuid [not null]
+  supplier_batch_id uuid [not null]
+  ingredient_id uuid [not null]
+
+  indexes {
+    (delivery_id, supplier_batch_id, ingredient_id) [pk]
+  }
+  Note: 'BR-071 Linked Batches.'
+}
+
+Table receiving_sessions {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: RCV-20260702-02']
+  school_id uuid [not null]
+  delivery_id uuid [not null]
+  supplier_id uuid [not null]
+  supplier_status_at_receipt varchar(16) [not null, note: 'BR-070 — snapshot trạng thái NCC lúc nhận']
+  received_at timestamptz [not null, default: `now()`, note: 'BR-073 — SERVER ghi, không tin client']
+  received_by_user_id uuid [not null]
+  driver_verification_id varchar(80) [note: 'Face Recognition (CF-M06-8)']
+  lat numeric(9,6) [note: 'BR-074']
+  lng numeric(9,6) [note: 'BR-074']
+  gps_verified boolean [not null, default: false]
+  photos_count int [not null, default: 0, note: 'CHECK: khác IN_PROGRESS thì phải >= 1']
+  device_info varchar(200) [note: 'BR-073']
+  status varchar(20) [not null, note: 'IN_PROGRESS | RECEIVED | RECEIVED_PARTIAL | REJECTED']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_rcv_school_code']
+    (school_id, received_at) [name: 'ix_rcv_school_date']
+  }
+}
+
+Table receiving_lines {
+  id uuid [pk, default: `gen_random_uuid()`]
+  session_id uuid [not null]
+  supplier_batch_id uuid [not null]
+  ingredient_id uuid [not null]
+  ingredient_label varchar(180) [not null]
+  storage_zone varchar(10) [not null, note: 'BR-202: DRY | CHILLED | FROZEN']
+  rejected boolean [not null, default: false]
+  reject_reason varchar(500)
+  reject_photo_keys jsonb [not null, default: `'[]'`, note: 'D10-BIS.2 — storageKey, KHÔNG URL công khai']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  Note: 'CHECK ck_line_reject: từ chối bắt buộc có lý do + >= 1 ảnh bằng chứng (BR-072/078).'
+}
+
+Table inventory_batches {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1 — mã lô của NCC (BR-076)']
+  school_id uuid [not null]
+  ingredient_id uuid [not null]
+  ingredient_label varchar(180) [not null, note: 'nhãn snapshot']
+  supplier_id uuid [not null]
+  initial_quantity numeric(12,3) [not null, note: 'CHECK > 0']
+  unit varchar(12) [not null]
+  storage_zone varchar(10) [not null, note: 'DRY | CHILLED | FROZEN']
+  received_date date [not null]
+  expiry_date date [not null, note: 'CHECK > received_date']
+  receiving_session_id uuid [note: 'BR-076 — gốc truy xuất nguồn gốc']
+  quarantine_at timestamptz
+  quarantine_by_user_id uuid
+  quarantine_reason varchar(500)
+  quarantine_incident_id uuid [note: 'ID thuần trỏ MF11 incidents — không FK']
+  quarantine_disposition varchar(24) [note: 'MF11 thêm (V20): RETURNED_TO_SUPPLIER | DISPOSED — gate đóng sự cố BR-217']
+  quarantine_disposition_at timestamptz [note: 'MF11 thêm (V20)']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_batch_school_code']
+    (school_id, ingredient_id, expiry_date) [name: 'ix_batch_fefo', note: 'BR-075 FEFO']
+    receiving_session_id [name: 'ix_batch_session']
+  }
+  Note: 'Tồn kho hiện tại = initial_quantity + SUM(inventory_transactions.delta) — KHÔNG lưu cột current_quantity (ADR-M06-1).'
+}
+
+Table issue_slips {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: ISS-2026-0031']
+  school_id uuid [not null]
+  service_date date [not null]
+  meal_type varchar(12) [not null]
+  menu_ids "uuid[]" [not null, note: 'Mảng menus.id được xuất kho trong phiếu']
+  issued_by_user_id uuid [not null]
+  status varchar(12) [not null, default: 'DRAFT', note: 'DRAFT | CONFIRMED | POSTED']
+  note varchar(500)
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_slip_school_code']
+    (school_id, service_date, meal_type) [unique, name: 'uq_slip_school_date_meal']
+  }
+  Note: 'ADR-M06-6 — phiếu xuất kho.'
+}
+
+Table inventory_transactions {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: TXN-20260728-01']
+  school_id uuid [not null]
+  occurred_at timestamptz [not null, default: `now()`]
+  type varchar(12) [not null, note: 'RECEIPT | ISSUE | ADJUSTMENT']
+  batch_id uuid [not null]
+  ingredient_id uuid [not null]
+  delta numeric(12,3) [not null, note: 'CHECK <> 0; RECEIPT > 0, ISSUE < 0']
+  unit varchar(12) [not null]
+  performed_by_user_id uuid [not null]
+  reason_code varchar(24) [note: 'SPOILAGE | COUNT_CORRECTION | DAMAGE | RETURN_TO_SUPPLIER — bắt buộc khi ADJUSTMENT']
+  manager_signature varchar(180) [note: 'bắt buộc khi ADJUSTMENT']
+  issue_slip_id uuid
+  menu_id uuid
+  dish_id uuid [note: 'BR-076 — truy xuất món ↔ lô bind tại bước XUẤT KHO']
+  dish_label varchar(180)
+  meal_type varchar(12)
+  service_date date
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_tx_school_code']
+    batch_id [name: 'ix_tx_batch']
+    issue_slip_id [name: 'ix_tx_slip']
+    (service_date, meal_type) [name: 'ix_tx_service']
+    (menu_id, dish_id) [name: 'ix_tx_trace']
+  }
+  Note: 'APPEND-ONLY (ADR-M06-1). CHECK ck_tx_issue_trace: ISSUE bắt buộc có issue_slip_id + dish_id + service_date + meal_type.'
+}
+
+Table preparation_records {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: PREP-20260707-02']
+  school_id uuid [not null]
+  date date [not null]
+  dish_id uuid [not null]
+  dish_label varchar(180) [not null]
+  menu_id uuid
+  meal_type varchar(12)
+  start_time time [not null]
+  end_time time [not null, note: 'CHECK > start_time']
+  cook_user_id uuid [not null]
+  notes varchar(1000)
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_prep_school_code']
+  }
+  Note: 'UC-066 — sổ chế biến.'
+}
+
+Table preparation_batches {
+  preparation_record_id uuid [not null]
+  batch_id uuid [not null]
+  extra boolean [not null, default: false]
+
+  indexes {
+    (preparation_record_id, batch_id) [pk]
+  }
+}
+
+Table receiving_evidence_documents {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, unique]
+  school_id uuid [not null]
+  file_key varchar(255) [not null, note: 'D10-BIS.2 — tài liệu RIÊNG TƯ']
+  content_type varchar(100)
+  file_size bigint
+  created_at timestamptz [not null, default: `now()`]
+  created_by varchar(180)
+
+  Note: 'BR-072/078 — ảnh bằng chứng từ chối lô lúc nhận hàng.'
+}
+
+Table class_meal_deliveries {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: CMDLV-2026-xxx']
+  school_id uuid [not null]
+  date date [not null]
+  meal_type varchar(12) [not null, note: 'BREAKFAST | LUNCH | SNACK']
+  classroom_id uuid [not null]
+  class_name varchar(20) [not null, note: 'snapshot lúc tạo']
+  status varchar(12) [not null, default: 'DELIVERED', note: 'DELIVERED | RECEIVED']
+  delivered_by_user_id uuid [not null]
+  delivered_at timestamptz [not null]
+  received_by_user_id uuid [note: 'CHECK: RECEIVED bắt buộc có received_at + received_by_user_id']
+  received_at timestamptz
+  note varchar(500)
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_cmdlv_school_code']
+    (school_id, date, meal_type, classroom_id) [unique, name: 'uq_cmdlv_date_meal_class', note: '1 lượt giao duy nhất mỗi (ngày, bữa, lớp) — cùng nguyên tắc BR-130']
+    (date, classroom_id) [name: 'ix_cmdlv_date_class']
+    (school_id, date) [name: 'ix_cmdlv_school_date']
+  }
+  Note: 'V32 — giao suất bếp -> LỚP theo món (KHÁC `deliveries` là NCC -> bếp). Chỉ theo dõi TRẠNG THÁI giao/nhận; breakdown món/suất nằm ở student_distributions + serving_dishes (nguồn sự thật duy nhất). Sở hữu bởi com.sfms.mf06.'
+}
+
+Ref: class_meal_deliveries.school_id > schools.id
+Ref: class_meal_deliveries.classroom_id > classrooms.id
+Ref: class_meal_deliveries.delivered_by_user_id > user_accounts.id
+Ref: class_meal_deliveries.received_by_user_id > user_accounts.id
+
+Ref: supplier_products.partner_id > partners.id
+Ref: supplier_products.ingredient_id > catalog_ingredients.id
+Ref: purchase_requests.school_id > schools.id
+Ref: purchase_requests.supplier_id > partners.id
+Ref: purchase_requests.requested_by_user_id > user_accounts.id
+Ref: purchase_requests.source_menu_id > menus.id
+Ref: purchase_items.purchase_request_id > purchase_requests.id [delete: cascade]
+Ref: purchase_items.ingredient_id > catalog_ingredients.id
+Ref: purchase_items.supplier_batch_id > supplier_batches.id
+Ref: supplier_batches.partner_id > partners.id
+Ref: supplier_batches.product_id > supplier_products.id
+Ref: batch_certificates.batch_id > supplier_batches.id [delete: cascade]
+Ref: batch_certificates.document_id > partner_documents.id
+Ref: deliveries.school_id > schools.id
+Ref: deliveries.purchase_request_id > purchase_requests.id
+Ref: deliveries.driver_id > delivery_persons.id
+Ref: delivery_batches.delivery_id > deliveries.id [delete: cascade]
+Ref: delivery_batches.supplier_batch_id > supplier_batches.id
+Ref: delivery_batches.ingredient_id > catalog_ingredients.id
+Ref: receiving_sessions.school_id > schools.id
+Ref: receiving_sessions.delivery_id > deliveries.id
+Ref: receiving_sessions.supplier_id > partners.id
+Ref: receiving_sessions.received_by_user_id > user_accounts.id
+Ref: receiving_lines.session_id > receiving_sessions.id [delete: cascade]
+Ref: receiving_lines.supplier_batch_id > supplier_batches.id
+Ref: receiving_lines.ingredient_id > catalog_ingredients.id
+Ref: inventory_batches.school_id > schools.id
+Ref: inventory_batches.ingredient_id > catalog_ingredients.id
+Ref: inventory_batches.supplier_id > partners.id
+Ref: inventory_batches.receiving_session_id > receiving_sessions.id
+Ref: inventory_batches.quarantine_by_user_id > user_accounts.id
+Ref: issue_slips.school_id > schools.id
+Ref: issue_slips.issued_by_user_id > user_accounts.id
+Ref: inventory_transactions.school_id > schools.id
+Ref: inventory_transactions.batch_id > inventory_batches.id
+Ref: inventory_transactions.ingredient_id > catalog_ingredients.id
+Ref: inventory_transactions.performed_by_user_id > user_accounts.id
+Ref: inventory_transactions.issue_slip_id > issue_slips.id
+Ref: inventory_transactions.menu_id > menus.id
+Ref: inventory_transactions.dish_id > dishes.id
+Ref: preparation_records.school_id > schools.id
+Ref: preparation_records.dish_id > dishes.id
+Ref: preparation_records.menu_id > menus.id
+Ref: preparation_records.cook_user_id > user_accounts.id
+Ref: preparation_batches.preparation_record_id > preparation_records.id [delete: cascade]
+Ref: preparation_batches.batch_id > inventory_batches.id
+Ref: receiving_evidence_documents.school_id > schools.id
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MF07 — Food Safety Inspection & Monitoring  (V12, V13)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+Table inspection_sessions {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: INSP-20260702-L']
+  school_id uuid [not null]
+  partner_id uuid [not null]
+  date date [not null]
+  meal_type varchar(16) [not null, note: 'BREAKFAST | LUNCH | SNACK']
+  menu_id uuid
+  dish_id uuid
+  step1 varchar(12) [not null, default: 'PENDING', note: 'PENDING | PASSED | FAILED — kiểm thực phẩm nguyên liệu']
+  step2 varchar(12) [not null, default: 'PENDING', note: 'kiểm khi chế biến']
+  step3 varchar(12) [not null, default: 'PENDING', note: 'kiểm trước khi ăn']
+  overall varchar(12) [not null, default: 'PENDING', note: 'BR-098: PASSED chỉ khi cả 3 bước PASSED']
+  fail_step int [note: 'CF-25 CHECK 1..3']
+  fail_reason varchar(1000)
+  fail_severity varchar(8) [note: 'LOW | MEDIUM | HIGH']
+  fail_witness varchar(120)
+  decided_at timestamptz
+  core_temp numeric(5,2) [note: 'BR-090: step2 PASSED bắt buộc >= 75']
+  holding_temp numeric(5,2) [note: 'BR-091 >= 60 — CHECK tạm tắt (CF-24), enforce ở service']
+  inspector_user_id uuid [not null]
+  co_signer_user_id uuid
+  co_signed_at timestamptz
+  gps varchar(64)
+  staff_notes varchar(2000)
+  medical_review_result varchar(12) [note: 'BR-222 — đánh giá ĐỘC LẬP của Medical Staff, KHÔNG ghi đè overall']
+  medical_review_reason varchar(1000) [note: 'bắt buộc khi medical_review_result = FAILED']
+  medical_review_by uuid
+  medical_review_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_insp_code']
+    (school_id, date) [name: 'ix_insp_school_date']
+    overall [name: 'ix_insp_overall']
+    (step1, step2, step3) [name: 'ix_insp_steps']
+    (school_id, date, meal_type, partner_id) [unique, name: 'ux_insp_slot', note: 'partial: WHERE overall <> FAILED — BR-079']
+  }
+  Note: 'Kiểm thực 3 bước theo QĐ 1246/QĐ-BYT.'
+}
+
+Table step1_fresh_rows {
+  id uuid [pk, default: `gen_random_uuid()`]
+  session_id uuid [not null]
+  row_order int [not null, default: 0]
+  name varchar(160) [not null]
+  batch_id uuid [note: 'BR-092/093 — inventory_batches.id']
+  received_at varchar(32) [not null]
+  quantity varchar(32) [not null]
+  supplier_name varchar(160) [not null]
+  supplier_contact varchar(200)
+  deliverer varchar(120)
+  has_invoice boolean [not null, default: false]
+  has_vet_cert boolean [not null, default: false]
+  has_quarantine_cert boolean [not null, default: false]
+  sensory_pass boolean [not null]
+  quick_test varchar(8) [not null, default: 'NONE', note: 'PASS | FAIL | NONE']
+  action varchar(500)
+  photo_count int [not null, default: 0, note: 'CHECK: cảm quan không đạt thì phải >= 1 ảnh']
+
+  Note: 'Mẫu số 1 phần I — thực phẩm tươi sống (QĐ 1246 Điều 3).'
+}
+
+Table step1_dry_rows {
+  id uuid [pk, default: `gen_random_uuid()`]
+  session_id uuid [not null]
+  row_order int [not null, default: 0]
+  name varchar(160) [not null]
+  batch_id uuid
+  producer varchar(160)
+  producer_address varchar(240)
+  received_at varchar(32) [not null]
+  quantity varchar(32) [not null]
+  supplier_name varchar(160) [not null]
+  deliverer varchar(120)
+  supplier_contact varchar(200)
+  expiry date [note: 'BR-092']
+  storage varchar(16) [note: 'THUONG | LANH | DONG']
+  has_invoice boolean [not null, default: false]
+  sensory_pass boolean [not null]
+  action varchar(500)
+  photo_count int [not null, default: 0]
+
+  Note: 'Mẫu số 1 phần II — thực phẩm khô / bao gói sẵn.'
+}
+
+Table step2_rows {
+  id uuid [pk, default: `gen_random_uuid()`]
+  session_id uuid [not null]
+  row_order int [not null, default: 0]
+  shift varchar(48) [not null]
+  dish_id uuid
+  dish_name varchar(160) [not null]
+  main_ingredients varchar(500)
+  servings varchar(16)
+  prep_done_at varchar(32)
+  cook_done_at varchar(32)
+  hygiene_staff boolean [not null]
+  hygiene_equipment boolean [not null]
+  hygiene_area boolean [not null]
+  sensory_pass boolean [not null]
+  core_temp numeric(5,2)
+  action varchar(500)
+  photo_count int [not null, default: 0]
+
+  Note: 'Mẫu số 2 — kiểm tra khi chế biến (QĐ 1246 Điều 4).'
+}
+
+Table step3_rows {
+  id uuid [pk, default: `gen_random_uuid()`]
+  session_id uuid [not null]
+  row_order int [not null, default: 0]
+  shift varchar(48) [not null]
+  dish_id uuid
+  dish_name varchar(160) [not null]
+  servings varchar(16)
+  divided_done_at varchar(32)
+  eat_start_at varchar(32)
+  utensils varchar(300)
+  holding_temp numeric(5,2)
+  sensory_pass boolean [not null]
+  action varchar(500)
+  photo_count int [not null, default: 0]
+
+  Note: 'Mẫu số 3 — kiểm tra trước khi ăn (QĐ 1246 Điều 5).'
+}
+
+Table inspection_evidences {
+  id uuid [pk, default: `gen_random_uuid()`]
+  owner_type varchar(32) [not null, note: 'SESSION | STEP1_FRESH | STEP1_DRY | STEP2 | STEP3 | KITCHEN_ITEM']
+  owner_id uuid [not null, note: 'PK nội bộ của bảng chủ — polymorphic, không FK']
+  storage_key varchar(500) [not null, note: 'D10-BIS — lưu key, KHÔNG URL công khai']
+  file_name varchar(200) [not null]
+  size_bytes bigint [not null]
+  sha256 varchar(64) [not null, note: 'ADR-M07-04 — chống sửa ảnh bằng chứng']
+  gps varchar(64)
+  uploaded_at timestamptz [not null, default: `now()`]
+  uploaded_by uuid [not null]
+
+  indexes {
+    (owner_type, owner_id) [name: 'ix_evidence_owner']
+  }
+}
+
+Table kitchen_inspections {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: KIN-2026-018']
+  school_id uuid [not null]
+  partner_id uuid
+  date date [not null]
+  score int [not null, note: 'BR-100/BR-104 CHECK 0..100']
+  inspector_user_id uuid [not null]
+  pest_control_valid boolean [not null, default: true]
+  staff_health_valid boolean [not null, default: true, note: 'BR-103']
+  result varchar(12) [not null, note: 'ADR-M07-03: score >= 60 <=> PASSED']
+  confirm_status varchar(32) [not null, default: 'AWAITING_CATERERS_CONFIRM', note: 'BR-221: AWAITING_CATERERS_CONFIRM | CONFIRMED']
+  confirmed_by uuid
+  confirmed_at timestamptz
+  record_caterers_rep uuid
+  record_pdf_exported_at timestamptz
+  record_pdf_version int
+  record_signed_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_kin_code']
+    (school_id, date) [name: 'ix_kin_school_date']
+  }
+  Note: 'UC-014 — kiểm tra an toàn & vệ sinh bếp.'
+}
+
+Table checklist_groups {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: CLG-1']
+  school_id uuid [not null, note: 'BR-210 — phạm vi TỪNG TRƯỜNG']
+  name varchar(200) [not null]
+  display_order int [not null, default: 0]
+  is_active boolean [not null, default: true, note: 'BR-210: xoá = ẩn, giữ lịch sử']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_clg_code']
+  }
+}
+
+Table checklist_items {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: CLI-1-1']
+  group_id uuid [not null]
+  school_id uuid [not null]
+  name varchar(300) [not null]
+  legal_note text [note: 'BR-207 — căn cứ pháp lý']
+  display_order int [not null, default: 0]
+  is_active boolean [not null, default: true]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_cli_code']
+    group_id [name: 'ix_cli_group']
+  }
+}
+
+Table checklist_item_results {
+  inspection_id uuid [not null]
+  item_id uuid [not null]
+  passed boolean [not null]
+  reason varchar(1000)
+  photo_count int [not null, default: 0]
+
+  indexes {
+    (inspection_id, item_id) [pk]
+  }
+  Note: 'BR-207: Không đạt bắt buộc >= 1 ảnh gắn đúng hạng mục + lý do.'
+}
+
+Table safety_signoffs {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: SGN-2026-014']
+  school_id uuid [not null]
+  date date [not null]
+  signed_by uuid [not null]
+  signed_at timestamptz [not null, default: `now()`]
+  note varchar(1000)
+  hygiene_score int [note: 'CF-32 snapshot căn cứ lúc ký, CHECK 0..100']
+  failed_steps int [not null, default: 0]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, date) [unique, name: 'uq_signoff_day']
+    (school_id, code) [unique, name: 'uq_sgn_code']
+  }
+  Note: 'UC-027 — BGH ký xác nhận an toàn hằng ngày.'
+}
+
+Ref: inspection_sessions.school_id > schools.id
+Ref: inspection_sessions.partner_id > partners.id
+Ref: inspection_sessions.menu_id > menus.id
+Ref: inspection_sessions.dish_id > dishes.id
+Ref: inspection_sessions.inspector_user_id > user_accounts.id
+Ref: inspection_sessions.co_signer_user_id > user_accounts.id
+Ref: inspection_sessions.medical_review_by > user_accounts.id
+Ref: step1_fresh_rows.session_id > inspection_sessions.id [delete: cascade]
+Ref: step1_fresh_rows.batch_id > inventory_batches.id
+Ref: step1_dry_rows.session_id > inspection_sessions.id [delete: cascade]
+Ref: step1_dry_rows.batch_id > inventory_batches.id
+Ref: step2_rows.session_id > inspection_sessions.id [delete: cascade]
+Ref: step2_rows.dish_id > dishes.id
+Ref: step3_rows.session_id > inspection_sessions.id [delete: cascade]
+Ref: step3_rows.dish_id > dishes.id
+Ref: inspection_evidences.uploaded_by > user_accounts.id
+Ref: kitchen_inspections.school_id > schools.id
+Ref: kitchen_inspections.partner_id > partners.id
+Ref: kitchen_inspections.inspector_user_id > user_accounts.id
+Ref: kitchen_inspections.confirmed_by > user_accounts.id
+Ref: kitchen_inspections.record_caterers_rep > user_accounts.id
+Ref: checklist_groups.school_id > schools.id
+Ref: checklist_items.group_id > checklist_groups.id
+Ref: checklist_items.school_id > schools.id
+Ref: checklist_item_results.inspection_id > kitchen_inspections.id [delete: cascade]
+Ref: checklist_item_results.item_id > checklist_items.id
+Ref: safety_signoffs.school_id > schools.id
+Ref: safety_signoffs.signed_by > user_accounts.id
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MF08 — Food Sample Retention  (V14, V15)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+Table receiving_authorities {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, unique, note: 'D1: LAB-CDC-HN']
+  name varchar(180) [not null, unique]
+  type varchar(16) [not null, note: 'LAB | AUTHORITY']
+  contact varchar(180)
+  address varchar(255)
+  is_active boolean [not null, default: true]
+  note varchar(400)
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  Note: 'Danh mục TOÀN HỆ THỐNG — đơn vị nhận mẫu (lab / cơ quan chức năng).'
+}
+
+Table sample_lab_requests {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: LABREQ-2026-001']
+  school_id uuid [not null]
+  incident_id uuid [note: 'ID thuần trỏ MF11 incidents — không FK (ADR-M08-5)']
+  authority_id uuid
+  lab_destination varchar(180) [not null]
+  handover_type varchar(16) [not null, default: 'LAB', note: 'LAB | AUTHORITY']
+  test_criteria varchar(400) [note: 'BR-212 — bắt buộc khi handover_type = LAB']
+  requested_by varchar(180) [not null, note: 'BR-114']
+  requested_at timestamptz [not null]
+  delivered_by varchar(180) [not null, note: 'BR-113']
+  sent_to_lab_at timestamptz [not null]
+  lab_representative varchar(180)
+  status varchar(24) [not null, default: 'SENT_TO_LAB']
+  note varchar(400)
+  cancelled_at timestamptz [note: 'legacy — chỉ đọc dữ liệu di trú (ADR-M08-2)']
+  cancelled_by varchar(180) [note: 'legacy']
+  cancel_reason varchar(400) [note: 'legacy']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_labreq_school_code']
+    incident_id [name: 'ix_labreq_incident']
+  }
+}
+
+Table food_samples {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: SMP-yyyyMMdd-NN']
+  school_id uuid [not null]
+  inspection_id uuid [not null, note: 'MF07 inspection_sessions.id — ID thuần, không FK (ADR-M08-5)']
+  dish_id uuid [not null, note: 'MF05 dishes.id — ID thuần']
+  menu_id uuid [note: 'MF05 menus.id — ID thuần']
+  incident_id uuid [note: 'MF11 incidents.id — ID thuần']
+  dish_name varchar(180) [not null, note: 'snapshot theo Mẫu 4']
+  meal_type varchar(16) [not null, note: 'BREAKFAST | LUNCH | SNACK']
+  meal_shift varchar(60) [not null, note: 'cột 3 — giờ ăn']
+  servings int [not null, note: 'cột 4, CHECK > 0']
+  sample_amount numeric(7,2) [not null, note: 'cột 5 — BR-203 >= 100g đặc / >= 150ml lỏng']
+  sample_unit varchar(4) [not null, note: 'G | ML']
+  container varchar(120) [not null, note: 'cột 6']
+  sanitized boolean [not null, note: 'Điều 6.2 — CHECK bắt buộc TRUE']
+  sealed boolean [not null, note: 'Điều 7.1 — CHECK bắt buộc TRUE']
+  fridge_temp numeric(4,1) [not null, note: 'cột 7']
+  temp_out_of_range boolean [not null, default: false, note: 'MSG-020']
+  collected_at timestamptz [not null, note: 'cột 8']
+  collected_by varchar(180) [not null, note: 'cột 11']
+  storage_location varchar(120) [not null]
+  retention_deadline timestamptz [not null, note: 'BR-111 snapshot hạn lưu tối thiểu (ADR-M08-3)']
+  status varchar(24) [not null, default: 'RETAINED', note: 'RETAINED | SENT_TO_LAB | DISPOSED']
+  disposed_at timestamptz [note: 'cột 9 — CHECK >= retention_deadline']
+  disposed_by varchar(180) [note: 'cột 12']
+  disposal_witness varchar(180) [note: 'CF-M08-9']
+  disposal_note varchar(500) [note: 'cột 10']
+  lab_request_id uuid
+  retrieved_at timestamptz
+  sent_to_lab_at timestamptz [note: 'CHECK >= collected_at']
+  gps_lat numeric(9,6)
+  gps_lng numeric(9,6)
+  device_info varchar(200) [note: 'BR-108']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_smp_school_code']
+    (inspection_id, dish_id) [unique, name: 'uq_smp_inspection_dish', note: 'Điều 7.1 — mỗi món 1 mẫu / phiên kiểm thực']
+    (school_id, collected_at) [name: 'ix_smp_school_collected']
+    status [name: 'ix_smp_status']
+    incident_id [name: 'ix_smp_incident']
+    lab_request_id [name: 'ix_smp_lab_request']
+  }
+  Note: 'Lưu mẫu thực phẩm 24h theo QĐ 1246 — Mẫu số 4 & 5.'
+}
+
+Table sample_attachments {
+  id uuid [pk, default: `gen_random_uuid()`]
+  owner_type varchar(16) [not null, note: 'SAMPLE | LAB_REQUEST']
+  owner_id uuid [not null, note: 'polymorphic — không FK']
+  kind varchar(24) [not null, note: 'EVIDENCE_PHOTO | SEAL_PHOTO | HANDOVER_RECORD | LAB_RECEIPT']
+  file_name varchar(255) [not null]
+  storage_key varchar(255) [not null, note: 'D10 — riêng tư']
+  size_bytes bigint [not null]
+  checksum_sha256 varchar(64) [not null]
+  created_at timestamptz [not null, default: `now()`, note: 'DTO map uploadedAt <- created_at']
+  updated_at timestamptz
+  created_by varchar(180) [note: 'DTO map uploadedBy <- created_by']
+  updated_by varchar(180)
+
+  indexes {
+    (owner_type, owner_id, kind) [name: 'ix_att_owner']
+  }
+}
+
+Ref: sample_lab_requests.school_id > schools.id
+Ref: sample_lab_requests.authority_id > receiving_authorities.id
+Ref: food_samples.school_id > schools.id
+Ref: food_samples.lab_request_id > sample_lab_requests.id
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MF09 — Meal Serving & Distribution  (V16, V17)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+Table student_distributions {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: DSTU-0706A-001']
+  school_id uuid [not null]
+  date date [not null]
+  meal_type varchar(12) [not null, note: 'BREAKFAST | LUNCH | SNACK']
+  student_id uuid [not null]
+  student_name varchar(120) [not null, note: 'snapshot lúc tạo phiên']
+  class_name varchar(20) [not null]
+  classroom_id uuid [not null]
+  menu_id uuid
+  caterer_partner_id uuid [note: 'snapshot lúc tạo phiên (ADR-M09-8)']
+  caterer_name varchar(180)
+  status varchar(12) [not null, default: 'PENDING', note: 'PENDING | SERVED']
+  served_at timestamptz [note: 'CHECK cùng ngày với date (Asia/Ho_Chi_Minh)']
+  served_by_user_id uuid [note: 'BR-120 — Teacher xác nhận']
+  planned_serve_time time [note: 'chừa cho BR-135']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_dist_school_code']
+    (student_id, date, meal_type) [unique, name: 'uq_dist_student_date_meal', note: 'BR-130 — chặn phát trùng']
+    (date, class_name, meal_type) [name: 'ix_dist_date_class_meal']
+    (student_id, date) [name: 'ix_dist_student_date']
+    (school_id, date) [name: 'ix_dist_school_date']
+  }
+  Note: 'ADR-M09-2: KHÔNG có cột assigned_meal / special_meal / allergy_warning / diet_tag — dẫn xuất runtime.'
+}
+
+Table serving_dishes {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: SDSH-0706A-001-1']
+  school_id uuid [not null]
+  distribution_id uuid [not null]
+  dish_id uuid [not null, note: 'KHOÁ truy xuất cho MF11 — em nào đã ăn món X?']
+  dish_name varchar(180) [not null, note: 'snapshot (ADR-M09-1)']
+  is_substitute boolean [not null, default: false, note: 'BR-065 — suất riêng']
+  substituted_for_dish_name varchar(180)
+  reason varchar(200)
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_sdish_school_code']
+    distribution_id [name: 'ix_sdish_dist']
+    dish_id [name: 'ix_sdish_dish']
+  }
+  Note: 'APPEND-ONLY (ADR-M09-1) — RULE serving_dishes_no_update / no_delete ở tầng DB.'
+}
+
+Table meal_consumption_records {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: MR-TD-3A-004']
+  school_id uuid [not null]
+  date date [not null]
+  meal_type varchar(12) [not null]
+  student_id uuid [not null]
+  student_name varchar(120) [not null]
+  class_name varchar(20) [not null]
+  dishes_label varchar(500)
+  special_diet varchar(60)
+  special_meal_served varchar(255) [note: 'BR-125']
+  consumption varchar(16) [not null, default: 'PENDING', note: 'BR-121: PENDING | FULLY | PARTIALLY | NOT_CONSUMED']
+  recorded_at timestamptz
+  recorded_by_user_id uuid
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_mcr_school_code']
+    (student_id, date, meal_type) [unique, name: 'uq_mcr_student_date_meal']
+    (date, class_name) [name: 'ix_mcr_date_class']
+    (student_id, date) [name: 'ix_mcr_student_date']
+  }
+}
+
+Table distribution_error_reports {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: DERR-2026-0007']
+  school_id uuid [not null]
+  distribution_id uuid [not null]
+  reported_by_user_id uuid [not null]
+  reason varchar(500) [not null]
+  resolved boolean [not null, default: false]
+  reported_at timestamptz [not null, default: `now()`, note: 'mốc NGHIỆP VỤ, khác created_at']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_der_school_code']
+    distribution_id [name: 'ix_der_dist']
+  }
+}
+
+Ref: student_distributions.school_id > schools.id
+Ref: student_distributions.student_id > students.id
+Ref: student_distributions.classroom_id > classrooms.id
+Ref: student_distributions.menu_id > menus.id
+Ref: student_distributions.caterer_partner_id > partners.id
+Ref: student_distributions.served_by_user_id > user_accounts.id
+Ref: serving_dishes.school_id > schools.id
+Ref: serving_dishes.distribution_id > student_distributions.id
+Ref: serving_dishes.dish_id > dishes.id
+Ref: meal_consumption_records.school_id > schools.id
+Ref: meal_consumption_records.student_id > students.id
+Ref: meal_consumption_records.recorded_by_user_id > user_accounts.id
+Ref: distribution_error_reports.school_id > schools.id
+Ref: distribution_error_reports.distribution_id > student_distributions.id
+Ref: distribution_error_reports.reported_by_user_id > user_accounts.id
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MF10 — Feedback, Announcement & Notification  (V18, V19)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+Table feedbacks {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: FB-2026-8809']
+  school_id uuid [not null]
+  submitter_user_id uuid [not null]
+  submitter_role varchar(10) [not null, note: 'PARENT | TEACHER']
+  scope varchar(10) [not null, note: 'DISH | SESSION | CLASS']
+  student_id uuid [note: 'NULL khi scope = CLASS']
+  classroom_id uuid
+  class_name varchar(20) [not null]
+  meal_date date [not null]
+  meal_type varchar(12) [not null, note: 'BREAKFAST | LUNCH | SNACK']
+  meal_session_id uuid [not null, note: 'student_distributions.id']
+  dish_id uuid
+  dish_name varchar(160)
+  rating int [not null, note: 'CHECK 1..5']
+  tags jsonb [not null, default: `'[]'`, note: 'BR-140: PARENT chấm < 3 sao bắt buộc có tag']
+  comment text
+  portion_size varchar(12) [note: 'UC-086']
+  illness_keyword boolean [not null, default: false, note: 'BR-142 — server tính lại, không tin client']
+  submitted_at timestamptz [not null, default: `now()`, note: 'mốc NGHIỆP VỤ BR-139']
+  deleted_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_fb_school_code']
+    (submitter_user_id, meal_session_id, dish_id, student_id) [unique, name: 'uq_fb_once']
+    (school_id, meal_date) [name: 'ix_fb_school_date']
+    submitter_user_id [name: 'ix_fb_submitter']
+    classroom_id [name: 'ix_fb_classroom']
+    (school_id, illness_keyword) [name: 'ix_fb_illness', note: 'partial: WHERE illness_keyword']
+  }
+}
+
+Table feedback_responses {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: FBR-2026-001']
+  school_id uuid [not null]
+  feedback_id uuid [not null]
+  responder_user_id uuid [not null]
+  content text [not null, note: 'UC-163 EX1 — CHECK không rỗng']
+  responded_at timestamptz [not null, default: `now()`]
+  late_response boolean [not null, default: false, note: 'UC-163 EX2 — >48h chỉ GHI NHẬN, không chặn']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_fbr_school_code']
+    feedback_id [name: 'ix_fbr_feedback']
+  }
+  Note: 'BR-143 / UC-163.'
+}
+
+Table feedback_attachments {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'FBATT-2026-001']
+  school_id uuid [not null]
+  feedback_id uuid [not null]
+  storage_key varchar(255) [not null, note: 'D10 — KHÔNG trả URL công khai, KHÔNG presign']
+  original_name varchar(255) [not null]
+  content_type varchar(100) [not null, note: 'đã kiểm MAGIC BYTES: image/jpeg | image/png | image/webp | application/pdf']
+  size_bytes bigint [not null, note: 'CHECK 0 < x <= 5 MB']
+  uploaded_by_user_id uuid [not null]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_fbatt_school_code']
+    feedback_id [name: 'ix_fbatt_feedback']
+  }
+}
+
+Table illness_keywords {
+  id uuid [pk, default: `gen_random_uuid()`]
+  keyword varchar(60) [not null, unique]
+  active boolean [not null, default: true]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  Note: 'BR-142 / ADR-M10-6 — bảng cấu hình, không có cột code.'
+}
+
+Table announcements {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: ANN-2026-113']
+  school_id uuid [not null]
+  title varchar(255) [not null]
+  content text [not null]
+  audience_codes jsonb [not null, default: `'[]'`, note: 'CF-M10-7 — thứ LỌC được (GIN index)']
+  audience_label varchar(255) [not null, note: 'chuỗi HIỂN THỊ, dẫn xuất']
+  status varchar(12) [not null, default: 'DRAFT', note: 'DRAFT | PUBLISHED']
+  urgent boolean [not null, default: false, note: 'BR-138']
+  author_user_id uuid [not null, note: 'khác created_by của BaseEntity']
+  author_name varchar(180) [not null]
+  published_at timestamptz [note: 'CHECK: PUBLISHED bắt buộc có, DRAFT bắt buộc NULL']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_ann_school_code']
+    (school_id, status, published_at) [name: 'ix_ann_school_status']
+    audience_codes [name: 'ix_ann_audience', note: 'USING gin']
+  }
+}
+
+Table announcement_revisions {
+  id uuid [pk, default: `gen_random_uuid()`]
+  announcement_id uuid [not null]
+  revised_by_user_id uuid [not null]
+  revised_by_name varchar(180) [not null]
+  note varchar(500) [not null]
+  revised_at timestamptz [not null, default: `now()`]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (announcement_id, revised_at) [name: 'ix_annrev_ann']
+  }
+  Note: 'BR-144 / ADR-M10-3 — APPEND-ONLY, RULE r_annrev_no_update / no_delete.'
+}
+
+Table notifications {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, unique, note: 'NTF-2026-482913 — NGOẠI LỆ của D1: UNIQUE trên MỘT cột vì school_id nullable']
+  school_id uuid [note: 'NULL = toàn nền tảng (VD thông báo bảo trì)']
+  audience varchar(8) [not null, note: 'ALL | ROLES']
+  recipient_roles jsonb [note: 'RoleKey kebab-case — CHECK bắt buộc khi audience = ROLES']
+  type varchar(20) [not null, note: 'D6 NotificationType (8 giá trị sau V31): MENU_PUBLISHED | INSPECTION_ALERT | CAPA_ASSIGNED | EXPIRY_ALERT | INCIDENT_ALERT | FOOD_RECALL | ALLERGY_ALERT | REPORT_SCHEDULE_FAILED']
+  title varchar(255) [not null]
+  content text [not null]
+  link varchar(255)
+  link_label varchar(80)
+  sent_at timestamptz [not null, default: `now()`]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, sent_at) [name: 'ix_ntf_school_sent']
+  }
+  Note: 'M10-D07: cột `critical` ĐÃ BỎ — dẫn xuất từ `type`.'
+}
+
+Table notification_reads {
+  id uuid [pk, default: `gen_random_uuid()`]
+  notification_id uuid [not null]
+  user_id uuid [not null]
+  read_at timestamptz [not null, default: `now()`]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (notification_id, user_id) [unique, name: 'uq_ntfread']
+  }
+}
+
+Table notification_preferences {
+  user_id uuid [pk, note: 'PK = user_id, không có cột code']
+  type_enabled jsonb [not null, default: `'{}'`, note: 'đúng 8 khoá của NotificationType']
+  email_fallback boolean [not null, default: true, note: 'BR-159']
+  quiet_start time [not null, default: '22:00', note: 'BR-158']
+  quiet_end time [not null, default: '06:00']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  Note: 'UC-088 / BR-158b.'
+}
+
+Table notification_deliveries {
+  id uuid [pk, default: `gen_random_uuid()`]
+  notification_id uuid [not null]
+  user_id uuid [not null]
+  channel varchar(8) [not null, note: 'PUSH | EMAIL']
+  attempt int [not null, default: 0, note: 'BR-159 CHECK <= 3']
+  status varchar(16) [not null, note: 'QUEUED | DEFERRED | SENT | FAILED | FALLBACK_EMAIL']
+  next_retry_at timestamptz
+  last_error varchar(500)
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (status, next_retry_at) [name: 'ix_ntfdlv_retry']
+  }
+}
+
+Ref: feedbacks.school_id > schools.id
+Ref: feedbacks.submitter_user_id > user_accounts.id
+Ref: feedbacks.student_id > students.id
+Ref: feedbacks.classroom_id > classrooms.id
+Ref: feedbacks.meal_session_id > student_distributions.id
+Ref: feedbacks.dish_id > dishes.id
+Ref: feedback_responses.school_id > schools.id
+Ref: feedback_responses.feedback_id > feedbacks.id
+Ref: feedback_responses.responder_user_id > user_accounts.id
+Ref: feedback_attachments.school_id > schools.id
+Ref: feedback_attachments.feedback_id > feedbacks.id [delete: cascade]
+Ref: feedback_attachments.uploaded_by_user_id > user_accounts.id
+Ref: announcements.school_id > schools.id
+Ref: announcements.author_user_id > user_accounts.id
+Ref: announcement_revisions.announcement_id > announcements.id
+Ref: announcement_revisions.revised_by_user_id > user_accounts.id
+Ref: notifications.school_id > schools.id
+Ref: notification_reads.notification_id > notifications.id
+Ref: notification_reads.user_id > user_accounts.id
+Ref: notification_preferences.user_id - user_accounts.id
+Ref: notification_deliveries.notification_id > notifications.id
+Ref: notification_deliveries.user_id > user_accounts.id
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MF11 — Incident & Emergency Management (+ Violation)  (V20, V21, V22)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+Table incident_source_reports {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(24) [not null, note: 'D1: RPT-2026-033']
+  school_id uuid [not null]
+  reported_by_id uuid [not null, note: 'trỏ user_accounts.id — không khai FK (M11-D06)']
+  reported_by_label varchar(120) [not null]
+  reported_at timestamptz [not null, note: 'CHECK >= meal_date']
+  class_name varchar(20)
+  symptoms jsonb [not null, default: `'[]'`]
+  suspected_meal_text varchar(300) [note: 'THÔ, không binding (BR-151)']
+  meal_date date
+  description text [not null]
+  evidence_photos int [not null, default: 0]
+  severity_level varchar(8) [note: 'LOW | MEDIUM | HIGH']
+  status varchar(28) [not null, default: 'PENDING_TRIAGE', note: 'PENDING_TRIAGE | DRAFTING | DRAFTED | MERGED | CLOSED_NOT_FOOD_SAFETY']
+  merged_into_incident_id uuid [note: 'CHECK bắt buộc khi status = MERGED']
+  draft_record_id uuid
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_rpt_code']
+    (school_id, status, reported_at) [name: 'ix_rpt_status']
+  }
+  Note: 'Tin báo ban đầu (nguồn) — nhiều RPT có thể gộp vào 1 biên bản.'
+}
+
+Table incident_records {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(24) [not null, note: 'D1: REC-2026-021']
+  school_id uuid [not null]
+  content text [not null, note: 'BR-154']
+  status varchar(28) [not null, default: 'DRAFT', note: 'DRAFT | COMPLETED | OPENED | CLOSED_NOT_FOOD_SAFETY']
+  created_by_id uuid [not null]
+  incident_id uuid [note: 'CHECK bắt buộc khi status = OPENED']
+  location varchar(200)
+  occurred_at timestamptz
+  pdf_exported boolean [not null, default: false]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_rec_code']
+  }
+  Note: 'Biên bản sự cố — ADR-M11-1.'
+}
+
+Table incident_record_sources {
+  record_id uuid [not null]
+  report_id uuid [not null]
+
+  indexes {
+    (record_id, report_id) [pk]
+  }
+  Note: 'N-1: nhiều tin báo gộp vào 1 biên bản (ADR-M11-1).'
+}
+
+Table incidents {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(24) [not null, note: 'D1: INC-2026-014']
+  school_id uuid [not null]
+  incident_record_id uuid [not null, unique, note: 'ADR-M11-1 — 1 biên bản = tối đa 1 sự cố']
+  title varchar(200) [not null]
+  reported_at timestamptz [not null]
+  occurred_at timestamptz [note: 'mốc #1 cửa sổ 24h (BR-149)']
+  reported_by_label varchar(200) [not null]
+  severity varchar(8) [note: 'LOW | MEDIUM | HIGH — NULL = chưa phân loại']
+  status varchar(20) [not null, default: 'SEVERITY_PENDING', note: 'SEVERITY_PENDING | INVESTIGATING | CAPA_PENDING | CAPA_APPROVED | VALIDATED | CLOSED']
+  symptoms jsonb [not null, default: `'[]'`]
+  suspected_meal_text varchar(300)
+  meal_date date
+  meal_time_label varchar(60)
+  first_aid_notes text
+  clinical_risk_assessment text [note: 'UC-009']
+  investigation_lab_result text
+  investigation_lab_result_files int [not null, default: 0]
+  root_cause text [note: 'BR-150']
+  root_cause_status varchar(12) [note: 'PRELIMINARY | FINAL']
+  evidence_final boolean [not null, default: false]
+  measures_draft text
+  official_clinical_notes text
+  traceability_map_status varchar(12) [not null, default: 'COMPILING', note: 'BR-151: COMPILING | READY']
+  report_exported boolean [not null, default: false, note: 'ADR-M11-8']
+  closed_at timestamptz
+  closed_by_id uuid
+  closing_statement text [note: 'BR-155 — CHECK: CLOSED bắt buộc đủ closed_at + closed_by_id + closing_statement']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_inc_code']
+    (school_id, status) [name: 'ix_inc_school_status']
+    reported_at [name: 'ix_inc_reported_at']
+    (school_id, severity) [name: 'ix_inc_severity']
+  }
+  Note: 'ADR-M11-6: KHÔNG có bảng bản đồ truy xuất — dẫn xuất từ serving_dishes + inventory_transactions.'
+}
+
+Table incident_affected_students {
+  id uuid [pk, default: `gen_random_uuid()`]
+  incident_id uuid [not null]
+  student_id uuid [not null, note: 'trỏ students.id — KHÔNG FK có chủ ý (M11-D11, hồ sơ pháp lý giữ 10 năm)']
+  student_name varchar(120) [not null, note: 'snapshot (ADR-M11-7)']
+  class_name varchar(20) [not null]
+  recovered boolean [not null, default: false, note: 'gate BR-155 đóng sự cố']
+  recovered_at timestamptz
+
+  indexes {
+    (incident_id, student_id) [unique, name: 'uq_ias_inc_student']
+    student_id [name: 'ix_ias_student']
+    class_name [name: 'ix_ias_class']
+  }
+}
+
+Table incident_suspected_dishes {
+  id uuid [pk, default: `gen_random_uuid()`]
+  incident_id uuid [not null]
+  dish_id uuid [not null, note: 'trỏ dishes.id — KHÔNG FK có chủ ý (M11-D11)']
+  dish_name varchar(180) [not null, note: 'snapshot']
+
+  indexes {
+    (incident_id, dish_id) [unique, name: 'uq_isd_inc_dish']
+  }
+}
+
+Table incident_quarantine_batches {
+  id uuid [pk, default: `gen_random_uuid()`]
+  incident_id uuid [not null]
+  batch_id uuid [not null, note: 'trỏ inventory_batches.id — KHÔNG FK có chủ ý (M11-D11)']
+  batch_code varchar(40) [not null]
+  reason varchar(300) [not null, note: 'BR-149 — BẮT BUỘC, CHECK không rỗng']
+  quarantined_at timestamptz [not null, default: `now()`]
+  quarantined_by_id uuid [not null]
+
+  indexes {
+    (incident_id, batch_id) [unique, name: 'uq_iqb_inc_batch']
+    batch_id [name: 'ix_iqb_batch']
+  }
+  Note: 'MỘT CHIỀU (BR-217 / ADR-M11-3): không có cột released_at, RULE iqb_no_delete chặn xoá.'
+}
+
+Table incident_quarantine_release_log {
+  id uuid [pk, default: `gen_random_uuid()`]
+  incident_id uuid [not null]
+  batch_codes jsonb [not null]
+  dish_label varchar(180)
+  reason varchar(300) [not null]
+  released_at timestamptz [not null]
+
+  Note: 'Log nhả lô LỊCH SỬ (19–27/07/2026) — read-only, KHÔNG ghi mới (CF-M11-2).'
+}
+
+Table incident_evidence {
+  id uuid [pk, default: `gen_random_uuid()`]
+  incident_id uuid [not null]
+  type varchar(60) [not null]
+  description varchar(500) [not null]
+  file_count int [not null, default: 0]
+  captured_at timestamptz [not null, default: `now()`, note: 'BR-150']
+
+  indexes {
+    incident_id [name: 'ix_iev_evidence_inc']
+  }
+}
+
+Table incident_events {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(24) [not null, note: 'IEV-014-01']
+  incident_id uuid [not null]
+  at timestamptz [not null]
+  type varchar(20) [not null, note: 'REPORTED | SEVERITY_SET | QUARANTINE | RELEASE | SAMPLE_SENT | TRACE_READY | CAPA_SUBMITTED | CAPA_APPROVED | CAPA_EVIDENCE | CAPA_VALIDATED | REPORT_SENT | CLOSED | STUDENT_RECOVERED (V22)']
+  description varchar(500) [not null]
+  actor_label varchar(120) [not null]
+
+  indexes {
+    (incident_id, at) [name: 'ix_iev_incident_at']
+  }
+  Note: 'ADR-M11-2 — APPEND-ONLY, RULE incident_events_no_update / no_delete.'
+}
+
+Table corrective_actions {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(24) [not null, note: 'D1: CAPA-2026-033']
+  school_id uuid [not null]
+  source_label varchar(200) [not null, note: 'nhãn hiển thị, KHÔNG là khoá']
+  incident_id uuid [note: 'CHECK ck_capa_source: đúng MỘT trong incident_id / inspection_id']
+  inspection_id uuid [note: 'MF07 — BR-095']
+  description text [not null]
+  assignee_label varchar(120) [not null]
+  assignee_supplier_id uuid
+  status varchar(30) [not null, default: 'DRAFT', note: 'BR-216: DRAFT | PENDING_ADMIN_APPROVAL | APPROVED_FOR_IMPLEMENTATION | IN_PROGRESS | SUBMITTED_EVIDENCE | COMPLETED']
+  submitted_for_approval_at timestamptz
+  approved_at timestamptz [note: 'CHECK >= submitted_for_approval_at']
+  evidence_submitted_at timestamptz
+  reject_reason varchar(500)
+  evidence_note text
+  evidence_photos int [not null, default: 0, note: 'CHECK: SUBMITTED_EVIDENCE / COMPLETED bắt buộc > 0']
+  rework_reason varchar(500)
+  rework_requested_at timestamptz
+  deadline varchar(40) [note: 'deprecated BR-216 (bỏ SLA 12h) — chỉ đọc']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_capa_code']
+    incident_id [unique, name: 'uq_capa_one_per_incident', note: 'partial: WHERE incident_id IS NOT NULL — BR-216 1 sự cố = 1 CAPA']
+    (school_id, status) [name: 'ix_capa_status']
+    assignee_supplier_id [name: 'ix_capa_assignee']
+  }
+}
+
+Table violation_records {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(24) [not null, note: 'D1: VIO-2026-008']
+  school_id uuid [not null]
+  type varchar(20) [not null, default: 'Quy trình']
+  subject varchar(200) [not null]
+  recorded_by_id uuid [not null]
+  recorded_by_label varchar(120) [not null]
+  date date [not null]
+  severity varchar(8) [not null, note: 'LOW | MEDIUM | HIGH']
+  resolution varchar(20) [not null, default: 'PENDING', note: 'PENDING | PENDING_APPROVAL | APPROVED | REJECTED']
+  status varchar(8) [not null, default: 'OPEN', note: 'OPEN | CLOSED — CHECK: CLOSED bắt buộc resolution APPROVED/REJECTED']
+  violation_type varchar(24) [note: 'HYGIENE_VIOLATION | PROCEDURE_SKIP | OVERRIDE_ABUSE | UNAUTHORIZED_ACTION | OTHER']
+  description text [not null]
+  occurred_at timestamptz [not null, note: 'BR-211']
+  location_of_incident varchar(200) [not null, note: 'BR-211']
+  caterers_representative_id uuid [not null, note: 'BR-183/187']
+  caterers_representative_label varchar(160) [not null]
+  witness_label varchar(120)
+  self_reported boolean [not null, default: false, note: 'BR-189']
+  repeat_suspect boolean [not null, default: false, note: 'BR-187 (MSG-088)']
+  related_incident_id uuid
+  source_inspection_id uuid [note: 'MF07']
+  pdf_exported boolean [not null, default: false, note: 'BR-211']
+  pdf_generated_at timestamptz
+  pdf_version int [not null, default: 0]
+  action_taken text [note: 'BR-185']
+  unit_sanction_level varchar(30) [note: 'WRITTEN_REMINDER | CONTRACT_WARNING | CONTRACT_PENALTY | TERMINATION_PROPOSAL']
+  handled_by_id uuid
+  reject_reason varchar(500)
+  staff_name varchar(120) [note: 'deprecated 26/07/2026 (CF-M11-4) — giữ dữ liệu cũ, KHÔNG ghi mới']
+  staff_position varchar(60) [note: 'deprecated']
+  disciplinary_level varchar(40) [note: 'deprecated']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_vio_code']
+    (school_id, date) [name: 'ix_vio_school_date']
+    (violation_type, date) [name: 'ix_vio_type_date']
+    (caterers_representative_id, severity, date) [name: 'ix_vio_rep_severity', note: 'BR-187 phát hiện tái phạm']
+    related_incident_id [name: 'ix_vio_incident']
+  }
+  Note: 'Biên bản vi phạm — MF11 sở hữu, MF07 đọc qua ViolationQueryPort.'
+}
+
+Table violation_files {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(24) [not null, note: 'D1 — path param DELETE /violations/{code}/signed-record/{fileId}']
+  violation_id uuid [not null]
+  kind varchar(16) [not null, note: 'EVIDENCE | SIGNED_RECORD']
+  name varchar(200) [not null]
+  storage_key varchar(400) [not null]
+  size_label varchar(20)
+  uploaded_at timestamptz [not null, default: `now()`]
+
+  indexes {
+    (violation_id, code) [unique, name: 'uq_vfile_code']
+    (violation_id, kind) [name: 'ix_vfile_violation']
+  }
+}
+
+Ref: incident_source_reports.school_id > schools.id
+Ref: incident_records.school_id > schools.id
+Ref: incident_record_sources.record_id > incident_records.id [delete: cascade]
+Ref: incident_record_sources.report_id > incident_source_reports.id
+Ref: incidents.school_id > schools.id
+Ref: incidents.incident_record_id - incident_records.id
+Ref: incident_affected_students.incident_id > incidents.id [delete: cascade]
+Ref: incident_suspected_dishes.incident_id > incidents.id [delete: cascade]
+Ref: incident_quarantine_batches.incident_id > incidents.id
+Ref: incident_quarantine_release_log.incident_id > incidents.id
+Ref: incident_evidence.incident_id > incidents.id
+Ref: incident_events.incident_id > incidents.id
+Ref: corrective_actions.school_id > schools.id
+Ref: corrective_actions.incident_id > incidents.id
+Ref: corrective_actions.inspection_id > inspection_sessions.id
+Ref: corrective_actions.assignee_supplier_id > partners.id
+Ref: violation_records.school_id > schools.id
+Ref: violation_records.related_incident_id > incidents.id
+Ref: violation_records.source_inspection_id > inspection_sessions.id
+Ref: violation_files.violation_id > violation_records.id
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MF12 — AI & Supporting Services  (V23, V24)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+Table ai_conversations {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, unique, note: 'D1: AIC-2026-0007']
+  user_id uuid [not null]
+  title varchar(200) [not null]
+  started_at timestamptz [not null, default: `now()`]
+  last_message_at timestamptz [not null, default: `now()`]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (user_id, last_message_at) [name: 'ix_ai_conv_user']
+  }
+  Note: 'BR-156/BR-157 — dữ liệu cấp nền tảng, không có school_id.'
+}
+
+Table ai_requests {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, unique, note: 'D1: AIQ-2026-0042']
+  conversation_id uuid [not null]
+  module varchar(32) [not null, note: 'MF05_MENU | MF12_CHAT']
+  prompt text [not null]
+  response_text text [note: 'BR-157 — CHECK: SUCCESS bắt buộc có nội dung']
+  model varchar(48) [not null]
+  status varchar(12) [not null, note: 'SUCCESS | FAILED | TIMEOUT']
+  latency_ms int [not null, default: 0]
+  requested_by uuid [not null]
+  requested_at timestamptz [not null, default: `now()`]
+  redacted boolean [not null, default: true]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (conversation_id, requested_at) [name: 'ix_ai_req_conv']
+    (requested_by, requested_at) [name: 'ix_ai_req_user']
+    module [name: 'ix_ai_req_module']
+  }
+}
+
+Table error_logs {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, unique, note: 'D1: ERR-5521']
+  timestamp timestamptz [not null, default: `now()`]
+  message varchar(1000) [not null]
+  severity varchar(12) [not null, note: 'CRITICAL | HIGH | MEDIUM | LOW']
+  module varchar(120) [not null]
+  path varchar(300) [not null]
+  stack_trace text [note: 'CF-18']
+  session_info varchar(500) [note: 'CF-18']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (severity, timestamp) [name: 'ix_error_sev_ts']
+  }
+  Note: 'UC-111 / BR-164.'
+}
+
+Table external_integrations {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, unique, note: 'D1: gps | gmail | firebase | gemini']
+  label varchar(120) [not null]
+  endpoint varchar(300) [not null]
+  endpoint_placeholder varchar(300)
+  purpose varchar(300) [not null]
+  connected boolean [not null, default: false, note: 'BR-163 — CHECK chỉ TRUE khi last_test_passed = TRUE']
+  status_note varchar(300)
+  credential_cipher bytea [note: 'BR-164 — envelope encryption, KHÔNG plaintext, KHÔNG trả ra API']
+  credential_iv bytea
+  key_version int [not null, default: 1]
+  last_tested_at timestamptz
+  last_test_passed boolean [not null, default: false]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  Note: 'UC-040 — cấu hình cấp NỀN TẢNG, không có school_id (CF-7).'
+}
+
+Table sent_reports {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: RPTS-2026-001']
+  school_id uuid [not null]
+  report_type varchar(24) [not null, note: 'COMPLIANCE | VIOLATION_SUMMARY | INCIDENT_SUMMARY | SYSTEM_HEALTH']
+  period varchar(12) [not null, note: 'DAILY | WEEKLY']
+  range_label varchar(120) [not null]
+  range_from date [not null]
+  range_to date [not null, note: 'CHECK >= range_from']
+  sent_at timestamptz [not null, default: `now()`]
+  sent_by_user_id uuid [not null]
+  recipient varchar(120) [not null, default: 'School Administration']
+  notes varchar(2000)
+  file_pdf_url varchar(500) [note: 'BR-178']
+  file_xlsx_url varchar(500) [note: 'BR-178']
+  confidential boolean [not null, default: false, note: 'BR-181']
+  payload jsonb [not null, default: `'{}'`, note: 'ADR-M12-05 — snapshot BẤT BIẾN lúc gửi (GIN index)']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_sent_report_code']
+    (school_id, report_type, sent_at) [name: 'ix_sent_reports_school_type']
+    payload [name: 'ix_sent_reports_payload', note: 'USING gin']
+  }
+  Note: 'M12-D07: sent_reports THUỘC MF12; MF13 sở hữu report_exports + report_schedules.'
+}
+
+Ref: ai_conversations.user_id > user_accounts.id
+Ref: ai_requests.conversation_id > ai_conversations.id [delete: cascade]
+Ref: ai_requests.requested_by > user_accounts.id
+Ref: sent_reports.school_id > schools.id
+Ref: sent_reports.sent_by_user_id > user_accounts.id
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MF13 — Reporting & Analytics  (V29, V30, V31)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+Table report_exports {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: RPX-2026-001']
+  school_id uuid [not null]
+  report_slug varchar(40) [not null, note: 'three-step | sample-retention | receiving | supplier-certificates | hygiene | traceability | system-usage']
+  report_title varchar(160) [not null, note: 'BR-178 #1']
+  period_from date [not null, note: 'BR-182 CHECK <= period_to']
+  period_to date [not null]
+  period_label varchar(120)
+  format varchar(8) [not null, note: 'BR-178: PDF | XLSX']
+  filters jsonb [not null, default: `'{}'`]
+  row_count int [not null, default: 0]
+  confidential boolean [not null, default: true, note: 'BR-181']
+  file_uri varchar(512) [not null]
+  file_size_bytes bigint [not null]
+  checksum_sha256 varchar(64) [not null]
+  generated_at timestamptz [not null, default: `now()`, note: 'BR-178 #4 — mốc NGHIỆP VỤ, khác created_at']
+  generated_by_user_id uuid [not null]
+  expires_at timestamptz [not null, note: 'BR-177 CHECK >= generated_at + 12 tháng']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_rpx_school_code']
+    (school_id, report_slug, generated_at) [name: 'ix_rpx_school_slug_time']
+    expires_at [name: 'ix_rpx_expires']
+  }
+  Note: 'BR-182 — snapshot bất biến; TRIGGER report_exports_no_update chặn UPDATE ở tầng DB.'
+}
+
+Table report_schedules {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, note: 'D1: RSC-2026-001']
+  school_id uuid [not null]
+  report_slug varchar(40) [not null, note: '7 slug như report_exports']
+  frequency varchar(8) [not null, note: 'BR-179: DAILY | WEEKLY | MONTHLY']
+  format varchar(8) [not null, note: 'PDF | XLSX']
+  time_of_day time [not null]
+  day_of_week smallint [note: 'BR-179 — WEEKLY bắt buộc 1..7']
+  day_of_month smallint [note: 'BR-179 — MONTHLY bắt buộc 1..28']
+  zone_id varchar(40) [not null, default: 'Asia/Ho_Chi_Minh']
+  active boolean [not null, default: true]
+  next_run_at timestamptz [not null]
+  created_by_user_id uuid [not null]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (school_id, code) [unique, name: 'uq_rsc_school_code']
+    (active, next_run_at) [name: 'ix_rsc_due']
+  }
+}
+
+Table report_schedule_runs {
+  id uuid [pk, default: `gen_random_uuid()`]
+  schedule_id uuid [not null]
+  scheduled_for timestamptz [not null]
+  attempt smallint [not null, note: 'BR-179 CHECK 1..3']
+  status varchar(12) [not null, note: 'PENDING | SUCCESS | FAILED']
+  report_export_id uuid
+  recipient_count int [not null, default: 0]
+  error_message varchar(1000)
+  started_at timestamptz [not null, default: `now()`]
+  finished_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz
+  created_by varchar(180)
+  updated_by varchar(180)
+
+  indexes {
+    (schedule_id, scheduled_for, attempt) [unique, name: 'uq_rsr_schedule_slot_attempt']
+  }
+  Note: 'Thất bại 3/3 lần retry -> gửi notification REPORT_SCHEDULE_FAILED (V31).'
+}
+
+Ref: report_exports.school_id > schools.id
+Ref: report_exports.generated_by_user_id > user_accounts.id
+Ref: report_schedules.school_id > schools.id
+Ref: report_schedules.created_by_user_id > user_accounts.id
+Ref: report_schedule_runs.schedule_id > report_schedules.id [delete: cascade]
+Ref: report_schedule_runs.report_export_id > report_exports.id
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// TABLE GROUPS — gom nhóm theo module để đọc sơ đồ dễ hơn
+// ═══════════════════════════════════════════════════════════════════════════════
+
+TableGroup MF01_User_Access {
+  roles
+  permissions
+  user_accounts
+  security_policies
+  refresh_tokens
+  account_activation_tokens
+  password_reset_tokens
+  password_history
+  audit_logs
+  code_sequences
+}
+
+TableGroup MF02_School_Class {
+  schools
+  school_config
+  academic_years
+  classrooms
+}
+
+TableGroup MF03_Student_Parent {
+  students
+  student_parents
+  health_documents
+  allergy_declarations
+  chronic_condition_declarations
+  special_meal_requests
+  student_health_records
+  student_clinical_files
+  health_history_events
+  student_imports
+}
+
+TableGroup MF04_Supplier_Partner {
+  partners
+  partner_documents
+  delivery_persons
+  partnership_applications
+  partnership_application_documents
+  supplier_partnerships
+}
+
+TableGroup MF05_Menu_Diet {
+  diet_groups
+  dishes
+  menus
+  dish_ingredients
+  menu_dishes
+  menu_dish_substitutes
+  menu_templates
+  menu_template_dishes
+}
+
+TableGroup MF06_Ingredient_Inventory {
+  catalog_ingredients
+  supplier_products
+  purchase_requests
+  purchase_items
+  supplier_batches
+  batch_certificates
+  deliveries
+  delivery_batches
+  receiving_sessions
+  receiving_lines
+  inventory_batches
+  issue_slips
+  inventory_transactions
+  preparation_records
+  preparation_batches
+  receiving_evidence_documents
+  class_meal_deliveries
+}
+
+TableGroup MF07_Inspection {
+  inspection_sessions
+  step1_fresh_rows
+  step1_dry_rows
+  step2_rows
+  step3_rows
+  inspection_evidences
+  kitchen_inspections
+  checklist_groups
+  checklist_items
+  checklist_item_results
+  safety_signoffs
+}
+
+TableGroup MF08_Sample_Retention {
+  receiving_authorities
+  sample_lab_requests
+  food_samples
+  sample_attachments
+}
+
+TableGroup MF09_Meal_Serving {
+  student_distributions
+  serving_dishes
+  meal_consumption_records
+  distribution_error_reports
+}
+
+TableGroup MF10_Feedback_Notification {
+  feedbacks
+  feedback_responses
+  feedback_attachments
+  illness_keywords
+  announcements
+  announcement_revisions
+  notifications
+  notification_reads
+  notification_preferences
+  notification_deliveries
+}
+
+TableGroup MF11_Incident_Violation {
+  incident_source_reports
+  incident_records
+  incident_record_sources
+  incidents
+  incident_affected_students
+  incident_suspected_dishes
+  incident_quarantine_batches
+  incident_quarantine_release_log
+  incident_evidence
+  incident_events
+  corrective_actions
+  violation_records
+  violation_files
+}
+
+TableGroup MF12_AI_Platform {
+  ai_conversations
+  ai_requests
+  error_logs
+  external_integrations
+  sent_reports
+}
+
+TableGroup MF13_Reporting {
+  report_exports
+  report_schedules
+  report_schedule_runs
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// GHI CHÚ BỔ SUNG
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// ─── 7 VIEW read-only (V30__mf13_report_views.sql — ADR-M13-1) ────────────────
+// DBML không mô tả được view; liệt kê ở đây để không thất lạc.
+// BR-182: mọi số liệu tính TRỰC TIẾP từ bảng nguồn. BR-181: view KHÔNG chọn cột PII học sinh.
+//   v_rpt_three_step        <- inspection_sessions + user_accounts + dishes
+//   v_rpt_sample_retention  <- food_samples
+//   v_rpt_receiving         <- receiving_sessions + partners + receiving_lines
+//   v_rpt_supplier_cert     <- partners + supplier_partnerships + partner_documents
+//   v_rpt_hygiene           <- kitchen_inspections + user_accounts
+//   v_rpt_traceability      <- inventory_batches + partners
+//   v_rpt_system_usage      <- user_accounts + roles
+
+// ─── THAM CHIẾU MỀM (ID thuần, CỐ Ý không khai FK) — không vẽ thành Ref ───────
+//   food_samples.inspection_id            -> inspection_sessions.id   (ADR-M08-5)
+//   food_samples.dish_id / menu_id        -> dishes.id / menus.id     (ADR-M08-5)
+//   food_samples.incident_id              -> incidents.id             (ADR-M08-5)
+//   sample_lab_requests.incident_id       -> incidents.id             (ADR-M08-5)
+//   incident_affected_students.student_id -> students.id              (M11-D11)
+//   incident_suspected_dishes.dish_id     -> dishes.id                (M11-D11)
+//   incident_quarantine_batches.batch_id  -> inventory_batches.id     (M11-D11)
+//   inventory_batches.quarantine_incident_id -> incidents.id
+//   incident_source_reports.reported_by_id, incidents.closed_by_id,
+//     incident_records.created_by_id, violation_records.recorded_by_id /
+//     caterers_representative_id / handled_by_id -> user_accounts.id  (M11-D06)
+//   health_documents.uploaded_by_user_id, allergy_declarations.declared_by_user_id /
+//     verified_by_user_id, special_meal_requests.requested_by_user_id /
+//     reviewed_by_user_id, health_history_events.by_user_id -> user_accounts.id
+//   inspection_evidences.owner_id, sample_attachments.owner_id -> polymorphic
+//
+// Lý do: hồ sơ pháp lý giữ 10 năm không được vỡ khi bản ghi gốc đổi/xoá, và tránh
+// khoá thứ tự migrate giữa các module. Muốn dbdiagram vẽ thêm thì thêm dòng Ref —
+// nhưng KHÔNG export SQL từ đó ngược về DB thật.

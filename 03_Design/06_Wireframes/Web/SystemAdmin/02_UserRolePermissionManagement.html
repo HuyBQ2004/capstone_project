@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>SFMS Wireframe — System Admin: User, Role &amp; Permission Management</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#333; --paper:#fff; --gray:#777; --lightgray:#d7d7d7; --midgray:#aaa;
+  }
+  * { box-sizing: border-box; }
+  html { font-size: 18px; }
+  body {
+    margin:0; font-family:'Patrick Hand', cursive; color:var(--ink);
+    background-color:#f4f4f4;
+    background-image: radial-gradient(#d7d7d7 1px, transparent 1px);
+    background-size: 20px 20px;
+    font-size:18px;
+  }
+  .text-xs   { font-size: 14px; line-height:1.4; }
+  .text-sm   { font-size: 18px; line-height:1.5; }
+  .text-base { font-size: 22px; line-height:1.5; }
+  .text-md   { font-size: 28px; line-height:1.3; }
+  .text-lg   { font-size: 35px; line-height:1.2; }
+
+  a { color:#3a5a8c; text-decoration:underline; cursor:pointer; }
+
+  .app { display:flex; min-height:100vh; }
+
+  /* ---- Sidebar ---- */
+  .sidebar {
+    width:280px; min-width:280px; background:#eee; border-right:3px solid var(--ink);
+    padding:18px 14px; position:sticky; top:0; height:100vh; overflow-y:auto;
+  }
+  .brand { display:flex; align-items:center; gap:8px; margin-bottom:18px; }
+  .brand .text-md { margin:0; }
+  .side-group { margin-bottom:6px; }
+  .side-group-title {
+    display:flex; align-items:center; gap:8px; font-size:16px; color:var(--gray);
+    text-transform:uppercase; letter-spacing:1px; margin:14px 0 6px 4px;
+  }
+  .side-link {
+    display:flex; align-items:center; gap:10px; padding:8px 10px; margin:2px 0;
+    border-radius:255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-size:18px; color:var(--ink); text-decoration:none; cursor:pointer;
+  }
+  .side-link:hover { background:#fff; border:2px dashed var(--midgray); }
+  .side-link.active { background:var(--ink); color:#fff; border:2px solid var(--ink); }
+  .side-link.active svg { stroke:#fff; }
+  .side-link.disabled { color:var(--midgray); cursor:default; }
+  .side-link.disabled:hover { background:none; border:none; }
+  .side-note { font-size:13px; color:var(--midgray); margin-left:32px; }
+  .icon { width:20px; height:20px; flex:none; stroke:var(--ink); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+
+  /* ---- Main / Topbar ---- */
+  .main { flex:1; min-width:0; }
+  .topbar {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 26px; border-bottom:3px solid var(--ink); background:#fafafa;
+  }
+  .breadcrumb { font-size:20px; }
+  .breadcrumb .crumb-group { color:var(--gray); }
+  .user-chip { display:flex; align-items:center; gap:8px; font-size:16px; }
+
+  .content { padding:26px; }
+
+  /* ---- Sketchy card / borders ---- */
+  .card {
+    border:2px solid var(--ink);
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    background:#fff;
+    padding:18px;
+  }
+  .card + .card { margin-top:18px; }
+
+  /* ---- Buttons ---- */
+  .btn-primary {
+    background:#333; color:white; border:2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family:'Patrick Hand', cursive; font-size:18px;
+    padding:10px 22px; cursor:pointer; display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-primary svg { stroke:#fff; }
+  .btn-secondary {
+    background:white; color:#333; border:2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family:'Patrick Hand', cursive; font-size:18px;
+    padding:10px 22px; cursor:pointer; display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-danger {
+    background:white; color:#333; border:3px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family:'Patrick Hand', cursive; font-size:18px;
+    padding:10px 22px; cursor:pointer; display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-danger .icon-x { stroke:#333; }
+  button:disabled { opacity:0.45; cursor:not-allowed; }
+  .btn-row { display:flex; gap:12px; flex-wrap:wrap; }
+
+  /* ---- Grid ---- */
+  .grid-12 { display:grid; grid-template-columns: repeat(12, 1fr); gap:18px; }
+  .col-3 { grid-column: span 3; }
+  .col-4 { grid-column: span 4; }
+  .col-8 { grid-column: span 8; }
+  .col-6 { grid-column: span 6; }
+  .col-12 { grid-column: span 12; }
+  @media (max-width: 980px){
+    .grid-12 > [class*="col-"] { grid-column: span 12; }
+  }
+
+  /* ---- Badges ---- */
+  .badge {
+    display:inline-flex; align-items:center; gap:6px; padding:3px 12px; font-size:16px;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  }
+  .badge-success { border:2px solid var(--ink); background:#fff; }
+  .badge-warning { border:2px dashed var(--ink); background:#fff; }
+  .badge-danger  { border:3px solid var(--ink); background:#fff; }
+  .badge-info    { border:2px dotted var(--ink); background:#fff; }
+  .badge svg { width:15px; height:15px; }
+
+  /* ---- Table ---- */
+  table.sketchy { width:100%; border-collapse:separate; border-spacing:0; font-size:18px; }
+  table.sketchy th, table.sketchy td { text-align:left; padding:10px 12px; border-bottom:2px solid var(--lightgray); }
+  table.sketchy thead th { border-bottom:3px solid var(--ink); color:var(--gray); font-weight:normal; font-size:16px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.sketchy tbody tr { cursor:pointer; }
+  table.sketchy tbody tr:hover { background:#f2f2f2; }
+  .table-wrap { border:2px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; overflow:hidden; background:#fff; }
+  .table-wrap table.sketchy { margin:0; }
+  .table-wrap thead th:first-child, .table-wrap tbody td:first-child { padding-left:20px; }
+
+  /* ---- Filter bar ---- */
+  .filter-bar { display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-bottom:16px; }
+  .filter-bar > * { flex:none; }
+  .filter-bar wired-search-input { width:280px; }
+  .filter-bar wired-select { width:200px; }
+
+  /* ---- Screens ---- */
+  .screen { display:none; }
+  .screen.active { display:block; }
+
+  h1.text-lg, h2.text-md { margin:0 0 4px 0; }
+  .page-header { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:20px; flex-wrap:wrap; }
+  .muted { color:var(--gray); }
+  .section-title { display:flex; align-items:center; gap:8px; margin:0 0 12px 0; }
+
+  .kpi-value { font-size:44px; line-height:1; margin:6px 0; }
+  .kpi-card { display:flex; flex-direction:column; gap:4px; }
+  .kpi-top { display:flex; align-items:center; justify-content:space-between; }
+
+  .shortcut-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+  @media (max-width:980px){ .shortcut-grid{ grid-template-columns:repeat(2,1fr);} }
+  .shortcut-tile { display:flex; flex-direction:column; align-items:flex-start; gap:8px; cursor:pointer; }
+  .shortcut-tile:hover { background:#f7f7f7; }
+
+  .alert {
+    display:flex; gap:12px; align-items:flex-start; padding:14px 16px;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff;
+  }
+  .alert-danger { border:3px solid var(--ink); }
+  .alert-warning { border:2px dashed var(--ink); }
+  .alert-info { border:2px dotted var(--ink); }
+  .alert .icon { flex:none; margin-top:2px; }
+
+  .modal-overlay {
+    display:none; position:fixed; inset:0; background:rgba(0,0,0,0.35);
+    align-items:center; justify-content:center; z-index:50; padding:20px;
+  }
+  .modal-overlay.active { display:flex; }
+  .modal-box {
+    width:100%; max-width:560px; background:#fff; border:3px solid var(--ink);
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; padding:24px;
+    max-height:90vh; overflow-y:auto;
+  }
+  .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  .close-x { cursor:pointer; }
+
+  /* ---- Sheet (slide from right) for Manage Role Screen ---- */
+  .sheet-overlay {
+    display:none; position:fixed; inset:0; background:rgba(0,0,0,0.3); z-index:60;
+  }
+  .sheet-overlay.active { display:block; }
+  .sheet-box {
+    position:fixed; top:0; right:0; bottom:0; width:100%; max-width:620px;
+    background:#fff; border-left:3px solid var(--ink);
+    padding:24px; overflow-y:auto;
+  }
+  .sheet-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+
+  .field-label { font-size:18px; margin-bottom:6px; display:flex; gap:4px; }
+  .req { color:var(--ink); font-weight:bold; }
+  .field-block { margin-bottom:16px; }
+  wired-input, wired-textarea, wired-select, wired-search-input, wired-combo { width:100%; display:block; }
+
+  .placeholder-x {
+    display:flex; align-items:center; justify-content:center; height:110px;
+    font-size:35px; color:var(--midgray); border:2px dashed var(--midgray);
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background:#fafafa;
+  }
+
+  .skeleton-note { display:flex; align-items:center; gap:10px; color:var(--gray); font-size:16px; margin-bottom:10px; }
+
+  .demo-toggle { display:flex; gap:10px; margin-bottom:16px; padding:10px 14px; border:2px dashed var(--midgray); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; align-items:center; flex-wrap:wrap; }
+  .demo-toggle .text-xs { color:var(--midgray); }
+
+  .perm-module { border:2px solid var(--lightgray); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; padding:12px 16px; margin-bottom:12px; }
+  .perm-module-title { font-size:20px; margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+  .perm-item { display:flex; align-items:center; gap:10px; padding:4px 0; }
+
+  .info-row { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:8px 0; border-bottom:2px solid var(--lightgray); }
+  .info-row:last-child { border-bottom:none; }
+
+  ul.plain { list-style:none; margin:0; padding:0; }
+  .breadcrumb-link { text-decoration:underline; cursor:pointer; }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar">
+    <div class="brand">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 21 L4 9 L12 3 L20 9 L20 21 Z" stroke-dasharray="1 0"/><path d="M9 21 L9 14 L15 14 L15 21"/></svg>
+      <span class="text-md">SFMS</span>
+    </div>
+    <div class="side-note" style="margin-left:0; margin-bottom:14px;">System Admin — Đỗ Minh Khôi</div>
+
+    <div class="side-group">
+      <div class="side-group-title">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 12 L12 4 L20 12"/><path d="M6 10 V20 H18 V10"/></svg>
+        Tổng quan
+      </div>
+      <div class="side-link" onclick="showScreen('dashboard')">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/></svg>
+        Dashboard
+      </div>
+    </div>
+
+    <div class="side-group">
+      <div class="side-group-title">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M6 3 h12 v18 h-12 z"/><path d="M9 3 v18"/></svg>
+        Trường học
+      </div>
+      <div class="side-link disabled">Quản lý Trường học</div>
+      <div class="side-note">(xem file wireframe nhóm khác)</div>
+    </div>
+
+    <div class="side-group">
+      <div class="side-group-title">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M17 20 v-2 a4 4 0 0 0 -4 -4 h-4 a4 4 0 0 0 -4 4 v2"/><circle cx="11" cy="7" r="3"/><path d="M21 20 v-2 a3.5 3.5 0 0 0 -2.5 -3.4"/></svg>
+        Quản lý Người dùng Hệ thống
+      </div>
+      <div class="side-link" onclick="showScreen('user-list')">
+        <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20 c0 -4.5 3.5 -7 8 -7 s8 2.5 8 7"/></svg>
+        User Account List
+      </div>
+      <div class="side-link" onclick="showScreen('role-list')">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 8 V16 L12 21 L3 16 V8 Z"/><path d="M9 12 l2 2 4 -4"/></svg>
+        Role List
+      </div>
+      <div class="side-link" onclick="showScreen('permission-list')">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="1"/><path d="M8 11 V7 a4 4 0 0 1 8 0 v4"/></svg>
+        Manage Permission List
+      </div>
+    </div>
+
+    <div class="side-group">
+      <div class="side-group-title">
+        <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3 v3 M12 18 v3 M3 12 h3 M18 12 h3 M5.6 5.6 l2.1 2.1 M16.3 16.3 l2.1 2.1 M18.4 5.6 l-2.1 2.1 M7.7 16.3 l-2.1 2.1"/></svg>
+        Cấu hình Hệ thống
+      </div>
+      <div class="side-link disabled">Cấu hình Hệ thống</div>
+      <div class="side-note">(xem file wireframe nhóm khác)</div>
+    </div>
+
+    <div class="side-group">
+      <div class="side-group-title">
+        <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8 v4 l3 2"/></svg>
+        Giám sát &amp; Audit
+      </div>
+      <div class="side-link disabled">Audit Log</div>
+      <div class="side-note">(xem file wireframe nhóm khác)</div>
+      <div class="side-link disabled">Error Logs</div>
+      <div class="side-note">(xem file wireframe nhóm khác)</div>
+    </div>
+
+    <div class="side-group">
+      <div class="side-group-title">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 8 a8 3 0 0 0 16 0 a8 3 0 0 0 -16 0 z"/><path d="M4 8 v8 a8 3 0 0 0 16 0 v-8"/></svg>
+        Sao lưu
+      </div>
+      <div class="side-link disabled">Sao lưu &amp; Phục hồi</div>
+      <div class="side-note">(xem file wireframe nhóm khác)</div>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <div class="main">
+
+    <!-- ========================================================= -->
+    <!-- SCREEN 1: SYSTEM ADMINISTRATOR DASHBOARD                   -->
+    <!-- ========================================================= -->
+    <section class="screen active" id="dashboard">
+      <div class="topbar">
+        <div class="breadcrumb"><span class="crumb-group">Tổng quan</span> / Dashboard</div>
+        <div class="user-chip">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20 c0 -4.5 3.5 -7 8 -7 s8 2.5 8 7"/></svg>
+          Đỗ Minh Khôi
+        </div>
+      </div>
+      <div class="content">
+        <div class="page-header">
+          <div>
+            <h1 class="text-lg">System Administrator Dashboard</h1>
+            <div class="muted text-sm">Node gốc điều hướng — tổng hợp shortcut/summary tới toàn bộ màn hình System Admin</div>
+          </div>
+        </div>
+
+        <div class="skeleton-note">
+          <svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M12 4 v4 M12 16 v4 M4 12 h4 M16 12 h4"/></svg>
+          Trạng thái Loading: mỗi card số liệu tải song song, hiển thị skeleton riêng — 1 card lỗi (VD server monitoring offline) không chặn các card khác (Error cục bộ).
+        </div>
+
+        <!-- KPI cards row (col-span-3 each) -->
+        <div class="grid-12">
+          <div class="col-3 card kpi-card">
+            <div class="kpi-top">
+              <span class="text-sm muted">Tổng số Trường</span>
+              <svg class="icon" viewBox="0 0 24 24"><path d="M6 3 h12 v18 h-12 z"/><path d="M9 3 v18"/></svg>
+            </div>
+            <div class="kpi-value">42</div>
+            <span class="text-xs muted">Active: 38 · Inactive: 3 · Pending: 1</span>
+          </div>
+
+          <div class="col-3 card kpi-card">
+            <div class="kpi-top">
+              <span class="text-sm muted">Tổng số User theo Role</span>
+              <svg class="icon" viewBox="0 0 24 24"><path d="M17 20 v-2 a4 4 0 0 0 -4 -4 h-4 a4 4 0 0 0 -4 4 v2"/><circle cx="11" cy="7" r="3"/></svg>
+            </div>
+            <div class="kpi-value">356</div>
+            <span class="text-xs muted">School Admin: 42 · Teacher: 180 · Caterer: 55 · Khác: 79</span>
+          </div>
+
+          <div class="col-3 card kpi-card">
+            <div class="kpi-top">
+              <span class="text-sm muted">Trạng thái Hệ thống</span>
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8 v4 l3 2"/></svg>
+            </div>
+            <span class="badge badge-success" style="margin-top:8px;"><svg class="icon" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M4 12 l5 5 11 -11"/></svg> Healthy</span>
+            <span class="text-xs muted">Health-check tóm tắt — cập nhật 5 phút trước</span>
+          </div>
+
+          <div class="col-3 card kpi-card">
+            <div class="kpi-top">
+              <span class="text-sm muted">Hoạt động Hệ thống (24h)</span>
+              <svg class="icon" viewBox="0 0 24 24"><path d="M4 19 h16 M7 19 v-6 M12 19 v-10 M17 19 v-4"/></svg>
+            </div>
+            <div class="kpi-value">1 240</div>
+            <span class="text-xs muted">Phiên đăng nhập trong 24h gần nhất</span>
+          </div>
+        </div>
+
+        <div class="grid-12" style="margin-top:18px;">
+          <div class="col-8 card">
+            <h2 class="text-md section-title">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M4 19 h16 M7 19 v-6 M12 19 v-10 M17 19 v-4"/></svg>
+              Biểu đồ hoạt động hệ thống (CPU/RAM/Session — 24h gần nhất)
+            </h2>
+            <div class="placeholder-x" style="height:180px;">[Chart Placeholder] X — CPU/RAM/Session 24h</div>
+          </div>
+          <div class="col-4 card">
+            <h2 class="text-md section-title">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/><circle cx="12" cy="17" r="0.6" fill="var(--ink)"/></svg>
+              Cảnh báo hệ thống gần nhất
+            </h2>
+            <div class="alert alert-danger" style="margin-bottom:10px;">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9 l6 6 M15 9 l-6 6"/></svg>
+              <div class="text-xs">Database connection pool gần đầy (Critical) — 12 phút trước</div>
+            </div>
+            <div class="alert alert-warning">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/></svg>
+              <div class="text-xs">Job đồng bộ trường học chạy chậm hơn ngưỡng (High) — 1 giờ trước</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shortcut tiles -->
+        <div class="card" style="margin-top:18px;">
+          <h2 class="text-md section-title">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 6 h16 M4 12 h16 M4 18 h16"/></svg>
+            Shortcut điều hướng
+          </h2>
+          <div class="shortcut-grid">
+            <div class="shortcut-tile card" onclick="showScreen('user-list')">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20 c0 -4.5 3.5 -7 8 -7 s8 2.5 8 7"/></svg>
+              <span class="text-sm">User Account List</span>
+              <span class="text-xs muted">356 tài khoản</span>
+            </div>
+            <div class="shortcut-tile card" onclick="showScreen('role-list')">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 8 V16 L12 21 L3 16 V8 Z"/><path d="M9 12 l2 2 4 -4"/></svg>
+              <span class="text-sm">Role List</span>
+              <span class="text-xs muted">6 role (3 Default, 3 Custom)</span>
+            </div>
+            <div class="shortcut-tile card" onclick="showScreen('permission-list')">
+              <svg class="icon" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="1"/><path d="M8 11 V7 a4 4 0 0 1 8 0 v4"/></svg>
+              <span class="text-sm">Manage Permission List</span>
+              <span class="text-xs muted">Danh mục quyền cố định (read-only)</span>
+            </div>
+            <div class="shortcut-tile card" style="opacity:0.55; cursor:default;">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M6 3 h12 v18 h-12 z"/><path d="M9 3 v18"/></svg>
+              <span class="text-sm">Quản lý Trường học</span>
+              <span class="text-xs muted">(xem file wireframe nhóm khác)</span>
+            </div>
+            <div class="shortcut-tile card" style="opacity:0.55; cursor:default;">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3 v3 M12 18 v3 M3 12 h3 M18 12 h3"/></svg>
+              <span class="text-sm">Cấu hình Hệ thống</span>
+              <span class="text-xs muted">(xem file wireframe nhóm khác)</span>
+            </div>
+            <div class="shortcut-tile card" style="opacity:0.55; cursor:default;">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8 v4 l3 2"/></svg>
+              <span class="text-sm">Audit Log</span>
+              <span class="text-xs muted">(xem file wireframe nhóm khác)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- SCREEN 2: USER ACCOUNT LIST                                -->
+    <!-- ========================================================= -->
+    <section class="screen" id="user-list">
+      <div class="topbar">
+        <div class="breadcrumb"><span class="crumb-group">Quản lý Người dùng Hệ thống</span> / User Account List</div>
+        <div class="user-chip">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20 c0 -4.5 3.5 -7 8 -7 s8 2.5 8 7"/></svg>
+          Đỗ Minh Khôi
+        </div>
+      </div>
+      <div class="content">
+        <div class="page-header">
+          <div>
+            <h1 class="text-lg">User Account List</h1>
+            <div class="muted text-sm">UC-153 — Danh sách toàn bộ tài khoản người dùng hệ thống</div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-primary" onclick="openModal('modal-create-user')">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20 c0 -4.5 3.5 -7 8 -7 s8 2.5 8 7"/><path d="M19 8 v6 M16 11 h6"/></svg>
+              Create User Account
+            </button>
+          </div>
+        </div>
+
+        <div class="filter-bar">
+          <wired-search-input placeholder="Tìm theo tên/email..."></wired-search-input>
+          <wired-select selected="Tất cả Role">
+            <wired-item value="all">Tất cả Role</wired-item>
+            <wired-item value="system-admin">System Admin</wired-item>
+            <wired-item value="school-admin">School Administration</wired-item>
+            <wired-item value="teacher">Teacher</wired-item>
+            <wired-item value="caterer">Service Caterers</wired-item>
+          </wired-select>
+          <wired-select selected="Tất cả Trường/Công ty">
+            <wired-item value="all">Tất cả Trường/Công ty</wired-item>
+            <wired-item value="le-van-tam">Trường Tiểu học Lê Văn Tám</wired-item>
+            <wired-item value="an-lanh">Công ty TNHH Suất ăn An Lành</wired-item>
+          </wired-select>
+          <wired-select selected="Tất cả Trạng thái">
+            <wired-item value="all">Tất cả Trạng thái</wired-item>
+            <wired-item value="active">Active</wired-item>
+            <wired-item value="pending">Pending</wired-item>
+            <wired-item value="inactive">Inactive</wired-item>
+          </wired-select>
+          <button class="btn-secondary" type="button">
+            <svg class="icon" viewBox="0 0 24 24" style="stroke:#333"><path d="M4 5 h16 M7 12 h10 M10 19 h4"/></svg>
+            Export Excel/CSV
+          </button>
+        </div>
+
+        <div class="table-wrap">
+          <table class="sketchy">
+            <thead>
+              <tr><th>Tên</th><th>Email</th><th>Role</th><th>School/Company</th><th>Trạng thái</th><th></th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Đỗ Minh Khôi</td>
+                <td>khoi.dm@sfms.vn</td>
+                <td>System Admin</td>
+                <td>— (toàn hệ thống)</td>
+                <td><span class="badge badge-success"><svg class="icon" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M4 12 l5 5 11 -11"/></svg>Active</span></td>
+                <td>
+                  <svg class="icon" viewBox="0 0 24 24" onclick="event.stopPropagation(); openDeactivateDialog('admin-default')" title="Toggle trạng thái"><circle cx="12" cy="12" r="9"/><path d="M12 7 v5 l3 3"/></svg>
+                </td>
+              </tr>
+              <tr>
+                <td>Nguyễn Thị Hoa</td>
+                <td>hoa.nguyen@levantam.edu.vn</td>
+                <td>School Administration</td>
+                <td>Trường Tiểu học Lê Văn Tám</td>
+                <td><span class="badge badge-success"><svg class="icon" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M4 12 l5 5 11 -11"/></svg>Active</span></td>
+                <td>
+                  <svg class="icon" viewBox="0 0 24 24" onclick="event.stopPropagation(); openDeactivateDialog('normal-active')" title="Toggle trạng thái"><circle cx="12" cy="12" r="9"/><path d="M12 7 v5 l3 3"/></svg>
+                </td>
+              </tr>
+              <tr>
+                <td>Trần Văn An</td>
+                <td>an.tran@levantam.edu.vn</td>
+                <td>Teacher</td>
+                <td>Trường Tiểu học Lê Văn Tám</td>
+                <td><span class="badge badge-warning"><svg class="icon" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/></svg>Pending</span></td>
+                <td>
+                  <svg class="icon" viewBox="0 0 24 24" onclick="event.stopPropagation(); openDeactivateDialog('normal-pending')" title="Toggle trạng thái"><circle cx="12" cy="12" r="9"/><path d="M12 7 v5 l3 3"/></svg>
+                </td>
+              </tr>
+              <tr>
+                <td>Lê Thị Ngọc</td>
+                <td>ngoc.le@anlanh.vn</td>
+                <td>Service Caterers</td>
+                <td>Công ty TNHH Suất ăn An Lành</td>
+                <td><span class="badge badge-danger"><svg class="icon" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M6 6 l12 12 M18 6 l-12 12"/></svg>Inactive</span></td>
+                <td>
+                  <svg class="icon" viewBox="0 0 24 24" onclick="event.stopPropagation(); openDeactivateDialog('normal-inactive')" title="Toggle trạng thái"><circle cx="12" cy="12" r="9"/><path d="M12 7 v5 l3 3"/></svg>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card" style="margin-top:18px; display:flex; gap:12px; align-items:center;">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8 v5 M12 16 v.1"/></svg>
+          <span class="text-sm muted">Trạng thái Empty: "Chưa có tài khoản nào khớp bộ lọc" + gợi ý xoá bớt filter. (ghi chú minh hoạ — bảng trên đang ở trạng thái Success)</span>
+        </div>
+
+        <div class="btn-row" style="justify-content:center; margin-top:16px;">
+          <button class="btn-secondary" type="button">&laquo; Trước</button>
+          <span class="text-sm" style="padding:8px 4px;">Trang 1 / 12</span>
+          <button class="btn-secondary" type="button">Sau &raquo;</button>
+        </div>
+      </div>
+
+      <!-- Modal: Manage User Screen/Dialog (Create) -->
+      <div class="modal-overlay" id="modal-create-user">
+        <div class="modal-box">
+          <div class="modal-header">
+            <h2 class="text-md" style="margin:0;">Tạo tài khoản người dùng (Create User Account)</h2>
+            <svg class="icon close-x" viewBox="0 0 24 24" onclick="closeModal('modal-create-user')"><path d="M6 6 l12 12 M18 6 l-12 12"/></svg>
+          </div>
+          <div class="text-xs muted" style="margin-bottom:14px;">UC-026 — sau khi tạo thành công, hệ thống gửi email xác minh (BR-010)</div>
+
+          <div class="field-block">
+            <div class="field-label">Họ tên đầy đủ <span class="req">*</span></div>
+            <wired-input placeholder="VD: Phạm Thị Lan"></wired-input>
+          </div>
+          <div class="field-block">
+            <div class="field-label">Email <span class="req">*</span></div>
+            <wired-input type="email" placeholder="VD: lan.pham@school.edu.vn"></wired-input>
+            <div class="text-xs" style="margin-top:4px;">MSG-006: "Registration failed: The email address is already in use." — hiện khi email đã tồn tại.</div>
+          </div>
+          <div class="field-block">
+            <div class="field-label">Số điện thoại</div>
+            <wired-input type="tel" placeholder="VD: 0912345678"></wired-input>
+          </div>
+          <div class="field-block">
+            <div class="field-label">Vai trò (Role) <span class="req">*</span></div>
+            <wired-select id="create-user-role" selected="" onchange="toggleSchoolField()">
+              <wired-item value="">-- Chọn Role --</wired-item>
+              <wired-item value="system-admin">System Admin</wired-item>
+              <wired-item value="school-admin">School Administration (cấp trường)</wired-item>
+              <wired-item value="teacher">Teacher (cấp trường)</wired-item>
+              <wired-item value="caterer">Service Caterers</wired-item>
+            </wired-select>
+          </div>
+          <div class="field-block" id="school-field-block" style="display:none;">
+            <div class="field-label">Trường liên kết (School) <span class="req">*</span></div>
+            <wired-select selected="">
+              <wired-item value="">-- Chọn Trường --</wired-item>
+              <wired-item value="le-van-tam">Trường Tiểu học Lê Văn Tám</wired-item>
+              <wired-item value="nguyen-hue">Trường THCS Nguyễn Huệ</wired-item>
+            </wired-select>
+            <div class="text-xs muted" style="margin-top:4px;">Chỉ hiện khi Role là role cấp trường (School Administration, Teacher...) — Normal Flow bước 3.</div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn-primary" onclick="closeModal('modal-create-user')">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M4 12 l5 5 11 -11"/></svg>
+              Tạo tài khoản
+            </button>
+            <button class="btn-secondary" onclick="closeModal('modal-create-user')">Huỷ</button>
+          </div>
+          <div class="text-xs muted" style="margin-top:10px;">Trạng thái Success: MSG-031 "User account created successfully." (Toast) + đóng dialog, quay về User Account List.</div>
+        </div>
+      </div>
+
+      <!-- Modal: Active/Deactivate User Dialog -->
+      <div class="modal-overlay" id="modal-deactivate-user">
+        <div class="modal-box" id="deactivate-content"></div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- SCREEN 3: ROLE LIST                                        -->
+    <!-- ========================================================= -->
+    <section class="screen" id="role-list">
+      <div class="topbar">
+        <div class="breadcrumb"><span class="crumb-group">Quản lý Người dùng Hệ thống</span> / Role List</div>
+        <div class="user-chip">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20 c0 -4.5 3.5 -7 8 -7 s8 2.5 8 7"/></svg>
+          Đỗ Minh Khôi
+        </div>
+      </div>
+      <div class="content">
+        <div class="page-header">
+          <div>
+            <h1 class="text-lg">Role List</h1>
+            <div class="muted text-sm">UC-130 — Danh sách toàn bộ Role trong hệ thống</div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-primary" onclick="openRoleSheet('create')">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 8 V16 L12 21 L3 16 V8 Z"/><path d="M12 8 v8 M8 12 h8"/></svg>
+              Create New Role
+            </button>
+          </div>
+        </div>
+
+        <div class="filter-bar">
+          <wired-search-input placeholder="Tìm theo tên role..."></wired-search-input>
+        </div>
+
+        <div class="table-wrap">
+          <table class="sketchy">
+            <thead>
+              <tr><th>Role Name</th><th>Description</th><th>User Count</th><th>Status</th><th></th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>System Admin</td>
+                <td>Quản trị toàn hệ thống</td>
+                <td>1</td>
+                <td><span class="badge badge-info"><svg class="icon" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M12 3 L21 8 V16 L12 21 L3 16 V8 Z"/></svg>Default</span></td>
+                <td class="btn-row">
+                  <svg class="icon" viewBox="0 0 24 24" onclick="openRoleSheet('update-default')" title="Edit (read-only, role mặc định)"><path d="M4 20 l4 -1 10 -10 -3 -3 -10 10 z"/></svg>
+                </td>
+              </tr>
+              <tr>
+                <td>School Administration</td>
+                <td>Quản trị cấp trường</td>
+                <td>42</td>
+                <td><span class="badge badge-info"><svg class="icon" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M12 3 L21 8 V16 L12 21 L3 16 V8 Z"/></svg>Default</span></td>
+                <td class="btn-row">
+                  <svg class="icon" viewBox="0 0 24 24" onclick="openRoleSheet('update-default')" title="Edit (read-only, role mặc định)"><path d="M4 20 l4 -1 10 -10 -3 -3 -10 10 z"/></svg>
+                </td>
+              </tr>
+              <tr>
+                <td>Teacher</td>
+                <td>Giáo viên chủ nhiệm</td>
+                <td>180</td>
+                <td><span class="badge badge-info"><svg class="icon" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M12 3 L21 8 V16 L12 21 L3 16 V8 Z"/></svg>Default</span></td>
+                <td class="btn-row">
+                  <svg class="icon" viewBox="0 0 24 24" onclick="openRoleSheet('update-default')" title="Edit (read-only, role mặc định)"><path d="M4 20 l4 -1 10 -10 -3 -3 -10 10 z"/></svg>
+                </td>
+              </tr>
+              <tr>
+                <td>Kiểm định viên An toàn (tuỳ chỉnh)</td>
+                <td>Role custom — chỉ xem báo cáo kiểm tra, không duyệt thực đơn</td>
+                <td>3</td>
+                <td><span class="badge badge-warning" style="border-style:dashed;"><svg class="icon" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M4 4 l16 16 M20 4 L4 20" stroke-dasharray="2 2"/></svg>Custom</span></td>
+                <td class="btn-row">
+                  <svg class="icon" viewBox="0 0 24 24" onclick="openRoleSheet('update-custom')" title="Edit"><path d="M4 20 l4 -1 10 -10 -3 -3 -10 10 z"/></svg>
+                  <svg class="icon" viewBox="0 0 24 24" onclick="openRoleSheet('delete-custom')" title="Delete (chỉ role Custom)"><path d="M4 7 h16 M9 7 v-2 h6 v2 M6 7 l1 13 h10 l1 -13"/></svg>
+                </td>
+              </tr>
+              <tr>
+                <td>Giám sát Đối tác (tuỳ chỉnh)</td>
+                <td>Role custom — chỉ quản lý đối tác Supplier/Caterer</td>
+                <td>0</td>
+                <td><span class="badge badge-warning" style="border-style:dashed;"><svg class="icon" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M4 4 l16 16 M20 4 L4 20" stroke-dasharray="2 2"/></svg>Custom</span></td>
+                <td class="btn-row">
+                  <svg class="icon" viewBox="0 0 24 24" onclick="openRoleSheet('update-custom')" title="Edit"><path d="M4 20 l4 -1 10 -10 -3 -3 -10 10 z"/></svg>
+                  <svg class="icon" viewBox="0 0 24 24" onclick="openRoleSheet('delete-custom')" title="Delete (chỉ role Custom)"><path d="M4 7 h16 M9 7 v-2 h6 v2 M6 7 l1 13 h10 l1 -13"/></svg>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="text-xs muted" style="margin-top:10px;">Ghi chú: badge Default = viền chấm (dotted), Custom = viền đứt nét (dashed) — phân biệt bằng kiểu viền, không dùng màu. Nút Delete chỉ hiện với role Custom (BR-008).</div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- SCREEN 4: MANAGE ROLE SCREEN (Create/Update/Delete)        -->
+    <!-- ========================================================= -->
+    <section class="screen" id="manage-role">
+      <div class="topbar">
+        <div class="breadcrumb"><span class="crumb-group breadcrumb-link" onclick="showScreen('role-list')">Quản lý Người dùng Hệ thống / Role List</span> / Manage Role Screen</div>
+        <div class="user-chip">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20 c0 -4.5 3.5 -7 8 -7 s8 2.5 8 7"/></svg>
+          Đỗ Minh Khôi
+        </div>
+      </div>
+      <div class="content">
+        <div class="page-header">
+          <div>
+            <h1 class="text-lg">Manage Role Screen</h1>
+            <div class="muted text-sm">Sheet trượt từ phải — dùng chung 3 hành động Create (UC-022) / Update (UC-098) / Delete (UC-029)</div>
+          </div>
+        </div>
+
+        <div class="demo-toggle">
+          <span class="text-xs">Demo chuyển chế độ (minh hoạ, không phải điều hướng thật):</span>
+          <button class="btn-secondary" type="button" onclick="openRoleSheet('create')">Xem chế độ Create</button>
+          <button class="btn-secondary" type="button" onclick="openRoleSheet('update-custom')">Xem chế độ Update (role Custom)</button>
+          <button class="btn-secondary" type="button" onclick="openRoleSheet('update-default')">Xem chế độ Update (role Default)</button>
+        </div>
+
+        <div class="card">
+          <span class="text-sm muted">Màn hình này hiển thị dưới dạng Sheet trượt từ phải (không phải trang riêng) — mở từ Role List qua nút "Create New Role" hoặc action "Edit"/"Delete" trên từng dòng. Bấm nút demo phía trên để xem Sheet ở từng chế độ.</span>
+        </div>
+      </div>
+
+      <!-- Sheet overlay -->
+      <div class="sheet-overlay" id="role-sheet-overlay">
+        <div class="sheet-box">
+          <div class="sheet-header">
+            <h2 class="text-md" id="role-sheet-title" style="margin:0;">Tạo Role mới</h2>
+            <svg class="icon close-x" viewBox="0 0 24 24" onclick="closeRoleSheet()"><path d="M6 6 l12 12 M18 6 l-12 12"/></svg>
+          </div>
+          <div class="text-xs muted" style="margin-bottom:14px;" id="role-sheet-subtitle">UC-022 — Create Role</div>
+
+          <div class="alert alert-danger" id="role-default-warning" style="display:none; margin-bottom:14px;">
+            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9 l6 6 M15 9 l-6 6"/></svg>
+            <div class="text-sm">Đây là role mặc định (Default) — Tên Role bị khoá không cho sửa (BR-008). Chỉ có thể xem/điều chỉnh mô tả và permission ở mức đọc tham khảo.</div>
+          </div>
+
+          <div class="field-block">
+            <div class="field-label">Tên Role <span class="req">*</span></div>
+            <wired-input id="role-name-input" placeholder="VD: Kiểm định viên An toàn"></wired-input>
+            <div class="text-xs muted" style="margin-top:4px;">Bắt buộc, duy nhất trong hệ thống. Disable khi Update role mặc định.</div>
+          </div>
+
+          <div class="field-block">
+            <div class="field-label">Mô tả</div>
+            <wired-textarea rows="3" placeholder="Mô tả ngắn về phạm vi quyền hạn của role này..."></wired-textarea>
+          </div>
+
+          <div class="field-block">
+            <div class="field-label">Danh sách Permission (theo module)</div>
+
+            <div class="perm-module">
+              <div class="perm-module-title">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20 c0 -4.5 3.5 -7 8 -7 s8 2.5 8 7"/></svg>
+                User Management
+              </div>
+              <div class="perm-item"><wired-checkbox checked>Xem danh sách User</wired-checkbox></div>
+              <div class="perm-item"><wired-checkbox>Tạo/Chỉnh sửa User</wired-checkbox></div>
+              <div class="perm-item"><wired-checkbox>Active/Deactivate User</wired-checkbox></div>
+            </div>
+
+            <div class="perm-module">
+              <div class="perm-module-title">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M6 3 h9 l3 3 v15 h-12 z"/><path d="M15 3 v3 h3"/><path d="M8 12 h8 M8 15 h5"/></svg>
+                Menu Management
+              </div>
+              <div class="perm-item"><wired-checkbox checked>Xem thực đơn</wired-checkbox></div>
+              <div class="perm-item"><wired-checkbox>Duyệt/Từ chối thực đơn</wired-checkbox></div>
+            </div>
+
+            <div class="perm-module">
+              <div class="perm-module-title">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8 v4 l3 2"/></svg>
+                System Monitoring
+              </div>
+              <div class="perm-item"><wired-checkbox>Xem Audit Log</wired-checkbox></div>
+              <div class="perm-item"><wired-checkbox>Xem Error Log</wired-checkbox></div>
+            </div>
+            <div class="text-xs muted">Danh mục permission cố định, lấy từ Manage Permission List Screen (UC-129). <a onclick="showScreen('permission-list')">Xem danh mục đầy đủ &rarr;</a></div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn-primary" id="role-save-btn" onclick="closeRoleSheet()">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M4 12 l5 5 11 -11"/></svg>
+              Lưu
+            </button>
+            <button class="btn-danger" id="role-delete-btn" style="display:none;" onclick="openModal('modal-delete-role')">
+              <svg class="icon icon-x" viewBox="0 0 24 24"><path d="M4 7 h16 M9 7 v-2 h6 v2 M6 7 l1 13 h10 l1 -13"/></svg>
+              Xoá Role
+            </button>
+            <button class="btn-secondary" onclick="closeRoleSheet()">Huỷ</button>
+          </div>
+          <div class="text-xs muted" style="margin-top:10px;">Trạng thái Success khi tạo: MSG-031. Update/Delete: toast xác nhận chung (chưa có MSG code riêng theo Screen Spec — <strong>[Giả định — cần team xác nhận]</strong>: dùng MSG-029 "Cập nhật thành công").</div>
+        </div>
+      </div>
+
+      <!-- AlertDialog: confirm delete role -->
+      <div class="modal-overlay" id="modal-delete-role">
+        <div class="modal-box">
+          <div class="modal-header">
+            <h2 class="text-md" style="margin:0;">Xác nhận Xoá Role</h2>
+            <svg class="icon close-x" viewBox="0 0 24 24" onclick="closeModal('modal-delete-role')"><path d="M6 6 l12 12 M18 6 l-12 12"/></svg>
+          </div>
+          <div class="alert alert-danger" style="margin-bottom:14px;">
+            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9 l6 6 M15 9 l-6 6"/></svg>
+            <div class="text-sm"><strong>Chặn xoá (AF1 UC-029):</strong> Role "Kiểm định viên An toàn" hiện có <strong>3 user</strong> đang gán (kể cả tài khoản đã Inactive). Vui lòng reassign toàn bộ user sang role khác trước khi xoá.</div>
+          </div>
+          <p class="text-sm">Bạn có chắc muốn xoá role này? Hành động không thể hoàn tác.</p>
+          <div class="btn-row">
+            <button class="btn-danger" disabled title="Chặn xoá — còn 3 user đang gán role này">
+              <svg class="icon icon-x" viewBox="0 0 24 24"><path d="M4 7 h16 M9 7 v-2 h6 v2 M6 7 l1 13 h10 l1 -13"/></svg>
+              Xác nhận Xoá
+            </button>
+            <button class="btn-secondary" onclick="closeModal('modal-delete-role')">Huỷ</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- SCREEN 5: MANAGE PERMISSION LIST SCREEN (read-only)        -->
+    <!-- ========================================================= -->
+    <section class="screen" id="permission-list">
+      <div class="topbar">
+        <div class="breadcrumb"><span class="crumb-group">Quản lý Người dùng Hệ thống</span> / Manage Permission List</div>
+        <div class="user-chip">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20 c0 -4.5 3.5 -7 8 -7 s8 2.5 8 7"/></svg>
+          Đỗ Minh Khôi
+        </div>
+      </div>
+      <div class="content">
+        <div class="page-header">
+          <div>
+            <h1 class="text-lg">Manage Permission List Screen</h1>
+            <div class="muted text-sm">UC-129 — Danh mục quyền cố định trong hệ thống (RBAC), chỉ đọc — không có nút Create/Edit/Delete</div>
+          </div>
+        </div>
+
+        <div class="filter-bar">
+          <wired-search-input placeholder="Tìm theo từ khoá..."></wired-search-input>
+          <wired-select selected="Tất cả Module">
+            <wired-item value="all">Tất cả Module</wired-item>
+            <wired-item value="user">User Management</wired-item>
+            <wired-item value="menu">Menu Management</wired-item>
+            <wired-item value="monitoring">System Monitoring</wired-item>
+          </wired-select>
+          <button class="btn-secondary" type="button">
+            <svg class="icon" viewBox="0 0 24 24" style="stroke:#333"><path d="M4 5 h16 M7 12 h10 M10 19 h4"/></svg>
+            Export Excel/CSV
+          </button>
+        </div>
+
+        <div class="table-wrap">
+          <table class="sketchy">
+            <thead>
+              <tr><th>Permission ID</th><th>Name</th><th>Module/Category</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>PERM-001</td>
+                <td>user.view</td>
+                <td>User Management</td>
+                <td>Xem danh sách và chi tiết tài khoản người dùng</td>
+              </tr>
+              <tr>
+                <td>PERM-002</td>
+                <td>user.manage</td>
+                <td>User Management</td>
+                <td>Tạo, chỉnh sửa, active/deactivate tài khoản người dùng</td>
+              </tr>
+              <tr>
+                <td>PERM-010</td>
+                <td>menu.view</td>
+                <td>Menu Management</td>
+                <td>Xem thực đơn đã đăng ký của trường</td>
+              </tr>
+              <tr>
+                <td>PERM-011</td>
+                <td>menu.approve</td>
+                <td>Menu Management</td>
+                <td>Duyệt hoặc từ chối thực đơn chờ phê duyệt</td>
+              </tr>
+              <tr>
+                <td>PERM-020</td>
+                <td>system.audit_log.view</td>
+                <td>System Monitoring</td>
+                <td>Xem nhật ký hoạt động (Audit Log) toàn hệ thống</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="text-xs muted" style="margin-top:10px;">Ghi chú: đây là danh mục cố định trong code (RBAC) — không tồn tại UC tạo/sửa permission nào; màn hình này chỉ phục vụ tra cứu trước khi gán vào Role.</div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  function showScreen(id){
+    document.querySelectorAll('.screen').forEach(function(el){ el.classList.remove('active'); });
+    var target = document.getElementById(id);
+    if(target){ target.classList.add('active'); }
+
+    document.querySelectorAll('.side-link:not(.disabled)').forEach(function(el){ el.classList.remove('active'); });
+    var links = document.querySelectorAll('.side-link:not(.disabled)');
+    // links order: [0]=Dashboard, [1]=User Account List, [2]=Role List, [3]=Manage Permission List
+    if(id === 'dashboard'){ links[0].classList.add('active'); }
+    else if(id === 'user-list'){ links[1].classList.add('active'); }
+    else if(id === 'role-list' || id === 'manage-role'){ links[2].classList.add('active'); }
+    else if(id === 'permission-list'){ links[3].classList.add('active'); }
+
+    window.scrollTo(0,0);
+  }
+
+  function openModal(id){ document.getElementById(id).classList.add('active'); }
+  function closeModal(id){ document.getElementById(id).classList.remove('active'); }
+
+  function toggleSchoolField(){
+    var role = document.getElementById('create-user-role').value;
+    var schoolBlock = document.getElementById('school-field-block');
+    var schoolRoles = ['school-admin', 'teacher'];
+    schoolBlock.style.display = schoolRoles.indexOf(role) !== -1 ? 'block' : 'none';
+  }
+
+  // ---- Active/Deactivate User Dialog ----
+  var deactivateScenarios = {
+    'admin-default': {
+      name: 'Đỗ Minh Khôi', email: 'khoi.dm@sfms.vn', role: 'System Admin',
+      from: 'Active', to: 'Inactive', blocked: true
+    },
+    'normal-active': {
+      name: 'Nguyễn Thị Hoa', email: 'hoa.nguyen@levantam.edu.vn', role: 'School Administration',
+      from: 'Active', to: 'Inactive', blocked: false
+    },
+    'normal-pending': {
+      name: 'Trần Văn An', email: 'an.tran@levantam.edu.vn', role: 'Teacher',
+      from: 'Pending', to: 'Inactive', blocked: false
+    },
+    'normal-inactive': {
+      name: 'Lê Thị Ngọc', email: 'ngoc.le@anlanh.vn', role: 'Service Caterers',
+      from: 'Inactive', to: 'Active', blocked: false
+    }
+  };
+
+  function openDeactivateDialog(key){
+    var s = deactivateScenarios[key];
+    var toBecomesInactive = s.to === 'Inactive';
+    var badgeClass = function(status){
+      if(status === 'Active') return 'badge-success';
+      if(status === 'Pending') return 'badge-warning';
+      return 'badge-danger';
+    };
+    var badgeIcon = function(status){
+      if(status === 'Active') return '<path d="M4 12 l5 5 11 -11"/>';
+      if(status === 'Pending') return '<path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/>';
+      return '<path d="M6 6 l12 12 M18 6 l-12 12"/>';
+    };
+
+    var html = '';
+    html += '<div class="modal-header">';
+    html += '<h2 class="text-md" style="margin:0;">Active/Deactivate User</h2>';
+    html += '<svg class="icon close-x" viewBox="0 0 24 24" onclick="closeModal(\'modal-deactivate-user\')"><path d="M6 6 l12 12 M18 6 l-12 12"/></svg>';
+    html += '</div>';
+
+    html += '<div class="info-row"><span class="text-sm muted">Họ tên</span><span class="text-sm">' + s.name + '</span></div>';
+    html += '<div class="info-row"><span class="text-sm muted">Email</span><span class="text-sm">' + s.email + '</span></div>';
+    html += '<div class="info-row"><span class="text-sm muted">Role</span><span class="text-sm">' + s.role + '</span></div>';
+
+    html += '<div style="display:flex; align-items:center; gap:10px; margin:16px 0;">';
+    html += '<span class="badge ' + badgeClass(s.from) + '"><svg class="icon" viewBox="0 0 24 24" style="width:14px;height:14px;">' + badgeIcon(s.from) + '</svg>' + s.from + '</span>';
+    html += '<svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px;"><path d="M5 12 h14 M13 6 l6 6 -6 6"/></svg>';
+    html += '<span class="badge ' + badgeClass(s.to) + '"><svg class="icon" viewBox="0 0 24 24" style="width:14px;height:14px;">' + badgeIcon(s.to) + '</svg>' + s.to + '</span>';
+    html += '</div>';
+
+    if(s.blocked){
+      html += '<div class="alert alert-danger" style="margin-bottom:14px;">';
+      html += '<svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9 l6 6 M15 9 l-6 6"/></svg>';
+      html += '<div class="text-sm"><strong>Chặn thao tác (BR-008):</strong> Đây là tài khoản System Admin mặc định duy nhất của hệ thống — không thể Deactivate. Vui lòng tạo thêm một tài khoản System Admin khác trước khi vô hiệu hoá tài khoản này.</div>';
+      html += '</div>';
+    } else if(toBecomesInactive){
+      html += '<div class="alert alert-warning" style="margin-bottom:14px;">';
+      html += '<svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/></svg>';
+      html += '<div class="text-sm">Deactivate sẽ hủy toàn bộ session hiện tại của user và gửi email thông báo cho họ (Normal Flow bước 6, BR-007).</div>';
+      html += '</div>';
+    }
+
+    html += '<div class="btn-row">';
+    if(s.blocked){
+      html += '<button class="btn-danger" disabled title="Chặn — tài khoản System Admin mặc định duy nhất">Xác nhận</button>';
+    } else if(toBecomesInactive){
+      html += '<button class="btn-danger" onclick="closeModal(\'modal-deactivate-user\')"><svg class="icon icon-x" viewBox="0 0 24 24"><path d="M6 6 l12 12 M18 6 l-12 12"/></svg>Xác nhận</button>';
+    } else {
+      html += '<button class="btn-primary" onclick="closeModal(\'modal-deactivate-user\')"><svg class="icon" viewBox="0 0 24 24"><path d="M4 12 l5 5 11 -11"/></svg>Xác nhận</button>';
+    }
+    html += '<button class="btn-secondary" onclick="closeModal(\'modal-deactivate-user\')">Huỷ</button>';
+    html += '</div>';
+    html += '<div class="text-xs muted" style="margin-top:10px;">Trạng thái Success: MSG-029 "Profile updated successfully." — đóng dialog, cập nhật badge trên User Account List.</div>';
+
+    document.getElementById('deactivate-content').innerHTML = html;
+    openModal('modal-deactivate-user');
+  }
+
+  // ---- Manage Role Screen (Sheet) ----
+  function openRoleSheet(mode){
+    var overlay = document.getElementById('role-sheet-overlay');
+    var title = document.getElementById('role-sheet-title');
+    var subtitle = document.getElementById('role-sheet-subtitle');
+    var nameInput = document.getElementById('role-name-input');
+    var warning = document.getElementById('role-default-warning');
+    var deleteBtn = document.getElementById('role-delete-btn');
+    var saveBtn = document.getElementById('role-save-btn');
+
+    if(mode === 'create'){
+      title.textContent = 'Tạo Role mới';
+      subtitle.textContent = 'UC-022 — Create Role';
+      nameInput.removeAttribute('disabled');
+      nameInput.value = '';
+      warning.style.display = 'none';
+      deleteBtn.style.display = 'none';
+      saveBtn.style.display = 'inline-flex';
+    } else if(mode === 'update-custom'){
+      title.textContent = 'Chỉnh sửa Role — Kiểm định viên An toàn';
+      subtitle.textContent = 'UC-098 — Update Role (role Custom)';
+      nameInput.removeAttribute('disabled');
+      nameInput.value = 'Kiểm định viên An toàn';
+      warning.style.display = 'none';
+      deleteBtn.style.display = 'inline-flex';
+      saveBtn.style.display = 'inline-flex';
+    } else if(mode === 'update-default'){
+      title.textContent = 'Xem/Chỉnh sửa Role — School Administration';
+      subtitle.textContent = 'UC-098 — Update Role (role Default, read-only tên)';
+      nameInput.setAttribute('disabled', 'true');
+      nameInput.value = 'School Administration';
+      warning.style.display = 'flex';
+      deleteBtn.style.display = 'none';
+      saveBtn.style.display = 'inline-flex';
+    } else if(mode === 'delete-custom'){
+      title.textContent = 'Chỉnh sửa Role — Kiểm định viên An toàn';
+      subtitle.textContent = 'UC-029 — Delete Role (role Custom)';
+      nameInput.removeAttribute('disabled');
+      nameInput.value = 'Kiểm định viên An toàn';
+      warning.style.display = 'none';
+      deleteBtn.style.display = 'inline-flex';
+      saveBtn.style.display = 'inline-flex';
+    }
+
+    overlay.classList.add('active');
+  }
+  function closeRoleSheet(){
+    document.getElementById('role-sheet-overlay').classList.remove('active');
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "java.configuration.updateBuildConfiguration": "disabled",
+  "java.autobuild.enabled": false,
+  "java.errors.incompleteClasspath.severity": "ignore",
+  "maven.validation.level": "off"
+}

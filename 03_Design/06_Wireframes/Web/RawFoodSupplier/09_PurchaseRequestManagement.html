@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>SFMS Wireframe — Raw Food Supplier: Purchase Request Management</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root{ --ink:#333; --gray:#777; --lightgray:#d7d7d7; --midgray:#aaa; }
+  * { box-sizing: border-box; } html { font-size: 18px; }
+  body { margin:0; font-family:'Patrick Hand', cursive; color:var(--ink); background-color:#f4f4f4; background-image: radial-gradient(#d7d7d7 1px, transparent 1px); background-size: 20px 20px; font-size:18px; }
+  .text-xs{font-size:14px;} .text-sm{font-size:18px;} .text-base{font-size:22px;} .text-md{font-size:28px;} .text-lg{font-size:35px;}
+  .app{display:flex;min-height:100vh;}
+  .sidebar{width:270px;min-width:270px;background:#eee;border-right:3px solid var(--ink);padding:18px 14px;position:sticky;top:0;height:100vh;overflow-y:auto;}
+  .brand{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .side-group-title{font-size:16px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin:14px 0 6px 4px;display:flex;align-items:center;gap:8px;}
+  .side-link{display:flex;align-items:center;gap:10px;padding:8px 10px;margin:2px 0;border-radius:255px 15px 225px 15px / 15px 225px 15px 255px;font-size:18px;cursor:pointer;}
+  .side-link:hover{background:#fff;border:2px dashed var(--midgray);}
+  .side-link.active{background:var(--ink);color:#fff;border:2px solid var(--ink);} .side-link.active svg{stroke:#fff;}
+  .side-link.disabled{color:var(--midgray);cursor:default;}
+  .side-note{font-size:13px;color:var(--midgray);margin-left:32px;}
+  .icon{width:20px;height:20px;flex:none;stroke:var(--ink);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  .main{flex:1;min-width:0;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 26px;border-bottom:3px solid var(--ink);background:#fafafa;}
+  .breadcrumb{font-size:20px;} .crumb-group{color:var(--gray);}
+  .content{padding:26px;}
+  .card{border:2px solid var(--ink);border-radius:255px 15px 225px 15px / 15px 225px 15px 255px;background:#fff;padding:18px;}
+  .card+.card{margin-top:18px;}
+  .btn-primary{background:#333;color:white;border:2px solid #333;border-radius:255px 15px 225px 15px / 15px 225px 15px 255px;font-family:'Patrick Hand',cursive;font-size:18px;padding:10px 22px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;}
+  .btn-primary svg{stroke:#fff;}
+  .btn-secondary{background:white;color:#333;border:2px solid #333;border-radius:255px 15px 225px 15px / 15px 225px 15px 255px;font-family:'Patrick Hand',cursive;font-size:18px;padding:10px 22px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;}
+  .btn-danger{background:white;color:#333;border:3px solid #333;border-radius:255px 15px 225px 15px / 15px 225px 15px 255px;font-family:'Patrick Hand',cursive;font-size:18px;padding:10px 22px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;}
+  .grid-12{display:grid;grid-template-columns:repeat(12,1fr);gap:18px;}
+  .col-4{grid-column:span 4;} .col-5{grid-column:span 5;} .col-7{grid-column:span 7;} .col-8{grid-column:span 8;} .col-12{grid-column:span 12;}
+  @media (max-width:980px){ .grid-12>[class*="col-"]{grid-column:span 12;} }
+  .badge{display:inline-flex;align-items:center;gap:6px;padding:3px 12px;font-size:16px;border-radius:255px 15px 225px 15px / 15px 225px 15px 255px;}
+  .badge-success{border:2px solid var(--ink);background:#fff;} .badge-warning{border:2px dashed var(--ink);background:#fff;} .badge-info{border:2px dotted var(--ink);background:#fff;}
+  .badge svg{width:15px;height:15px;}
+  table.sketchy{width:100%;border-collapse:separate;border-spacing:0;font-size:18px;}
+  table.sketchy th,table.sketchy td{text-align:left;padding:10px 12px;border-bottom:2px solid var(--lightgray);}
+  table.sketchy thead th{border-bottom:3px solid var(--ink);color:var(--gray);font-weight:normal;font-size:16px;text-transform:uppercase;}
+  table.sketchy tbody tr{cursor:pointer;} table.sketchy tbody tr:hover{background:#f2f2f2;}
+  .table-wrap{border:2px solid var(--ink);border-radius:255px 15px 225px 15px / 15px 225px 15px 255px;overflow:hidden;background:#fff;}
+  .table-wrap table.sketchy{margin:0;}
+  .filter-bar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:16px;}
+  .filter-bar wired-search-input{width:260px;} .filter-bar wired-select{width:200px;}
+  .screen{display:none;} .screen.active{display:block;}
+  .muted{color:var(--gray);} .section-title{display:flex;align-items:center;gap:8px;margin:0 0 12px 0;}
+  .counter-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:18px;}
+  .counter-card{flex:1;min-width:150px;text-align:center;}
+  .counter-value{font-size:35px;}
+  .empty-state{display:flex;flex-direction:column;align-items:center;gap:10px;padding:40px 20px;text-align:center;color:var(--gray);}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><svg class="icon" viewBox="0 0 24 24"><path d="M4 21 L4 9 L12 3 L20 9 L20 21 Z"/></svg><span class="text-md">SFMS</span></div>
+    <div class="side-note" style="margin-left:0;margin-bottom:14px;">Raw Food Supplier — Cty TNHH Rau Sạch Xanh</div>
+    <div class="side-group"><div class="side-group-title">Tổng quan</div><div class="side-link disabled">Supplier Dashboard</div><div class="side-note">(xem nhóm 01-03,07-08)</div></div>
+    <div class="side-group"><div class="side-group-title">Hợp tác với Trường</div><div class="side-link disabled">School Partnerships</div><div class="side-note">(xem nhóm 01-03,07-08)</div></div>
+    <div class="side-group">
+      <div class="side-group-title"><svg class="icon" viewBox="0 0 24 24"><path d="M3 3 h18 v18 h-18 z"/></svg>Đơn Mua hàng</div>
+      <div class="side-link active" onclick="showScreen('pr-entry')"><svg class="icon" viewBox="0 0 24 24"><path d="M3 3 h18 v18 h-18 z"/></svg>Purchase Requests</div>
+      <div class="side-link" onclick="showScreen('pr-list')"><svg class="icon" viewBox="0 0 24 24"><path d="M7 8 h10 M7 12 h10 M7 16 h6"/><rect x="3" y="3" width="18" height="18"/></svg>Purchase Request List</div>
+    </div>
+    <div class="side-group"><div class="side-group-title">Giao hàng</div><div class="side-link disabled">Deliveries</div><div class="side-note">(xem nhóm 18-24)</div></div>
+    <div class="side-group"><div class="side-group-title">Tuân thủ &amp; Chứng nhận</div><div class="side-link disabled">Compliance Documents</div><div class="side-note">(xem nhóm 04-06,25-26)</div></div>
+    <div class="side-group"><div class="side-group-title">Lô Nguyên liệu</div><div class="side-link disabled">Ingredient Batches</div><div class="side-note">(xem nhóm 12-17)</div></div>
+    <div class="side-group"><div class="side-group-title">Cá nhân</div><div class="side-link disabled">Profile / Notification</div></div>
+  </aside>
+  <div class="main">
+
+    <!-- ============ SCREEN 09: PURCHASE REQUESTS (entry) ============ -->
+    <section class="screen active" id="pr-entry">
+      <div class="topbar"><div class="breadcrumb"><span class="crumb-group">Đơn Mua hàng</span> / Material Order</div></div>
+      <div class="content">
+        <div class="counter-row">
+          <div class="card counter-card"><div class="counter-value">2</div><div class="muted text-sm">Awaiting confirmation</div></div>
+          <div class="card counter-card"><div class="counter-value">1</div><div class="muted text-sm">Scheduled</div></div>
+          <div class="card counter-card"><div class="counter-value">5</div><div class="muted text-sm">Delivery completed</div></div>
+        </div>
+        <button class="btn-primary" onclick="showScreen('pr-list')"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12 h14 M13 6 l6 6 -6 6"/></svg>Xem danh sách đầy đủ</button>
+        <div class="assumption" style="margin-top:12px;color:var(--gray);font-size:15px;border-left:3px dashed var(--midgray);padding:4px 10px;">[Giả định] Bộ đếm nhanh theo trạng thái là mở rộng nhẹ so với Report 3 gốc — xem Screen Spec 09_PurchaseRequests.md.</div>
+      </div>
+    </section>
+
+    <!-- ============ SCREEN 10: PURCHASE REQUEST LIST ============ -->
+    <section class="screen" id="pr-list">
+      <div class="topbar"><div class="breadcrumb"><span class="crumb-group">Đơn Mua hàng</span> / Purchase order list</div></div>
+      <div class="content">
+        <div class="filter-bar">
+          <wired-search-input placeholder="Tìm theo mã đơn..."></wired-search-input>
+          <wired-select><wired-item>Tất cả trạng thái</wired-item></wired-select>
+        </div>
+        <div class="table-wrap">
+          <table class="sketchy">
+            <thead><tr><th>Order code</th><th>Status</th><th>Source of request</th><th>Delivery date required</th></tr></thead>
+            <tbody>
+              <tr onclick="showScreen('pr-detail')"><td>PR-2026-0113</td><td><span class="badge badge-warning"><svg viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/></svg>Awaiting confirmation</span></td><td>Springfield Head Chef</td><td>05/07/2026, 06:00</td></tr>
+              <tr onclick="showScreen('pr-detail')"><td>PR-2026-0098</td><td><span class="badge badge-success"><svg viewBox="0 0 24 24"><path d="M4 12 l5 5 L20 6"/></svg>Delivery completed</span></td><td>Lincoln Kitchen Manager</td><td>28/06/2026, 06:00</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SCREEN 11: PURCHASE REQUEST DETAIL ============ -->
+    <section class="screen" id="pr-detail">
+      <div class="topbar">
+        <div class="breadcrumb"><span class="crumb-group">Đơn Mua hàng</span> / PR-2026-0113</div>
+        <svg class="icon" viewBox="0 0 24 24" onclick="showScreen('pr-list')"><path d="M15 6 l-6 6 6 6"/></svg>
+      </div>
+      <div class="content">
+        <div class="grid-12">
+          <div class="col-4">
+            <div class="card">
+              <table class="sketchy">
+                <tr><td class="muted">Order number</td><td>PR-2026-0113</td></tr>
+                <tr><td class="muted">Recipient</td><td>Trường Tiểu học Springfield — Canteen A</td></tr>
+                <tr><td class="muted">Delivery deadline</td><td>05/07/2026, trước 06:00 — bắt buộc đúng khung giờ vận hành bếp</td></tr>
+              </table>
+            </div>
+          </div>
+          <div class="col-8">
+            <div class="card">
+              <div class="section-title text-base">List of ingredients to order</div>
+              <div class="table-wrap">
+                <table class="sketchy">
+                  <thead><tr><th>Ingredient</th><th>Khối lượng yêu cầu</th><th>Mã lô/lot dự kiến</th></tr></thead>
+                  <tbody>
+                    <tr><td>Rau cải xanh</td><td>25 kg</td><td>—</td></tr>
+                    <tr><td>Cà rốt</td><td>15 kg</td><td>—</td></tr>
+                    <tr><td>Thịt heo nạc</td><td>30 kg</td><td>—</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="btn-row" style="margin-top:16px;">
+          <button class="btn-primary" onclick="alert('Điều hướng: Confirm Delivery Schedule (nhóm 18-24)')"><svg class="icon" viewBox="0 0 24 24"><path d="M4 12 l5 5 L20 6"/></svg>Accept</button>
+          <button class="btn-danger" onclick="openModal('modal-reject')"><svg class="icon" viewBox="0 0 24 24"><path d="M6 6 l12 12 M18 6 l-12 12"/></svg>Reject</button>
+        </div>
+      </div>
+
+      <div class="modal-overlay" id="modal-reject" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);align-items:center;justify-content:center;z-index:50;padding:20px;">
+        <div class="modal-box" style="width:100%;max-width:520px;background:#fff;border:3px solid var(--ink);border-radius:255px 15px 225px 15px / 15px 225px 15px 255px;padding:22px;">
+          <h2 class="text-md">Xác nhận Reject — PR-2026-0113</h2>
+          <div style="font-size:15px;color:var(--gray);border-left:3px dashed var(--midgray);padding:4px 10px;margin-bottom:10px;">[Giả định — cần team xác nhận] có bắt buộc nhập lý do từ chối hay không.</div>
+          <div class="field-block" style="margin-bottom:14px;"><wired-textarea placeholder="Lý do từ chối (tuỳ chọn/bắt buộc — chờ xác nhận)..." rows="3" style="width:100%;"></wired-textarea></div>
+          <div class="btn-row">
+            <button class="btn-danger" onclick="closeModal('modal-reject'); showScreen('pr-list');">Xác nhận Reject</button>
+            <button class="btn-secondary" onclick="closeModal('modal-reject')">Huỷ</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+<script>
+  function showScreen(id){
+    document.querySelectorAll('.screen').forEach(function(el){ el.classList.remove('active'); });
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.side-link:not(.disabled)').forEach(function(el){ el.classList.remove('active'); });
+    var links = document.querySelectorAll('.side-link:not(.disabled)');
+    var map = { 'pr-entry':0, 'pr-list':1, 'pr-detail':1 };
+    if(map[id] !== undefined){ links[map[id]].classList.add('active'); }
+    window.scrollTo(0,0);
+  }
+  function openModal(id){ document.getElementById(id).style.display='flex'; }
+  function closeModal(id){ document.getElementById(id).style.display='none'; }
+</script>
+</body>
+</html>

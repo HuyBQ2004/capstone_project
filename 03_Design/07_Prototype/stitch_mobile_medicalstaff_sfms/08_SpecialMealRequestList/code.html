@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Danh sách suất ăn</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-fixed-variant": "#3d4947",
+                      "primary-fixed": "#b9eaff",
+                      "primary": "#005a71",
+                      "on-tertiary-container": "#e2efec",
+                      "on-surface": "#191c1e",
+                      "secondary-container": "#d0e1fb",
+                      "on-secondary-container": "#54647a",
+                      "inverse-surface": "#2d3133",
+                      "on-tertiary": "#ffffff",
+                      "tertiary": "#495553",
+                      "tertiary-fixed-dim": "#bcc9c6",
+                      "on-primary": "#ffffff",
+                      "surface-bright": "#f7f9fb",
+                      "error": "#ba1a1a",
+                      "background": "#f7f9fb",
+                      "outline-variant": "#bec8cd",
+                      "on-primary-fixed-variant": "#004d62",
+                      "error-container": "#ffdad6",
+                      "primary-container": "#0e7490",
+                      "outline": "#6f787d",
+                      "on-tertiary-fixed": "#121e1c",
+                      "surface-container-high": "#e6e8ea",
+                      "tertiary-fixed": "#d8e5e2",
+                      "tertiary-container": "#616d6b",
+                      "surface-tint": "#006781",
+                      "secondary": "#505f76",
+                      "surface": "#f7f9fb",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "on-primary-fixed": "#001f29",
+                      "inverse-on-surface": "#eff1f3",
+                      "on-secondary": "#ffffff",
+                      "surface-container": "#eceef0",
+                      "on-background": "#191c1e",
+                      "surface-container-low": "#f2f4f6",
+                      "on-surface-variant": "#3f484c",
+                      "surface-container-highest": "#e0e3e5",
+                      "on-primary-container": "#d3f1ff",
+                      "primary-fixed-dim": "#81d1f0",
+                      "on-error": "#ffffff",
+                      "surface-dim": "#d8dadc",
+                      "secondary-fixed": "#d3e4fe",
+                      "surface-container-lowest": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "inverse-primary": "#81d1f0",
+                      "surface-variant": "#e0e3e5",
+                      "on-secondary-fixed": "#0b1c30",
+                      // Custom status colors requested by prompt that aren't strictly in theme but needed for 'yellow' and 'green' labels
+                      "status-pending-bg": "#fef08a", // yellow-200 equivalent
+                      "status-pending-text": "#854d0e", // yellow-800 equivalent
+                      "status-approved-bg": "#bbf7d0", // green-200 equivalent
+                      "status-approved-text": "#166534" // green-800 equivalent
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "xs": "4px",
+                      "sm": "8px",
+                      "lg": "24px",
+                      "xl": "32px",
+                      "margin-mobile": "16px",
+                      "md": "16px",
+                      "margin-tablet": "24px",
+                      "base": "4px"
+              },
+              "fontFamily": {
+                      "title-lg": ["Be Vietnam Pro"],
+                      "label-lg": ["Be Vietnam Pro"],
+                      "label-sm": ["Be Vietnam Pro"],
+                      "headline-lg": ["Be Vietnam Pro"],
+                      "headline-md": ["Be Vietnam Pro"],
+                      "body-md": ["Be Vietnam Pro"],
+                      "headline-lg-mobile": ["Be Vietnam Pro"],
+                      "body-lg": ["Be Vietnam Pro"]
+              },
+              "fontSize": {
+                      "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["26px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+      </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+      </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col antialiased">
+<!-- App Bar (TopAppBar - Reinterpreted for Sub-page/Linear flow with Back Button) -->
+<header class="bg-surface h-14 w-full flex items-center justify-between px-margin-mobile sticky top-0 z-40">
+<button class="text-primary p-2 -ml-2 rounded-full hover:bg-surface-container-high transition-colors duration-200 flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-on-surface text-center flex-1 pr-10">Danh sách suất ăn</h1>
+</header>
+<!-- Main Content -->
+<main class="flex-1 pb-[90px]"> <!-- padding bottom to account for optional nav if it were present, or just breathing room -->
+<!-- Search Bar Section -->
+<div class="px-margin-mobile py-sm">
+<div class="relative w-full">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline" style="font-variation-settings: 'FILL' 0;">search</span>
+</div>
+<input class="w-full pl-10 pr-4 py-3 bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" placeholder="Tìm theo tên học sinh hoặc lớp..." type="text"/>
+</div>
+</div>
+<!-- Tabs -->
+<div class="px-margin-mobile pt-sm pb-md border-b border-surface-variant">
+<div class="flex space-x-2">
+<button class="flex-1 py-2 px-4 rounded-full bg-primary-container text-on-primary-container font-label-lg text-label-lg transition-colors text-center whitespace-nowrap overflow-hidden text-ellipsis">
+                    Chờ duyệt
+                </button>
+<button class="flex-1 py-2 px-4 rounded-full bg-surface-container-high text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-container-highest transition-colors text-center whitespace-nowrap overflow-hidden text-ellipsis">
+                    Đã duyệt
+                </button>
+</div>
+</div>
+<!-- List Content (Pending - Active Tab) -->
+<div class="px-margin-mobile py-md space-y-4">
+<!-- List Item 1: Pending -->
+<div class="bg-surface-container-lowest rounded-lg p-md shadow-[0_2px_8px_rgba(14,116,144,0.04)] border border-surface-variant flex flex-col gap-sm relative overflow-hidden transition-all hover:bg-surface-bright">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center shrink-0 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A small, soft-lit profile avatar portrait of a 7-year-old Vietnamese boy with neat short hair, smiling gently. The background is a pale, neutral teal color. Clean, professional school medical portal aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqfvtUhygWfwlc99QPgd6SbHX8py9Qh-y-npVrPAZU5q1qJP-YTydTNBcF0OsIm4T86iqZoWhAk6lJhQrW3CeSeWOGyPU2FupCVm_7CbaFojqoM55FtMxSbk3qcgO0z1_b7nB-jsvzN1u9RoB0FlOwoRzpPOEit06OTs6c2i88lMDDBEAW3CmUf6vGKqN1aDqsDKgG9gAA_yjpyuqe_Zctbcnk3XNaOIfc0kagKPdIB7gNqckaDHeNJoa85cGbhTnFC8zRYG1YGRA"/>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface line-clamp-1">Nguyễn Văn An</h3>
+<p class="font-body-md text-body-md text-secondary">Lớp 2A • MSHS: 20230101</p>
+</div>
+</div>
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-status-pending-bg text-status-pending-text font-label-sm text-label-sm whitespace-nowrap ml-2">
+                        Chờ duyệt
+                    </span>
+</div>
+<div class="mt-xs pt-xs border-t border-surface-variant flex flex-col gap-xs">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">restaurant_menu</span>
+<span class="font-body-md text-body-md">Suất ăn kiêng: Không hải sản</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">calendar_month</span>
+<span class="font-body-md text-body-md">Từ: 15/10/2023 - 30/11/2023</span>
+</div>
+</div>
+</div>
+<!-- List Item 2: Pending -->
+<div class="bg-surface-container-lowest rounded-lg p-md shadow-[0_2px_8px_rgba(14,116,144,0.04)] border border-surface-variant flex flex-col gap-sm relative overflow-hidden transition-all hover:bg-surface-bright">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center shrink-0 overflow-hidden">
+<span class="material-symbols-outlined text-on-secondary-container" style="font-variation-settings: 'FILL' 1;">person</span>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface line-clamp-1">Trần Thị Bé</h3>
+<p class="font-body-md text-body-md text-secondary">Lớp 1B • MSHS: 20240052</p>
+</div>
+</div>
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-status-pending-bg text-status-pending-text font-label-sm text-label-sm whitespace-nowrap ml-2">
+                        Chờ duyệt
+                    </span>
+</div>
+<div class="mt-xs pt-xs border-t border-surface-variant flex flex-col gap-xs">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">restaurant_menu</span>
+<span class="font-body-md text-body-md">Suất ăn chay</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">calendar_month</span>
+<span class="font-body-md text-body-md">Cả năm học</span>
+</div>
+</div>
+</div>
+<!-- List Item 3: Approved (Shown here just for visual variety although technically it would be under the other tab, standard practice to show empty state or mixed if filtering) -->
+<div class="bg-surface-container-lowest rounded-lg p-md shadow-[0_2px_8px_rgba(14,116,144,0.04)] border border-surface-variant flex flex-col gap-sm relative overflow-hidden transition-all hover:bg-surface-bright opacity-80">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center shrink-0 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A small, soft-lit profile avatar portrait of a 10-year-old Vietnamese girl with glasses, smiling. The background is a pale, neutral teal color. Clean, professional school medical portal aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQv8_lO4UjTf-I4fvC82eQ10KXl9WA_myk3K1ng8DNdeKid9G2qZoJX_GmQpIUCq7fgRl9FlGi52q6AUPQ-HMY129RxMcCLvZsYmd47wMyDfvIQrfe6pPt9RPxSLbviJJveYEPUa3M2Z9XoU3r_Osj0JCcgeJ3T-Y285YVkK6R0cWMg2vo-6jTuMYW86r9uqKn6rPapW8p_RnqxSNSAO5Zhf6_ImoUSw6h7BmMSPWybKLQX5JuWIGAWG6XdEvyXjT-z_m-oZl1OQg"/>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface line-clamp-1">Lê Hoàng Nam</h3>
+<p class="font-body-md text-body-md text-secondary">Lớp 5C • MSHS: 20200891</p>
+</div>
+</div>
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-status-approved-bg text-status-approved-text font-label-sm text-label-sm whitespace-nowrap ml-2">
+                        Đã duyệt
+                    </span>
+</div>
+<div class="mt-xs pt-xs border-t border-surface-variant flex flex-col gap-xs">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">restaurant_menu</span>
+<span class="font-body-md text-body-md">Dị ứng đậu phộng</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">calendar_month</span>
+<span class="font-body-md text-body-md">Cả năm học</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Suppressed Bottom Navigation because this is a sub-page with a Back button flow, focusing on a specific task list -->
+</body></html>

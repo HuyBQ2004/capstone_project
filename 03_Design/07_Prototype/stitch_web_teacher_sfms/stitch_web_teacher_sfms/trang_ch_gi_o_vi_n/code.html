@@ -1,0 +1,440 @@
+<!DOCTYPE html><html class="light" lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>SFMS - Bảng điều khiển Giáo viên</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#191c1e",
+                    "primary": "#005a71",
+                    "inverse-primary": "#81d1f0",
+                    "on-surface": "#0b1c30",
+                    "outline-variant": "#bec8cd",
+                    "on-primary": "#ffffff",
+                    "background": "#f8f9ff",
+                    "on-primary-container": "#d3f1ff",
+                    "on-surface-variant": "#3f484c",
+                    "error-container": "#ffdad6",
+                    "inverse-surface": "#213145",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "on-background": "#0b1c30",
+                    "surface-bright": "#f8f9ff",
+                    "outline": "#6f787d",
+                    "primary-fixed": "#b9eaff",
+                    "on-primary-fixed": "#001f29",
+                    "tertiary-container": "#686b6d",
+                    "tertiary": "#505355",
+                    "surface": "#f8f9ff",
+                    "secondary-fixed": "#d8e3fb",
+                    "surface-container-low": "#eff4ff",
+                    "secondary": "#545f73",
+                    "surface-variant": "#d3e4fe",
+                    "on-error": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-container": "#586377",
+                    "surface-tint": "#006781",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-container": "#eaecee",
+                    "tertiary-fixed-dim": "#c4c7c9",
+                    "secondary-container": "#d5e0f8",
+                    "primary-fixed-dim": "#81d1f0",
+                    "secondary-fixed-dim": "#bcc7de",
+                    "surface-container": "#e5eeff",
+                    "surface-dim": "#cbdbf5",
+                    "inverse-on-surface": "#eaf1ff",
+                    "primary-container": "#0e7490",
+                    "on-primary-fixed-variant": "#004d62",
+                    "on-tertiary-fixed-variant": "#444749",
+                    "surface-container-high": "#dce9ff",
+                    "on-error-container": "#93000a",
+                    "on-secondary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#111c2d",
+                    "tertiary-fixed": "#e0e3e5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "unit": "4px",
+                    "container-padding": "24px",
+                    "max-width-desktop": "1440px",
+                    "stack-lg": "32px",
+                    "stack-sm": "8px",
+                    "stack-md": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Be Vietnam Pro"],
+                    "headline-md": ["Be Vietnam Pro"],
+                    "display-lg": ["Be Vietnam Pro"],
+                    "title-sm": ["Be Vietnam Pro"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .bento-card {
+            background: #ffffff;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+        .bento-card:hover {
+            border-color: #0e7490;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-0 z-50 flex justify-between items-center px-container-padding h-16 bg-surface shadow-sm">
+<div class="flex items-center gap-4">
+<span class="text-title-sm font-title-sm text-primary font-bold">SFMS</span>
+<div class="hidden md:flex bg-surface-container-low rounded-full px-4 py-1.5 items-center gap-2 border border-outline-variant">
+<span class="material-symbols-outlined text-outline">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-sm w-64" placeholder="Tìm kiếm học sinh..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-colors relative">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant">
+<div class="text-right hidden sm:block">
+<p class="font-bold text-body-sm text-on-surface">Nguyễn Văn A</p>
+<p class="text-[12px] text-on-surface-variant">Phòng Y tế</p>
+</div>
+<span class="material-symbols-outlined text-4xl text-primary">account_circle</span>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-72 flex flex-col p-stack-md bg-surface-container-lowest border-r border-outline-variant hidden md:flex z-40 pt-20">
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-primary font-bold bg-secondary-container rounded-lg transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Bảng điều khiển</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-md text-body-md">Danh sách học sinh</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">restaurant</span>
+<span class="font-body-md text-body-md">Bữa ăn đặc biệt</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-body-md text-body-md">Ghi chép bữa ăn</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 space-y-1 border-t border-outline-variant">
+<button class="w-full flex items-center justify-center gap-2 py-3 bg-primary text-on-primary rounded-xl font-bold shadow-md hover:bg-primary-container transition-colors mb-4">
+<span class="material-symbols-outlined">add_circle</span>
+<span>Ghi nhận nhanh</span>
+</button>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md">Cài đặt</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-error hover:bg-error-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body-md text-body-md">Đăng xuất</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-72 pt-24 px-container-padding pb-12">
+<div class="max-w-max-width-desktop mx-auto">
+<!-- Welcome Banner -->
+<section class="relative overflow-hidden rounded-2xl mb-8 bg-primary-container p-8 flex flex-col md:flex-row justify-between items-center border border-primary/20">
+<div class="relative z-10 text-center md:text-left">
+<h1 class="font-display-lg text-display-lg text-on-primary-container mb-2">Chào buổi sáng, GV. Nguyễn Văn A!</h1>
+<p class="text-body-md text-on-primary-container/80 max-w-xl">Hệ thống ghi nhận 2 học sinh cần theo dõi y tế đặc biệt trong sáng nay. Hãy kiểm tra danh sách bữa ăn trước 10:30.</p>
+</div>
+<div class="mt-6 md:mt-0 relative z-10">
+<div class="flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full border border-white/30 text-on-primary-container">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-bold">Thứ Hai, 22 Tháng 5, 2024</span>
+</div>
+</div>
+<!-- Subtle decorative background element -->
+<div class="absolute -right-20 -top-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
+</section>
+<!-- Metric Cards Bento Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter mb-8">
+<!-- Card 1 -->
+<div class="bento-card p-6 rounded-xl border-l-4 border-l-primary">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-surface-container rounded-lg">
+<span class="material-symbols-outlined text-primary">group</span>
+</div>
+<span class="text-[12px] font-bold text-outline uppercase tracking-wider">Học sinh</span>
+</div>
+<p class="text-display-lg-mobile font-bold text-on-surface">35</p>
+<p class="text-body-sm text-on-surface-variant">Tổng số học sinh lớp</p>
+</div>
+<!-- Card 2 -->
+<div class="bento-card p-6 rounded-xl border-l-4 border-l-secondary">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-secondary-container rounded-lg">
+<span class="material-symbols-outlined text-secondary">restaurant</span>
+</div>
+<span class="text-[12px] font-bold text-outline uppercase tracking-wider">Phục vụ</span>
+</div>
+<p class="text-display-lg-mobile font-bold text-on-surface">12</p>
+<p class="text-body-sm text-on-surface-variant">Bữa ăn đang chờ</p>
+</div>
+<!-- Card 3 -->
+<div class="bento-card p-6 rounded-xl border-l-4 border-l-[#F59E0B]">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-[#FEF3C7] rounded-lg">
+<span class="material-symbols-outlined text-[#D97706]">medical_information</span>
+</div>
+<span class="text-[12px] font-bold text-outline uppercase tracking-wider">Ăn kiêng</span>
+</div>
+<p class="text-display-lg-mobile font-bold text-on-surface">5</p>
+<p class="text-body-sm text-on-surface-variant">Ghi chú ăn kiêng</p>
+</div>
+<!-- Card 4 -->
+<div class="bento-card p-6 rounded-xl border-l-4 border-l-error">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-error-container rounded-lg">
+<span class="material-symbols-outlined text-error">emergency</span>
+</div>
+<span class="text-[12px] font-bold text-outline uppercase tracking-wider">Cảnh báo</span>
+</div>
+<p class="text-display-lg-mobile font-bold text-error">2</p>
+<p class="text-body-sm text-on-surface-variant">Sự cố sức khỏe</p>
+</div>
+</div>
+<!-- Main Layout: Timeline & Table -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Bảng tin hôm nay (Announcements) -->
+<div class="lg:col-span-1 space-y-gutter">
+<section class="bento-card p-6 rounded-2xl h-full">
+<div class="flex items-center justify-between mb-6">
+<h2 class="font-title-sm text-title-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">campaign</span>
+                                Bảng tin hôm nay
+                            </h2>
+<button class="text-body-sm text-primary font-bold">Tất cả</button>
+</div>
+<div class="space-y-4">
+<!-- Update 1 -->
+<div class="p-4 bg-surface-container-low rounded-xl border border-outline-variant hover:border-primary transition-colors cursor-pointer group">
+<div class="flex justify-between items-center mb-2">
+<span class="text-label-caps text-primary bg-primary-fixed px-2 py-0.5 rounded">HÀNH CHÍNH</span>
+<span class="text-[12px] text-on-surface-variant">08:15</span>
+</div>
+<h3 class="font-bold text-body-md group-hover:text-primary transition-colors">Cập nhật thực đơn tuần sau</h3>
+<p class="text-body-sm text-on-surface-variant mt-1">Đã có thực đơn chi tiết cho tuần cuối tháng 5...</p>
+</div>
+<!-- Update 2 -->
+<div class="p-4 bg-surface-container-low rounded-xl border border-outline-variant hover:border-primary transition-colors cursor-pointer group">
+<div class="flex justify-between items-center mb-2">
+<span class="text-label-caps text-error bg-error-container px-2 py-0.5 rounded">KHẨN CẤP</span>
+<span class="text-[12px] text-on-surface-variant">07:45</span>
+</div>
+<h3 class="font-bold text-body-md group-hover:text-primary transition-colors">Cảnh báo dị ứng mới (Lớp 2A)</h3>
+<p class="text-body-sm text-on-surface-variant mt-1">Học sinh Lê Văn B mới phát hiện dị ứng với đậu phộng...</p>
+</div>
+<!-- Update 3 -->
+<div class="p-4 bg-surface-container-low rounded-xl border border-outline-variant hover:border-primary transition-colors cursor-pointer group">
+<div class="flex justify-between items-center mb-2">
+<span class="text-label-caps text-secondary bg-secondary-container px-2 py-0.5 rounded">LỊCH HỌC</span>
+<span class="text-[12px] text-on-surface-variant">Hôm qua</span>
+</div>
+<h3 class="font-bold text-body-md group-hover:text-primary transition-colors">Kiểm tra sức khỏe định kỳ</h3>
+<p class="text-body-sm text-on-surface-variant mt-1">Phòng Y tế sẽ bắt đầu kiểm tra từ thứ Tư tới.</p>
+</div>
+</div>
+</section>
+</div>
+<!-- Active Monitoring / Recent Activity -->
+<div class="lg:col-span-2">
+<section class="bento-card rounded-2xl overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex items-center justify-between">
+<h2 class="font-title-sm text-title-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">monitoring</span>
+                                Theo dõi bữa ăn gần đây
+                            </h2>
+<div class="flex gap-2">
+<span class="flex items-center gap-1 text-[12px] text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-error"></span> Dị ứng
+                                </span>
+<span class="flex items-center gap-1 text-[12px] text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-[#F59E0B]"></span> Ăn kiêng
+                                </span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low">
+<tr>
+<th class="px-6 py-4 font-bold text-label-caps text-on-surface-variant">Học sinh</th>
+<th class="px-6 py-4 font-bold text-label-caps text-on-surface-variant">Tình trạng</th>
+<th class="px-6 py-4 font-bold text-label-caps text-on-surface-variant">Ghi chú y tế</th>
+<th class="px-6 py-4 font-bold text-label-caps text-on-surface-variant">Hành động</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary font-bold">TM</div>
+<div>
+<p class="font-bold text-body-sm">Trần Minh Mẫn</p>
+<p class="text-[12px] text-on-surface-variant">Lớp 1B - ID: 4421</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-error/10 text-error text-[12px] font-bold inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">warning</span> Dị ứng hải sản
+                                            </span>
+</td>
+<td class="px-6 py-4 text-body-sm text-on-surface-variant">
+                                            Thay thế bằng thịt heo/gà
+                                        </td>
+<td class="px-6 py-4">
+<button class="p-2 hover:bg-primary-container/20 rounded-full text-primary">
+<span class="material-symbols-outlined">edit_square</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center text-secondary font-bold">HL</div>
+<div>
+<p class="font-bold text-body-sm">Hoàng Lan Anh</p>
+<p class="text-[12px] text-on-surface-variant">Lớp 3A - ID: 4402</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-[#FEF3C7] text-[#D97706] text-[12px] font-bold inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">flatware</span> Ăn chay
+                                            </span>
+</td>
+<td class="px-6 py-4 text-body-sm text-on-surface-variant">
+                                            Không trứng và sữa
+                                        </td>
+<td class="px-6 py-4">
+<button class="p-2 hover:bg-primary-container/20 rounded-full text-primary">
+<span class="material-symbols-outlined">edit_square</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-tertiary font-bold">QH</div>
+<div>
+<p class="font-bold text-body-sm">Quốc Huy</p>
+<p class="text-[12px] text-on-surface-variant">Lớp 2C - ID: 4398</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full border border-outline-variant text-on-surface-variant text-[12px] font-bold">Bình thường</span>
+</td>
+<td class="px-6 py-4 text-body-sm text-on-surface-variant">
+                                            -
+                                        </td>
+<td class="px-6 py-4">
+<button class="p-2 hover:bg-primary-container/20 rounded-full text-primary">
+<span class="material-symbols-outlined">edit_square</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 bg-surface-container-low text-center">
+<button class="text-body-sm text-primary font-bold hover:underline">Xem thêm 32 học sinh khác</button>
+</div>
+</section>
+<!-- Feature Cards (Quick Actions) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter mt-gutter">
+<div class="bento-card p-6 rounded-2xl flex items-center gap-4 group cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined">history</span>
+</div>
+<div>
+<h4 class="font-bold text-body-md">Lịch sử ghi chép</h4>
+<p class="text-body-sm text-on-surface-variant">Xem lại các bữa ăn và báo cáo y tế cũ</p>
+</div>
+</div>
+<div class="bento-card p-6 rounded-2xl flex items-center gap-4 group cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all">
+<span class="material-symbols-outlined">description</span>
+</div>
+<div>
+<h4 class="font-bold text-body-md">Báo cáo tuần</h4>
+<p class="text-body-sm text-on-surface-variant">Xuất file PDF tổng hợp dinh dưỡng lớp</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-surface border-t border-outline-variant flex items-center justify-around z-50">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-bold">Bảng tin</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[10px] font-bold">Học sinh</span>
+</button>
+<button class="bg-primary text-on-primary w-12 h-12 rounded-full -mt-8 shadow-lg flex items-center justify-center">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">restaurant</span>
+<span class="text-[10px] font-bold">Bữa ăn</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-bold">Cài đặt</span>
+</button>
+</nav>
+<script>
+        // Micro-interactions for dashboard cards
+        document.querySelectorAll('.bento-card').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98)';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

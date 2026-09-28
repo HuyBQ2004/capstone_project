@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Wireframe — Special Meal Approval (Medical Staff, Mobile)</title>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<style>
+  * { box-sizing:border-box; } html{font-size:18px;}
+  body { margin:0; font-family:'Patrick Hand',cursive; color:#333; background-image: radial-gradient(#d7d7d7 1px, transparent 1px); background-size:20px 20px; display:flex; flex-direction:column; align-items:center; padding:20px 10px 60px; }
+  .demo-nav { display:flex; gap:6px; flex-wrap:wrap; justify-content:center; margin-bottom:16px; }
+  .demo-nav button { font-size:12px; background:white; border:2px solid #333; border-radius:10px; padding:5px 8px; cursor:pointer; }
+  .demo-nav button.active { background:#333; color:white; }
+  .phone { width:390px; max-width:100%; min-height:760px; background:white; border:3px solid #333; border-radius:32px; overflow:hidden; position:relative; }
+  .screen { display:none; flex-direction:column; min-height:760px; } .screen.visible { display:flex; }
+  .appbar { display:flex; align-items:center; gap:10px; padding:14px; border-bottom:2px solid #333; }
+  .appbar .title { font-size:19px; flex:1; text-align:center; } .appbar .icon-slot { width:24px; }
+  .content { padding:16px 18px 30px; flex:1; overflow:auto; }
+  .tabs { display:flex; gap:6px; margin-bottom:10px; }
+  .tab-btn { flex:1; text-align:center; border:2px solid #333; border-radius:10px; padding:6px; cursor:pointer; background:white; font-size:14px; }
+  .tab-btn.active { background:#333; color:white; }
+  .list-card { border:2px solid #333; border-radius:12px; padding:10px 12px; margin-bottom:10px; cursor:pointer; }
+  .badge { display:inline-flex; gap:4px; align-items:center; padding:2px 8px; border-radius:8px; font-size:12px; border:2px dashed #333; }
+  .field-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px dashed #ccc; font-size:14px; }
+  .doc-preview { border:2px dashed #333; border-radius:10px; padding:18px; text-align:center; color:#666; font-size:13px; margin:10px 0; }
+  .btn-primary { background:#333; color:white; border:2px solid #333; border-radius:255px 15px 225px 15px/15px 225px 15px 255px; font-family:'Patrick Hand',cursive; font-size:16px; padding:10px; cursor:pointer; width:100%; margin-top:8px; }
+  .btn-secondary { background:white; color:#333; border:2px solid #333; border-radius:255px 15px 225px 15px/15px 225px 15px 255px; font-family:'Patrick Hand',cursive; font-size:16px; padding:10px; cursor:pointer; width:100%; margin-top:8px; }
+  .sheet-backdrop { display:none; position:absolute; inset:0; background:rgba(0,0,0,.2); z-index:8; }
+  .sheet-backdrop.show { display:block; }
+  .bottom-sheet { display:none; position:absolute; left:0; right:0; bottom:0; background:white; border:2px solid #333; border-radius:20px 20px 0 0; padding:18px; z-index:9; }
+  .bottom-sheet.show { display:block; }
+  textarea { width:100%; border:2px solid #333; border-radius:8px; padding:6px; font-family:'Patrick Hand',cursive; font-size:15px; }
+  .field { margin-bottom:10px; } .field label { display:block; margin-bottom:4px; font-size:13px; }
+  .icon { width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; }
+  .toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#333; color:white; padding:10px 18px; border-radius:10px; display:none; align-items:center; gap:8px; z-index:20; }
+  .toast.show { display:flex; }
+</style>
+</head>
+<body>
+
+<svg style="display:none">
+  <symbol id="ic-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-linecap="round"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24"><path d="M4 12l6 6L20 6" stroke-linecap="round"/></symbol>
+  <symbol id="ic-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></symbol>
+  <symbol id="ic-file" viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5"/></symbol>
+</svg>
+
+<div class="demo-nav">
+  <button data-go="screen-list" class="active">1. List</button>
+  <button data-go="screen-review">2. Review</button>
+</div>
+
+<div class="phone">
+  <!-- 08 Special Meal Request List -->
+  <div class="screen visible" id="screen-list">
+    <div class="appbar"><span class="title">Special Meal</span></div>
+    <div class="content">
+      <div class="tabs"><div class="tab-btn active">Awaiting approval (2)</div><div class="tab-btn">Approved</div></div>
+      <div class="list-card" onclick="showScreen('screen-review')">
+        <b>Đặng Thu Hà — 4B</b> <span class="badge">Needs Approval</span>
+        <div>Purely vegetarian menu — Religion</div>
+      </div>
+      <div class="list-card" onclick="showScreen('screen-review')">
+        <b>Ngô Tấn Phát — 5A</b> <span class="badge">Needs Approval</span>
+        <div>Gluten-Free — Voluntary</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 07 Review Special Meal Request -->
+  <div class="screen" id="screen-review">
+    <div class="appbar"><span data-go="screen-list" class="icon-slot"><svg class="icon"><use href="#ic-back"/></svg></span><span class="title">Đặng Thu Hà — 4B</span><span class="icon-slot"></span></div>
+    <div class="content">
+      <div class="field-row"><span>Dietary type</span><span>Purely vegetarian menu</span></div>
+      <div class="field-row"><span>Duration</span><span>Học kỳ 2</span></div>
+      <div class="field-row"><span>Medical justification</span><span>Theo tôn giáo gia đình</span></div>
+      <div class="doc-preview"><svg class="icon" style="width:20px;height:20px"><use href="#ic-file"/></svg><br>[Image Placeholder]</div>
+      <button class="btn-primary" onclick="openSheet('modal-approve')">Approve</button>
+      <button class="btn-secondary" onclick="openSheet('modal-reject')">Reject</button>
+    </div>
+
+    <div class="sheet-backdrop" id="backdrop" onclick="closeSheet()"></div>
+
+    <div class="bottom-sheet" id="modal-approve">
+      <h3>Approve Special Meal</h3>
+      <p>Xác nhận duyệt <b>Purely vegetarian menu</b>?</p>
+      <div class="field"><label>Ghi chú xác nhận (tùy chọn)</label><textarea rows="2"></textarea></div>
+      <button class="btn-primary" onclick="toast('Đã Approve.'); closeSheet(); showScreen('screen-list')">Confirm Approve</button>
+      <button class="btn-secondary" onclick="closeSheet()">Cancel</button>
+    </div>
+
+    <div class="bottom-sheet" id="modal-reject">
+      <h3>Reject Special Meal</h3>
+      <div class="field"><label>Lý do từ chối (bắt buộc)</label><textarea rows="2" id="reject-reason"></textarea></div>
+      <button class="btn-primary" onclick="submitReject()">Confirm Reject</button>
+      <button class="btn-secondary" onclick="closeSheet()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><svg class="icon" style="stroke:white"><use href="#ic-check"/></svg><span id="toast-text"></span></div>
+
+<script>
+function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('visible')); document.getElementById(id).classList.add('visible'); document.querySelectorAll('.demo-nav button').forEach(b=>b.classList.toggle('active', b.dataset.go===id)); }
+document.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>showScreen(el.dataset.go)));
+function openSheet(id){ document.querySelectorAll('.bottom-sheet').forEach(s=>s.classList.remove('show')); document.getElementById(id).classList.add('show'); document.getElementById('backdrop').classList.add('show'); }
+function closeSheet(){ document.querySelectorAll('.bottom-sheet').forEach(s=>s.classList.remove('show')); document.getElementById('backdrop').classList.remove('show'); }
+function toast(msg){ const t=document.getElementById('toast'); document.getElementById('toast-text').textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600); }
+function submitReject(){ if(!document.getElementById('reject-reason').value.trim()){ toast('Bắt buộc nhập lý do.'); return; } toast('Đã Reject.'); closeSheet(); showScreen('screen-list'); }
+</script>
+</body>
+</html>

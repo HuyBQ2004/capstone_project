@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thông tin cá nhân - SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-fixed": "#0b1c30",
+                      "surface-container-high": "#e2e7ff",
+                      "on-secondary-container": "#54647a",
+                      "inverse-primary": "#81d1f0",
+                      "tertiary-container": "#666b6f",
+                      "surface-bright": "#faf8ff",
+                      "primary": "#005a71",
+                      "primary-fixed": "#b9eaff",
+                      "tertiary-fixed": "#dfe3e7",
+                      "surface-container-highest": "#dae2fd",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "outline-variant": "#bec8cd",
+                      "surface-tint": "#006781",
+                      "on-surface": "#131b2e",
+                      "on-primary": "#ffffff",
+                      "surface-dim": "#d2d9f4",
+                      "on-secondary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary": "#505f76",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "tertiary": "#4e5356",
+                      "surface-container-low": "#f2f3ff",
+                      "on-background": "#131b2e",
+                      "error": "#ba1a1a",
+                      "on-error": "#ffffff",
+                      "secondary-container": "#d0e1fb",
+                      "surface": "#faf8ff",
+                      "primary-fixed-dim": "#81d1f0",
+                      "on-tertiary-fixed-variant": "#43474b",
+                      "on-primary-fixed-variant": "#004d62",
+                      "inverse-on-surface": "#eef0ff",
+                      "on-primary-container": "#d3f1ff",
+                      "surface-variant": "#dae2fd",
+                      "on-primary-fixed": "#001f29",
+                      "background": "#faf8ff",
+                      "primary-container": "#0e7490",
+                      "on-tertiary-fixed": "#171c1f",
+                      "tertiary-fixed-dim": "#c3c7cb",
+                      "outline": "#6f787d",
+                      "on-tertiary-container": "#e8edf1",
+                      "error-container": "#ffdad6",
+                      "on-error-container": "#93000a",
+                      "surface-container": "#eaedff",
+                      "inverse-surface": "#283044",
+                      "secondary-fixed": "#d3e4fe",
+                      "on-surface-variant": "#3f484c",
+                      "on-tertiary": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-max-width": "1280px",
+                      "base-unit": "4px",
+                      "gutter": "24px",
+                      "auth-card-width": "448px"
+              },
+              "fontFamily": {
+                      "h3": [
+                              "Be Vietnam Pro"
+                      ],
+                      "body-base": [
+                              "Be Vietnam Pro"
+                      ],
+                      "label-sm": [
+                              "Be Vietnam Pro"
+                      ],
+                      "h1": [
+                              "Be Vietnam Pro"
+                      ],
+                      "body-sm": [
+                              "Be Vietnam Pro"
+                      ],
+                      "label-md": [
+                              "Be Vietnam Pro"
+                      ],
+                      "h2": [
+                              "Be Vietnam Pro"
+                      ],
+                      "body-lg": [
+                              "Be Vietnam Pro"
+                      ],
+                      "h1-mobile": [
+                              "Be Vietnam Pro"
+                      ]
+              },
+              "fontSize": {
+                      "h3": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-base": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "h1": [
+                              "36px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "h2": [
+                              "30px",
+                              {
+                                      "lineHeight": "36px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "h1-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "34px",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-surface-container-low min-h-screen text-on-surface">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface shadow-sm">
+<div class="flex items-center gap-4">
+<img alt="Logo" class="h-8 w-auto rounded-md" src="https://lh3.googleusercontent.com/aida/AP1WRLs1Ts5ma2lg-Hgu8zSewt7X_gHa9XnaVWlBYVC8xVmbVsKpyOJSFV9r3Z96KENFyPTF4Ntc5maKIjcTDuATghLpkAD4l_Z_dayQn32soBs9fTJ2AB6UlqboZnnwLw9wBI2BMXf5JSAPnBd7z8EbxYlORP0t91tVgjnpzE985hN7Lzvh9P2a-is86tbCLvJnyKZdm4V6iqZe11-_ac0zrNkSO46ZsLJmCtT84RAYOq65AP_oxey3ChNCPWU"/>
+<span class="font-h2 text-h2 font-bold text-primary hidden md:block">sfms</span>
+</div>
+<div class="flex-1 max-w-md mx-8 hidden md:block relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" style="font-variation-settings: 'FILL' 0;">search</span>
+<input class="w-full h-10 pl-10 pr-4 rounded-lg border border-outline-variant bg-surface-container-lowest focus:ring-1 focus:ring-primary focus:border-primary font-body-sm text-body-sm transition-colors" placeholder="Tìm kiếm..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="flex items-center gap-2 p-1 rounded-full hover:bg-surface-container-low transition-colors active:scale-95">
+<img class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="A professional headshot of an Asian male healthcare worker wearing a clean white lab coat, in a bright, modern clinic setting. The lighting is soft and flattering, highlighting a friendly and trustworthy expression. The overall style is clean, corporate, and modern, fitting a light-mode dashboard interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHss6FMVJKEkRa1WImiBhk-klbkVBX_jP5h1Kl6RbG1tH5Ms-QUM000Dz73aBArPpPX5dftSn9R7I7EeTnyNjadduqZAw6pijj95wx3gFYk8fgM-FHaYApC-5U3T9YQVSqI14O6YldikhqEiQJLaVYWMQ8sG9O7LFR90BkBm9dWqZnHiQh3fVrM5XMBkQaXgNUT7B65JHfTt3nn99K-4n0xN87DNdQxZtX6_NDYsFSZs_BPqnJlS_uuEhGa54_kGnxpjifrib3qOg"/>
+</button>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 p-4 flex flex-col bg-surface-container-low border-r border-outline-variant hidden md:flex">
+<div class="mb-8 px-2 flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover border border-outline-variant" data-alt="A professional headshot of an Asian male healthcare worker wearing a clean white lab coat, in a bright, modern clinic setting. The lighting is soft and flattering, highlighting a friendly and trustworthy expression. The overall style is clean, corporate, and modern, fitting a light-mode dashboard interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuACeTdgMaTelZ3Y6sxgV4U8DIwyQYsmQ6VgIFqX5XgYWtL6n1xweQvqU6CRkNzkZGW2DtUHG8KY9kbng52OJ7DYYFWX5qjM2mznZsr1e35DO1zKxaJK4m-T-29tE9M8NeyPGqaEbnA0iCYaZdYRvKApnwOaKIoJJGsqliwv9Id_V_IceXzyfz3tvZK0dphZEuRlzRz3hshPbDMB9R_s8G2fNzVfxDBUojFsGZa7omA2IZrjUC_p1bBhDFTyCUO1MH3tYR54_sYoAOw"/>
+<div>
+<p class="font-label-md text-label-md font-bold text-on-surface">Quản trị viên</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Hệ thống SFMS</p>
+</div>
+</div>
+<ul class="flex-1 space-y-2">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 bg-secondary-container text-on-secondary-container font-bold rounded-lg transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-md text-label-md">Chỉnh sửa hồ sơ</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">lock</span>
+<span class="font-label-md text-label-md">Đổi mật khẩu</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications_active</span>
+<span class="font-label-md text-label-md">Cài đặt thông báo</span>
+</a>
+</li>
+</ul>
+<div class="mt-auto">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">logout</span>
+<span class="font-label-md text-label-md">Đăng xuất</span>
+</a>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="pt-24 pb-8 px-4 md:px-gutter md:ml-64 max-w-container-max-width mx-auto">
+<div class="mb-8">
+<h1 class="font-h3 text-h3 text-on-surface">Thông tin cá nhân</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Quản lý và cập nhật thông tin hồ sơ của bạn.</p>
+</div>
+<div class="bg-surface rounded-xl border border-outline-variant shadow-sm overflow-hidden flex flex-col md:flex-row">
+<!-- Left Side: Avatar & Basic Info -->
+<div class="p-8 md:w-1/3 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-outline-variant bg-surface-bright">
+<div class="relative group">
+<img class="w-40 h-40 rounded-full object-cover border-4 border-surface shadow-sm transition-transform duration-300 group-hover:scale-105" data-alt="A large, highly detailed professional portrait of an Asian male healthcare professional. He is wearing a crisp white lab coat over a neat blue shirt. The background is a slightly blurred, modern, bright hospital corridor. Lighting is soft, even, and flattering, emphasizing cleanliness and trust in a light-mode design context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVfp_A05jq2V92DDXbMnVQJpVnptyCUIBeU6EDvVti1ur14KNEYPJcfGOf0Fa1CnVKyTPrJa-Ny0ucSksV4W2G0WTB_h_LE_U2XtcH2hBWlC7AQUaB7dxs8caB088a94ETaxIClrgaX3pkLpbY0G-h-gygV7Z3yBWx93drxUVqi5UwynhblwmHrPigSfu6ZXb2-dwtzx1SxSqznv0Fd5RjdWgThCDTfar0ManPXR4fFBXBt977g7gunvX8SyLZdieTBDlqlENG288"/>
+<button class="absolute bottom-2 right-2 w-10 h-10 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center shadow-md hover:bg-primary transition-colors active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">edit</span>
+</button>
+</div>
+<h2 class="font-h3 text-h3 text-on-surface mt-6 text-center">Nguyễn Văn A</h2>
+<div class="mt-2 px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full font-label-sm text-label-sm inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+                    Nhân viên y tế
+                </div>
+</div>
+<!-- Right Side: Details Form -->
+<div class="p-8 md:w-2/3">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Form Group -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">badge</span>
+                            Họ và tên
+                        </label>
+<input class="w-full h-10 px-3 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface font-body-sm text-body-sm opacity-80 cursor-not-allowed" disabled="" type="text" value="Nguyễn Văn A"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">work</span>
+                            Vai trò
+                        </label>
+<input class="w-full h-10 px-3 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface font-body-sm text-body-sm opacity-80 cursor-not-allowed" disabled="" type="text" value="Nhân viên y tế"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">mail</span>
+                            Email
+                        </label>
+<input class="w-full h-10 px-3 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface font-body-sm text-body-sm opacity-80 cursor-not-allowed" disabled="" type="email" value="nguyenvana@sfms.vn"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">call</span>
+                            Số điện thoại
+                        </label>
+<input class="w-full h-10 px-3 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface font-body-sm text-body-sm opacity-80 cursor-not-allowed" disabled="" type="tel" value="0901234567"/>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-outline-variant flex justify-end">
+<button class="bg-primary-container text-on-primary-container hover:brightness-90 px-6 py-2.5 rounded-lg font-label-md text-label-md transition-all active:scale-95 shadow-sm">
+                        Chỉnh sửa
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-4 px-gutter flex flex-col md:flex-row justify-between items-center mt-auto bg-surface-bright border-t border-outline-variant md:pl-[280px]">
+<div class="font-label-md text-label-md font-bold text-primary mb-2 md:mb-0">
+            sfms
+        </div>
+<div class="font-label-sm text-label-sm text-secondary">
+            © 2024 sfms Healthcare Management System
+        </div>
+<ul class="flex gap-4 mt-2 md:mt-0 font-label-sm text-label-sm">
+<li><a class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer" href="#">Terms</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer" href="#">Privacy</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer" href="#">Support</a></li>
+</ul>
+</footer>
+</body></html>

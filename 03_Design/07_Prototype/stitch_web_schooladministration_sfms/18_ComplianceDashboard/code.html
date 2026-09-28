@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard tuân thủ - SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-background": "#131b2e",
+                      "on-secondary-container": "#54647a",
+                      "inverse-surface": "#283044",
+                      "secondary-fixed": "#d3e4fe",
+                      "secondary-container": "#d0e1fb",
+                      "on-tertiary": "#ffffff",
+                      "outline": "#6f787d",
+                      "secondary": "#505f76",
+                      "surface-tint": "#006781",
+                      "on-secondary": "#ffffff",
+                      "surface-container-highest": "#dae2fd",
+                      "on-surface": "#131b2e",
+                      "surface-bright": "#faf8ff",
+                      "on-tertiary-fixed-variant": "#444749",
+                      "on-secondary-fixed": "#0b1c30",
+                      "tertiary": "#505355",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "error": "#ba1a1a",
+                      "surface-container-high": "#e2e7ff",
+                      "tertiary-fixed": "#e0e3e5",
+                      "on-primary-fixed": "#001f29",
+                      "surface-container": "#eaedff",
+                      "on-primary-container": "#d3f1ff",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "on-primary": "#ffffff",
+                      "primary-container": "#0e7490",
+                      "primary-fixed": "#b9eaff",
+                      "inverse-primary": "#81d1f0",
+                      "on-surface-variant": "#3f484c",
+                      "on-error-container": "#93000a",
+                      "primary-fixed-dim": "#81d1f0",
+                      "surface": "#faf8ff",
+                      "primary": "#005a71",
+                      "on-tertiary-container": "#eaecee",
+                      "surface-container-low": "#f2f3ff",
+                      "on-error": "#ffffff",
+                      "on-tertiary-fixed": "#191c1e",
+                      "on-primary-fixed-variant": "#004d62",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-variant": "#dae2fd",
+                      "background": "#faf8ff",
+                      "surface-dim": "#d2d9f4",
+                      "error-container": "#ffdad6",
+                      "inverse-on-surface": "#eef0ff",
+                      "tertiary-container": "#686b6d",
+                      "outline-variant": "#bec8cd",
+                      "tertiary-fixed-dim": "#c4c7c9"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-md": "16px",
+                      "stack-lg": "24px",
+                      "gutter": "16px",
+                      "unit": "4px",
+                      "sidebar-width": "260px",
+                      "container-padding": "24px",
+                      "stack-sm": "8px"
+              },
+              "fontFamily": {
+                      "body-lg": [
+                              "Be Vietnam Pro"
+                      ],
+                      "headline-md": [
+                              "Be Vietnam Pro"
+                      ],
+                      "headline-lg-mobile": [
+                              "Be Vietnam Pro"
+                      ],
+                      "display": [
+                              "Be Vietnam Pro"
+                      ],
+                      "body-md": [
+                              "Be Vietnam Pro"
+                      ],
+                      "label-md": [
+                              "Be Vietnam Pro"
+                      ],
+                      "headline-lg": [
+                              "Be Vietnam Pro"
+                      ],
+                      "title-lg": [
+                              "Be Vietnam Pro"
+                      ],
+                      "label-sm": [
+                              "Be Vietnam Pro"
+                      ]
+              },
+              "fontSize": {
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display": [
+                              "36px",
+                              {
+                                      "lineHeight": "44px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "title-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-sidebar-width bg-surface border-r border-outline-variant z-40 hidden xl:flex flex-col py-stack-lg">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined font-display text-display text-primary">lunch_dining</span>
+</div>
+<div>
+<h1 class="font-display text-display text-primary leading-none tracking-tight">sfms</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">School Admin</p>
+</div>
+</div>
+<nav class="flex-1 px-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors" data-icon="dashboard">dashboard</span>
+<span class="font-body-md text-body-md font-medium">Tổng quan</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors" data-icon="handshake">handshake</span>
+<span class="font-body-md text-body-md font-medium">Đối tác</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors" data-icon="restaurant_menu">restaurant_menu</span>
+<span class="font-body-md text-body-md font-medium">Thực đơn</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors" data-icon="groups">groups</span>
+<span class="font-body-md text-body-md font-medium">Lớp &amp; Học sinh</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors" data-icon="report_problem">report_problem</span>
+<span class="font-body-md text-body-md font-medium">Sự cố &amp; Kiểm tra</span>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-4 py-3 text-primary bg-secondary-fixed border-l-4 border-primary font-title-lg rounded-r-lg mt-1 mb-1" href="#">
+<span class="material-symbols-outlined" data-icon="analytics" data-weight="fill" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-body-md text-body-md font-semibold">Báo cáo &amp; Thống kê</span>
+</a>
+</nav>
+<div class="px-4 mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-outline-variant" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Cài đặt</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-error hover:bg-error-container transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-md text-label-md">Đăng xuất</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 xl:ml-sidebar-width flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="h-16 bg-surface-bright border-b border-outline-variant flex justify-between items-center px-container-padding sticky top-0 z-30">
+<div class="flex items-center gap-4">
+<button class="xl:hidden p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="hidden md:flex items-center text-sm">
+<span class="text-on-surface-variant font-label-md">Báo cáo &amp; Thống kê</span>
+<span class="material-symbols-outlined text-outline-variant mx-2 text-[16px]">chevron_right</span>
+<span class="text-primary font-bold font-label-md">Dashboard tuân thủ</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 text-on-secondary-container hover:text-primary transition-opacity duration-150 rounded-full relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 text-on-secondary-container hover:text-primary transition-opacity duration-150 rounded-full">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-secondary-container border border-outline-variant overflow-hidden ml-2">
+<img alt="Admin User Profile" class="w-full h-full object-cover" data-alt="A professional headshot of an Asian female school administrator in her late 30s, wearing a smart casual blazer, smiling softly against a clean, bright white background. High-key lighting, modern corporate style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgt7KVg61lS1FIXm7VNbwIK5n8nEUqfoRW-Po-YFTgmWjQGgO09MLW-RlcGdRClY1fxgsbIBjAYv4HlbjdNwrXmOPOtQVZAtK0g4apMF-Og_fGXhCOyEb_s7TZWPFSMoqXBQye5iMYeIhXDSdkNz879GS1oPdygLKv9DGeKPAADrt6y-RThXYLg1wJEckyI9nulIOc6WuhCcIyjBPy2aMalezZKQL6SAebHO7HkzW43JPBU9EA68mHun6CZwY7W4r_g560djLVX90"/>
+</div>
+</div>
+</header>
+<div class="p-container-padding flex-1 bg-surface-container-lowest flex flex-col gap-6">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-background">Dashboard tuân thủ</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Giám sát quy trình an toàn thực phẩm hàng ngày</p>
+</div>
+<button class="bg-primary-container text-white px-6 py-2.5 rounded-lg font-label-md text-label-md flex items-center gap-2 hover:bg-primary transition-colors shadow-sm self-start md:self-auto">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+                    Ký xác nhận trạng thái an toàn hôm nay
+                </button>
+</div>
+<!-- Quarantine Banner -->
+<div class="bg-error-container border border-error rounded-xl p-4 flex items-start gap-4">
+<div class="bg-error text-white p-2 rounded-full flex-shrink-0">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<div class="flex-1">
+<h3 class="font-title-lg text-title-lg text-on-error-container font-bold">Khu vực bếp phụ số 2 đang trong tình trạng CÁCH LY (Kitchen Quarantine)</h3>
+<p class="font-body-md text-body-md text-on-error-container opacity-90 mt-1">Yêu cầu tất cả nhân sự không phận sự miễn vào. Đang chờ đội kiểm tra y tế lấy mẫu.</p>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- KPI Card -->
+<div class="md:col-span-4 bg-white border border-outline-variant rounded-xl p-6 flex flex-col justify-between relative overflow-hidden shadow-sm">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-fixed-dim opacity-20 rounded-bl-full -mr-8 -mt-8"></div>
+<div>
+<div class="flex items-center gap-2 text-on-surface-variant mb-2">
+<span class="material-symbols-outlined text-primary">fact_check</span>
+<h3 class="font-label-md text-label-md font-semibold uppercase tracking-wider">Điểm số vệ sinh trung bình tuần này</h3>
+</div>
+<div class="flex items-baseline gap-2 mt-4">
+<span class="font-display text-display text-primary text-5xl">92</span>
+<span class="font-title-lg text-title-lg text-outline">/100</span>
+</div>
+</div>
+<div class="mt-6 flex items-center gap-2">
+<span class="inline-flex items-center gap-1 text-[12px] font-medium text-[#16a34a] bg-[#dcfce7] px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+                            +3 điểm so với tuần trước
+                        </span>
+</div>
+</div>
+<!-- Daily Inspection Progress -->
+<div class="md:col-span-8 bg-white border border-outline-variant rounded-xl p-6 shadow-sm">
+<h3 class="font-title-lg text-title-lg text-on-background mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">timeline</span>
+                        Tiến độ kiểm tra ngày
+                    </h3>
+<div class="relative">
+<!-- Connecting Line -->
+<div class="absolute left-[28px] top-8 bottom-8 w-0.5 bg-outline-variant/30 md:left-auto md:top-[28px] md:bottom-auto md:w-full md:h-0.5 z-0"></div>
+<div class="flex flex-col md:flex-row justify-between gap-6 relative z-10">
+<!-- Step 1: Green -->
+<div class="flex md:flex-col items-center gap-4 md:w-1/3">
+<div class="w-14 h-14 rounded-full bg-[#dcfce7] border-2 border-[#16a34a] flex items-center justify-center text-[#16a34a] shrink-0 z-10 bg-white">
+<span class="material-symbols-outlined">inventory_2</span>
+</div>
+<div class="text-left md:text-center">
+<p class="font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">Bước 1</p>
+<h4 class="font-body-md text-body-md font-medium text-on-background">Nhận hàng nguyên liệu</h4>
+<span class="inline-block mt-2 font-label-sm text-label-sm bg-[#dcfce7] text-[#16a34a] px-2.5 py-0.5 rounded-full border border-[#bbf7d0]">Hoàn thành</span>
+</div>
+</div>
+<!-- Step 2: Red -->
+<div class="flex md:flex-col items-center gap-4 md:w-1/3">
+<div class="w-14 h-14 rounded-full bg-error-container border-2 border-error flex items-center justify-center text-error shrink-0 z-10 bg-white relative">
+<span class="material-symbols-outlined">thermostat</span>
+<span class="absolute -top-1 -right-1 w-4 h-4 bg-error rounded-full animate-ping"></span>
+<span class="absolute -top-1 -right-1 w-4 h-4 bg-error rounded-full"></span>
+</div>
+<div class="text-left md:text-center">
+<p class="font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">Bước 2</p>
+<h4 class="font-body-md text-body-md font-medium text-on-background">Chế biến &amp; Lưu mẫu</h4>
+<span class="inline-block mt-2 font-label-sm text-label-sm bg-error-container text-error px-2.5 py-0.5 rounded-full border border-error">Lỗi lệch nhiệt độ</span>
+</div>
+</div>
+<!-- Step 3: Gray -->
+<div class="flex md:flex-col items-center gap-4 md:w-1/3">
+<div class="w-14 h-14 rounded-full bg-surface-variant border-2 border-outline-variant flex items-center justify-center text-outline shrink-0 z-10 bg-white">
+<span class="material-symbols-outlined">local_dining</span>
+</div>
+<div class="text-left md:text-center">
+<p class="font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">Bước 3</p>
+<h4 class="font-body-md text-body-md font-medium text-outline">Phân phối món ăn</h4>
+<span class="inline-block mt-2 font-label-sm text-label-sm bg-surface-variant text-on-surface-variant px-2.5 py-0.5 rounded-full border border-outline-variant">Chờ thực hiện</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Alert Box (Critical) -->
+<div class="md:col-span-12 bg-white border border-error rounded-xl p-0 overflow-hidden shadow-sm flex flex-col md:flex-row">
+<div class="bg-error w-full md:w-2 flex-shrink-0 h-2 md:h-auto"></div>
+<div class="p-6 flex-1 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+<div class="flex items-start gap-4">
+<div class="mt-1 text-error">
+<span class="material-symbols-outlined text-[32px]">error</span>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-on-background font-bold mb-1">Cảnh báo lỗi Bước 2: Phát hiện lệch nhiệt độ tại tủ lưu mẫu số 03</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Nhiệt độ ghi nhận 8°C (Vượt mức cho phép ≤ 4°C). Thời gian duy trì lỗi: 45 phút.</p>
+</div>
+</div>
+<button class="whitespace-nowrap px-4 py-2 border border-error text-error font-label-md text-label-md rounded-lg hover:bg-error-container transition-colors focus:ring-2 focus:ring-error focus:ring-offset-2">
+                            Yêu cầu CAPA khẩn cấp
+                        </button>
+</div>
+</div>
+<!-- Gallery Section -->
+<div class="md:col-span-12 bg-white border border-outline-variant rounded-xl p-6 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-title-lg text-title-lg text-on-background flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">photo_library</span>
+                            Ảnh xác minh hiện trường
+                        </h3>
+<span class="text-label-sm font-label-sm text-outline">Cập nhật lúc: 10:45 AM, Hôm nay</span>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="relative group rounded-lg overflow-hidden border border-outline-variant aspect-[4/3]">
+<img alt="Food sample storage 1" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Close up shot of stainless steel food sample containers in a commercial refrigerator. The containers have clear labels with dates written in black marker. The lighting is cool, clinical white light typical of a professional kitchen fridge. High resolution, clear details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcW8BDucHJUV9T345-wzG7s3TL7VGWIKJYEP8ZyeWlIVn_nep5wnrHT11sLXdrdXf_pvwydr5zIDhVaiR_EOrCp3Owq0naBU2ZH7TUiulHlmpJ-GtKGvfpNfy4VkPsXHQX4O4j6MDLnuPut2QhKcIYE7y6oIzcAhQaYMN0qo-0AUrk5xuWGuNwV5Xmp146jzgGnzV3L5PG9eLi2PEFT3932dDy4MxE210hiyWxbaI1IPXT2jUW3iSQNeipQzak8qddPIGkK7IqV6o"/>
+<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2">
+<p class="text-white font-label-sm text-[10px]">Tủ lưu mẫu 03 - 10:30 AM</p>
+</div>
+</div>
+<div class="relative group rounded-lg overflow-hidden border border-error aspect-[4/3]">
+<div class="absolute top-2 right-2 bg-error text-white text-[10px] px-1.5 py-0.5 rounded font-bold z-10">LỖI</div>
+<img alt="Thermometer reading 8C" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="A digital thermometer display inside a commercial refrigerator showing a reading of 8 degrees Celsius. The numbers are glowing red digital LED. The background is slightly out of focus stainless steel interior of a fridge. Dramatic, slightly urgent lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmTAxgfaNw70J8wwXmgwFJzj00qcWjMXzdMOMoiDH5ZNbtjspQFveS3hQ48NcGgwvSWYsElAuVLfH4JydxJgnWDtf9e5B29LkCoF-jAnags-7OaD-XwJ-cgHjKvK1bwR8A0i4pGAdy6fDPb8Nv9FnZV4phMAWk6xih2yQsfTY0BrOF1EwNKLtXQlfA6EORYVxceAChcVaah0Qgl6i-NaJhrn8IHjVYlQ75ZUi8GSA2z7TPRyipynf9CD7mbIKZY2swsWSThMfnIvY"/>
+<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2">
+<p class="text-white font-label-sm text-[10px]">Nhiệt kế Tủ 03 - 10:35 AM</p>
+</div>
+</div>
+<div class="relative group rounded-lg overflow-hidden border border-outline-variant aspect-[4/3] hidden md:block">
+<img alt="Kitchen prep area" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="A wide angle shot of a clean, modern commercial kitchen food prep area. Stainless steel counters are empty and wiped clean. Bright, overhead fluorescent lighting. Clinical, sanitary, professional environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxkWOvlDwSCPtzWTi9_UrZCYfE0GpV-J_B4SQbUZ8yWNqITR1IX5a2S7zjqMY6V7SVtG9DlAqKOlAO9uDI6KrR2PgG02mYRRbwkBqTTT3_xd-WB0tCk5CET4fDbRFugaGzU7X9hWcrHcrIWBAi4NVXZ86BJk5KdpGQ5yBlWYmf8DY8yxGcJ1s0AkoLsEPplZ8UzxBZodD6tPqERsLTRZqNATkjxlBdIgoSpeDNsLIqRFm7JvgxgkpUYYVos8dKm44VSpWChxqDcb0"/>
+<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2">
+<p class="text-white font-label-sm text-[10px]">Khu vực sơ chế - 09:00 AM</p>
+</div>
+</div>
+<div class="relative group rounded-lg overflow-hidden border border-outline-variant aspect-[4/3] hidden md:flex items-center justify-center bg-surface-container-low cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="text-center">
+<span class="material-symbols-outlined text-outline text-[32px] mb-1">add_a_photo</span>
+<p class="font-label-sm text-label-sm text-outline">Tải thêm ảnh</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

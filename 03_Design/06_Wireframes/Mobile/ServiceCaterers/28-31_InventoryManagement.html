@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>SFMS Wireframe — Service Caterers (Mobile): Inventory Management</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root{ --ink:#333; --paper:#fff; --gray:#777; --lightgray:#d7d7d7; --midgray:#aaa; }
+  * { box-sizing: border-box; }
+  html { font-size: 18px; }
+  body { margin:0; font-family:'Patrick Hand', cursive; color:var(--ink); background-color:#f4f4f4; background-image: radial-gradient(#d7d7d7 1px, transparent 1px); background-size: 20px 20px; font-size:18px; min-height:100vh; }
+  .text-xs   { font-size: 14px; line-height:1.4; }
+  .text-sm   { font-size: 18px; line-height:1.5; }
+  .text-base { font-size: 22px; line-height:1.5; }
+  .text-md   { font-size: 28px; line-height:1.3; }
+  .text-lg   { font-size: 35px; line-height:1.2; }
+  a { color:#3a5a8c; text-decoration:underline; cursor:pointer; }
+
+  .note-banner { max-width:900px; margin:14px auto 0; text-align:center; font-family:'Caveat', cursive; font-size:20px; color:#900; padding:0 14px; }
+  .wrap { display:flex; flex-direction:column; align-items:center; padding:18px 10px 60px; gap:16px; }
+  .manifest { max-width:390px; font-size:14px; color:var(--gray); text-align:center; }
+
+  .phone-frame { width:390px; min-width:390px; background:#e9e9e9; border:3px solid var(--ink); border-radius:34px; padding:14px 10px; box-shadow:0 6px 0 rgba(0,0,0,0.08); position:relative; }
+  .phone-notch { width:90px; height:14px; background:var(--ink); border-radius:8px; margin:0 auto 8px; }
+  .phone-screen-area { background:#fff; border:2px solid var(--ink); border-radius:18px; overflow:hidden; height:760px; display:flex; flex-direction:column; position:relative; }
+
+  .appbar { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:12px 14px; border-bottom:3px solid var(--ink); background:#fafafa; flex:none; }
+  .appbar-title { display:flex; align-items:center; gap:8px; }
+  .appbar-actions { display:flex; align-items:center; gap:12px; }
+  .appbar-actions svg { cursor:pointer; }
+  .back-btn { cursor:pointer; display:flex; align-items:center; }
+  .content { flex:1; overflow-y:auto; padding:14px 14px 70px; }
+  .fixed-footer { flex:none; padding:12px 14px; border-top:3px solid var(--ink); background:#fafafa; }
+
+  .icon { width:20px; height:20px; flex:none; stroke:var(--ink); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .icon-sm { width:16px; height:16px; }
+
+  .card { border:2px solid var(--ink); border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; padding:14px; }
+  .card + .card { margin-top:12px; }
+  .card-row { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+
+  .btn-primary { background:#333; color:white; border:2px solid #333; border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:10px 20px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+  .btn-primary svg { stroke:#fff; }
+  .btn-secondary { background:white; color:#333; border:2px solid #333; border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:8px 16px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+  .btn-block { width:100%; justify-content:center; }
+  button:disabled { opacity:0.45; cursor:not-allowed; }
+
+  .badge { display:inline-flex; align-items:center; gap:5px; padding:2px 10px; font-size:14px; border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; }
+  .badge-success { border:2px solid var(--ink); }
+  .badge-warning { border:2px dashed var(--ink); }
+  .badge-danger { border:3px solid var(--ink); }
+
+  .alert { display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; margin-top:10px; }
+  .alert-danger { border:3px solid var(--ink); }
+  .alert-warning { border:2px dashed var(--ink); }
+  .alert .icon { margin-top:2px; }
+
+  .field-block { margin-bottom:14px; }
+  .field-label { font-size:17px; margin-bottom:5px; display:flex; align-items:center; gap:6px; }
+  wired-input, wired-textarea, wired-select { width:100%; display:block; }
+
+  .muted { color:var(--gray); }
+  .section-title { display:flex; align-items:center; gap:8px; margin:14px 0 8px; }
+  .state-legend { margin-top:10px; padding:10px 12px; border:2px dotted var(--midgray); border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; font-size:13px; color:var(--gray); }
+
+  .modal-overlay { display:none; position:absolute; inset:0; background:rgba(0,0,0,0.35); align-items:flex-end; justify-content:center; z-index:50; }
+  .modal-overlay.active { display:flex; }
+  .sheet-box { width:100%; background:#fff; border-top:3px solid var(--ink); border-radius:22px 22px 0 0; padding:18px 16px; max-height:85%; overflow-y:auto; }
+  .sheet-handle { width:50px; height:6px; background:var(--lightgray); border-radius:4px; margin:0 auto 12px; }
+  .sheet-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+
+  .screen { display:none; height:100%; flex-direction:column; }
+  .screen.active { display:flex; }
+</style>
+</head>
+<body>
+
+<div class="note-banner">Wireframe hand-drawn (skill wireframer) — nhóm màn hình Quản lý Kho (28-31), actor Service Caterers, nền tảng Mobile.</div>
+
+<div class="wrap">
+<div class="manifest">Điều hướng: Inventory Management Dashboard → Issue Ingredients Workspace / Monitor Expiration Dates Panel / Record Inventory Transactions Log (bottom-sheet điều chỉnh + nhật ký).</div>
+
+<div class="phone-frame">
+  <div class="phone-notch"></div>
+  <div class="phone-screen-area">
+
+    <!-- ============ 28: Inventory Management Dashboard ============ -->
+    <div class="screen active" id="dashboard">
+      <div class="appbar">
+        <div class="appbar-title text-md">Quản lý Kho</div>
+        <div class="appbar-actions">
+          <svg class="icon" viewBox="0 0 24 24" onclick="showScreen('expiry')" title="Cảnh báo Hết hạn"><circle cx="12" cy="12" r="9"/><path d="M12 7 v5 l4 2"/></svg>
+          <svg class="icon" viewBox="0 0 24 24" onclick="showScreen('transactions')" title="Nhật ký Giao dịch Kho"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9 h8 M8 13 h8"/></svg>
+        </div>
+      </div>
+      <div class="content">
+        <div class="alert alert-danger">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/></svg>
+          <div class="text-sm">MSG-018 — Thịt heo không đủ tồn kho (12kg) so với nhu cầu kế hoạch tuần (18kg).</div>
+        </div>
+
+        <div class="card">
+          <div class="card-row"><div><div class="text-base">Thịt heo</div><div class="text-xs muted">Kho lạnh #1 · HD 09/07/2026</div></div><span class="badge badge-danger">12kg</span></div>
+          <button class="btn-secondary" style="margin-top:8px" onclick="showScreen('issue')">Xuất kho</button>
+        </div>
+        <div class="card">
+          <div class="card-row"><div><div class="text-base">Gạo tẻ</div><div class="text-xs muted">Kho khô #1 · HD 20/12/2026</div></div><span class="badge badge-success">85kg</span></div>
+        </div>
+        <div class="card">
+          <div class="card-row"><div><div class="text-base">Rau cải ngọt</div><div class="text-xs muted">Kho lạnh #2 · HD 09/07/2026</div></div><span class="badge badge-warning">Expiring Soon</span></div>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap">
+          <button class="btn-secondary" onclick="openModal('adjust-modal')">Điều chỉnh Kho</button>
+          <button class="btn-secondary" disabled title="Create Purchase Request — ngoài phạm vi actor Service Caterers, chưa có Screen Spec">Tạo Yêu cầu Mua hàng</button>
+        </div>
+
+        <div class="state-legend">Empty: kho trống hoàn toàn → gợi ý tạo yêu cầu mua hàng. Loading: shimmer. Error: MSG-004/MSG-005. Success: SnackBar MSG-042 sau khi ghi nhận giao dịch.</div>
+      </div>
+
+      <!-- Modal: form điều chỉnh kho (mở tắt, cùng nội dung với #transactions form) -->
+      <div class="modal-overlay" id="adjust-modal">
+        <div class="sheet-box">
+          <div class="sheet-handle"></div>
+          <div class="sheet-header"><span class="text-md">Điều chỉnh Kho</span><svg class="icon" viewBox="0 0 24 24" onclick="closeModal('adjust-modal')"><path d="M6 6 L18 18 M18 6 L6 18"/></svg></div>
+          <div class="field-block"><div class="field-label">Chọn lô nguyên liệu <span style="color:var(--ink)">*</span></div><wired-select><wired-item value="pork">Thịt heo — Kho lạnh #1</wired-item></wired-select></div>
+          <div class="field-block"><div class="field-label">Số lượng điều chỉnh (+/-) <span style="color:var(--ink)">*</span></div><wired-input placeholder="-2 kg"></wired-input></div>
+          <div class="field-block"><div class="field-label">Mã lý do điều chỉnh <span style="color:var(--ink)">*</span></div><wired-select><wired-item value="spoilage">Hư hỏng (spoilage)</wired-item><wired-item value="waste">Hao hụt (waste)</wired-item><wired-item value="audit">Audit write-off</wired-item></wired-select></div>
+          <div class="field-block"><div class="field-label">Xác nhận quản lý <span style="color:var(--ink)">*</span></div><wired-input placeholder="Chữ ký/PIN quản lý bếp"></wired-input></div>
+          <button class="btn-primary btn-block" onclick="closeModal('adjust-modal')">Ghi nhận Giao dịch</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 29: Issue Ingredients Workspace ============ -->
+    <div class="screen" id="issue">
+      <div class="appbar"><div class="appbar-title text-md"><span class="back-btn" onclick="showScreen('dashboard')"><svg class="icon" viewBox="0 0 24 24"><path d="M15 5 L8 12 L15 19"/></svg></span>Xuất kho</div></div>
+      <div class="content">
+        <div class="field-block"><div class="field-label">Phiên sản xuất/thực đơn cần xuất <span style="color:var(--ink)">*</span></div><wired-select><wired-item value="lunch">Cơm trưa Khối 1-5 — 07/07</wired-item></wired-select></div>
+
+        <div class="card">
+          <div class="card-row"><div><div class="text-base">Thịt heo — 18kg cần xuất</div><div class="text-xs muted">Lô đề xuất FEFO: #PK-0703 (HD 09/07)</div></div><button class="btn-secondary" style="padding:4px 10px">Đổi lô khác</button></div>
+        </div>
+        <div class="card">
+          <div class="card-row"><div><div class="text-base">Gạo tẻ — 20kg cần xuất</div><div class="text-xs muted">Lô đề xuất FEFO: #RC-0620 (HD 20/12)</div></div><button class="btn-secondary" style="padding:4px 10px">Đổi lô khác</button></div>
+        </div>
+
+        <div class="alert alert-danger">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/></svg>
+          <div class="text-sm">MSG-018 — Thịt heo chỉ còn 12kg, thiếu 6kg so với nhu cầu. Đề xuất Tạo Yêu cầu Mua hàng.</div>
+        </div>
+
+        <div class="state-legend">Loading: shimmer khi tải danh sách. Success: SnackBar MSG-042.</div>
+      </div>
+      <div class="fixed-footer"><button class="btn-primary btn-block" onclick="showScreen('dashboard')">Xác nhận Xuất kho</button></div>
+    </div>
+
+    <!-- ============ 30: Monitor Expiration Dates Panel ============ -->
+    <div class="screen" id="expiry">
+      <div class="appbar"><div class="appbar-title text-md"><span class="back-btn" onclick="showScreen('dashboard')"><svg class="icon" viewBox="0 0 24 24"><path d="M15 5 L8 12 L15 19"/></svg></span>Cảnh báo Hết hạn</div></div>
+      <div class="content">
+        <div class="card">
+          <div class="card-row"><div><div class="text-base">Thịt heo — Lô #PK-0703</div><div class="text-xs muted">HD 09/07/2026 · còn 12kg</div></div><span class="badge badge-warning">Expiring Soon</span></div>
+          <button class="btn-secondary" style="margin-top:8px" onclick="showScreen('issue')">Xuất kho ngay</button>
+        </div>
+        <div class="card">
+          <div class="card-row"><div><div class="text-base">Rau cải ngọt — Lô #RC-0705</div><div class="text-xs muted">HD 10/07/2026 · còn 15kg</div></div><span class="badge badge-warning">Expiring Soon</span></div>
+          <button class="btn-secondary" style="margin-top:8px" onclick="showScreen('issue')">Xuất kho ngay</button>
+        </div>
+        <div class="state-legend">Sắp xếp theo mức độ khẩn cấp (gần hết hạn nhất lên đầu, BR-075). Empty: không có lô nào sắp hết hạn — thông báo tích cực. Loading: shimmer. Error: SnackBar MSG-004/MSG-005.</div>
+      </div>
+    </div>
+
+    <!-- ============ 31: Record Inventory Transactions Log ============ -->
+    <div class="screen" id="transactions">
+      <div class="appbar"><div class="appbar-title text-md"><span class="back-btn" onclick="showScreen('dashboard')"><svg class="icon" viewBox="0 0 24 24"><path d="M15 5 L8 12 L15 19"/></svg></span>Nhật ký Giao dịch Kho</div></div>
+      <div class="content">
+        <button class="btn-primary btn-block" onclick="openModal('adjust-modal-2')">Điều chỉnh Kho Mới</button>
+
+        <div class="section-title text-base" style="margin-top:14px">Lịch sử giao dịch</div>
+        <div class="card">
+          <div class="card-row"><span class="text-sm">06/07 · Thịt heo · -2kg</span><span class="text-xs muted">Trần Văn Bình</span></div>
+          <div class="text-xs muted">Lý do: Hư hỏng (spoilage)</div>
+        </div>
+        <div class="card">
+          <div class="card-row"><span class="text-sm">05/07 · Rau cải ngọt · -1kg</span><span class="text-xs muted">Lê Thị Hoa</span></div>
+          <div class="text-xs muted">Lý do: Hao hụt (waste)</div>
+        </div>
+
+        <div class="state-legend">Empty: chưa có giao dịch điều chỉnh nào. Loading: shimmer cho form+nhật ký. Error: AlertDialog MSG-004/MSG-005 nếu thiếu mã lý do/sign-off. Success: SnackBar MSG-042.</div>
+      </div>
+
+      <div class="modal-overlay" id="adjust-modal-2">
+        <div class="sheet-box">
+          <div class="sheet-handle"></div>
+          <div class="sheet-header"><span class="text-md">Điều chỉnh Kho</span><svg class="icon" viewBox="0 0 24 24" onclick="closeModal('adjust-modal-2')"><path d="M6 6 L18 18 M18 6 L6 18"/></svg></div>
+          <div class="field-block"><div class="field-label">Chọn lô nguyên liệu <span style="color:var(--ink)">*</span></div><wired-select><wired-item value="pork">Thịt heo — Kho lạnh #1</wired-item></wired-select></div>
+          <div class="field-block"><div class="field-label">Số lượng điều chỉnh (+/-) <span style="color:var(--ink)">*</span></div><wired-input placeholder="-2 kg"></wired-input></div>
+          <div class="field-block"><div class="field-label">Mã lý do điều chỉnh <span style="color:var(--ink)">*</span></div><wired-select><wired-item value="spoilage">Hư hỏng (spoilage)</wired-item></wired-select></div>
+          <div class="field-block"><div class="field-label">Xác nhận quản lý <span style="color:var(--ink)">*</span></div><wired-input placeholder="Chữ ký/PIN quản lý bếp"></wired-input></div>
+          <div class="alert alert-danger"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9 L15 15 M15 9 L9 15"/></svg><div class="text-sm">Chặn ghi nhận nếu thiếu mã lý do hoặc xác nhận quản lý.</div></div>
+          <button class="btn-primary btn-block" style="margin-top:10px" onclick="closeModal('adjust-modal-2')">Ghi nhận Giao dịch</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<script>
+  function showScreen(id){ document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+  function openModal(id){ document.getElementById(id).classList.add('active'); }
+  function closeModal(id){ document.getElementById(id).classList.remove('active'); }
+</script>
+</body>
+</html>

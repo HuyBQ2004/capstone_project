@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Duyệt thông tin dị ứng - SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#bec8cd",
+                        "secondary": "#505f76",
+                        "on-primary-fixed-variant": "#004d62",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed": "#0b1c30",
+                        "primary-container": "#0e7490",
+                        "surface-dim": "#d0dbed",
+                        "surface-bright": "#f8f9ff",
+                        "on-tertiary-fixed": "#191c1e",
+                        "surface-container": "#e6eeff",
+                        "primary": "#005a71",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#d0e1fb",
+                        "on-secondary-container": "#54647a",
+                        "tertiary-fixed": "#e0e3e5",
+                        "tertiary-container": "#686b6d",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#d3f1ff",
+                        "tertiary": "#505355",
+                        "background": "#f8f9ff",
+                        "surface-container-low": "#eff4ff",
+                        "surface-tint": "#006781",
+                        "surface-container-highest": "#d9e3f6",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "on-tertiary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#d3e4fe",
+                        "outline": "#6f787d",
+                        "surface-container-high": "#dee9fc",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "on-background": "#121c2a",
+                        "on-surface-variant": "#3f484c",
+                        "on-surface": "#121c2a",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-primary-fixed": "#001f29",
+                        "surface": "#f8f9ff",
+                        "inverse-surface": "#27313f",
+                        "primary-fixed-dim": "#81d1f0",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#b9eaff",
+                        "surface-variant": "#d9e3f6",
+                        "on-tertiary-container": "#eaecee",
+                        "inverse-primary": "#81d1f0",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "topbar-height": "64px",
+                        "section-gap": "32px",
+                        "container-padding": "24px",
+                        "gutter": "16px",
+                        "sidebar-width": "280px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Be Vietnam Pro"],
+                        "h3": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "body-sm": ["Be Vietnam Pro"],
+                        "h2": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "h1": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "600" }],
+                        "h3": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "h1": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .side-sheet-enter { transform: translateX(100%); }
+        .side-sheet-enter-active { transform: translateX(0); transition: transform 300ms ease-in-out; }
+        .side-sheet-exit { transform: translateX(0); }
+        .side-sheet-exit-active { transform: translateX(100%); transition: transform 300ms ease-in-out; }
+        .overlay-enter { opacity: 0; }
+        .overlay-enter-active { opacity: 1; transition: opacity 300ms ease-in-out; }
+        .overlay-exit { opacity: 1; }
+        .overlay-exit-active { opacity: 0; transition: opacity 300ms ease-in-out; }
+        
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased min-h-screen overflow-hidden flex">
+<!-- SideNavBar -->
+<nav class="w-[280px] h-screen fixed left-0 top-0 bg-surface-container-lowest dark:bg-inverse-surface border-r border-outline-variant dark:border-outline z-40 flex flex-col gap-2 p-4 h-full">
+<div class="flex items-center gap-3 mb-8 px-2 mt-2">
+<div class="w-10 h-10 rounded bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-xl">S</div>
+<div>
+<h1 class="font-h2 text-h2 font-bold text-primary dark:text-primary-fixed-dim leading-none">sfms</h1>
+<p class="font-label-sm text-label-sm text-secondary mt-1">Hệ thống Y tế</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-on-surface-variant/10 transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Trang chủ</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed font-semibold transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="medical_services">medical_services</span>
+<span class="font-label-md text-label-md">Hồ sơ sức khỏe</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-on-surface-variant/10 transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="restaurant">restaurant</span>
+<span class="font-label-md text-label-md">Suất ăn đặc biệt</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-on-surface-variant/10 transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="fact_check">fact_check</span>
+<span class="font-label-md text-label-md">Kiểm tra vệ sinh</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-on-surface-variant/10 transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="inventory_2">inventory_2</span>
+<span class="font-label-md text-label-md">Lưu mẫu thực phẩm</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-on-surface-variant/10 transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="report_problem">report_problem</span>
+<span class="font-label-md text-label-md">Quản lý vi phạm</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-on-surface-variant/10 transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="emergency">emergency</span>
+<span class="font-label-md text-label-md">Quản lý sự cố</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex-1 ml-[280px] h-screen flex flex-col relative">
+<!-- TopNavBar -->
+<header class="h-16 fixed top-0 right-0 left-[280px] z-30 bg-surface/80 dark:bg-surface-container-lowest/80 backdrop-blur-md border-b border-outline-variant dark:border-outline shadow-sm flex items-center justify-between px-6">
+<div class="flex items-center gap-4">
+<nav class="flex items-center space-x-1 text-sm text-secondary">
+<a class="hover:text-primary transition-colors" href="#">Hồ sơ sức khỏe</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="font-medium text-on-surface">Duyệt thông tin dị ứng</span>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-secondary hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-secondary hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant ml-2">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a healthcare administrator in a bright, modern office setting. High-key lighting, soft shadows, wearing a white coat. The overall mood is approachable, trustworthy, and clinical." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAibVu_2B24S6E1BfD1gkMu9zmo84I7yXNJuCaH2leqvn4etA0m5kJKPHiik6mdy1W2yF3OdShC8oAXsVebpiuokLXvCZ-N1Z6r1aMxIP34KDHRCZPs8v9a7iBBFBDOrmLEPiMpU30s8QieH2qojWtoQTpy7_dDElqUz_2Y3plkG2lDHleUyPo4dF_DxGl-GjQr4e97MqqHb-fw54tVs8BDoAiOhfboZnY87EthwHHesBNH4Orte59t9NmWTJHT2CtXusFb-MGaCg"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<main class="flex-1 mt-16 p-container-padding overflow-y-auto bg-surface-bright">
+<div class="max-w-6xl mx-auto">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-6">
+<div>
+<h2 class="font-h2 text-h2 text-on-surface">Duyệt thông tin dị ứng</h2>
+<p class="font-body-sm text-body-sm text-secondary mt-1">Xem xét và phê duyệt hồ sơ dị ứng do phụ huynh cập nhật.</p>
+</div>
+<div class="flex gap-3">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="pl-10 pr-4 py-2 rounded-lg border border-outline-variant bg-surface-container-lowest text-body-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all w-64" placeholder="Tìm kiếm học sinh..." type="text"/>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg border border-outline-variant bg-surface-container-lowest hover:bg-surface-container text-label-md font-label-md text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                            Lọc
+                        </button>
+</div>
+</div>
+<!-- Stats/Summary Bento Cards -->
+<div class="grid grid-cols-4 gap-4 mb-6">
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-label-md text-label-md text-secondary">Đang chờ duyệt</span>
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">pending_actions</span>
+</div>
+</div>
+<div class="mt-4">
+<span class="font-h1 text-h1 text-on-surface">12</span>
+<span class="text-sm text-secondary ml-1">hồ sơ</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-label-md text-label-md text-secondary">Khẩn cấp (Mức cao)</span>
+<div class="w-8 h-8 rounded-full bg-error-container/50 flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+</div>
+</div>
+<div class="mt-4">
+<span class="font-h1 text-h1 text-on-surface">3</span>
+<span class="text-sm text-secondary ml-1">hồ sơ</span>
+</div>
+</div>
+</div>
+<!-- Data Table Container -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50 border-b border-outline-variant">
+<th class="font-label-sm text-label-sm text-secondary px-6 py-3">Học sinh</th>
+<th class="font-label-sm text-label-sm text-secondary px-6 py-3">Lớp</th>
+<th class="font-label-sm text-label-sm text-secondary px-6 py-3">Loại dị ứng</th>
+<th class="font-label-sm text-label-sm text-secondary px-6 py-3">Mức độ</th>
+<th class="font-label-sm text-label-sm text-secondary px-6 py-3">Thời gian gửi</th>
+<th class="px-6 py-3"></th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm text-on-surface">
+<!-- Row 1 -->
+<tr class="border-b border-outline-variant hover:bg-surface-container-low/50 cursor-pointer transition-colors" onclick="openSideSheet()">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container/20 flex items-center justify-center text-primary font-bold text-xs">NA</div>
+<span class="font-medium">Nguyễn Văn A</span>
+</div>
+</td>
+<td class="px-6 py-4 text-secondary">10A1</td>
+<td class="px-6 py-4">Hải sản (Tôm, Cua)</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-error-container text-on-error-container font-label-sm text-[11px] uppercase tracking-wide">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                                        Cao
+                                    </span>
+</td>
+<td class="px-6 py-4 text-secondary">10:23, 12/10/2023</td>
+<td class="px-6 py-4 text-right">
+<span class="material-symbols-outlined text-outline hover:text-primary transition-colors text-[20px]">chevron_right</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="border-b border-outline-variant hover:bg-surface-container-low/50 cursor-pointer transition-colors" onclick="openSideSheet()">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container/50 flex items-center justify-center text-on-secondary-container font-bold text-xs">TB</div>
+<span class="font-medium">Trần Thị B</span>
+</div>
+</td>
+<td class="px-6 py-4 text-secondary">10A2</td>
+<td class="px-6 py-4">Đậu phộng</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#fef08a] text-[#854d0e] font-label-sm text-[11px] uppercase tracking-wide">
+<span class="w-1.5 h-1.5 rounded-full bg-[#ca8a04]"></span>
+                                        Trung bình
+                                    </span>
+</td>
+<td class="px-6 py-4 text-secondary">09:15, 12/10/2023</td>
+<td class="px-6 py-4 text-right">
+<span class="material-symbols-outlined text-outline hover:text-primary transition-colors text-[20px]">chevron_right</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="border-b border-outline-variant hover:bg-surface-container-low/50 cursor-pointer transition-colors" onclick="openSideSheet()">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-tertiary-container/20 flex items-center justify-center text-tertiary font-bold text-xs">LM</div>
+<span class="font-medium">Lê Văn M</span>
+</div>
+</td>
+<td class="px-6 py-4 text-secondary">11B3</td>
+<td class="px-6 py-4">Sữa bò</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#dcfce7] text-[#166534] font-label-sm text-[11px] uppercase tracking-wide">
+<span class="w-1.5 h-1.5 rounded-full bg-[#16a34a]"></span>
+                                        Thấp
+                                    </span>
+</td>
+<td class="px-6 py-4 text-secondary">16:45, 11/10/2023</td>
+<td class="px-6 py-4 text-right">
+<span class="material-symbols-outlined text-outline hover:text-primary transition-colors text-[20px]">chevron_right</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+<!-- Side Sheet Overlay -->
+<div class="fixed inset-0 bg-on-surface/20 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300" id="sideSheetOverlay" onclick="closeSideSheet()"></div>
+<!-- Side Sheet -->
+<aside class="fixed top-0 right-0 h-screen w-[480px] bg-surface-container-lowest shadow-2xl z-50 flex flex-col transform translate-x-full transition-transform duration-300 ease-in-out border-l border-outline-variant rounded-l-2xl" id="sideSheet">
+<!-- Header -->
+<div class="flex items-center justify-between p-6 border-b border-outline-variant">
+<h3 class="font-h3 text-h3 text-on-surface">Chi tiết hồ sơ dị ứng</h3>
+<button class="w-8 h-8 rounded-full flex items-center justify-center text-secondary hover:bg-surface-container transition-colors" onclick="closeSideSheet()">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-6 space-y-6">
+<!-- Student Info Profile Card -->
+<div class="flex items-start gap-4 p-4 rounded-xl bg-surface-container-low border border-outline-variant/50">
+<div class="w-12 h-12 rounded-full bg-primary-container/20 flex items-center justify-center text-primary font-bold text-lg mt-1">NA</div>
+<div>
+<h4 class="font-h3 text-[18px] text-on-surface leading-snug">Nguyễn Văn A</h4>
+<div class="flex items-center gap-4 mt-1 text-sm text-secondary">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">school</span> Lớp 10A1</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">badge</span> ID: HS23019</span>
+</div>
+</div>
+</div>
+<!-- Allergy Details Grid -->
+<div>
+<h5 class="font-label-md text-label-md text-secondary mb-3 uppercase tracking-wider text-[11px]">Thông tin y tế</h5>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1">
+<p class="text-xs text-secondary">Loại dị ứng</p>
+<p class="font-medium text-on-surface">Hải sản (Tôm, Cua)</p>
+</div>
+<div class="space-y-1">
+<p class="text-xs text-secondary">Mức độ cảnh báo</p>
+<div>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-error-container text-on-error-container font-label-sm text-[11px] uppercase tracking-wide">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> Cao
+                            </span>
+</div>
+</div>
+<div class="col-span-2 space-y-1 mt-2">
+<p class="text-xs text-secondary">Biểu hiện khi phát tác</p>
+<p class="text-sm text-on-surface p-3 bg-surface-container-low rounded-lg border border-outline-variant/30">Nổi mẩn đỏ diện rộng, khó thở nhẹ, buồn nôn. Cần can thiệp y tế ngay lập tức nếu vô tình ăn phải.</p>
+</div>
+</div>
+</div>
+<hr class="border-outline-variant/50"/>
+<!-- Evidence / Attachment -->
+<div>
+<h5 class="font-label-md text-label-md text-secondary mb-3 uppercase tracking-wider text-[11px]">Tài liệu / Bằng chứng y khoa</h5>
+<div class="rounded-xl overflow-hidden border border-outline-variant bg-surface-container-low relative group cursor-pointer">
+<img alt="Medical Evidence" class="w-full h-40 object-cover opacity-90 group-hover:opacity-100 transition-opacity" data-alt="A clean, highly legible medical document or doctor's note on official clinic letterhead, photographed from top-down on a light minimalist desk. Soft natural lighting, clinical and professional aesthetic, high contrast black text on crisp white paper." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1x-X34q4qNXjvBmW59tpq4o1NmKUSyrI03897z82vVvoxqAKXHVkWlySccr_bX6fQdKbw8oaa3Ygr5JqxxG2YBmBNHcEWKIXFhJ2MsTFn8zUcv3TIxTWsFyB1FR4WR_hQ0vzzUumEiQwkSVkKpXd5sbqNHHkOetVQ3xL6qAkyrIx9ILQcuO5rrXnT0fRyA-OBBDuVYRBQW4hxzAp2S6FWsCVdTZyqSyEO-EjARdFDH_c3cmpukwntLf41R6Jzyj2SSBRp5Rd1PWU"/>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+<div class="opacity-0 group-hover:opacity-100 bg-surface-container-lowest/90 backdrop-blur px-3 py-1.5 rounded-full shadow-sm text-sm font-medium text-on-surface flex items-center gap-2 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+<span class="material-symbols-outlined text-[18px]">zoom_in</span> Xem lớn
+                        </div>
+</div>
+</div>
+<p class="text-xs text-secondary mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">attachment</span>
+                    Giay_xac_nhan_BS.jpg (1.2MB)
+                </p>
+</div>
+<!-- Review Action Area -->
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant mt-8">
+<label class="font-label-md text-label-md text-on-surface block mb-2">Ghi chú phản hồi (Tùy chọn, bắt buộc nếu từ chối)</label>
+<textarea class="w-full rounded-lg border border-outline-variant bg-surface-container-lowest text-body-sm p-3 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all resize-none" placeholder="Nhập lý do hoặc ghi chú..." rows="3"></textarea>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="p-4 border-t border-outline-variant bg-surface-container-lowest flex gap-3">
+<button class="flex-1 py-2.5 px-4 rounded-lg border border-error text-error hover:bg-error-container/30 font-label-md text-label-md transition-colors">
+                Từ chối
+            </button>
+<button class="flex-[2] py-2.5 px-4 rounded-lg bg-[#16a34a] hover:bg-[#15803d] text-white font-label-md text-label-md shadow-sm transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+                Duyệt hồ sơ
+            </button>
+</div>
+</aside>
+<script>
+        const sheet = document.getElementById('sideSheet');
+        const overlay = document.getElementById('sideSheetOverlay');
+
+        function openSideSheet() {
+            overlay.classList.remove('hidden');
+            // Small delay to allow display:block to apply before transition
+            setTimeout(() => {
+                overlay.classList.remove('opacity-0');
+                sheet.classList.remove('translate-x-full');
+            }, 10);
+        }
+
+        function closeSideSheet() {
+            overlay.classList.add('opacity-0');
+            sheet.classList.add('translate-x-full');
+            
+            // Wait for transition to finish before hiding
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+            }, 300);
+        }
+    </script>
+</body></html>

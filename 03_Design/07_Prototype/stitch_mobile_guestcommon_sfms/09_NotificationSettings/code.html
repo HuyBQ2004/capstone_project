@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cài đặt thông báo - SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Public+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#bfd2fd",
+                        "error": "#a83836",
+                        "on-surface": "#2b3438",
+                        "on-tertiary-fixed": "#213456",
+                        "on-background": "#2b3438",
+                        "secondary": "#506076",
+                        "inverse-on-surface": "#9a9da0",
+                        "on-primary": "#f2faff",
+                        "surface": "#f7fafc",
+                        "primary-dim": "#005b72",
+                        "primary-container": "#8fdfff",
+                        "tertiary-dim": "#415377",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-primary-fixed-variant": "#005a71",
+                        "on-surface-variant": "#576065",
+                        "on-error-container": "#6e0a12",
+                        "error-container": "#fa746f",
+                        "on-secondary-fixed": "#314055",
+                        "surface-dim": "#d2dbe0",
+                        "primary-fixed": "#8fdfff",
+                        "surface-container-highest": "#dbe4e9",
+                        "secondary-container": "#d3e4fe",
+                        "on-tertiary-fixed-variant": "#3e5175",
+                        "error-dim": "#67040d",
+                        "surface-container-high": "#e2e9ed",
+                        "on-secondary": "#f7f9ff",
+                        "inverse-surface": "#0b0f11",
+                        "surface-tint": "#006882",
+                        "secondary-dim": "#44546a",
+                        "primary": "#006882",
+                        "on-tertiary-container": "#35476b",
+                        "tertiary-container": "#bfd2fd",
+                        "secondary-fixed-dim": "#c5d6f0",
+                        "on-tertiary": "#f9f8ff",
+                        "surface-variant": "#dbe4e9",
+                        "outline-variant": "#aab3b8",
+                        "primary-fixed-dim": "#81d1f0",
+                        "inverse-primary": "#8fdfff",
+                        "outline": "#737c81",
+                        "surface-container-low": "#eff4f8",
+                        "surface-container": "#e8eff3",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#fff7f6",
+                        "tertiary-fixed-dim": "#b1c4ee",
+                        "background": "#f7fafc",
+                        "on-primary-container": "#005065",
+                        "tertiary": "#4d5f84",
+                        "on-primary-fixed": "#003b4c",
+                        "on-secondary-fixed-variant": "#4d5d73",
+                        "surface-bright": "#f7fafc",
+                        "on-secondary-container": "#435368"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Be Vietnam Pro"],
+                        "display": ["Be Vietnam Pro"],
+                        "body": ["Be Vietnam Pro"],
+                        "label": ["Public Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #006882;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #006882;
+        }
+        .toggle-checkbox {
+            right: 0;
+            z-index: 1;
+            border-color: #e2e8f0;
+            transition: all 0.3s;
+        }
+        .toggle-label {
+            width: 3rem;
+            height: 1.5rem;
+            background-color: #cbd5e1;
+            border-radius: 9999px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .toggle-label::after {
+            content: '';
+            position: absolute;
+            top: 0.125rem;
+            left: 0.125rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            background-color: white;
+            border-radius: 50%;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .toggle-checkbox:checked + .toggle-label::after {
+            transform: translateX(1.5rem);
+        }
+        
+        #snackbar {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #2b3438;
+            color: #f7fafc;
+            text-align: center;
+            border-radius: 8px;
+            padding: 16px;
+            position: fixed;
+            z-index: 100;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-family: 'Public Sans', sans-serif;
+            font-size: 0.875rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        #snackbar.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
+        }
+
+        @keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body min-h-screen pt-16 pb-safe">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface-dim flex items-center justify-between px-4 h-16 w-full z-50 fixed top-0 shadow-sm text-primary dark:text-primary-dim">
+<button aria-label="Go back" class="p-2 -ml-2 rounded-full hover:bg-surface-variant transition-colors active:scale-95 duration-150" onclick="window.history.back();">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<h1 class="font-headline text-headline-sm font-bold text-xl flex-1 text-center">Cài đặt thông báo</h1>
+<div class="w-10"></div> <!-- Spacer for centering -->
+</header>
+<!-- Main Content -->
+<main class="p-4 max-w-md mx-auto space-y-6">
+<p class="text-on-surface-variant text-sm mb-6 mt-2 font-label">Quản lý cách bạn nhận thông báo từ hệ thống SFMS.</p>
+<!-- Setting Card: Allergy Alerts -->
+<section class="bg-surface-container-lowest rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-surface-variant/50">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-error-container/20 flex items-center justify-center text-error">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">medical_information</span>
+</div>
+<div>
+<h2 class="font-bold text-on-surface font-headline">Cảnh báo dị ứng nguy hiểm</h2>
+<p class="text-xs text-on-surface-variant font-label">Thông báo khẩn khi phát hiện thành phần dị ứng.</p>
+</div>
+</div>
+<div class="space-y-4 pl-13">
+<div class="flex items-center justify-between">
+<label class="text-sm font-medium text-on-surface" for="allergy-push">Thông báo đẩy (Push)</label>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer opacity-0" id="allergy-push" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="allergy-push"></label>
+</div>
+</div>
+<div class="w-full h-px bg-surface-variant/50"></div>
+<div class="flex items-center justify-between">
+<label class="text-sm font-medium text-on-surface" for="allergy-email">Email</label>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer opacity-0" id="allergy-email" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="allergy-email"></label>
+</div>
+</div>
+</div>
+</section>
+<!-- Setting Card: Food Safety -->
+<section class="bg-surface-container-lowest rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-surface-variant/50">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-primary-container/30 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+<div>
+<h2 class="font-bold text-on-surface font-headline">Cảnh báo an toàn thực phẩm</h2>
+<p class="text-xs text-on-surface-variant font-label">Cập nhật về tiêu chuẩn và vệ sinh an toàn.</p>
+</div>
+</div>
+<div class="space-y-4 pl-13">
+<div class="flex items-center justify-between">
+<label class="text-sm font-medium text-on-surface" for="safety-push">Thông báo đẩy (Push)</label>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer opacity-0" id="safety-push" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="safety-push"></label>
+</div>
+</div>
+<div class="w-full h-px bg-surface-variant/50"></div>
+<div class="flex items-center justify-between">
+<label class="text-sm font-medium text-on-surface" for="safety-email">Email</label>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer opacity-0" id="safety-email" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="safety-email"></label>
+</div>
+</div>
+</div>
+</section>
+<!-- Setting Card: General Alerts -->
+<section class="bg-surface-container-lowest rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-surface-variant/50">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-secondary-container/50 flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">notifications</span>
+</div>
+<div>
+<h2 class="font-bold text-on-surface font-headline">Thông báo hệ thống chung</h2>
+<p class="text-xs text-on-surface-variant font-label">Cập nhật ứng dụng, tin tức và sự kiện.</p>
+</div>
+</div>
+<div class="pl-13">
+<div class="flex items-center justify-between">
+<label class="text-sm font-medium text-on-surface" for="general-push">Thông báo đẩy (Push)</label>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer opacity-0" id="general-push" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="general-push"></label>
+</div>
+</div>
+</div>
+</section>
+<!-- Save Button -->
+<div class="pt-6 pb-8">
+<button class="w-full bg-[#0E7490] hover:bg-primary-dim text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition-all active:scale-95 flex items-center justify-center gap-2" onclick="saveSettings()">
+<span class="material-symbols-outlined" style="font-size: 20px;">save</span>
+                Lưu cài đặt
+            </button>
+</div>
+</main>
+<!-- SnackBar Component -->
+<div id="snackbar">Đã lưu cài đặt thông báo</div>
+<script>
+        function saveSettings() {
+            var x = document.getElementById("snackbar");
+            x.className = "show";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        }
+    </script>
+</body></html>

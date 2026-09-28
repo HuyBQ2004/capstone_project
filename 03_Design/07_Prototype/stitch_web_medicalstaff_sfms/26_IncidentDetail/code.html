@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chi tiết sự cố: INC-2023-001</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-fixed": "#0b1c30",
+                      "inverse-surface": "#27313f",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "primary-container": "#0e7490",
+                      "surface": "#f8f9ff",
+                      "outline": "#6f787d",
+                      "on-primary-container": "#d3f1ff",
+                      "secondary": "#505f76",
+                      "on-primary-fixed": "#001f29",
+                      "on-tertiary-fixed": "#191c1e",
+                      "surface-container-highest": "#d9e3f6",
+                      "secondary-container": "#d0e1fb",
+                      "on-error-container": "#93000a",
+                      "inverse-primary": "#81d1f0",
+                      "on-surface": "#121c2a",
+                      "surface-container-lowest": "#ffffff",
+                      "on-tertiary-container": "#eaecee",
+                      "surface-dim": "#d0dbed",
+                      "inverse-on-surface": "#eaf1ff",
+                      "on-secondary-container": "#54647a",
+                      "outline-variant": "#bec8cd",
+                      "background": "#f8f9ff",
+                      "surface-container-high": "#dee9fc",
+                      "on-tertiary-fixed-variant": "#444749",
+                      "tertiary-fixed": "#e0e3e5",
+                      "surface-bright": "#f8f9ff",
+                      "tertiary-container": "#686b6d",
+                      "primary": "#005a71",
+                      "surface-container": "#e6eeff",
+                      "on-error": "#ffffff",
+                      "primary-fixed-dim": "#81d1f0",
+                      "on-secondary": "#ffffff",
+                      "tertiary-fixed-dim": "#c4c7c9",
+                      "surface-variant": "#d9e3f6",
+                      "on-primary-fixed-variant": "#004d62",
+                      "on-background": "#121c2a",
+                      "error-container": "#ffdad6",
+                      "tertiary": "#505355",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "error": "#ba1a1a",
+                      "surface-tint": "#006781",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-low": "#eff4ff",
+                      "primary-fixed": "#b9eaff",
+                      "on-primary": "#ffffff",
+                      "secondary-fixed": "#d3e4fe",
+                      "on-surface-variant": "#3f484c"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "sidebar-width": "280px",
+                      "gutter": "16px",
+                      "container-padding": "24px",
+                      "topbar-height": "64px",
+                      "section-gap": "32px"
+              },
+              "fontFamily": {
+                      "body-lg": [
+                              "Be Vietnam Pro"
+                      ],
+                      "label-md": [
+                              "Be Vietnam Pro"
+                      ],
+                      "h2": [
+                              "Be Vietnam Pro"
+                      ],
+                      "label-sm": [
+                              "Be Vietnam Pro"
+                      ],
+                      "h1": [
+                              "Be Vietnam Pro"
+                      ],
+                      "h3": [
+                              "Be Vietnam Pro"
+                      ],
+                      "body-sm": [
+                              "Be Vietnam Pro"
+                      ]
+              },
+              "fontSize": {
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "h2": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "h1": [
+                              "30px",
+                              {
+                                      "lineHeight": "36px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "h3": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+          .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+          }
+      </style>
+</head>
+<body class="bg-background text-on-background font-body-sm antialiased h-screen flex overflow-hidden">
+<!-- Sidebar -->
+<aside class="fixed left-0 top-0 h-screen flex flex-col p-gutter w-[sidebar-width] border-r border-outline-variant bg-surface-container-lowest z-50 md:flex hidden">
+<div class="flex items-center gap-3 mb-8 px-2">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container font-h2 font-bold">
+                SF
+            </div>
+<div>
+<h2 class="font-h2 text-h2 font-bold text-primary">Hệ thống SFMS</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Quản lý Y tế</p>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary rounded-lg py-2.5 px-4 font-label-md text-label-md mb-6 hover:opacity-90 active:scale-95 duration-150 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">add</span>
+            Báo cáo sự cố mới
+        </button>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-secondary-container hover:bg-surface-container-high transition-colors font-label-md text-label-md active:scale-95 duration-150 hover:bg-surface-container-high hover:text-on-surface transition-all" href="#">
+<span class="material-symbols-outlined text-xl">dashboard</span>
+                Tổng quan
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary bg-secondary-container font-semibold font-label-md text-label-md active:scale-95 duration-150 hover:bg-surface-container-high hover:text-on-surface transition-all" href="#">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">warning</span>
+                Sự cố y khoa
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-secondary-container hover:bg-surface-container-high transition-colors font-label-md text-label-md active:scale-95 duration-150 hover:bg-surface-container-high hover:text-on-surface transition-all" href="#">
+<span class="material-symbols-outlined text-xl">assessment</span>
+                Báo cáo
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-secondary-container hover:bg-surface-container-high transition-colors font-label-md text-label-md active:scale-95 duration-150 hover:bg-surface-container-high hover:text-on-surface transition-all" href="#">
+<span class="material-symbols-outlined text-xl">list_alt</span>
+                Danh mục
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-secondary-container hover:bg-surface-container-high transition-colors font-label-md text-label-md active:scale-95 duration-150 hover:bg-surface-container-high hover:text-on-surface transition-all" href="#">
+<span class="material-symbols-outlined text-xl">settings</span>
+                Cài đặt
+            </a>
+</nav>
+<div class="mt-auto pt-4 border-t border-outline-variant space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-secondary-container hover:bg-surface-container-high transition-colors font-label-md text-label-md active:scale-95 duration-150 hover:bg-surface-container-high hover:text-on-surface transition-all" href="#">
+<span class="material-symbols-outlined text-xl">help</span>
+                Hỗ trợ
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-error hover:bg-error-container/50 transition-colors font-label-md text-label-md active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined text-xl">logout</span>
+                Đăng xuất
+            </a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col md:ml-[sidebar-width] w-full md:w-[calc(100%-280px)] overflow-hidden">
+<!-- Top Nav -->
+<header class="h-[topbar-height] w-full backdrop-blur-md sticky top-0 flex justify-between items-center px-container-padding z-40 bg-surface/80 border-b border-outline-variant shadow-sm hidden md:flex">
+<div class="flex items-center gap-4">
+<h1 class="font-h3 text-h3 font-bold text-on-surface">Quản lý Sự cố</h1>
+<div class="h-6 w-px bg-outline-variant mx-2"></div>
+<nav class="flex gap-6 h-full items-end pt-4">
+<a class="text-on-surface-variant hover:text-primary transition-colors pb-4 font-label-md text-label-md cursor-pointer active:opacity-80" href="#">Tất cả</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors pb-4 font-label-md text-label-md cursor-pointer active:opacity-80" href="#">Chưa xử lý</a>
+<a class="text-primary border-b-2 border-primary font-semibold pb-4 font-label-md text-label-md cursor-pointer active:opacity-80" href="#">Đang giải quyết</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors pb-4 font-label-md text-label-md cursor-pointer active:opacity-80" href="#">Đã đóng</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined text-outline cursor-pointer hover:text-primary transition-colors">search</span>
+</div>
+<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-all cursor-pointer active:opacity-80 text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-all cursor-pointer active:opacity-80 text-on-surface-variant">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant ml-2">
+<img alt="Bác sĩ quản trị" class="w-full h-full object-cover" data-alt="A small, high-quality profile portrait of an Asian male doctor with short dark hair, wearing a white medical coat and a light blue stethoscope around his neck. The lighting is soft and professional, capturing a trustworthy and focused expression. Bright, clean clinical background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8yK0gtE1jsSc4jFxgAZ_Ilh6UbyGTBuhVo4V8j5q05fOmCqu2EpH1SrYWunNuA-eXNoSAYl_-dP5eC_FF8HJAfF4jV4EXqLwDIsFq5ksMXZ16maAUrz4e69eSFfXHICa4QN2cyY0znY2IbtlGTsk91ucGlmWWjMKks_MnrU6rvpv9-VAAQ5d5JkaE0PPCcJQ3_OI3k6DhqjmeSHl3ylKQcQUffHypu1CjcSyFj_R0CHiDWRqtoIgfpxXFIwbZJAWiUiV0BRmCqcc"/>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-container-padding bg-background space-y-section-gap">
+<!-- Page Header -->
+<div class="flex flex-col gap-4">
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="flex text-on-surface-variant font-label-sm text-label-sm">
+<ol class="inline-flex items-center space-x-1 md:space-x-2">
+<li class="inline-flex items-center">
+<a class="inline-flex items-center hover:text-primary transition-colors" href="#">
+                                Quản lý sự cố
+                            </a>
+</li>
+<li>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-sm mx-1">chevron_right</span>
+<span class="text-on-surface">Chi tiết sự cố</span>
+</div>
+</li>
+</ol>
+</nav>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<h1 class="font-h1 text-h1 text-on-surface">Chi tiết sự cố: INC-2023-001</h1>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-error-container text-on-error-container">
+                            Khẩn cấp
+                        </span>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 border border-outline rounded-lg text-on-surface hover:bg-surface-container-low transition-colors font-label-md text-label-md flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">assignment</span>
+                            Đánh giá mức độ nghiêm trọng
+                        </button>
+<button class="px-4 py-2 bg-primary text-on-primary rounded-lg hover:opacity-90 transition-opacity font-label-md text-label-md flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-sm">search</span>
+                            Không gian điều tra
+                        </button>
+</div>
+</div>
+</div>
+<!-- Main Layout: 2 Columns -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column (70%) -->
+<div class="lg:col-span-8 flex flex-col gap-gutter">
+<!-- Thông tin chung Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-[24px]">
+<h3 class="font-h3 text-h3 text-on-surface mb-6 flex items-center gap-2 border-b border-outline-variant pb-3">
+<span class="material-symbols-outlined text-primary">info</span>
+                            Thông tin chung
+                        </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-4">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-1">Thời gian phát hiện</p>
+<p class="font-body-sm text-body-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline">schedule</span>
+                                        15/10/2023 - 10:30 AM
+                                    </p>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-1">Địa điểm</p>
+<p class="font-body-sm text-body-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline">location_on</span>
+                                        Trường Tiểu học ABC, Quận 1, TP.HCM
+                                    </p>
+</div>
+</div>
+<div class="space-y-4">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-1">Người báo cáo</p>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-container-highest flex items-center justify-center text-xs font-bold text-on-surface">
+                                            NT
+                                        </div>
+<p class="font-body-sm text-body-sm text-on-surface">Nguyễn Thị Thu (Y tế học đường)</p>
+</div>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-1">Mô tả sơ bộ</p>
+<p class="font-body-sm text-body-sm text-on-surface">Nhiều học sinh có biểu hiện đau bụng, buồn nôn sau giờ ăn nhẹ buổi sáng. Đã đưa 5 em xuống phòng y tế sơ cứu.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Danh sách học sinh ảnh hưởng Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden flex flex-col flex-1">
+<div class="p-[24px] border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-h3 text-h3 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">groups</span>
+                                Danh sách học sinh ảnh hưởng
+                            </h3>
+<span class="bg-surface-container text-on-surface px-3 py-1 rounded-full font-label-sm text-label-sm">
+                                Tổng: 12 em
+                            </span>
+</div>
+<div class="overflow-x-auto flex-1">
+<table class="w-full text-left border-collapse">
+<thead class="bg-slate-50/50 text-on-surface-variant font-label-sm text-label-sm border-b border-outline-variant">
+<tr>
+<th class="px-6 py-3 font-medium">Tên học sinh</th>
+<th class="px-6 py-3 font-medium">Lớp</th>
+<th class="px-6 py-3 font-medium">Triệu chứng</th>
+<th class="px-6 py-3 font-medium">Thời gian khởi phát</th>
+<th class="px-6 py-3 font-medium text-right">Hành động</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant text-on-surface font-body-sm text-body-sm">
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4 font-medium text-primary">Trần Văn An</td>
+<td class="px-6 py-4">3A1</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                                                Buồn nôn, Đau bụng
+                                            </span>
+</td>
+<td class="px-6 py-4">10:15 AM</td>
+<td class="px-6 py-4 text-right">
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4 font-medium text-primary">Lê Bảo Châu</td>
+<td class="px-6 py-4">3A1</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                                                Đau bụng
+                                            </span>
+</td>
+<td class="px-6 py-4">10:20 AM</td>
+<td class="px-6 py-4 text-right">
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4 font-medium text-primary">Phạm Minh Đức</td>
+<td class="px-6 py-4">3A2</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                                                Nôn mửa, Đau đầu
+                                            </span>
+</td>
+<td class="px-6 py-4">10:25 AM</td>
+<td class="px-6 py-4 text-right">
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-outline-variant flex justify-center bg-surface-container-lowest">
+<button class="text-primary font-label-sm text-label-sm hover:underline">Xem toàn bộ danh sách</button>
+</div>
+</div>
+</div>
+<!-- Right Column (30%) -->
+<div class="lg:col-span-4 flex flex-col gap-gutter">
+<!-- Thực đơn & Lô thực phẩm Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-[24px]">
+<h3 class="font-h3 text-h3 text-on-surface mb-6 flex items-center gap-2 border-b border-outline-variant pb-3">
+<span class="material-symbols-outlined text-primary">restaurant_menu</span>
+                            Thực đơn nghi ngờ
+                        </h3>
+<div class="space-y-4">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Bữa ăn: Ăn nhẹ sáng (09:30 AM)</p>
+<!-- Food Item 1 -->
+<div class="p-4 rounded-lg border border-error/30 bg-error-container/10">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-label-md text-label-md font-bold text-on-surface">Sữa chua dâu tây</h4>
+<span class="material-symbols-outlined text-error text-sm">warning</span>
+</div>
+<div class="space-y-2 mt-3">
+<div class="flex justify-between items-center text-body-sm font-body-sm text-on-surface-variant">
+<span>Mã lô:</span>
+<span class="font-mono bg-surface-container px-2 py-0.5 rounded text-on-surface">L-231012-Y</span>
+</div>
+<div class="flex justify-between items-center text-body-sm font-body-sm text-on-surface-variant">
+<span>Nhà cung cấp:</span>
+<span class="text-on-surface">Vinamilk ĐN</span>
+</div>
+</div>
+</div>
+<!-- Food Item 2 -->
+<div class="p-4 rounded-lg border border-outline-variant bg-surface">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-label-md text-label-md font-bold text-on-surface">Bánh quy bơ</h4>
+</div>
+<div class="space-y-2 mt-3">
+<div class="flex justify-between items-center text-body-sm font-body-sm text-on-surface-variant">
+<span>Mã lô:</span>
+<span class="font-mono bg-surface-container px-2 py-0.5 rounded text-on-surface">B-230901-K</span>
+</div>
+<div class="flex justify-between items-center text-body-sm font-body-sm text-on-surface-variant">
+<span>Nhà cung cấp:</span>
+<span class="text-on-surface">Kinh Đô</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Stepper Cố định dưới đáy (Demo) -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-[24px] mt-section-gap">
+<h3 class="font-h3 text-h3 text-on-surface mb-6">Tiến trình xử lý</h3>
+<div class="relative flex items-center justify-between w-full">
+<!-- Đường nối -->
+<div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 bg-slate-200 z-0"></div>
+<!-- Bước 1: Hoàn thành -->
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-cyan-700 text-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-sm">check</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface">Ghi nhận</span>
+</div>
+<!-- Bước 2: Hiện tại -->
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest border-2 border-cyan-700 text-cyan-700 flex items-center justify-center font-bold font-label-md shadow-sm">
+                            2
+                        </div>
+<span class="font-label-sm text-label-sm text-primary font-bold">Điều tra</span>
+</div>
+<!-- Bước 3: Chờ -->
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-label-md">
+                            3
+                        </div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Xử lý</span>
+</div>
+<!-- Bước 4: Chờ -->
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-label-md">
+                            4
+                        </div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Đóng</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cấu hình thông báo - SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#0b1c30",
+                        "surface-container-high": "#e2e7ff",
+                        "on-secondary-container": "#54647a",
+                        "inverse-primary": "#81d1f0",
+                        "tertiary-container": "#666b6f",
+                        "surface-bright": "#faf8ff",
+                        "primary": "#005a71",
+                        "primary-fixed": "#b9eaff",
+                        "tertiary-fixed": "#dfe3e7",
+                        "surface-container-highest": "#dae2fd",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "outline-variant": "#bec8cd",
+                        "surface-tint": "#006781",
+                        "on-surface": "#131b2e",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#d2d9f4",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#505f76",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "tertiary": "#4e5356",
+                        "surface-container-low": "#f2f3ff",
+                        "on-background": "#131b2e",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#d0e1fb",
+                        "surface": "#faf8ff",
+                        "primary-fixed-dim": "#81d1f0",
+                        "on-tertiary-fixed-variant": "#43474b",
+                        "on-primary-fixed-variant": "#004d62",
+                        "inverse-on-surface": "#eef0ff",
+                        "on-primary-container": "#d3f1ff",
+                        "surface-variant": "#dae2fd",
+                        "on-primary-fixed": "#001f29",
+                        "background": "#faf8ff",
+                        "primary-container": "#0e7490",
+                        "on-tertiary-fixed": "#171c1f",
+                        "tertiary-fixed-dim": "#c3c7cb",
+                        "outline": "#6f787d",
+                        "on-tertiary-container": "#e8edf1",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#eaedff",
+                        "inverse-surface": "#283044",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-surface-variant": "#3f484c",
+                        "on-tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max-width": "1280px",
+                        "base-unit": "4px",
+                        "gutter": "24px",
+                        "auth-card-width": "448px"
+                    },
+                    "fontFamily": {
+                        "h3": ["Be Vietnam Pro"],
+                        "body-base": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "h1": ["Be Vietnam Pro"],
+                        "body-sm": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "h2": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "h1-mobile": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "h3": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-base": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "h1": ["36px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "h2": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "h1-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "700" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #005a71;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #005a71;
+        }
+        .toggle-checkbox {
+            right: 0;
+            z-index: 1;
+            border-color: #e2e8f0;
+            transition: all 0.3s;
+        }
+        .toggle-label {
+            width: 3rem;
+            height: 1.5rem;
+            background-color: #e2e8f0;
+            border-radius: 9999px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .toggle-label:after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 1.25rem;
+            height: 1.25rem;
+            background-color: white;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        .toggle-checkbox:checked + .toggle-label:after {
+            transform: translateX(1.5rem);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-base antialiased">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface dark:bg-inverse-surface shadow-sm">
+<div class="flex items-center gap-4">
+<span class="font-h2 text-h2 font-bold text-primary dark:text-primary-fixed-dim">sfms</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors cursor-pointer active:scale-95 transition-transform text-on-surface-variant dark:text-outline-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-fixed overflow-hidden border border-outline-variant">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="A small, professional avatar portrait of a healthcare administrator. Clean, bright corporate lighting, soft shadows, neutral background. The subject is wearing business casual attire." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9Xlyha87Uvpn0ObD-62OiKq-66q6X6abA54Bnk6N-dHrwujtjdqadWTjQ0s4zSdJ4GBekB-RLkZ5_8I0rF_Uuf-ZlQgh-Zv_Wmki9jHM-Lmrs4uWpyDTac5IRdG_RLz0S91xNdLjti5cPT6zEneYF510YaxLM8xQSldi8KG0hCaZbEWhTv_KWqmbFlThzvrdPwNOfoXkcUIAbR8VJIvS8C0nfIm8o1wy31EdWSD45CzRNt4r8H8cLTcrWQCFd8Gq8Chohtn6KIjs"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 p-4 flex flex-col bg-surface-container-low dark:bg-on-secondary-fixed border-r border-outline-variant dark:border-outline hidden md:flex">
+<div class="mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-fixed overflow-hidden border border-outline-variant shrink-0">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="A small, professional avatar portrait of a healthcare administrator. Clean, bright corporate lighting, soft shadows, neutral background. The subject is wearing business casual attire." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqM1Qa7Nu-uboNcwaiahFFStBrcToYPwHh_HlVkYLr_zejqyDgwFvfdDznVTrbAfUZhrZ4qaj5tlzVnIiZDlMqq9D7NkjSG6F19ezOEQqkcQLPzUT4U3zPjexUNiFnARnN-dKfMwAyFOJOCB5HJWDw4TfM0qKqwSOsRP5CJ6V2OnjtC_1f13KQD5Wludu_-rmAOuOxase4jns2_xtJY48b1ZemJwgBaqELc_27v2VjqMnBNZ82X-Cu3pBew7sfKQvkmtXPODOFgjs"/>
+</div>
+<div>
+<div class="font-label-md text-label-md font-bold text-on-surface">Quản trị viên</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Hệ thống SFMS</div>
+</div>
+</div>
+<ul class="flex flex-col gap-2 flex-grow">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container-high dark:hover:bg-secondary-fixed transition-all active:scale-[0.98] cursor-pointer font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">person</span>
+<span>Chỉnh sửa hồ sơ</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container-high dark:hover:bg-secondary-fixed transition-all active:scale-[0.98] cursor-pointer font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">lock</span>
+<span>Đổi mật khẩu</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-secondary-container dark:bg-secondary-fixed-dim text-on-secondary-container dark:text-on-secondary-fixed font-bold hover:bg-surface-container-high dark:hover:bg-secondary-fixed transition-all active:scale-[0.98] cursor-pointer font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">notifications_active</span>
+<span>Cài đặt thông báo</span>
+</a>
+</li>
+</ul>
+<div class="mt-auto">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container-high dark:hover:bg-secondary-fixed transition-all active:scale-[0.98] cursor-pointer font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Đăng xuất</span>
+</a>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="md:ml-64 pt-16 min-h-screen flex flex-col">
+<div class="p-gutter max-w-container-max-width mx-auto w-full flex-grow">
+<div class="mb-8">
+<h1 class="font-h1 text-h1 text-on-surface">Cấu hình thông báo</h1>
+<p class="font-body-base text-body-base text-on-surface-variant mt-2">Quản lý cách bạn nhận thông báo từ hệ thống SFMS.</p>
+</div>
+<!-- Bento-style Grid for Settings -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
+<!-- Category 1 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 shadow-sm flex flex-col gap-6">
+<div class="flex items-center gap-3 border-b border-surface-container-high pb-4">
+<span class="material-symbols-outlined text-primary text-2xl">medical_services</span>
+<h2 class="font-h3 text-h3 text-on-surface">Cảnh báo dị ứng</h2>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<div class="font-label-md text-label-md font-bold text-on-surface">Email</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Nhận cảnh báo qua email đã đăng ký.</div>
+</div>
+<div class="relative inline-block w-12 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" id="toggle-allergy-email" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="toggle-allergy-email"></label>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<div class="font-label-md text-label-md font-bold text-on-surface">Push Notifications</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Nhận thông báo đẩy trực tiếp trên thiết bị.</div>
+</div>
+<div class="relative inline-block w-12 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" id="toggle-allergy-push" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="toggle-allergy-push"></label>
+</div>
+</div>
+</div>
+<!-- Category 2 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 shadow-sm flex flex-col gap-6">
+<div class="flex items-center gap-3 border-b border-surface-container-high pb-4">
+<span class="material-symbols-outlined text-primary text-2xl">restaurant</span>
+<h2 class="font-h3 text-h3 text-on-surface">Báo cáo an toàn thực phẩm</h2>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<div class="font-label-md text-label-md font-bold text-on-surface">Email</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Nhận báo cáo định kỳ qua email.</div>
+</div>
+<div class="relative inline-block w-12 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" id="toggle-food-email" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="toggle-food-email"></label>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<div class="font-label-md text-label-md font-bold text-on-surface">Push Notifications</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Nhận thông báo khẩn cấp về an toàn.</div>
+</div>
+<div class="relative inline-block w-12 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" id="toggle-food-push" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="toggle-food-push"></label>
+</div>
+</div>
+</div>
+<!-- Category 3 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 shadow-sm flex flex-col gap-6 md:col-span-2">
+<div class="flex items-center gap-3 border-b border-surface-container-high pb-4">
+<span class="material-symbols-outlined text-primary text-2xl">update</span>
+<h2 class="font-h3 text-h3 text-on-surface">Thông tin cập nhật hệ thống</h2>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<div class="font-label-md text-label-md font-bold text-on-surface">Push Notifications</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Nhận thông báo về bảo trì và tính năng mới.</div>
+</div>
+<div class="relative inline-block w-12 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" id="toggle-system-push" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="toggle-system-push"></label>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Button -->
+<div class="mt-8">
+<button class="bg-primary text-on-primary font-label-md text-label-md px-6 py-3 rounded-lg hover:bg-primary-container transition-colors shadow-sm flex items-center gap-2" id="save-btn">
+<span class="material-symbols-outlined">save</span>
+                    Lưu cấu hình
+                </button>
+</div>
+</div>
+<!-- Footer -->
+<footer class="w-full py-4 px-gutter flex justify-between items-center mt-auto bg-surface-bright dark:bg-on-secondary-fixed border-t border-outline-variant">
+<div class="font-label-md text-label-md font-bold text-primary">sfms</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant dark:text-outline-variant">
+                © 2024 sfms Healthcare Management System
+            </div>
+<div class="flex gap-4 font-label-sm text-label-sm">
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors cursor-pointer" href="#">Terms</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors cursor-pointer" href="#">Privacy</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors cursor-pointer" href="#">Support</a>
+</div>
+</footer>
+</main>
+<!-- Toast Notification (Hidden by default) -->
+<div class="fixed bottom-4 right-4 flex items-center p-4 mb-4 text-on-primary bg-primary rounded-lg shadow-lg opacity-0 pointer-events-none transition-opacity duration-300 z-50 max-w-sm w-full" id="toast" role="alert">
+<div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg bg-primary-container text-on-primary-container">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+</div>
+<div class="ml-3 font-label-md text-label-md font-normal">Lưu cấu hình thành công!</div>
+<button aria-label="Close" class="ml-auto -mx-1.5 -my-1.5 bg-transparent text-on-primary hover:text-surface-container-high rounded-lg focus:ring-2 focus:ring-on-primary p-1.5 inline-flex h-8 w-8 transition-colors" onclick="hideToast()" type="button">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+<script>
+        const saveBtn = document.getElementById('save-btn');
+        const toast = document.getElementById('toast');
+        let toastTimeout;
+
+        saveBtn.addEventListener('click', () => {
+            // Add loading state to button
+            const originalContent = saveBtn.innerHTML;
+            saveBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span> Đang lưu...';
+            saveBtn.disabled = true;
+            saveBtn.classList.add('opacity-75', 'cursor-not-allowed');
+
+            // Simulate API call
+            setTimeout(() => {
+                // Restore button
+                saveBtn.innerHTML = originalContent;
+                saveBtn.disabled = false;
+                saveBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                
+                // Show toast
+                showToast();
+            }, 800);
+        });
+
+        function showToast() {
+            clearTimeout(toastTimeout);
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            toast.classList.add('opacity-100');
+            
+            toastTimeout = setTimeout(() => {
+                hideToast();
+            }, 3000);
+        }
+
+        function hideToast() {
+            toast.classList.remove('opacity-100');
+            toast.classList.add('opacity-0', 'pointer-events-none');
+        }
+    </script>
+</body></html>

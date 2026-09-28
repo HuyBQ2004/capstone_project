@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SFMS Backend — School Food Management System
+  Stack (ADR-000 / 01_MVP_Backend_Implementation_Plan.md §3):
+    Java 25 LTS · Spring Boot 4.1.x · PostgreSQL 16 · Flyway · Spring Security + JWT
+    · Spring Security OAuth2 Client (Google) · MapStruct · springdoc-OpenAPI
+    · JUnit 5 + Testcontainers + WireMock + GreenMail + JaCoCo
+
+  CẤM: Prisma / TypeScript / passport / next-auth (TDS-MF01 §17.4 AP-AI-007).
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>4.1.0</version>
+    <relativePath/>
+  </parent>
+
+  <groupId>com.sfms</groupId>
+  <artifactId>sfms-backend</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>SFMS Backend</name>
+  <description>School Food Management System — backend (13 modules, MF01 là module nền)</description>
+
+  <properties>
+    <java.version>25</java.version>
+    <maven.compiler.release>25</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!--
+      13/08/2026 (Nam) — Snyk (job snyk-backend, severity-threshold=high) báo 13 issue, TẤT CẢ
+      đều nằm ở dependency TRUYỀN VÀO (transitive) do BOM spring-boot-dependencies:4.1.0 ghim,
+      không phải thư viện ta tự khai. Spring Boot BOM để version của chúng trong `<properties>`,
+      nên chỉ cần khai đè property CÙNG TÊN ở đây là toàn bộ cây phụ thuộc nhảy version — không
+      cần <dependencyManagement> riêng, cũng không cần đợi Spring Boot 4.1.1.
+      XOÁ nguyên khối này khi nâng Spring Boot lên bản đã tự mang version >= các số dưới đây.
+
+        jackson-bom (Jackson 3, tools.jackson)  3.1.4 → 3.1.5   Incorrect Authorization SNYK-JAVA-TOOLSJACKSONCORE-17972609
+                                                                (vào qua flyway-core; Snyk gợi ý nâng flyway 13.0.0 —
+                                                                 nâng thẳng Jackson gọn hơn, không đụng major Flyway)
+        jackson-2-bom (com.fasterxml)           2.21.4 → 2.21.5 Incorrect Authorization SNYK-JAVA-COMFASTERXMLJACKSONCORE-17972608 (qua jjwt-jackson)
+        logback                                 1.5.34 → 1.5.38 Expression Injection SNYK-JAVA-CHQOSLOGBACK-17675439 (vá từ 1.5.36)
+        netty                                   4.2.15 → 4.2.17 5 issue DoS/Infinite loop trên netty-codec{,-http,-http2,-compression}
+                                                                (qua firebase-admin + awssdk s3; vá từ 4.2.16.Final)
+        httpcore5                               5.4.2 → 5.4.3   DoS SNYK-JAVA-ORGAPACHEHTTPCOMPONENTSCORE5-17817217 (qua firebase-admin)
+        tomcat                                  11.0.22 → 11.0.24 Improper Authentication + Detection of Error Condition
+                                                                Without Action (SNYK-...-17732890 / 17733746, vá từ 11.0.23)
+        postgresql                              42.7.11 → 42.7.13 Incorrect Implementation of Authentication Algorithm
+                                                                SNYK-JAVA-ORGPOSTGRESQL-17874248 (vá từ 42.7.12)
+    -->
+    <jackson-bom.version>3.1.5</jackson-bom.version>
+    <jackson-2-bom.version>2.21.5</jackson-2-bom.version>
+    <logback.version>1.5.38</logback.version>
+    <netty.version>4.2.17.Final</netty.version>
+    <httpcore5.version>5.4.3</httpcore5.version>
+    <tomcat.version>11.0.24</tomcat.version>
+    <postgresql.version>42.7.13</postgresql.version>
+
+    <mapstruct.version>1.6.3</mapstruct.version>
+    <springdoc.version>3.0.3</springdoc.version>
+    <jjwt.version>0.12.6</jjwt.version>
+    <testcontainers.version>1.21.4</testcontainers.version>
+    <wiremock.version>3.10.0</wiremock.version>
+    <greenmail.version>2.1.3</greenmail.version>
+    <jsonpath.version>2.9.0</jsonpath.version>
+    <firebase-admin.version>9.4.3</firebase-admin.version>
+    <jacoco.version>0.8.15</jacoco.version>
+    <awssdk.version>2.50.1</awssdk.version>
+    <poi.version>5.5.1</poi.version>
+    <pdfbox.version>3.0.8</pdfbox.version>
+    <spring-dotenv.version>5.1.0</spring-dotenv.version>
+    <argLine>-Xmx2048m</argLine>
+    <!--
+      11/08/2026 (Nam) — *IT.java (107 file) chạy TUẦN TỰ mặc định, ~20 phút cục bộ. Không bật
+      chạy song song KIỂU JUNIT-5-TRONG-1-JVM (junit-platform.properties) được: mọi lớp kế thừa
+      AbstractIamIntegrationTest CÙNG DÙNG một Postgres `static` duy nhất, và @BeforeEach
+      flyway.clean()+migrate() lại schema đó TRƯỚC MỖI TEST — 2 test chạy đồng thời trong cùng
+      JVM sẽ giẫm DB của nhau (một bên clean() giữa lúc bên kia đang query), ra kết quả SAI chứ
+      không chỉ flaky.
+
+      Failsafe forkCount thay vào đó tách NHIỀU JVM riêng — mỗi JVM có container `static` CỦA
+      RIÊNG NÓ (biến static không chia sẻ xuyên JVM), test trong 1 fork vẫn tuần tự (an toàn),
+      nhưng nhiều fork chạy song song. Mặc định 2 (an toàn cho runner CI nhỏ, 2 vCPU) — máy dev
+      nhiều core hơn thì override: `mvn verify -Dfailsafe.forkCount=4`. Mỗi fork tự tải MỘT
+      Postgres container + argLine riêng (Xmx2048m × forkCount RAM) — đừng đẩy số này quá cao
+      trên máy ít RAM.
+    -->
+    <failsafe.forkCount>2</failsafe.forkCount>
+  </properties>
+
+  <dependencies>
+    <!-- ═══ Web / Validation ═══ -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+
+    <!-- ═══ Persistence — JPA + PostgreSQL 16 + Flyway ═══ -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-flyway</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-database-postgresql</artifactId>
+    </dependency>
+
+    <!-- ═══ Security — JWT + OAuth2 Client (Google, UC-191/BR-218) ═══ -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-oauth2-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-websocket</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt-api</artifactId>
+      <version>${jjwt.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt-impl</artifactId>
+      <version>${jjwt.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt-jackson</artifactId>
+      <version>${jjwt.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- ═══ Mail (BR-003/010/011 gửi email kích hoạt / đặt lại MK) ═══ -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-mail</artifactId>
+    </dependency>
+
+    <!-- ═══ OpenAPI / Swagger (D8) ═══ -->
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+      <version>${springdoc.version}</version>
+    </dependency>
+
+    <!-- ═══ Mapping ═══ -->
+    <dependency>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct</artifactId>
+      <version>${mapstruct.version}</version>
+    </dependency>
+
+    <!-- ═══ Object storage — Cloudflare R2 (S3-compatible), ADR-001 mục 6 ═══ -->
+    <dependency>
+      <groupId>software.amazon.awssdk</groupId>
+      <artifactId>s3</artifactId>
+      <version>${awssdk.version}</version>
+    </dependency>
+
+    <!-- ═══ MF08 §9.1 — xuất sổ Mẫu số 5 (UC-118): XLSX thật (POI) + PDF thật (PDFBox) ═══ -->
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>${poi.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.pdfbox</groupId>
+      <artifactId>pdfbox</artifactId>
+      <version>${pdfbox.version}</version>
+    </dependency>
+
+    <!-- ═══ Nạp .env vào Spring Environment (ADR-000: secrets qua ENV, không hardcode) ═══ -->
+    <dependency>
+      <groupId>me.paulschwarz</groupId>
+      <artifactId>spring-dotenv</artifactId>
+      <version>${spring-dotenv.version}</version>
+    </dependency>
+
+    <!-- ═══ Test ═══ -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- @ServiceConnection: Spring Boot tự nối DataSource vào container, không cần
+         @DynamicPropertySource cho url/user/password -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-testcontainers</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>postgresql</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.wiremock</groupId>
+      <artifactId>wiremock-standalone</artifactId>
+      <version>${wiremock.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.icegreen</groupId>
+      <artifactId>greenmail-junit5</artifactId>
+      <version>${greenmail.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.jayway.jsonpath</groupId>
+      <artifactId>json-path</artifactId>
+      <version>${jsonpath.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.firebase</groupId>
+      <artifactId>firebase-admin</artifactId>
+      <version>${firebase-admin.version}</version>
+    </dependency>
+  </dependencies>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.testcontainers</groupId>
+        <artifactId>testcontainers-bom</artifactId>
+        <version>${testcontainers.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.mapstruct</groupId>
+              <artifactId>mapstruct-processor</artifactId>
+              <version>${mapstruct.version}</version>
+            </path>
+          </annotationProcessorPaths>
+          <compilerArgs>
+            <arg>-Amapstruct.defaultComponentModel=spring</arg>
+            <arg>-Amapstruct.unmappedTargetPolicy=IGNORE</arg>
+            <arg>-parameters</arg>
+          </compilerArgs>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+
+      <!-- Unit test: *Test.java -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <argLine>@{argLine}</argLine>
+          <includes>
+            <include>**/*Test.java</include>
+          </includes>
+          <excludes>
+            <exclude>**/*IT.java</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+
+      <!-- Integration + Security test: *IT.java (Testcontainers) -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <configuration>
+          <argLine>@{argLine}</argLine>
+          <includes>
+            <include>**/*IT.java</include>
+          </includes>
+          <!-- Xem giải thích ở <properties>/failsafe.forkCount — forkCount JVM, KHÔNG phải
+               parallel trong-1-JVM, vì mỗi JVM cần Postgres static RIÊNG (không chia sẻ được). -->
+          <forkCount>${failsafe.forkCount}</forkCount>
+          <reuseForks>true</reuseForks>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- TestSpec §6 Exit Criteria: JaCoCo ≥ 80% cho service/web -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco.version}</version>
+        <executions>
+          <execution>
+            <id>prepare-agent</id>
+            <goals><goal>prepare-agent</goal></goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>verify</phase>
+            <goals><goal>report</goal></goals>
+          </execution>
+          <execution>
+            <id>check-coverage</id>
+            <phase>verify</phase>
+            <goals><goal>check</goal></goals>
+            <configuration>
+              <rules>
+                <rule>
+                  <element>PACKAGE</element>
+                  <includes>
+                    <include>com.sfms.iam.service</include>
+                    <include>com.sfms.iam.web</include>
+                  </includes>
+                  <limits>
+                    <limit>
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.80</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

@@ -1,0 +1,409 @@
+<!DOCTYPE html><html class="light" lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Lịch sử bữa ăn - SFMS Parent</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "outline": "#6f787d",
+                        "surface-container-highest": "#d3e4fe",
+                        "tertiary-container": "#686b6d",
+                        "surface-variant": "#d3e4fe",
+                        "on-secondary-container": "#00616f",
+                        "background": "#f8f9ff",
+                        "on-secondary-fixed": "#001f25",
+                        "on-secondary-fixed-variant": "#004e5a",
+                        "on-surface-variant": "#3f484c",
+                        "on-tertiary-fixed": "#191c1e",
+                        "on-primary-fixed": "#001f29",
+                        "surface-bright": "#f8f9ff",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "outline-variant": "#bec8cd",
+                        "inverse-surface": "#213145",
+                        "primary-fixed-dim": "#81d1f0",
+                        "surface": "#f8f9ff",
+                        "tertiary-fixed": "#e0e3e5",
+                        "primary-container": "#0e7490",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#81d1f0",
+                        "on-secondary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#004d62",
+                        "primary": "#005a71",
+                        "on-background": "#0b1c30",
+                        "on-error-container": "#93000a",
+                        "on-primary-container": "#d3f1ff",
+                        "surface-container-high": "#dce9ff",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#a2eeff",
+                        "surface-container": "#e5eeff",
+                        "surface-tint": "#006781",
+                        "on-surface": "#0b1c30",
+                        "on-tertiary-container": "#eaecee",
+                        "surface-container-low": "#eff4ff",
+                        "surface-dim": "#cbdbf5",
+                        "primary-fixed": "#b9eaff",
+                        "secondary-container": "#3fe1fd",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#2fd9f4",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "secondary": "#006877",
+                        "on-error": "#ffffff",
+                        "tertiary": "#505355"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "xl": "32px",
+                        "lg": "24px",
+                        "base": "8px",
+                        "sm": "12px",
+                        "md": "16px",
+                        "container-max": "1200px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-lg-mobile": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "data-mono": ["monospace"],
+                        "body-sm": ["Be Vietnam Pro"],
+                        "display-lg": ["Be Vietnam Pro"],
+                        "headline-md": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "data-mono": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #f8f9ff; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .card-shadow { shadow: 0px 4px 12px rgba(14, 116, 144, 0.05); }
+    </style>
+</head>
+<body class="flex min-h-screen overflow-hidden">
+<!-- SideNavBar Anchor -->
+<aside class="bg-surface-container-low dark:bg-inverse-surface h-screen w-72 flex flex-col shadow-sm hidden md:flex shrink-0">
+<div class="p-lg">
+<h1 class="text-headline-md font-headline-md text-primary dark:text-primary-fixed-dim">SFMS Parent</h1>
+<p class="text-body-sm text-on-surface-variant opacity-70">Hệ thống giám sát thực phẩm</p>
+</div>
+<nav class="flex-1 px-md space-y-xs">
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 duration-150 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Bảng điều khiển</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-primary font-bold border-r-4 border-primary bg-primary-container/10 transition-colors active:scale-95 duration-150 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="restaurant_menu">restaurant_menu</span>
+<span>Thực đơn</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 duration-150 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="monitor_heart">monitor_heart</span>
+<span>Sức khỏe học sinh</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 duration-150 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="clinical_notes">clinical_notes</span>
+<span>Chế độ ăn đặc biệt</span>
+</a>
+</nav>
+<div class="p-lg mt-auto border-t border-outline-variant/30">
+<div class="flex items-center gap-md">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="Close up portrait of a smiling young Vietnamese mother with soft lighting, reflecting warmth and trust. She is dressed in modern professional attire against a clean, minimalist off-white background with teal accents, maintaining the SFMS clinical and corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwQzL6bynspEzHYy_WY_18Sor06XbOqacVQIqwhWFo2vHVk0LuS0vfmJNUfEacEJkBNWyRIQmvRJGBU91-O0YHY2IZX6vt1_MKlW5R1ybOC0MWHSYUeL-OqfkKDyA_5tjfEXidEKcdJuB14B6vcbWkLL63vnRRhNsH9UMdNazsayDloB9gDDTA4vVxaU2IEy5i5BVp8aKNszCv4a2vE3TWnHaaEM7km7YjAmTKFdt92pgKZNvuSS2LxrBOj1UUt3tG3iV0ty-jtg">
+<div>
+<p class="font-bold text-on-surface">Minh Anh</p>
+<p class="text-xs text-on-surface-variant">Phụ huynh học sinh</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden relative">
+<!-- TopNavBar Anchor -->
+<header class="bg-surface dark:bg-background border-b border-outline-variant flex justify-between items-center px-lg py-md w-full sticky top-0 z-10">
+<div class="flex items-center gap-md">
+<button class="md:hidden p-base">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim">Lịch sử bữa ăn</h2>
+</div>
+<div class="flex items-center gap-lg">
+<div class="hidden lg:flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-body-lg text-body-lg">Nguyễn Minh Anh - Lớp 4A</span>
+</div>
+<div class="flex items-center gap-md">
+<button class="relative p-xs hover:text-primary transition-colors cursor-pointer active:opacity-70">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-xs hover:text-primary transition-colors cursor-pointer active:opacity-70">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto p-lg custom-scrollbar">
+<!-- Filters & Stats Section -->
+<div class="max-w-container-max mx-auto space-y-lg">
+<!-- Bento Header -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-lg">
+<!-- Date Selector & Toggle -->
+<div class="md:col-span-8 bg-surface-container-lowest p-lg rounded-xl border border-outline-variant/30 flex flex-col sm:flex-row justify-between items-center gap-md">
+<div class="flex items-center gap-md">
+<button class="p-base hover:bg-surface-container-low rounded-full transition-all">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<div class="text-center">
+<h3 class="font-bold text-on-surface">Tháng 10, 2023</h3>
+<p class="text-xs text-primary font-medium">Tuần 42 (16/10 - 22/10)</p>
+</div>
+<button class="p-base hover:bg-surface-container-low rounded-full transition-all">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+<div class="flex bg-surface-container-low p-xs rounded-lg">
+<button class="px-lg py-xs bg-white shadow-sm rounded-md text-primary font-bold text-body-sm">Tuần</button>
+<button class="px-lg py-xs text-on-surface-variant hover:text-primary text-body-sm transition-colors">Tháng</button>
+</div>
+</div>
+<!-- Quick Action -->
+<div class="md:col-span-4 bg-primary p-lg rounded-xl flex flex-col justify-center text-white relative overflow-hidden group">
+
+<div class="relative z-10">
+<p class="text-sm opacity-80 mb-xs">Tỷ lệ hài lòng</p>
+<h4 class="text-display-lg font-display-lg leading-none">98%</h4>
+<p class="text-xs mt-base flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+                                +2% so với tháng trước
+                            </p>
+</div>
+<span class="material-symbols-outlined absolute -bottom-4 -right-4 text-9xl opacity-10 group-hover:scale-110 transition-transform duration-500">restaurant</span>
+</div>
+</div>
+<!-- History List Container -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 overflow-hidden">
+<!-- Table Header -->
+<div class="grid grid-cols-12 gap-md p-md bg-surface-container-low border-b border-outline-variant/30 text-label-md text-on-surface-variant uppercase tracking-wider hidden md:grid">
+<div class="col-span-2">Ngày / Thứ</div>
+<div class="col-span-4">Thông tin bữa ăn</div>
+<div class="col-span-3 text-center">Trạng thái an toàn</div>
+<div class="col-span-3 text-right pr-md">Hành động</div>
+</div>
+<!-- Table Body -->
+<div class="divide-y divide-outline-variant/20">
+<!-- Row 1: Positive Case -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-md p-lg items-center hover:bg-surface-container-low/50 transition-all group">
+<div class="col-span-2 flex md:flex-col items-center md:items-start gap-sm">
+<div class="bg-primary/10 text-primary w-12 h-12 rounded-xl flex flex-col items-center justify-center">
+<span class="text-lg font-bold">20</span>
+<span class="text-[10px] font-bold">T6</span>
+</div>
+<span class="text-body-sm font-medium md:hidden">Thứ Sáu, 20/10</span>
+<span class="text-body-sm font-medium hidden md:block">Thứ Sáu</span>
+<span class="text-xs text-on-surface-variant hidden md:block">20/10/2023</span>
+</div>
+<div class="col-span-4 flex items-center gap-md">
+<div class="w-16 h-16 rounded-lg bg-cover bg-center shrink-0 shadow-sm border border-outline-variant/20" data-alt="A macro food photograph of a nutritious school lunch featuring grilled chicken breast, vibrant steamed broccoli, and fluffy brown rice. The lighting is bright and natural, shot in a high-key corporate cafeteria style with soft teal and white tones. The food is arranged neatly on a modern sustainable tray, emphasizing health and transparency." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCATdj4bKtob8h4Qiu050lMZo4MmMB5FfhHKNCjzvhvxR1s0WCb0P02vVUBVJ7m4Hx-jz0Rt8Vd1ODEXQr7GMsOCPLz-vEcg0-Nq_0mdvQCam25fqTvg_2oL8Zd7_dqKJPyo3hygeWKQcyElylxF3-oGvIBMo8jvJ7PlOFNrT0_ToquuQV0iKCL6tOmUTfBDHwJjAhODLXhYzhvRFe2t0Jjo8-W2IPl18iT0-RvVc4FqIi_T53q280IT72xwecMzPzH80JJ8zgdDQ')"></div>
+<div>
+<h5 class="font-bold text-on-surface">Bữa Trưa: Cơm Gà Nướng</h5>
+<p class="text-xs text-on-surface-variant">Cơm gạo lứt, Gà nướng mật ong, Canh bí đỏ</p>
+<div class="flex gap-xs mt-base">
+<span class="bg-emerald-50 text-emerald-700 text-[10px] px-base py-[2px] rounded border border-emerald-100 font-bold">ORGANIC</span>
+<span class="bg-amber-50 text-amber-700 text-[10px] px-base py-[2px] rounded border border-amber-100 font-bold">NUT-FREE</span>
+</div>
+</div>
+</div>
+<div class="col-span-3 flex justify-center">
+<div class="flex items-center gap-sm bg-emerald-50 px-md py-sm rounded-full text-emerald-700 border border-emerald-100">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="text-label-md">Đạt chuẩn an toàn</span>
+</div>
+</div>
+<div class="col-span-3 flex justify-end">
+<button class="flex items-center gap-xs px-lg py-md bg-white border border-primary text-primary hover:bg-primary hover:text-white transition-all rounded-lg font-bold text-body-sm active:scale-95">
+                                    Chi tiết <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Row 2: Warning Case -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-md p-lg items-center hover:bg-surface-container-low/50 transition-all group">
+<div class="col-span-2 flex md:flex-col items-center md:items-start gap-sm">
+<div class="bg-primary/10 text-primary w-12 h-12 rounded-xl flex flex-col items-center justify-center">
+<span class="text-lg font-bold">19</span>
+<span class="text-[10px] font-bold">T5</span>
+</div>
+<span class="text-body-sm font-medium hidden md:block">Thứ Năm</span>
+<span class="text-xs text-on-surface-variant hidden md:block">19/10/2023</span>
+</div>
+<div class="col-span-4 flex items-center gap-md">
+<div class="w-16 h-16 rounded-lg bg-cover bg-center shrink-0 shadow-sm border border-outline-variant/20" data-alt="A clean, minimalist bowl of Vietnamese Pho soup with sliced beef and fresh herbs. The presentation is professional and clinical, highlighting the freshness of ingredients. The lighting is soft and airy, shot from a top-down angle on a white marble surface, reinforcing the SFMS brand's emphasis on food safety and transparency." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDZDogv-7FTpKPRAtR-b2AHIq7GTXfVNCpeGa4DrPlqghmSFhuUohv4-WOb7_y7fD02iIGZbUBrKFheGmmI9alfKWVTZmk3kxFc1OiODi0eWxrkA4_ZU-ufcGDngfnc-IMK0hb7E0rIF--4nNLVkhq6kmFeu7VSjnT2gvRQaOJ-xWAloKRnkjiJL6Jjq3aA0CAPSqbPuAUwEZg_Uh5i0llau9bj4FNJWmv_AY2BP9OyXq01ukOuBDgpCZ-CLZsldbfjp3Awk23rzg')"></div>
+<div>
+<h5 class="font-bold text-on-surface">Bữa Sáng: Phở Bò</h5>
+<p class="text-xs text-on-surface-variant">Phở bò truyền thống, Rau thơm, Quẩy</p>
+<div class="flex gap-xs mt-base">
+<span class="bg-primary/5 text-primary text-[10px] px-base py-[2px] rounded border border-primary/20 font-bold">TRADITIONAL</span>
+</div>
+</div>
+</div>
+<div class="col-span-3 flex justify-center">
+<div class="flex items-center gap-sm bg-error-container/30 px-md py-sm rounded-full text-error border border-error/20">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">report</span>
+<span class="text-label-md font-bold">Cần lưu ý (Dị ứng)</span>
+</div>
+</div>
+<div class="col-span-3 flex justify-end">
+<button class="flex items-center gap-xs px-lg py-md bg-white border border-primary text-primary hover:bg-primary hover:text-white transition-all rounded-lg font-bold text-body-sm active:scale-95">
+                                    Chi tiết <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Row 3: Standard Case -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-md p-lg items-center hover:bg-surface-container-low/50 transition-all group">
+<div class="col-span-2 flex md:flex-col items-center md:items-start gap-sm">
+<div class="bg-primary/10 text-primary w-12 h-12 rounded-xl flex flex-col items-center justify-center">
+<span class="text-lg font-bold">18</span>
+<span class="text-[10px] font-bold">T4</span>
+</div>
+<span class="text-body-sm font-medium hidden md:block">Thứ Tư</span>
+<span class="text-xs text-on-surface-variant hidden md:block">18/10/2023</span>
+</div>
+<div class="col-span-4 flex items-center gap-md">
+<div class="w-16 h-16 rounded-lg bg-cover bg-center shrink-0 shadow-sm border border-outline-variant/20" data-alt="A modern, high-end presentation of pasta carbonara with a creamy sauce and fresh parsley. The lighting is warm yet crisp, emphasizing the texture of the dish. The background is a clean, corporate light-mode setting, maintaining the visual language of professional food monitoring and nutritional accuracy." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC7E4wq2UzHFoWPoBee_FsBlQJ2IHfY3UoNr-WaJAeyE9bpxB6HB-ycqB8rYcPzr2zU-af_Ig81BwxkDIv4MtfUi8HpBGiB2MwYGuOfrNwVCJ_z3iUzmjclWqjl69eWeEJD935DTqzvQ2Ld25sCVoSgEb5u1R53dYXm6kFq55kXIkucc0FsO06f36Rhdi8xgFy4MI4VNSPQ9dPAIbl-C6es2oyFivgXWit1ZUHuilH_3kMyFIf7eiKhMkbPPVIGNOdI17fGos5HUg')"></div>
+<div>
+<h5 class="font-bold text-on-surface">Bữa Trưa: Mì Ý Sốt Kem</h5>
+<p class="text-xs text-on-surface-variant">Mì ống, Sốt kem nấm, Thịt xông khói</p>
+<div class="flex gap-xs mt-base">
+<span class="bg-emerald-50 text-emerald-700 text-[10px] px-base py-[2px] rounded border border-emerald-100 font-bold">ENERGY+</span>
+</div>
+</div>
+</div>
+<div class="col-span-3 flex justify-center">
+<div class="flex items-center gap-sm bg-surface-container-high px-md py-sm rounded-full text-on-surface-variant border border-outline-variant/30">
+<span class="material-symbols-outlined text-lg">check_circle</span>
+<span class="text-label-md">Đã hoàn thành</span>
+</div>
+</div>
+<div class="col-span-3 flex justify-end">
+<button class="flex items-center gap-xs px-lg py-md bg-white border border-primary text-primary hover:bg-primary hover:text-white transition-all rounded-lg font-bold text-body-sm active:scale-95">
+                                    Chi tiết <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Nutritional Summary Section -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-lg">
+<div class="bg-white p-lg rounded-xl shadow-sm border border-outline-variant/20 flex flex-col items-center text-center">
+<div class="w-12 h-12 bg-primary/10 text-primary rounded-full flex items-center justify-center mb-md">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<h6 class="text-xs text-on-surface-variant font-medium uppercase mb-xs">Năng lượng TB</h6>
+<p class="text-headline-md font-bold text-on-surface">1,850 kcal</p>
+</div>
+<div class="bg-white p-lg rounded-xl shadow-sm border border-outline-variant/20 flex flex-col items-center text-center">
+<div class="w-12 h-12 bg-secondary-container/20 text-secondary rounded-full flex items-center justify-center mb-md">
+<span class="material-symbols-outlined">egg_alt</span>
+</div>
+<h6 class="text-xs text-on-surface-variant font-medium uppercase mb-xs">Đạm (Protein)</h6>
+<p class="text-headline-md font-bold text-on-surface">75g <span class="text-xs text-on-surface-variant">/ ngày</span></p>
+</div>
+<div class="bg-white p-lg rounded-xl shadow-sm border border-outline-variant/20 flex flex-col items-center text-center">
+<div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center mb-md">
+<span class="material-symbols-outlined">eco</span>
+</div>
+<h6 class="text-xs text-on-surface-variant font-medium uppercase mb-xs">Chất xơ</h6>
+<p class="text-headline-md font-bold text-on-surface">22g <span class="text-xs text-on-surface-variant">/ ngày</span></p>
+</div>
+<div class="bg-white p-lg rounded-xl shadow-sm border border-outline-variant/20 flex flex-col items-center text-center">
+<div class="w-12 h-12 bg-error-container/30 text-error rounded-full flex items-center justify-center mb-md">
+<span class="material-symbols-outlined">opacity</span>
+</div>
+<h6 class="text-xs text-on-surface-variant font-medium uppercase mb-xs">Chất béo</h6>
+<p class="text-headline-md font-bold text-on-surface">45g <span class="text-xs text-on-surface-variant">/ ngày</span></p>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Action Button - Only for Relevant Screens -->
+<button class="fixed bottom-lg right-lg w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center active:scale-90 transition-transform hover:bg-primary-container">
+<span class="material-symbols-outlined text-2xl">add</span>
+</button>
+</main>
+<!-- Bottom Navigation for Mobile -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface-container-low flex justify-around items-center py-sm shadow-[0_-4px_12px_rgba(0,0,0,0.05)] z-20">
+<a class="flex flex-col items-center gap-xs text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px]">Tổng quan</span>
+</a>
+<a class="flex flex-col items-center gap-xs text-primary font-bold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">restaurant_menu</span>
+<span class="text-[10px]">Thực đơn</span>
+</a>
+<a class="flex flex-col items-center gap-xs text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">monitor_heart</span>
+<span class="text-[10px]">Sức khỏe</span>
+</a>
+<a class="flex flex-col items-center gap-xs text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px]">Cá nhân</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for active states and hover effects
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('mousedown', () => el.style.transform = 'scale(0.96)');
+            el.addEventListener('mouseup', () => el.style.transform = 'scale(1)');
+            el.addEventListener('mouseleave', () => el.style.transform = 'scale(1)');
+        });
+
+        // Simulating loading effects for a smoother "clinical" feel
+        window.addEventListener('load', () => {
+            const items = document.querySelectorAll('.divide-y > div');
+            items.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    item.style.transition = 'all 0.5s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body></html>

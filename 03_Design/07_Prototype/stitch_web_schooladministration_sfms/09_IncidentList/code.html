@@ -1,0 +1,304 @@
+<!DOCTYPE html><html lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Danh sách sự cố - SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error": "#ffffff",
+                        "inverse-on-surface": "#eef1f3",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#e0e3e5",
+                        "outline-variant": "#bec8cd",
+                        "primary-container": "#0e7490",
+                        "surface-dim": "#d7dadd",
+                        "background": "#f7fafc",
+                        "secondary-container": "#d0e1fb",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#2c1600",
+                        "surface-bright": "#f7fafc",
+                        "on-background": "#181c1e",
+                        "on-primary-container": "#d3f1ff",
+                        "outline": "#6f787d",
+                        "surface-container": "#ebeef0",
+                        "tertiary-fixed-dim": "#ffb86f",
+                        "primary": "#005a71",
+                        "surface-container-high": "#e6e8eb",
+                        "on-surface-variant": "#3f484c",
+                        "on-primary-fixed": "#001f29",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#794602",
+                        "tertiary-container": "#965e1c",
+                        "inverse-surface": "#2d3133",
+                        "surface": "#f7fafc",
+                        "primary-fixed": "#b9eaff",
+                        "tertiary-fixed": "#ffdcbd",
+                        "on-secondary-container": "#54647a",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-tertiary-fixed-variant": "#693c00",
+                        "secondary": "#505f76",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "surface-container-low": "#f1f4f6",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "inverse-primary": "#81d1f0",
+                        "on-primary-fixed-variant": "#004d62",
+                        "on-surface": "#181c1e",
+                        "surface-tint": "#006781",
+                        "on-tertiary-container": "#ffe8d6",
+                        "primary-fixed-dim": "#81d1f0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "2rem",
+                        "gutter": "1rem",
+                        "component-padding-y": "0.5rem",
+                        "component-padding-x": "1rem",
+                        "section-gap": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "body-base": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "h3": ["Be Vietnam Pro"],
+                        "h1": ["Be Vietnam Pro"],
+                        "h2": ["Be Vietnam Pro"],
+                        "h1-mobile": ["Be Vietnam Pro"],
+                        "body-sm": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "body-base": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "h3": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "h1": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "h1-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-base min-h-screen flex">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-screen w-64 bg-surface dark:bg-inverse-surface border-r border-outline-variant dark:border-outline flex flex-col py-6 px-4 z-50">
+<div class="mb-8 px-2 flex flex-col items-start gap-2">
+<div class="font-h2 text-h2 font-bold text-primary dark:text-inverse-primary truncate w-full">SFMS Management</div>
+<div class="text-label-sm text-on-surface-variant font-label-sm">Ban Giám Hiệu</div>
+</div>
+<ul class="flex flex-col gap-1 flex-1">
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container dark:hover:bg-on-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Tổng quan</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container dark:hover:bg-on-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="handshake">handshake</span>
+<span class="font-label-md text-label-md">Đối tác</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container dark:hover:bg-on-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="restaurant">restaurant</span>
+<span class="font-label-md text-label-md">Thực đơn</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container dark:hover:bg-on-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="groups">groups</span>
+<span class="font-label-md text-label-md">Lớp &amp; Học sinh</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2 bg-secondary-container dark:bg-primary-container text-on-secondary-container dark:text-on-primary-container font-semibold rounded-lg scale-[0.98] transition-transform duration-150" href="#">
+<span class="material-symbols-outlined icon-fill text-[20px]" data-icon="report_problem">report_problem</span>
+<span class="font-label-md text-label-md">Sự cố &amp; Kiểm tra</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container dark:hover:bg-on-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="analytics">analytics</span>
+<span class="font-label-md text-label-md">Báo cáo &amp; Thống kê</span>
+</a>
+</li>
+</ul>
+<ul class="flex flex-col gap-1 mt-auto pt-4 border-t border-outline-variant">
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Cài đặt</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="logout">logout</span>
+<span class="font-label-md text-label-md">Đăng xuất</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- TopAppBar -->
+<main class="ml-64 mt-16 p-8 w-[calc(100%-256px)] min-h-[calc(100vh-64px)] bg-background">
+  <!-- Page Header -->
+  <div class="flex justify-between items-end mb-8">
+    <div>
+      <h1 class="text-h1 font-h1 text-on-surface mb-1">Danh sách sự cố &amp; Kiểm tra</h1>
+      <p class="text-body-base text-on-surface-variant">Quản lý và theo dõi các vấn đề an toàn thực phẩm phát sinh trong hệ thống.</p>
+    </div>
+    <button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-md flex items-center gap-2 hover:opacity-90 transition-opacity">
+      <span class="material-symbols-outlined">add</span>
+      Tạo báo cáo sự cố
+    </button>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="bg-surface-container-low p-4 rounded-xl mb-6 flex flex-wrap gap-4 items-center">
+    <div class="flex-1 min-w-[240px] relative">
+      <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+      <input type="text" placeholder="Tìm kiếm sự cố..." class="w-full pl-10 pr-4 py-2 bg-surface border border-outline-variant rounded-lg focus:outline-none focus:border-primary text-body-sm">
+    </div>
+    <div class="flex gap-3">
+      <select class="bg-surface border border-outline-variant rounded-lg px-3 py-2 text-body-sm focus:outline-none">
+        <option>Mức độ: Tất cả</option>
+        <option>Nghiêm trọng</option>
+        <option>Trung bình</option>
+        <option>Thấp</option>
+      </select>
+      <select class="bg-surface border border-outline-variant rounded-lg px-3 py-2 text-body-sm focus:outline-none">
+        <option>Trạng thái: Tất cả</option>
+        <option>Đang điều tra</option>
+        <option>Đang khắc phục</option>
+        <option>Đã đóng</option>
+      </select>
+      <button class="flex items-center gap-2 bg-surface border border-outline-variant rounded-lg px-3 py-2 text-body-sm">
+        <span class="material-symbols-outlined text-[20px]">calendar_today</span>
+        Ngày báo cáo
+      </button>
+    </div>
+  </div>
+
+  <!-- Data Table -->
+  <div class="bg-surface border border-outline-variant rounded-xl overflow-hidden">
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="bg-surface-container-high border-b border-outline-variant">
+          <th class="px-6 py-4 font-label-md text-on-surface-variant">Mã sự cố</th>
+          <th class="px-6 py-4 font-label-md text-on-surface-variant">Ngày báo cáo</th>
+          <th class="px-6 py-4 font-label-md text-on-surface-variant">Loại sự cố / Mô tả</th>
+          <th class="px-6 py-4 font-label-md text-on-surface-variant">Mức độ</th>
+          <th class="px-6 py-4 font-label-md text-on-surface-variant">Trạng thái</th>
+          <th class="px-6 py-4 font-label-md text-on-surface-variant">Hành động</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-outline-variant">
+        <!-- Row 1 -->
+        <tr class="hover:bg-surface-container-low transition-colors">
+          <td class="px-6 py-4 font-label-md text-primary">#INC-20231015-01</td>
+          <td class="px-6 py-4 text-body-sm">15/10/2023</td>
+          <td class="px-6 py-4">
+            <div class="font-semibold text-body-sm">Nghi ngờ ngộ độc thực phẩm</div>
+            <div class="text-label-sm text-on-surface-variant truncate max-w-xs">5 học sinh lớp 3A có biểu hiện đau bụng</div>
+          </td>
+          <td class="px-6 py-4">
+            <span class="px-2 py-1 rounded-full bg-error-container text-on-error-container text-label-sm font-semibold">Nghiêm trọng</span>
+          </td>
+          <td class="px-6 py-4">
+            <span class="px-2 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant text-label-sm font-semibold">Đang điều tra</span>
+          </td>
+          <td class="px-6 py-4">
+            <a href="#" class="text-primary font-label-md hover:underline">Xem chi tiết</a>
+          </td>
+        </tr>
+        <!-- Row 2 -->
+        <tr class="hover:bg-surface-container-low transition-colors">
+          <td class="px-6 py-4 font-label-md text-primary">#INC-20231014-02</td>
+          <td class="px-6 py-4 text-body-sm">14/10/2023</td>
+          <td class="px-6 py-4">
+            <div class="font-semibold text-body-sm">Phát hiện vật lạ trong suất ăn</div>
+            <div class="text-label-sm text-on-surface-variant truncate max-w-xs">Sợi tóc trong khay cơm trưa lớp 5B</div>
+          </td>
+          <td class="px-6 py-4">
+            <span class="px-2 py-1 rounded-full bg-secondary-container text-on-secondary-container text-label-sm font-semibold">Thấp</span>
+          </td>
+          <td class="px-6 py-4">
+            <span class="px-2 py-1 rounded-full bg-tertiary-fixed-dim text-on-tertiary-fixed-variant text-label-sm font-semibold">Đang khắc phục</span>
+          </td>
+          <td class="px-6 py-4">
+            <a href="#" class="text-primary font-label-md hover:underline">Xem chi tiết</a>
+          </td>
+        </tr>
+        <!-- Row 3 -->
+        <tr class="hover:bg-surface-container-low transition-colors">
+          <td class="px-6 py-4 font-label-md text-primary">#INC-20231012-03</td>
+          <td class="px-6 py-4 text-body-sm">12/10/2023</td>
+          <td class="px-6 py-4">
+            <div class="font-semibold text-body-sm">Tủ lưu mẫu không đạt nhiệt độ</div>
+            <div class="text-label-sm text-on-surface-variant truncate max-w-xs">Nhiệt độ ghi nhận 8°C tại tủ số 03</div>
+          </td>
+          <td class="px-6 py-4">
+            <span class="px-2 py-1 rounded-full bg-tertiary-fixed-dim text-on-tertiary-fixed-variant text-label-sm font-semibold">Trung bình</span>
+          </td>
+          <td class="px-6 py-4">
+            <span class="px-2 py-1 rounded-full bg-primary-container text-on-primary-container text-label-sm font-semibold">Đã đóng</span>
+          </td>
+          <td class="px-6 py-4">
+            <a href="#" class="text-primary font-label-md hover:underline">Xem chi tiết</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="px-6 py-4 bg-surface-container-low flex justify-between items-center border-t border-outline-variant">
+      <span class="text-label-sm text-on-surface-variant">Hiển thị 1-3 trong số 24 sự cố</span>
+      <div class="flex gap-2">
+        <button class="p-2 rounded-lg border border-outline-variant hover:bg-surface transition-colors disabled:opacity-50" disabled="">
+          <span class="material-symbols-outlined">chevron_left</span>
+        </button>
+        <button class="px-3 py-1 rounded-lg bg-primary text-on-primary text-label-sm">1</button>
+        <button class="px-3 py-1 rounded-lg border border-outline-variant hover:bg-surface text-label-sm">2</button>
+        <button class="px-3 py-1 rounded-lg border border-outline-variant hover:bg-surface text-label-sm">3</button>
+        <button class="p-2 rounded-lg border border-outline-variant hover:bg-surface transition-colors">
+          <span class="material-symbols-outlined">chevron_right</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</main><header class="fixed top-0 right-0 w-[calc(100%-256px)] z-40 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline flex justify-between items-center h-16 px-8">
+<div class="flex items-center gap-4">
+<span class="font-h3 text-h3 font-bold text-on-surface dark:text-inverse-on-surface">SFMS - School Food Management System</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors rounded-full hover:bg-surface-container">
+</button></div></header>
+
+</body></html>

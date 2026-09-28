@@ -1,0 +1,914 @@
+@startuml SFMS_DataModel
+
+' ══════════════════════════════════════════════════════════════════════
+' SFMS — MÔ HÌNH DỮ LIỆU (định hướng persistence / Spring Boot + JPA)
+'
+' Sinh từ mô hình mock đã kiểm chứng (03_Design/08_FrontEnd/Web/src/lib/mock-data.ts)
+' nên khớp đúng những gì hệ thống thật sự chạy, không phải mô tả mong muốn.
+' Bản song sinh: class_diagram.puml — cùng nội dung, nhìn theo hướng đối tượng.
+'
+' QUY ƯỚC
+'   <<PK>>  khoá chính        <<FK>> khoá ngoại
+'   /field  THUỘC TÍNH DẪN XUẤT — KHÔNG tạo cột, tính lúc đọc.
+'           Vẽ chúng như cột lưu là nguồn của lệch dữ liệu: cùng một sự thật
+'           tồn tại hai bản, không cơ chế đồng bộ.
+' ══════════════════════════════════════════════════════════════════════
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam packageStyle Rectangle
+hide methods
+
+package "Tài khoản & Phân quyền" #EEF2FF {
+  entity UserAccount {
+    +id : String <<PK>>
+    +name : String
+    +email : String
+    ~phone : String
+    +role : String
+    ~school : String
+    +status : Enum
+    ~partnerId : String <<FK>>
+    +lastLogin : String
+  }
+  entity RoleRecord {
+    +id : String <<PK>>
+    +name : String
+    +description : String
+    /users : Decimal <<derived>>
+    +system : Boolean
+    +permissions : List<String>
+  }
+  entity Permission {
+    +id : String <<PK>>
+    +name : String
+    +module : String
+    +description : String
+  }
+  entity SecurityPolicy {
+    +id : String <<PK>>
+    +maxLoginAttempts : Decimal
+    +lockoutMinutes : Decimal
+    +sessionTimeoutMinutes : Decimal
+    +passwordMinLength : Decimal
+    +requireSpecialChar : Boolean
+    +requireNumber : Boolean
+    +requireMixedCase : Boolean
+    +noReuseLast3 : Boolean
+    ~updatedAt : String
+    ~updatedBy : String
+  }
+  entity AuditLog {
+    +id : String <<PK>>
+    +timestamp : String
+    +actor : String
+    ~ip : String
+    +action : String
+    +resource : String
+    +result : "SUCCESS" | "BLOCKED"
+  }
+}
+
+package "Trường học & Cấu hình" #F0FDF4 {
+  entity SchoolRecord {
+    +id : String <<PK>>
+    +name : String
+    +address : String
+    /students : Decimal <<derived>>
+    +mealsPerDay : Decimal
+    +status : Enum
+    +registeredAt : String
+    +taxId : String <<FK>>
+    +email : String
+    +lat : Decimal
+    +lng : Decimal
+    +coordinateLocked : Boolean
+    +operatingHours : String
+    +emergencyContact : String
+    /classes : Decimal <<derived>>
+    /staff : Decimal <<derived>>
+  }
+  entity SchoolConfig {
+    +id : String <<PK>>
+    +costCeiling : Decimal
+    +geofenceRadius : Decimal
+    +reportEmails : List<String>
+    ~updatedAt : String
+    ~updatedBy : String
+  }
+  entity AcademicYear {
+    +id : String <<PK>>
+    +name : String
+    +start : String
+    +end : String
+    +classes : Decimal
+    +students : Decimal
+    +status : Enum
+    ~copyStructure : Boolean
+  }
+  entity Classroom {
+    +id : String <<PK>>
+    +grade : Decimal
+    +teacher : String
+    /students : Decimal <<derived>>
+    /allergies : Decimal <<derived>>
+    +academicYearId : String <<FK>>
+    ~capacity : Decimal
+  }
+  entity StaffMember {
+    +id : String <<PK>>
+    +name : String
+    +email : String
+    +phone : String
+    +role : "Teacher" | "Medical Staff" | "Service Caterers"
+    +status : Enum
+    +emailVerified : "VERIFIED" | "PENDING"
+    +invitedAt : String
+  }
+  entity ExternalIntegration {
+    +id : String <<PK>>
+    +label : String
+    +endpoint : String
+    +endpointPlaceholder : String
+    +connected : Boolean
+    ~statusNote : String
+    +purpose : String
+    ~lastTestedAt : String
+  }
+}
+
+package "Học sinh & Hồ sơ sức khoẻ" #FEF2F2 {
+  entity Student {
+    +id : String <<PK>>
+    +name : String
+    +class : String
+    /allergies : List<String> <<derived>>
+    ~specialDiet : String
+    +healthStatus : Enum
+    +parent : String
+    ~medicalConditions : String
+    ~medications : String
+    ~emergencyContact : String
+    ~medicalDocuments : List<String>
+    ~allergySeverity : "Mild" | "Moderate" | "Severe"
+  }
+  entity ParentChild {
+    +studentId : String <<FK>>
+    +name : String
+    +class : String
+    +dob : String
+    +age : Decimal
+    +school : String
+  }
+  entity HealthRecord {
+    +height : Decimal
+    +weight : Decimal
+    +bloodType : String
+    +bmi : Decimal
+    +status : Enum
+    +updatedAt : String
+    ~proofFile : String
+  }
+  entity AllergyDeclaration {
+    +id : String <<PK>>
+    +studentId : String <<FK>>
+    +category : String
+    +allergen : String
+    +severity : "Nhẹ" | "Trung bình" | "Nặng"
+    +declaredAt : String
+    +status : Enum
+    ~proofFile : String
+  }
+  entity ChronicConditionDeclaration {
+    +id : String <<PK>>
+    +studentId : String <<FK>>
+    +category : String
+    +conditionName : String
+    +severity : "Nhẹ" | "Trung bình" | "Nặng"
+    ~notes : String
+    +declaredAt : String
+    +status : Enum
+    ~proofFile : String
+  }
+  entity HealthHistoryEvent {
+    +id : String <<PK>>
+    +studentId : String <<FK>>
+    +at : String
+    +type : "Khai báo" | "Xác minh" | "Ghi chú lâm sàng" | "Sự cố" | "Cập nhật thuốc"
+    +event : String
+    +by : String
+  }
+}
+
+package "Đối tác & Mua sắm" #FFF7ED {
+  entity Partner {
+    +id : String <<PK>>
+    +name : String
+    +type : "Raw Food Supplier" | "Service Caterer"
+    +status : Enum
+    +certExpiry : String
+    +certStatus : Enum
+    +performanceScore : Decimal
+    +appliedAt : String
+    +taxId : String <<FK>>
+    +address : String
+    +contact : String
+    ~siteInspectionScore : Decimal
+    ~rejectReason : String
+    ~suspendReason : String
+    +documents : List<PartnerDocument>
+  }
+  entity PartnerDocument {
+    +name : String
+    +number : String
+    +expiry : String
+    +status : Enum
+  }
+  entity SupplierProduct {
+    +id : String <<PK>>
+    +supplierId : String <<FK>>
+    +ingredientId : String <<FK>>
+    ~label : String
+    +unit : String
+    +unitPrice : Decimal
+    ~packaging : String
+    +effectiveFrom : String
+  }
+  entity SupplierBatch {
+    +id : String <<PK>>
+    +productId : String <<FK>>
+    /productName : String <<derived>>
+    +lotNumber : String
+    +manufacturingDate : String
+    +packagingDate : String
+    +expirationDate : String
+    +quantity : String
+    +certificates : List<String>
+    +status : Enum
+  }
+  entity PurchaseRequest {
+    +id : String <<PK>>
+    +school : String
+    ~supplier : String
+    ~supplierId : String <<FK>>
+    ~requestedBy : String
+    +requestedDate : String
+    +deliveryDate : String
+    +items : Decimal
+    +totalValue : String
+    +status : Enum
+    ~itemsDetail : List<PurchaseItem>
+    ~batchAssignments : Record<string, string>
+    ~sourceMenuId : String <<FK>>
+    ~sourceMealType : MealType
+    ~serviceDate : String
+    ~acceptedAt : String
+    ~confirmedDeliveryAt : String
+    ~rejectedAt : String
+    ~quotedAt : String
+    ~quoteNote : String
+    ~quoteRevision : Decimal
+    ~revisionNote : String
+    ~priceAcceptedAt : String
+  }
+  entity PurchaseItem {
+    +name : String
+    +quantity : String
+    ~note : String
+    ~unitPrice : String
+    ~lineTotal : String
+  }
+  entity Delivery {
+    +id : String <<PK>>
+    +school : String
+    +scheduledAt : String
+    +driver : String
+    +vehiclePlate : String
+    +batches : Decimal
+    +status : Enum
+    ~purchaseRequestId : String <<FK>>
+    ~linkedBatches : List<String>
+    ~batchAssignments : Record<string, string>
+    ~statusUpdatedAt : String
+  }
+  entity ReceivingSession {
+    +id : String <<PK>>
+    +supplier : String
+    ~supplierId : String <<FK>>
+    +supplierStatus : "APPROVED" | "SUSPENDED"
+    +deliveryDate : String
+    +items : Decimal
+    +batches : List<String>
+    +status : Enum
+    +gpsVerified : Boolean
+    +photosCount : Decimal
+    +receivedBy : String
+  }
+}
+
+package "Thực đơn & Món ăn" #FEFCE8 {
+  entity CatalogIngredient {
+    +id : String <<PK>>
+    +name : String
+    +unit : String
+    +allergens : List<String>
+    ~refuseFactor : Decimal
+  }
+  entity Dish {
+    +id : String <<PK>>
+    +name : String
+    +category : "Món chính" | "Món mặn" | "Canh" | "Rau" | "Bữa phụ"
+    +supplier : String
+    +kitchen : String
+    +kcal : Decimal
+    +protein : Decimal
+    +fat : Decimal
+    +carb : Decimal
+    +ingredients : List<DishIngredient>
+    +manualAllergens : List<String>
+    +isActive : Boolean
+  }
+  entity DishIngredient {
+    ~ingredientId : String <<FK>>
+    +name : String
+    +quantity : String
+    +unit : String
+  }
+  entity MenuItem {
+    +id : String <<PK>>
+    +week : String
+    +name : String
+    +grade : String
+    ~menuDateIso : String
+    +status : Enum
+    /dishes : Decimal <<derived>>
+    /allergyConflicts : Decimal <<derived>>
+    +estimatedCost : Decimal
+    +costCeiling : Decimal
+    ~submittedAt : String
+    +createdBy : String
+    ~createdBySupplierId : String <<FK>>
+    ~approvedBy : String
+    ~approvalSignature : String
+    ~rejectReason : String
+  }
+  entity MenuVariant {
+    +id : String <<PK>>
+    +menuId : String <<FK>>
+    +mealType : MealType
+    +dietGroupId : String <<FK>>
+    +mode : "PARTIAL" | "FULL"
+    +portions : Decimal
+    +dishes : List<MenuVariantDish>
+    ~note : String
+  }
+  entity MenuVariantDish {
+    +dishId : String <<FK>>
+    ~replacesDishId : String <<FK>>
+  }
+  entity DietGroup {
+    +id : String <<PK>>
+    +label : String
+    ~matchDiet : String
+  }
+}
+
+package "Kho & Truy xuất" #ECFEFF {
+  entity InventoryBatch {
+    +id : String <<PK>>
+    +ingredientId : String <<FK>>
+    +ingredient : String
+    +supplier : String
+    +quantity : String
+    +storageZone : "Dry" | "Chilled" | "Frozen"
+    +receivedDate : String
+    +expiryDate : String
+    /status : Enum <<derived>>
+    ~quarantine : QuarantineInfo
+  }
+
+  entity QuarantineInfo <<value object>> {
+    +at : String
+    +by : String
+    +reason : String
+    ~incidentId : String <<FK>>
+  }
+
+  entity InventoryTransaction {
+    +id : String <<PK>>
+    +timestamp : String
+    +type : "Nhập kho" | "Xuất kho (FEFO)" | "Điều chỉnh"
+    +batchId : String <<FK>>
+    +ingredient : String
+    +quantity : String
+    ~reasonCode : String
+    +actor : String
+    ~managerSignature : String
+    ~ingredientId : String <<FK>>
+    ~menuId : String <<FK>>
+    ~mealType : MealType
+    ~dishName : String
+    ~dishId : String <<FK>>
+    ~serviceDate : String
+  }
+  entity PreparationRecord {
+    +id : String <<PK>>
+    +date : String
+    +dish : String
+    ~dishId : String <<FK>>
+    +batchesUsed : List<String>
+    +startTime : String
+    +endTime : String
+    +cook : String
+    ~notes : String
+    ~menuId : String <<FK>>
+    ~mealType : MealType
+    ~extraBatches : List<String>
+  }
+}
+
+package "Kiểm soát ATTP" #F5F3FF {
+  entity InspectionSession {
+    +id : String <<PK>>
+    +date : String
+    +meal : "Bữa trưa" | "Bữa phụ"
+    +step1 : Enum
+    +step2 : Enum
+    +step3 : Enum
+    +overall : Enum
+    ~coreTemp : Decimal
+    +inspector : String
+    ~coSigner : String
+    ~formHeader : ThreeStepFormHeader
+    ~step1Fresh : List<Step1FreshRow>
+    ~step1Dry : List<Step1DryRow>
+    ~step2Rows : List<Step2Row>
+    ~step3Rows : List<Step3Row>
+    ~dish : String
+    ~dishId : String <<FK>>
+    ~evidencePhotos : Decimal
+    ~gps : String
+    ~staffNotes : String
+  }
+  entity KitchenInspection {
+    +id : String <<PK>>
+    +date : String
+    ~type : "Định kỳ tháng" | "Đột xuất"
+    +score : Decimal
+    +inspector : String
+    +pestControlValid : Boolean
+    +staffHealthValid : Boolean
+    +result : Enum
+    ~photosCount : Decimal
+    ~failedItems : List<String>
+    ~itemFindings : List<InspectionItemFinding>
+  }
+  entity FoodSample {
+    +id : String <<PK>>
+    +dish : String
+    ~dishId : String <<FK>>
+    +meal : String
+    ~mealShift : String
+    ~servings : String
+    +weight : String
+    ~container : String
+    ~sanitized : Boolean
+    ~sealed : Boolean
+    +fridgeTemp : Decimal
+    +collectedAt : String
+    +collectedBy : String
+    ~storageLocation : String
+    +retentionDeadline : String
+    +hoursRemaining : Decimal
+    ~disposedAt : String
+    ~disposedBy : String
+    ~disposalNote : String
+    +status : Enum
+    ~incidentId : String <<FK>>
+    ~labDestination : String
+    ~retrievedAt : String
+    ~labRepresentative : String
+    ~testCriteria : String
+    ~labRequestId : String <<FK>>
+    ~sentToLabAt : String
+    ~deliveredBy : String
+    ~labReceiptFiles : List<UploadedFile>
+  }
+  entity SampleLabRequest {
+    +id : String <<PK>>
+    +incidentId : String <<FK>>
+    +sampleIds : List<String> <<FK>>
+    +labDestination : String
+    ~authorityId : String <<FK>>
+    ~handoverType : "LAB" | "AUTHORITY"
+    +testCriteria : String
+    +requestedBy : String
+    +requestedAt : String
+    +status : Enum
+    ~note : String
+    ~cancelledAt : String
+    ~cancelledBy : String
+    ~cancelReason : String
+    ~deliveredBy : String
+    ~sentToLabAt : String
+    ~labRepresentative : String
+    ~labReceiptFiles : List<UploadedFile>
+  }
+  entity ReceivingAuthority {
+    +id : String <<PK>>
+    +name : String
+    +type : "LAB" | "AUTHORITY"
+    ~contact : String
+    ~address : String
+    +isActive : Boolean
+    ~note : String
+  }
+  entity SafetySignoff {
+    +id : String <<PK>>
+    +date : String
+    +signedBy : String
+    +signedAt : String
+    ~hygieneScore : Decimal
+    +failedSteps : Decimal
+    ~note : String
+  }
+  entity FridgeTempLog {
+    +id : String <<PK>>
+    +fridge : String
+    +date : String
+    +time : String
+    +temperature : Decimal
+    +status : Enum
+    +checkedBy : String
+  }
+}
+
+package "Sự cố & Khắc phục" #FEE2E2 {
+  entity IncidentSourceReport {
+    +id : String <<PK>>
+    +reportedBy : String
+    +reportedAt : String
+    +className : String
+    +affectedStudents : List<IncidentAffectedStudent>
+    +symptoms : List<String>
+    +suspectedMealText : String
+    +mealDate : String
+    +description : String
+    +evidencePhotos : Decimal
+    ~severityLevel : "LOW" | "MEDIUM" | "HIGH"
+    +status : "PENDING_TRIAGE" | "DRAFTING" | "DRAFTED" | "MERGED" | "CLOSED_NOT_FOOD_SAFETY"
+    ~mergedIntoIncidentId : String <<FK>>
+    ~draftRecordId : String <<FK>>
+  }
+  entity IncidentRecordDraft {
+    +id : String <<PK>>
+    +sourceReportIds : List<String> <<FK>>
+    +content : String
+    +status : "DRAFT" | "COMPLETED" | "OPENED" | "CLOSED_NOT_FOOD_SAFETY"
+    +createdBy : String
+    +createdAt : String
+    ~updatedAt : String
+    ~incidentId : String <<FK>>
+    ~location : String
+    ~occurredAt : String
+    ~pdfExported : Boolean
+  }
+  entity Incident {
+    +id : String <<PK>>
+    +title : String
+    +reportedAt : String
+    +reportedBy : String
+    +affectedStudents : List<IncidentAffectedStudent>
+    +severity : Enum
+    +status : Enum
+    +symptoms : List<String>
+    ~suspectedDish : String
+    ~mealTime : String
+    ~firstAid : String
+    ~investigationEvidence : List<InvestigationEvidence>
+    ~investigationLabResult : String
+    ~investigationRootCause : String
+    ~investigationRootCauseStatus : "PRELIMINARY" | "FINAL"
+    ~sourceReportIds : List<String> <<FK>>
+    ~suspectedMeal : String
+    ~mealDate : String
+    ~firstAidNotes : String
+    ~clinicalRiskAssessment : String
+    ~suspectedDishIds : List<String> <<FK>>
+    ~quarantineBatches : List<String>
+    ~traceabilityMapStatus : "COMPILING" | "READY"
+    ~reportExported : Boolean
+    ~assessmentDraftSaved : Boolean
+    ~investigationEvidenceFinal : Boolean
+    ~investigationMeasuresDraft : String
+    ~officialClinicalNotes : String
+    ~quarantineReleaseLog : List<QuarantineRelease>
+  }
+
+  entity IncidentAffectedStudent {
+    +studentId : String <<FK>>
+    +studentName : String
+    +className : String
+  }
+  entity IncidentEvent {
+    +id : String <<PK>>
+    +incidentId : String <<FK>>
+    +at : String
+    +type : | "REPORTED"
+    +description : String
+    +actor : String
+  }
+  entity CorrectiveAction {
+    +id : String <<PK>>
+    +source : String
+    ~incidentId : String <<FK>>
+    ~inspectionId : String <<FK>>
+    +description : String
+    +assignee : String
+    ~assigneeSupplierId : String <<FK>>
+    ~deadline : String
+    +status : Enum
+    ~submittedForApprovalAt : String
+    ~approvedAt : String
+    ~evidenceSubmittedAt : String
+    ~rejectReason : String
+    ~evidenceNote : String
+    ~evidencePhotos : Decimal
+    ~reworkReason : String
+    ~reworkRequestedAt : String
+  }
+  entity ViolationRecord {
+    +id : String <<PK>>
+    +type : "Quy trình" | "Nhân sự"
+    +subject : String
+    +recordedBy : String
+    +date : String
+    +severity : Enum
+    +resolution : Enum
+    +status : Enum
+    ~staffName : String
+    ~staffPosition : String
+    ~violationType : String
+    ~description : String
+    ~occurredAt : String
+    ~witness : String
+    ~evidencePhotos : Decimal
+    ~actionTaken : String
+    ~disciplinaryLevel : String
+    ~handledBy : String
+    ~selfReported : Boolean
+    ~repeatSuspect : Boolean
+    ~locationOfIncident : String
+    ~caterersRepresentative : String
+    ~pdfExported : Boolean
+    ~signedRecordPhoto : Boolean
+    ~relatedIncidentId : String <<FK>>
+    ~evidenceFiles : List<UploadedFile>
+    ~signedRecordFiles : List<UploadedFile>
+    ~pdfGeneratedAt : String
+    ~pdfVersion : Decimal
+    ~sourceInspectionId : String <<FK>>
+  }
+}
+
+package "Phục vụ & Phản hồi" #F0F9FF {
+  entity StudentDistribution {
+    +id : String <<PK>>
+    +date : String
+    +mealType : MealType
+    +studentId : String <<FK>>
+    +name : String
+    +class : String
+    +assignedMeal : String
+    ~specialMeal : String
+    ~servedDishes : List<ServingDish>
+    ~dietTag : String
+    +allergens : List<String>
+    ~allergyWarning : String
+    +isSpecial : "yes" | "no"
+    +status : Enum
+    ~servedAt : String
+  }
+  entity ServingDish {
+    +dishId : String <<FK>>
+    +dishName : String
+    +isSubstitute : Boolean
+    ~substitutedForDishName : String
+    ~reason : String
+  }
+  entity TeacherMealRecord {
+    +id : String <<PK>>
+    +date : String
+    +studentId : String <<FK>>
+    +student : String
+    +dishes : String
+    ~specialDiet : String
+    ~specialMealServed : String
+    +consumption : Enum
+    ~recordedAt : String
+  }
+  entity SpecialMealRequest {
+    +id : String <<PK>>
+    +studentId : String <<FK>>
+    +student : String
+    +class : String
+    +dietaryType : String
+    +duration : String
+    +justification : String
+    +hasDocument : Boolean
+    ~documentName : String
+    +requestedBy : String
+    +date : String
+    +status : Enum
+    ~reviewNote : String
+    ~reviewedBy : String
+  }
+  entity Feedback {
+    +id : String <<PK>>
+    +studentId : String <<FK>>
+    +student : String
+    +class : String
+    +date : String
+    +mealType : "Bữa sáng" | "Bữa trưa" | "Bữa phụ"
+    +dish : String
+    ~dishId : String <<FK>>
+    +rating : Decimal
+    +tags : List<String>
+    +comment : String
+    +submittedAt : String
+    +illnessKeyword : Boolean
+  }
+  entity Announcement {
+    +id : String <<PK>>
+    +title : String
+    +audience : String
+    +publishedAt : String
+    +status : "DRAFT" | "PUBLISHED"
+    +author : String
+    +revisions : List<AnnouncementRevision>
+    +urgent : Boolean
+    +content : String
+  }
+  entity UserNotification {
+    +id : String <<PK>>
+    +audience : NotificationAudience
+    ~recipientRoles : List<RoleKey>
+    +type : "ALLERGY" | "FOOD_SAFETY" | "NEWS" | "SYSTEM"
+    +title : String
+    +content : String
+    +sentAt : String
+    +read : Boolean
+    ~link : String
+    ~linkLabel : String
+  }
+}
+
+' ══════════════════════════════════════════════════════════════════════
+' QUAN HỆ
+' ══════════════════════════════════════════════════════════════════════
+
+' --- Tài khoản, trường, lớp ---
+UserAccount "n" --> "1" RoleRecord : giữ vai
+RoleRecord "n" --> "n" Permission
+UserAccount "n" --> "0..1" Partner : tài khoản của đối tác
+SchoolRecord "1" *-- "n" AcademicYear
+AcademicYear "1" *-- "n" Classroom
+Classroom "1" o-- "n" Student
+SchoolRecord "1" -- "1" SchoolConfig : trần chi phí, geofence
+
+' --- Học sinh & hồ sơ sức khoẻ ---
+Student "1" *-- "n" AllergyDeclaration
+Student "1" *-- "n" ChronicConditionDeclaration
+Student "1" *-- "n" HealthHistoryEvent
+Student "1" -- "0..1" HealthRecord
+ParentChild "n" --> "1" Student
+
+' --- Đối tác & mua sắm ---
+Partner "1" *-- "n" PartnerDocument
+Partner "1" *-- "n" SupplierProduct : mặt hàng cung ứng
+SupplierProduct "1" --> "1" CatalogIngredient : quy về danh mục trường
+SupplierProduct "1" o-- "n" SupplierBatch : một mặt hàng, nhiều lô
+PurchaseRequest "n" --> "1" Partner
+PurchaseRequest "1" *-- "n" PurchaseItem
+PurchaseRequest "1" o-- "n" Delivery
+Delivery "1" --> "0..1" ReceivingSession
+ReceivingSession "n" --> "1" Partner
+ReceivingSession "1" --> "n" InventoryBatch : lô được nhận vào kho
+
+' --- Thực đơn ---
+Dish "1" *-- "n" DishIngredient
+DishIngredient "n" --> "1" CatalogIngredient
+MenuItem "n" --> "1" Partner : đơn vị lập
+MenuItem "1" o-- "n" Dish : món của bữa
+MenuItem "1" o-- "n" MenuVariant : thực đơn riêng theo chế độ ăn
+MenuVariant "n" --> "1" DietGroup
+MenuVariant "1" *-- "n" MenuVariantDish
+MenuVariantDish "n" --> "1" Dish
+
+' --- Kho & truy xuất nguồn gốc (BR-076) ---
+InventoryBatch "n" --> "1" CatalogIngredient
+InventoryTransaction "n" --> "1" InventoryBatch
+InventoryTransaction "n" --> "0..1" Dish : món tiêu thụ lô này
+InventoryTransaction "n" --> "0..1" MenuItem
+PreparationRecord "n" --> "1" Dish
+PreparationRecord "n" --> "n" InventoryBatch : lô đã dùng
+
+' --- Kiểm soát ATTP ---
+InspectionSession "n" --> "0..1" Dish
+FoodSample "n" --> "1" Dish
+FoodSample "n" --> "0..1" SampleLabRequest
+SampleLabRequest "n" --> "1" ReceivingAuthority : nơi tiếp nhận
+SampleLabRequest "n" --> "1" Incident
+SafetySignoff "n" --> "1" SchoolRecord
+
+' --- Sự cố ---
+IncidentSourceReport "n" --> "0..1" Incident : gộp N báo cáo thành 1 sự cố
+IncidentSourceReport "1" *-- "n" IncidentAffectedStudent
+IncidentRecordDraft "1" --> "0..1" Incident
+Incident "1" *-- "n" IncidentAffectedStudent
+Incident "1" *-- "n" IncidentEvent : sổ sự kiện append-only
+Incident "1" o-- "n" CorrectiveAction
+Incident "n" --> "n" InventoryBatch : lô bị cách ly (BR-149)
+CorrectiveAction "n" --> "0..1" InspectionSession : CAPA từ kiểm thực (BR-095)
+CorrectiveAction "n" --> "0..1" Partner : đơn vị chịu trách nhiệm
+ViolationRecord "n" --> "0..1" Incident
+IncidentAffectedStudent "n" --> "1" Student
+
+' --- Các bảng còn lại, nối về chủ sở hữu ---
+InventoryBatch "1" o-- "0..1" QuarantineInfo : cách ly (BR-149)
+StaffMember "n" --> "1" SchoolRecord
+Classroom "n" --> "1" StaffMember : giáo viên chủ nhiệm
+KitchenInspection "n" --> "1" Partner : bếp được kiểm tra
+FridgeTempLog "n" --> "1" SchoolRecord
+Announcement "n" --> "1" SchoolRecord
+UserNotification "n" --> "n" RoleRecord : vai nhận
+AuditLog "n" --> "1" UserAccount : ai thao tác
+SecurityPolicy "1" -- "n" UserAccount : áp cho mọi tài khoản
+ExternalIntegration "n" --> "1" SchoolRecord
+
+' --- Phục vụ & phản hồi ---
+StudentDistribution "n" --> "1" Student
+StudentDistribution "1" *-- "n" ServingDish : suất ĐÓNG BĂNG lúc trao tay
+ServingDish "n" --> "1" Dish
+TeacherMealRecord "n" --> "1" Student
+SpecialMealRequest "n" --> "1" Student
+Feedback "n" --> "1" Student
+Feedback "n" --> "0..1" Dish
+
+' ══════════════════════════════════════════════════════════════════════
+' RÀNG BUỘC — đặt ở tầng CSDL hoặc service, không trông vào kỷ luật nhập liệu.
+' Mỗi dòng dưới đây đã từng bị vi phạm ngay trong dữ liệu mẫu.
+' ══════════════════════════════════════════════════════════════════════
+
+note as C1
+  **Sự cố chỉ đóng được khi mọi CAPA đã COMPLETED**
+  Từng có sự cố ở trạng thái ĐÃ ĐÓNG trong khi CAPA
+  mới nộp bằng chứng — trạng thái không thể đạt
+  được qua giao diện.
+end note
+C1 .. Incident
+
+note as C2
+  **Thực đơn chỉ công bố được khi hết xung đột dị ứng**
+  chưa xử lý (BR-063). Từng có 2 thực đơn ĐÃ CÔNG BỐ
+  còn món chạm dị ứng đã xác minh mà không có suất riêng.
+end note
+C2 .. MenuItem
+
+note as C3
+  **Phát suất phải trỏ tới thực đơn có thật**
+  của đúng (ngày, khối, bữa), và bữa đó phải có
+  phiên kiểm thực ĐẠT (BR-094). Từng có 10/10 dòng
+  phát suất không tra ra thực đơn nào.
+end note
+C3 .. StudentDistribution
+
+note as C4
+  **Mọi khai báo sức khoẻ phải có student_id.**
+  Xác minh theo TỪNG tác nhân (BR-031), không phải
+  một cờ chung ở mức học sinh.
+end note
+C4 .. AllergyDeclaration
+
+note as C5
+  **Đối tác bị đình chỉ**: tài khoản không đăng nhập
+  được, không nhận đơn mới, báo giá không dùng để
+  ước tính chi phí (BR-070).
+end note
+C5 .. Partner
+
+note as C6
+  **Truy xuất nối bằng KHOÁ, không bằng tên.**
+  Phiếu xuất ↔ món ↔ mẫu lưu từng nối bằng chuỗi tên;
+  lệch một chữ là đứt chuỗi mà không có lỗi nào báo ra.
+end note
+C6 .. InventoryTransaction
+
+note as C7
+  **Lượng thực mua = lượng ăn được ÷ (1 − hệ số thải bỏ)**
+  và chỉ áp cho khối lượng/thể tích. Đơn vị đếm thì công
+  thức đã ghi đúng thứ phải mua.
+end note
+C7 .. CatalogIngredient
+
+@enduml

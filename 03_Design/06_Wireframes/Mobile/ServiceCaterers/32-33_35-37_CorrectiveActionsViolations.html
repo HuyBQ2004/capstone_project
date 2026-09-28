@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>SFMS Wireframe — Service Caterers (Mobile): Corrective Actions &amp; Violations</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root{ --ink:#333; --paper:#fff; --gray:#777; --lightgray:#d7d7d7; --midgray:#aaa; }
+  * { box-sizing: border-box; }
+  html { font-size: 18px; }
+  body { margin:0; font-family:'Patrick Hand', cursive; color:var(--ink); background-color:#f4f4f4; background-image: radial-gradient(#d7d7d7 1px, transparent 1px); background-size: 20px 20px; font-size:18px; min-height:100vh; }
+  .text-xs   { font-size: 14px; line-height:1.4; }
+  .text-sm   { font-size: 18px; line-height:1.5; }
+  .text-base { font-size: 22px; line-height:1.5; }
+  .text-md   { font-size: 28px; line-height:1.3; }
+  .text-lg   { font-size: 35px; line-height:1.2; }
+  a { color:#3a5a8c; text-decoration:underline; cursor:pointer; }
+
+  .note-banner { max-width:900px; margin:14px auto 0; text-align:center; font-family:'Caveat', cursive; font-size:20px; color:#900; padding:0 14px; }
+  .wrap { display:flex; flex-direction:column; align-items:center; padding:18px 10px 60px; gap:16px; }
+  .manifest { max-width:390px; font-size:14px; color:var(--gray); text-align:center; }
+
+  .phone-frame { width:390px; min-width:390px; background:#e9e9e9; border:3px solid var(--ink); border-radius:34px; padding:14px 10px; box-shadow:0 6px 0 rgba(0,0,0,0.08); }
+  .phone-notch { width:90px; height:14px; background:var(--ink); border-radius:8px; margin:0 auto 8px; }
+  .phone-screen-area { background:#fff; border:2px solid var(--ink); border-radius:18px; overflow:hidden; height:760px; display:flex; flex-direction:column; }
+
+  .appbar { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:12px 14px; border-bottom:3px solid var(--ink); background:#fafafa; flex:none; }
+  .appbar-title { display:flex; align-items:center; gap:8px; }
+  .back-btn { cursor:pointer; display:flex; align-items:center; }
+  .content { flex:1; overflow-y:auto; padding:14px 14px 70px; }
+  .fixed-footer { flex:none; padding:12px 14px; border-top:3px solid var(--ink); background:#fafafa; }
+
+  .icon { width:20px; height:20px; flex:none; stroke:var(--ink); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .icon-sm { width:16px; height:16px; }
+
+  .card { border:2px solid var(--ink); border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; padding:14px; }
+  .card + .card { margin-top:12px; }
+  .card-row { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+  .card.critical { border:3px solid var(--ink); }
+
+  .btn-primary { background:#333; color:white; border:2px solid #333; border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:10px 20px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+  .btn-primary svg { stroke:#fff; }
+  .btn-secondary { background:white; color:#333; border:2px solid #333; border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:8px 16px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+  .btn-block { width:100%; justify-content:center; }
+
+  .badge { display:inline-flex; align-items:center; gap:5px; padding:2px 10px; font-size:14px; border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; }
+  .badge-success { border:2px solid var(--ink); }
+  .badge-warning { border:2px dashed var(--ink); }
+  .badge-danger { border:3px solid var(--ink); }
+  .badge-critical { border:4px double var(--ink); }
+
+  .alert { display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; margin-top:10px; }
+  .alert-danger { border:3px solid var(--ink); }
+  .alert-warning { border:2px dashed var(--ink); }
+  .alert .icon { margin-top:2px; }
+
+  .field-block { margin-bottom:14px; }
+  .field-label { font-size:17px; margin-bottom:5px; display:flex; align-items:center; gap:6px; }
+  wired-input, wired-textarea, wired-select { width:100%; display:block; }
+
+  .camera-box { height:110px; border:2px dashed var(--midgray); border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; color:var(--midgray); background:#fafafa; }
+
+  .muted { color:var(--gray); }
+  .section-title { display:flex; align-items:center; gap:8px; margin:14px 0 8px; }
+  ul.plain { list-style:none; margin:0; padding:0; }
+  li.list-row { display:flex; justify-content:space-between; padding:6px 0; border-bottom:2px solid var(--lightgray); font-size:16px; }
+  li.list-row:last-child { border-bottom:none; }
+  .state-legend { margin-top:10px; padding:10px 12px; border:2px dotted var(--midgray); border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; font-size:13px; color:var(--gray); }
+
+  .screen { display:none; height:100%; flex-direction:column; }
+  .screen.active { display:flex; }
+</style>
+</head>
+<body>
+
+<div class="note-banner">Wireframe hand-drawn (skill wireframer) — nhóm màn hình Sự cố &amp; Vi phạm (32,33,35,36,37), actor Service Caterers, nền tảng Mobile. Màn 34 (View Inspection Records Log) đã build ở nhóm 15-20_34_ThreeStepInspection.html — không lặp lại tại đây.</div>
+
+<div class="wrap">
+<div class="manifest">Điều hướng: Corrective Actions Dashboard → Submit Results Form / Incident Detail; Lập Biên bản Vi phạm Quy trình/Nhân viên đặt chung trong Dashboard do ScreenFlow không có Screen Spec "Violation Dashboard" riêng.</div>
+
+<div class="phone-frame">
+  <div class="phone-notch"></div>
+  <div class="phone-screen-area">
+
+    <!-- ============ 32: Corrective Actions Dashboard ============ -->
+    <div class="screen active" id="capadash">
+      <div class="appbar"><div class="appbar-title text-md">Sự cố &amp; Khắc phục</div></div>
+      <div class="content">
+        <div class="card">
+          <div class="card-row"><div><div class="text-base">Sự cố #INC-0705 — Nhiệt độ nấu chưa đạt</div><div class="text-xs muted">Hạn chót: 08/07 20:00</div></div><span class="badge badge-warning">Late Submission</span></div>
+          <button class="btn-secondary" style="margin-top:8px" onclick="showScreen('submitresults')">Cập nhật Tiến độ</button>
+        </div>
+        <div class="card">
+          <div class="card-row"><div><div class="text-base">Sự cố #INC-0703 — Lô hàng cận date</div><div class="text-xs muted">Hạn chót: 09/07 12:00</div></div><span class="badge badge-success">In Progress</span></div>
+          <button class="btn-secondary" style="margin-top:8px" onclick="showScreen('submitresults')">Cập nhật Tiến độ</button>
+        </div>
+
+        <div class="text-xs muted" style="margin-top:10px">Nguồn ScreenFlow: điều hướng tiếp tới <a onclick="showScreen('incidentlist')">View Incident Information Detail →</a></div>
+
+        <div class="section-title text-base" style="margin-top:16px">Vi phạm</div>
+        <div class="text-xs muted" style="margin-bottom:8px">ScreenFlow không có Screen Spec "Violation Dashboard" riêng — 2 form vi phạm đặt trực tiếp tại đây theo đúng entry point ghi trong Screen Spec 36/37.</div>
+        <button class="btn-secondary btn-block" style="margin-bottom:8px" onclick="showScreen('processviol')">Lập Biên bản Vi phạm Quy trình</button>
+        <button class="btn-secondary btn-block" onclick="showScreen('staffviol')">Lập Biên bản Vi phạm Nhân viên</button>
+
+        <div class="state-legend">Empty: không có CAPA nào đang chờ xử lý. Loading: shimmer. Error: SnackBar MSG-004/MSG-005.</div>
+      </div>
+    </div>
+
+    <!-- ============ 33: Submit Corrective Action Results Form ============ -->
+    <div class="screen" id="submitresults">
+      <div class="appbar"><div class="appbar-title text-md"><span class="back-btn" onclick="showScreen('capadash')"><svg class="icon" viewBox="0 0 24 24"><path d="M15 5 L8 12 L15 19"/></svg></span>Nộp Kết quả Khắc phục</div></div>
+      <div class="content">
+        <div class="card text-sm">CAPA: Sự cố #INC-0705 — Nhiệt độ nấu chưa đạt · Hạn chót 08/07 20:00 (chỉ đọc)</div>
+
+        <div class="field-block" style="margin-top:12px"><div class="field-label">Ghi chú hoàn thành <span style="color:var(--ink)">*</span></div><wired-textarea placeholder="Đã hiệu chỉnh lại nhiệt kế, tái đào tạo nhân viên bếp về ngưỡng 75°C"></wired-textarea></div>
+
+        <div class="field-block"><div class="field-label">Tài liệu bằng chứng <span style="color:var(--ink)">*</span></div><div class="camera-box">Chụp/tải tài liệu (bắt buộc ≥1 file)</div></div>
+
+        <div class="field-block"><div class="field-label">Giấy chứng nhận Cơ quan Y tế (bắt buộc do sự cố High Severity từng đóng cửa bếp)</div><div class="camera-box">Chưa tải file</div></div>
+
+        <div class="alert alert-danger">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9 L15 15 M15 9 L9 15"/></svg>
+          <div class="text-sm">MSG-004 — Thiếu Giấy chứng nhận Cơ quan Y tế bắt buộc (BR-153). Chặn nộp kết quả.</div>
+        </div>
+
+        <div class="state-legend">Loading: shimmer. Success: SnackBar xác nhận nộp kết quả thành công.</div>
+      </div>
+      <div class="fixed-footer"><button class="btn-primary btn-block" onclick="showScreen('capadash')">Nộp Kết quả</button></div>
+    </div>
+
+    <!-- ============ 35: View Incident Information Detail ============ -->
+    <div class="screen" id="incidentlist">
+      <div class="appbar">
+        <div class="appbar-title text-md"><span class="back-btn" onclick="showScreen('capadash')"><svg class="icon" viewBox="0 0 24 24"><path d="M15 5 L8 12 L15 19"/></svg></span>Thông tin Sự cố</div>
+        <svg class="icon" viewBox="0 0 24 24" title="Xuất Dữ liệu CSV/PDF"><path d="M12 3 v12 M8 11 l4 4 4 -4"/><path d="M4 19 h16"/></svg>
+      </div>
+      <div class="content">
+        <div class="card critical" onclick="showScreen('incidentdetail')">
+          <div class="card-row"><div><div class="text-base">#INC-0705</div><div class="text-xs muted">05/07/2026</div></div><span class="badge badge-critical">High</span></div>
+          <div class="text-xs muted" style="margin-top:6px">Trạng thái: Đang xử lý</div>
+        </div>
+        <div class="card" onclick="showScreen('incidentdetail')">
+          <div class="card-row"><div><div class="text-base">#INC-0703</div><div class="text-xs muted">03/07/2026</div></div><span class="badge badge-warning">Medium</span></div>
+          <div class="text-xs muted" style="margin-top:6px">Trạng thái: Đã đóng</div>
+        </div>
+        <div class="state-legend">Empty: không có sự cố nào được gán. Loading: shimmer. Error: SnackBar MSG-023/MSG-004/MSG-005.</div>
+      </div>
+    </div>
+
+    <div class="screen" id="incidentdetail">
+      <div class="appbar"><div class="appbar-title text-md"><span class="back-btn" onclick="showScreen('incidentlist')"><svg class="icon" viewBox="0 0 24 24"><path d="M15 5 L8 12 L15 19"/></svg></span>Chi tiết Sự cố #INC-0705</div></div>
+      <div class="content">
+        <span class="badge badge-critical">High Severity</span>
+        <div class="alert alert-danger" style="margin-top:10px">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/></svg>
+          <div class="text-sm">Lô hàng liên quan #PK-0703 đang bị Quarantine (BR-149).</div>
+        </div>
+        <ul class="plain card" style="margin-top:10px">
+          <li class="list-row"><span>Ngày phát hiện</span><span>05/07/2026</span></li>
+          <li class="list-row"><span>Phạm vi liên quan Service Caterers</span><span>Bước 2 kiểm tra 3-bước thất bại</span></li>
+          <li class="list-row"><span>Trạng thái</span><span>Đang xử lý</span></li>
+        </ul>
+        <div class="state-legend">Chỉ hiển thị thông tin liên quan tới phạm vi Service Caterers, không toàn bộ hồ sơ y tế/nội bộ khác.</div>
+      </div>
+    </div>
+
+    <!-- ============ 36: Record Process Violation ============ -->
+    <div class="screen" id="processviol">
+      <div class="appbar"><div class="appbar-title text-md"><span class="back-btn" onclick="showScreen('capadash')"><svg class="icon" viewBox="0 0 24 24"><path d="M15 5 L8 12 L15 19"/></svg></span>Biên bản Vi phạm Quy trình</div></div>
+      <div class="content">
+        <div class="card text-sm">Ngữ cảnh: Bước 2 (Upload Image Cooked Food) — Batch #CB-0707, thất bại do nhiệt độ 68°C &lt; 75°C (pre-filled từ InspectionStep.fail())</div>
+        <div class="card text-sm" style="margin-top:10px">Người phát hiện: Trần Văn Bình (tự động)</div>
+
+        <div class="field-block" style="margin-top:12px"><div class="field-label">Mô tả vi phạm <span style="color:var(--ink)">*</span></div><wired-textarea placeholder="Nhân viên không kiểm tra nhiệt độ lõi trước khi báo đạt"></wired-textarea></div>
+        <div class="field-block"><div class="field-label">Ảnh bằng chứng <span style="color:var(--ink)">*</span></div><div class="camera-box">Chụp ảnh</div></div>
+
+        <div class="field-block">
+          <div class="field-label">Mức độ nghiêm trọng <span style="color:var(--ink)">*</span></div>
+          <label class="text-sm" style="display:flex;gap:8px;align-items:center;margin-bottom:4px"><wired-radio></wired-radio> Low</label>
+          <label class="text-sm" style="display:flex;gap:8px;align-items:center;margin-bottom:4px"><wired-radio checked></wired-radio> Medium</label>
+          <label class="text-sm" style="display:flex;gap:8px;align-items:center"><wired-radio></wired-radio> High</label>
+        </div>
+
+        <div class="field-block"><div class="field-label">Chọn Nhân chứng <span style="color:var(--ink)">*</span> (bắt buộc — Severity ≥ Medium)</div><wired-select><wired-item value="witness1">Lê Thị Hoa — Bếp trưởng</wired-item></wired-select></div>
+
+        <div class="state-legend">Error: AlertDialog MSG-085 nếu thiếu mô tả/ảnh/witness khi bắt buộc. Success: SnackBar MSG-086, ghi audit log bất biến (BR-188).</div>
+      </div>
+      <div class="fixed-footer"><button class="btn-primary btn-block" onclick="showScreen('capadash')">Lưu Biên bản Vi phạm</button></div>
+    </div>
+
+    <!-- ============ 37: Record Staff Violation ============ -->
+    <div class="screen" id="staffviol">
+      <div class="appbar"><div class="appbar-title text-md"><span class="back-btn" onclick="showScreen('capadash')"><svg class="icon" viewBox="0 0 24 24"><path d="M15 5 L8 12 L15 19"/></svg></span>Biên bản Vi phạm Nhân viên</div></div>
+      <div class="content">
+        <div class="field-block"><div class="field-label">Tên nhân viên vi phạm <span style="color:var(--ink)">*</span></div><wired-input placeholder="Nguyễn Văn Cường"></wired-input></div>
+        <div class="field-block"><div class="field-label">Chức vụ (tuỳ chọn)</div><wired-input placeholder="Phụ bếp"></wired-input></div>
+        <div class="field-block"><div class="field-label">Loại vi phạm <span style="color:var(--ink)">*</span></div><wired-select><wired-item value="override">Lạm dụng Manual Override (OVERRIDE_ABUSE)</wired-item><wired-item value="hygiene">Vi phạm vệ sinh cá nhân</wired-item></wired-select></div>
+        <div class="field-block"><div class="field-label">Mô tả vi phạm <span style="color:var(--ink)">*</span></div><wired-textarea placeholder="Tự ý bấm Manual Override xác thực khuôn mặt 3 lần trong ca không có lý do hợp lệ"></wired-textarea></div>
+        <div class="field-block"><div class="field-label">Ảnh bằng chứng <span style="color:var(--ink)">*</span></div><div class="camera-box">Chụp ảnh</div></div>
+        <div class="field-block">
+          <div class="field-label">Mức độ nghiêm trọng <span style="color:var(--ink)">*</span></div>
+          <label class="text-sm" style="display:flex;gap:8px;align-items:center;margin-bottom:4px"><wired-radio checked></wired-radio> Medium</label>
+          <label class="text-sm" style="display:flex;gap:8px;align-items:center"><wired-radio></wired-radio> High</label>
+        </div>
+        <div class="field-block"><div class="field-label">Ngày giờ xảy ra vi phạm <span style="color:var(--ink)">*</span></div><wired-input placeholder="07/07/2026 09:15"></wired-input></div>
+
+        <div class="alert alert-warning">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/></svg>
+          <div class="text-sm">MSG-088 — Nguyễn Văn Cường đã có 1 biên bản Medium+ trong 90 ngày gần nhất (BR-187). Không chặn lưu.</div>
+        </div>
+
+        <div class="state-legend">Error: AlertDialog MSG-085 nếu thiếu field bắt buộc. Success: SnackBar MSG-086 (có thể kèm MSG-088).</div>
+      </div>
+      <div class="fixed-footer"><button class="btn-primary btn-block" onclick="showScreen('capadash')">Lưu Biên bản Vi phạm Nhân viên</button></div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<script>
+  function showScreen(id){ document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+</script>
+</body>
+</html>

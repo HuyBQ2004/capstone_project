@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hộp thoại Khoá/Kích hoạt tài khoản</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-tint": "#006781",
+                      "inverse-on-surface": "#eef0ff",
+                      "on-secondary-fixed": "#0b1c30",
+                      "tertiary-fixed-dim": "#ffb86f",
+                      "on-surface": "#131b2e",
+                      "on-background": "#131b2e",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-low": "#f2f3ff",
+                      "primary-fixed": "#b9eaff",
+                      "inverse-primary": "#81d1f0",
+                      "on-primary-container": "#d3f1ff",
+                      "surface-container-highest": "#dae2fd",
+                      "on-error-container": "#93000a",
+                      "primary-fixed-dim": "#81d1f0",
+                      "primary-container": "#0e7490",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "secondary-container": "#d0e1fb",
+                      "surface-variant": "#dae2fd",
+                      "inverse-surface": "#283044",
+                      "surface": "#faf8ff",
+                      "on-tertiary-fixed": "#2c1600",
+                      "on-tertiary-container": "#ffe8d6",
+                      "on-secondary": "#ffffff",
+                      "secondary": "#505f76",
+                      "error": "#ba1a1a",
+                      "error-container": "#ffdad6",
+                      "on-error": "#ffffff",
+                      "surface-bright": "#faf8ff",
+                      "surface-container": "#eaedff",
+                      "on-primary-fixed-variant": "#004d62",
+                      "primary": "#005a71",
+                      "outline-variant": "#bec8cd",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary": "#794602",
+                      "outline": "#6f787d",
+                      "surface-dim": "#d2d9f4",
+                      "tertiary-container": "#965e1c",
+                      "tertiary-fixed": "#ffdcbd",
+                      "secondary-fixed": "#d3e4fe",
+                      "on-secondary-container": "#54647a",
+                      "on-primary-fixed": "#001f29",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "on-tertiary-fixed-variant": "#693c00",
+                      "on-surface-variant": "#3f484c",
+                      "surface-container-high": "#e2e7ff",
+                      "background": "#faf8ff",
+                      "on-primary": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "1rem",
+                      "component-padding-y": "0.5rem",
+                      "container-margin": "2rem",
+                      "section-gap": "1.5rem",
+                      "component-padding-x": "1rem"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Be Vietnam Pro"
+                      ],
+                      "display": [
+                              "Be Vietnam Pro"
+                      ],
+                      "body-lg": [
+                              "Be Vietnam Pro"
+                      ],
+                      "title-md": [
+                              "Be Vietnam Pro"
+                      ],
+                      "body-md": [
+                              "Be Vietnam Pro"
+                      ],
+                      "headline-lg": [
+                              "Be Vietnam Pro"
+                      ],
+                      "label-md": [
+                              "Be Vietnam Pro"
+                      ],
+                      "label-sm": [
+                              "Be Vietnam Pro"
+                      ],
+                      "title-lg": [
+                              "Be Vietnam Pro"
+                      ],
+                      "headline-lg-mobile": [
+                              "Be Vietnam Pro"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display": [
+                              "36px",
+                              {
+                                      "lineHeight": "44px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "title-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "30px",
+                              {
+                                      "lineHeight": "36px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "title-lg": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex overflow-hidden">
+<!-- Background App (Blurred for modal) -->
+<div class="flex w-full min-h-screen blur-sm pointer-events-none select-none transition-all">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full w-[260px] bg-surface dark:bg-inverse-surface border-r border-outline-variant dark:border-outline flex flex-col p-gutter gap-section-gap z-10 hidden md:flex">
+<!-- Brand -->
+<div class="flex items-center gap-3 px-4 py-2">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-on-primary font-bold">s</div>
+<div>
+<h1 class="font-display text-display font-bold text-primary dark:text-inverse-primary text-xl">sfms</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Hệ thống Quản trị</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+                    Tổng quan
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary font-bold font-label-md text-label-md opacity-90 transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">manage_accounts</span>
+                    Người dùng &amp; Vai trò
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 0;">school</span>
+                    Trường học
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 0;">settings</span>
+                    Cấu hình hệ thống
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 0;">policy</span>
+                    Giám sát &amp; Audit
+                </a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col md:ml-[260px] bg-background">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-20 flex justify-between items-center h-16 px-container-margin bg-surface/80 backdrop-blur-md border-b border-outline-variant dark:border-outline">
+<div class="flex items-center gap-4">
+<!-- Search Placeholder -->
+<div class="relative hidden sm:block w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="w-full pl-9 pr-4 py-2 bg-surface-container-low border-none rounded-full text-sm focus:ring-2 focus:ring-primary outline-none text-on-surface" placeholder="Tìm kiếm..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<img alt="Admin Avatar" class="w-8 h-8 rounded-full object-cover" data-alt="A professional headshot of an administrative user in a clean, brightly lit corporate environment. The user is smiling subtly, wearing professional attire. The background is a soft, out-of-focus light gray office setting, emphasizing a modern light-mode design aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7zKeFnV6RW9g9UEDJE-Uuh3JjUdihGEnakNuBVVnuGytGf_WALA6T0WpWZzgm4Ft60QgcAZ9IcQzSrREY81vXhgAxRMxEwM38jsz2tCDnWJ4tAyIKNE5KM20sL6pj2znvVEWmUWr-OGd1Z4uOgqxfV53jcdP-xKdR6rb7QF2IwIwAhIEFRoxiGBgnpciHe-qW-HhCtrVeLtjKG-y_0U2nzj7tZsPQp51kkaXgY0UvNFKlzgEvz6CilXuaXR3MzijHevL7q5npyDFH"/>
+</button>
+</div>
+</header>
+<!-- Dummy Page Content (User List) -->
+<div class="p-container-margin flex-1">
+<div class="flex justify-between items-end mb-6">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-1">Quản lý Người dùng</h2>
+<p class="text-on-surface-variant font-body-md text-body-md">Danh sách tất cả người dùng trong hệ thống.</p>
+</div>
+</div>
+<!-- Table Skeleton -->
+<div class="bg-surface border border-outline-variant rounded-lg overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="py-3 px-4 font-label-md text-label-md text-on-surface-variant">Họ &amp; Tên</th>
+<th class="py-3 px-4 font-label-md text-label-md text-on-surface-variant">Email</th>
+<th class="py-3 px-4 font-label-md text-label-md text-on-surface-variant">Vai trò</th>
+<th class="py-3 px-4 font-label-md text-label-md text-on-surface-variant">Trạng thái</th>
+<th class="py-3 px-4 font-label-md text-label-md text-on-surface-variant text-right">Thao tác</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-outline-variant/50">
+<td class="py-3 px-4 font-body-md text-body-md font-medium">Nguyễn Văn A</td>
+<td class="py-3 px-4 font-body-md text-body-md text-on-surface-variant">admin@sfms.com</td>
+<td class="py-3 px-4"><span class="px-2 py-1 bg-primary-container text-on-primary-container rounded text-xs font-medium">System Admin</span></td>
+<td class="py-3 px-4"><span class="px-2 py-1 bg-[#dcfce7] text-[#166534] rounded text-xs font-medium">Hoạt động</span></td>
+<td class="py-3 px-4 text-right">
+<button class="p-1 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-sm">more_vert</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+<!-- Modal Overlay -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+<!-- Confirmation Modal -->
+<div class="bg-surface w-full max-w-md rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-outline-variant overflow-hidden flex flex-col transform scale-100 transition-transform">
+<!-- Modal Header -->
+<div class="px-6 py-5 border-b border-outline-variant/50">
+<h2 class="font-title-lg text-title-lg text-on-surface">Xác nhận trạng thái tài khoản</h2>
+</div>
+<!-- Modal Body -->
+<div class="px-6 py-5 flex flex-col gap-4">
+<!-- User Info -->
+<div class="p-4 bg-surface-container-low rounded-lg flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant">Người dùng:</p>
+<p class="font-title-md text-title-md text-on-surface">Nguyễn Văn A (admin@sfms.com)</p>
+</div>
+</div>
+<!-- Warning Box -->
+<div class="p-4 bg-[#fefce8] border border-[#fef08a] rounded-lg flex items-start gap-3">
+<span class="material-symbols-outlined text-[#ca8a04] mt-0.5">warning</span>
+<p class="font-body-md text-body-md text-[#854d0e]">
+                        Khi vô hiệu hóa tài khoản, người dùng này sẽ bị đăng xuất khỏi tất cả thiết bị và không thể truy cập hệ thống cho đến khi được kích hoạt lại.
+                    </p>
+</div>
+<!-- Special Case Error Message -->
+<div class="flex items-center gap-2 mt-2">
+<span class="material-symbols-outlined text-error text-sm">error</span>
+<p class="font-label-sm text-label-sm text-error">
+                        Không thể khóa tài khoản System Admin mặc định duy nhất của hệ thống.
+                    </p>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="px-6 py-4 bg-surface-container-lowest border-t border-outline-variant/50 flex justify-end gap-3">
+<button class="px-4 py-2 rounded-md border border-outline text-on-surface font-label-md text-label-md hover:bg-surface-container-low transition-colors">
+                    Hủy
+                </button>
+<button class="px-4 py-2 rounded-md bg-on-surface/10 text-on-surface/40 font-label-md text-label-md cursor-not-allowed flex items-center gap-2" disabled="">
+<span class="material-symbols-outlined text-sm">lock</span>
+                    Xác nhận khoá
+                </button>
+</div>
+</div>
+</div>
+</body></html>

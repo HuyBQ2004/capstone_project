@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<title>SFMS — Reports &amp; Compliance (School Administration)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<style>
+  * { box-sizing: border-box; }
+  html { font-size: 18px; }
+  body {
+    margin: 0; font-size: 18px; font-family: 'Patrick Hand', cursive; color: #333;
+    background-image: radial-gradient(#d7d7d7 1px, transparent 1px);
+    background-size: 20px 20px;
+    min-height: 100vh;
+  }
+  .text-xs   { font-size: 14px; line-height: 1.4; }
+  .text-sm   { font-size: 18px; line-height: 1.5; }
+  .text-base { font-size: 22px; line-height: 1.5; }
+  .text-md   { font-size: 28px; line-height: 1.3; }
+  .text-lg   { font-size: 35px; line-height: 1.2; }
+
+  a.sketch-link { color: #45607a; text-decoration: underline; cursor: pointer; }
+
+  /* ---------- App shell ---------- */
+  .app { display: flex; min-height: 100vh; }
+
+  .sidebar {
+    width: 280px; flex-shrink: 0; background: white;
+    border-right: 2px solid #333;
+    padding: 18px 14px; position: sticky; top: 0; height: 100vh; overflow-y: auto;
+  }
+  .sidebar .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+  .sidebar .brand svg { width: 30px; height: 30px; flex-shrink: 0; }
+  .sidebar .brand-text { font-size: 22px; line-height: 1.1; }
+  .sidebar .brand-sub { font-size: 14px; color: #666; }
+
+  .nav-group { margin-bottom: 6px; }
+  .nav-group-title {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 18px; color: #555; padding: 8px 8px 4px;
+  }
+  .nav-group-title svg { width: 18px; height: 18px; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 10px; margin: 2px 0; border-radius: 8px;
+    font-size: 18px; color: #999; cursor: default;
+  }
+  .nav-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .nav-item.disabled { color: #b6b6b6; }
+  .nav-item.active-group .nav-item { color: #333; }
+  .nav-item.clickable { color: #333; cursor: pointer; }
+  .nav-item.clickable:hover { background: #f1f1f1; }
+  .nav-item.current {
+    background: #ececec; border-left: 3px solid #333; color: #111; font-weight: bold;
+    padding-left: 7px;
+  }
+  .nav-note {
+    font-size: 12px; color: #999; padding: 2px 10px 8px 34px; font-style: italic;
+  }
+
+  .main { flex: 1; min-width: 0; padding: 24px 32px 60px; }
+
+  .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 18px; flex-wrap: wrap; gap: 10px;
+  }
+  .breadcrumb { font-size: 14px; color: #666; }
+  .breadcrumb b { color: #333; }
+  .back-link { display: flex; align-items: center; gap: 6px; }
+  .back-link svg { width: 18px; height: 18px; }
+
+  /* ---------- Screens ---------- */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .page-title { display: flex; align-items: center; gap: 12px; margin: 4px 0 18px; }
+  .page-title svg { width: 30px; height: 30px; }
+
+  .card {
+    border: 2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    background: white;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+  }
+  .card-tight { padding: 14px 18px; }
+
+  .section-title { display: flex; align-items: center; gap: 8px; margin: 0 0 14px; }
+  .section-title svg { width: 22px; height: 22px; }
+
+  .filter-bar {
+    display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end;
+  }
+  .filter-field { display: flex; flex-direction: column; gap: 4px; min-width: 200px; }
+  .filter-field .field-label { display: flex; align-items: center; gap: 6px; font-size: 14px; color: #555; }
+  .filter-field .field-label svg { width: 16px; height: 16px; }
+
+  .btn-primary {
+    background: #333; color: white; border: 2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family: 'Patrick Hand', cursive; font-size: 18px;
+    padding: 10px 22px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-secondary {
+    background: white; color: #333; border: 2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family: 'Patrick Hand', cursive; font-size: 18px;
+    padding: 10px 22px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+
+  table.sketch-table { width: 100%; border-collapse: collapse; font-size: 18px; }
+  table.sketch-table th, table.sketch-table td {
+    border-bottom: 2px solid #ccc; text-align: left; padding: 8px 10px;
+  }
+  table.sketch-table th { color: #333; border-bottom: 2px solid #333; }
+  table.sketch-table tr:last-child td { border-bottom: none; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 2px 10px; font-size: 14px; border-radius: 10px;
+    border: 2px solid #333; background: white;
+  }
+  .badge svg { width: 14px; height: 14px; }
+  .badge-dashed { border-style: dashed; color: #666; }
+  .badge-double { border-width: 3px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .kpi-card { text-align: center; }
+  .kpi-value { font-size: 35px; line-height: 1.1; }
+  .kpi-label { font-size: 14px; color: #555; display: flex; gap: 6px; justify-content: center; align-items: center; }
+  .kpi-label svg { width: 16px; height: 16px; }
+
+  .alert {
+    display: flex; gap: 10px; align-items: flex-start;
+    border: 2px dashed #333; border-radius: 10px; padding: 12px 14px; background: #f7f7f7;
+    margin-bottom: 16px;
+  }
+  .alert svg { width: 24px; height: 24px; flex-shrink: 0; }
+  .alert.critical { border: 3px solid #333; background: #eaeaea; }
+
+  .banner-quarantine {
+    display: flex; align-items: center; gap: 12px;
+    border: 3px solid #333; background: repeating-linear-gradient(45deg, #eee, #eee 10px, #fff 10px, #fff 20px);
+    padding: 14px 18px; border-radius: 10px; margin-bottom: 18px;
+  }
+  .banner-quarantine svg { width: 30px; height: 30px; flex-shrink: 0; }
+
+  .step-row { display: flex; gap: 14px; }
+  .step-box {
+    flex: 1; border: 2px solid #333; border-radius: 10px; padding: 12px; text-align: center; background: #fff;
+  }
+  .step-box svg { width: 26px; height: 26px; }
+  .step-box.done { background: #ececec; }
+  .step-box.pending { border-style: dashed; color: #777; }
+
+  .gallery-row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .gallery-row wired-card { width: 140px; height: 100px; display: flex; align-items: center; justify-content: center; }
+
+  .grid-8-4 { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; }
+  @media (max-width: 900px) { .grid-8-4 { grid-template-columns: 1fr; } .kpi-grid { grid-template-columns: 1fr; } }
+
+  .hub-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .hub-card { cursor: pointer; }
+  .hub-card:hover { background: #fafafa; }
+  .hub-card .section-title svg { width: 26px; height: 26px; }
+  .hub-card p { color: #555; }
+
+  .empty-state { text-align: center; padding: 30px 10px; color: #666; }
+  .empty-state svg { width: 60px; height: 60px; margin-bottom: 8px; }
+
+  .chart-placeholder { display: flex; align-items: flex-end; gap: 8px; height: 160px; padding: 10px; }
+  .chart-bar { flex: 1; background: repeating-linear-gradient(0deg, #333 0 2px, transparent 2px 6px); border: 2px solid #333; border-radius: 4px 4px 0 0; }
+
+  .status-line { font-size: 14px; color: #666; margin-top: 8px; display: flex; align-items: center; gap: 6px; }
+  .status-line svg { width: 16px; height: 16px; }
+
+  wired-card[style] { background: white; }
+  wired-input, wired-select, wired-combo { width: 100%; }
+
+  .assumption-tag { font-size: 12px; color: #900; font-style: italic; }
+
+  .note-banner {
+    position: sticky; top: 0; z-index: 5; text-align: center;
+    font-family: 'Caveat', cursive; font-size: 20px; color: #900;
+    background: #fffceb; border-bottom: 2px dashed #333; padding: 6px 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="note-banner">Wireframe SFMS — nhóm "Reports &amp; Compliance" (School Administration). Nguồn Draft, xem manifest .md đi kèm. Field đánh dấu [Giả định] được giữ nguyên theo Screen Spec gốc.</div>
+
+<div class="app">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <div class="sidebar">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2 L21 6 V11 C21 16.5 17 20.5 12 22 C7 20.5 3 16.5 3 11 V6 Z"/>
+        <path d="M9 12 L11 14 L15 9" stroke-width="1.8"/>
+      </svg>
+      <div>
+        <div class="brand-text">SFMS</div>
+        <div class="brand-sub">School Administration</div>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><rect x="14" y="14" width="6" height="6"/></svg>
+        Quản lý Lớp/Học sinh
+      </div>
+      <div class="nav-item disabled">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b6b6b6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M4 20c0-4 3.5-6 8-6s8 2 8 6"/></svg>
+        Danh sách học sinh
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+        Quản lý Thực đơn
+      </div>
+      <div class="nav-item disabled">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b6b6b6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h5"/></svg>
+        Thực đơn tuần
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-6 9 6-9 6-9-6z"/><path d="M3 9v6l9 6 9-6V9"/></svg>
+        Quản lý Nhà cung cấp
+      </div>
+      <div class="nav-item disabled">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b6b6b6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        Đối tác &amp; Hợp đồng
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L21 6 V11 C21 16.5 17 20.5 12 22 C7 20.5 3 16.5 3 11 V6 Z"/></svg>
+        Kiểm tra &amp; Sự cố
+      </div>
+      <div class="nav-item disabled">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b6b6b6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 17a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+        Sự cố &amp; CAPA
+      </div>
+    </div>
+
+    <div class="nav-group active-group">
+      <div class="nav-group-title" style="color:#333;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+        Báo cáo &amp; Thống kê
+      </div>
+
+      <div class="nav-item clickable" onclick="showScreen('compliance-dashboard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        Compliance Dashboard
+      </div>
+      <div class="nav-item clickable" onclick="showScreen('inspection-reports')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l1 3h3v15H5V6h3z"/><path d="M9 11l2 2 4-4"/></svg>
+        Inspection Reports
+      </div>
+      <div class="nav-item clickable" onclick="showScreen('analytics-hub')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 13v4M12 9v8M16 11v6"/></svg>
+        Analytics Dashboard
+      </div>
+      <div class="nav-note">↳ Food Sample / Receiving / Traceability / Usage nằm trong hub này</div>
+      <div class="nav-item clickable" onclick="showScreen('allergy-review')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.6-9.3-9C1 8.5 2.6 5 6 5c2 0 3.4 1.2 4 2.2C10.6 6.2 12 5 14 5c3.4 0 5 3.5 3.3 7-2.3 4.4-9.3 9-9.3 9z"/><path d="M9 9v3M9 15h.01"/></svg>
+        Allergy Review
+      </div>
+      <div class="nav-item clickable" onclick="showScreen('partnership-reports')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8a3 3 0 1 0-2.83-4M7 8a3 3 0 1 0 2.83-4"/><path d="M2 20c0-3.3 3-5 7-5s7 1.7 7 5M13 20c0-2.5 2-4 5-4s5 1.5 5 4"/></svg>
+        Partnership Reports
+      </div>
+      <div class="nav-item clickable" onclick="showScreen('partnership-approval-history')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 8v4l3 2"/></svg>
+        Partnership Approval History
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MAIN AREA ===================== -->
+  <div class="main">
+
+    <!-- ============================================================ -->
+    <!-- 1. COMPLIANCE DASHBOARD                                       -->
+    <!-- ============================================================ -->
+    <div class="screen active" id="compliance-dashboard">
+      <div class="topbar">
+        <div class="breadcrumb">Báo cáo &amp; Thống kê / <b>Compliance Dashboard</b></div>
+        <div class="back-link"><a class="sketch-link" href="#">◀ Quay lại Dashboard chính</a></div>
+      </div>
+
+      <div class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        <span class="text-lg">Compliance Dashboard</span>
+      </div>
+
+      <!-- Field 5: Banner Quarantine -->
+      <div class="banner-quarantine">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 17a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+        <div>
+          <b>Bếp trung tâm đang bị CÁCH LY (Kitchen Quarantine)</b><br>
+          <span class="text-sm">MSG-024 — Phát hiện vi phạm nghiêm trọng lô sản xuất #PB-2026-0701-03. Toàn bộ hoạt động bếp tạm dừng chờ xử lý CAPA.</span>
+        </div>
+      </div>
+
+      <div class="grid-8-4">
+        <div>
+          <!-- Field 1: 3-step realtime -->
+          <div class="card">
+            <div class="section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+              <span class="text-md">Trạng thái 3-bước kiểm tra hôm nay (lô sản xuất #PB-2026-0701-03)</span>
+            </div>
+            <div class="step-row">
+              <div class="step-box done">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><path d="M5 13l4 4L19 7"/></svg>
+                <div><b>Bước 1</b><br><span class="text-xs">Kiểm tra nguyên liệu đầu vào</span></div>
+                <div class="badge">Pass</div>
+              </div>
+              <div class="step-box done">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><path d="M5 13l4 4L19 7"/></svg>
+                <div><b>Bước 2</b><br><span class="text-xs">Kiểm tra trong chế biến</span></div>
+                <div class="badge badge-double">Fail — nhiệt độ giữ ấm</div>
+              </div>
+              <div class="step-box pending">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#777" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                <div><b>Bước 3</b><br><span class="text-xs">Kiểm tra trước phục vụ</span></div>
+                <div class="badge badge-dashed">Chưa bắt đầu</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Field 3: Alert danger -->
+          <div class="alert critical">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 17a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+            <div>
+              <b>Cảnh báo: Bước 2 thất bại — nhiệt độ giữ ấm dưới ngưỡng an toàn (BR-091)</b><br>
+              <span class="text-sm">Yêu cầu CAPA đang mở: <a class="sketch-link" href="#">CAPA-2026-0701-011 — xem chi tiết non-conformance</a></span>
+            </div>
+          </div>
+
+          <!-- Field 4: Gallery -->
+          <div class="card">
+            <div class="section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="M21 16l-5-5-4 4-2-2-5 5"/></svg>
+              <span class="text-md">Ảnh xác minh (verification photos)</span>
+            </div>
+            <div class="gallery-row">
+              <wired-card style="background:white">[Image Placeholder]</wired-card>
+              <wired-card style="background:white">[Image Placeholder]</wired-card>
+              <wired-card style="background:white">X</wired-card>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <!-- Field 2: hygiene score -->
+          <div class="card kpi-card">
+            <div class="section-title" style="justify-content:center;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+              <span class="text-md">Điểm vệ sinh hàng ngày</span>
+            </div>
+            <div class="kpi-value">87 / 100</div>
+            <div class="kpi-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-6"/></svg>
+              Bếp trung tâm — cập nhật 09:40
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Field 6: nut ky xac nhan -->
+      <div class="btn-row">
+        <button class="btn-primary" onclick="alert('[Demo] Đã ký xác nhận trạng thái an toàn hôm nay — ghi log review.')">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 10-10-3-3L5 16l-1 4z"/></svg>
+          Ký xác nhận trạng thái an toàn hôm nay
+        </button>
+      </div>
+      <div class="status-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.6"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 17a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+        Trạng thái: Error (Quarantine active — MSG-024; Bước 2 thất bại — AF1)
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 2. INSPECTION REPORTS                                         -->
+    <!-- ============================================================ -->
+    <div class="screen" id="inspection-reports">
+      <div class="topbar">
+        <div class="breadcrumb">Báo cáo &amp; Thống kê / <b>Inspection Reports</b></div>
+        <div class="back-link"><a class="sketch-link" href="#">◀ Quay lại Dashboard chính</a></div>
+      </div>
+
+      <div class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l1 3h3v15H5V6h3z"/><path d="M9 11l2 2 4-4"/></svg>
+        <span class="text-lg">Inspection Reports</span>
+      </div>
+
+      <div class="card">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v4H4zM4 10h10v10H4z"/></svg>
+          <span class="text-md">Bộ lọc</span>
+        </div>
+        <div class="filter-bar">
+          <div class="filter-field">
+            <div class="field-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+              Date range
+            </div>
+            <wired-input placeholder="01/06/2026 – 30/06/2026"></wired-input>
+          </div>
+          <div class="filter-field">
+            <div class="field-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><path d="M4 19h16M4 5h16M4 12h10"/></svg>
+              Meal session
+            </div>
+            <wired-select>
+              <wired-item value="all">Tất cả</wired-item>
+              <wired-item value="breakfast">Bữa sáng</wired-item>
+              <wired-item value="lunch">Bữa trưa</wired-item>
+            </wired-select>
+          </div>
+          <div class="filter-field">
+            <div class="field-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><path d="M3 9l9-6 9 6-9 6-9-6z"/></svg>
+              Service Caterers
+            </div>
+            <wired-select>
+              <wired-item value="all">Tất cả</wired-item>
+              <wired-item value="c1">Cty TNHH Suất ăn An Bình</wired-item>
+              <wired-item value="c2">Cty CP Bếp Xanh</wired-item>
+            </wired-select>
+          </div>
+          <button class="btn-primary" onclick="alert('[Demo] Đang tạo báo cáo (Generate Report — Loading)...')">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="white" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M9 9h6v6H9z"/></svg>
+            Generate Report
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+          <span class="text-md">Bảng tổng hợp kiểm tra</span>
+        </div>
+        <table class="sketch-table">
+          <thead>
+            <tr><th>Chỉ số</th><th>Giá trị</th><th>Ghi chú</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Tổng số lô kiểm tra</td><td>142</td><td>01/06 – 30/06/2026</td></tr>
+            <tr><td>Tỷ lệ Pass / Fail</td><td>92% / 8%</td><td>11 lô Fail</td></tr>
+            <tr><td>Số lần lệch nhiệt độ nghiêm trọng</td><td>4</td><td>BR-091</td></tr>
+            <tr><td>Trạng thái CAPA</td><td><span class="badge">2 Đang mở</span> <span class="badge badge-dashed">9 Đã đóng</span></td><td>BR-097</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-secondary">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 19h16"/></svg>
+          Export Report (PDF/Excel)
+        </button>
+      </div>
+      <div class="status-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.6"><path d="M5 13l4 4L19 7"/></svg>
+        Trạng thái: Success — Bảng tổng hợp hiển thị, Export sẵn sàng tải file (AF1)
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 3. ANALYTICS DASHBOARD (HUB)                                  -->
+    <!-- ============================================================ -->
+    <div class="screen" id="analytics-hub">
+      <div class="topbar">
+        <div class="breadcrumb">Báo cáo &amp; Thống kê / <b>Analytics Dashboard</b></div>
+        <div class="back-link"><a class="sketch-link" href="#">◀ Quay lại Dashboard chính</a></div>
+      </div>
+
+      <div class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 13v4M12 9v8M16 11v6"/></svg>
+        <span class="text-lg">Analytics Dashboard (hub báo cáo)</span>
+      </div>
+      <p class="text-sm" style="color:#555;">UC-171 View Analytics Dashboard — chọn 1 danh mục báo cáo bên dưới (mỗi danh mục là 1 view lọc trong Analytics Dashboard, có nút Export dùng UC-172).</p>
+
+      <div class="hub-grid">
+        <div class="card hub-card" onclick="showScreen('food-sample-retention')">
+          <div class="section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6v4l3 12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2l3-12z"/><path d="M8 12h8"/></svg>
+            <span class="text-md">Food Sample Retention Reports</span>
+          </div>
+          <p class="text-sm">Số mẫu lưu, số mẫu hủy đúng hạn, số mẫu thu hồi điều tra, cảnh báo nhiệt độ tủ lưu mẫu.</p>
+        </div>
+
+        <div class="card hub-card" onclick="showScreen('receiving-reports')">
+          <div class="section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/></svg>
+            <span class="text-md">Receiving Reports</span>
+          </div>
+          <p class="text-sm">Số lô nhận, số lô từ chối, tỷ lệ đúng hạn/GPS hợp lệ (UC-123).</p>
+        </div>
+
+        <div class="card hub-card" onclick="showScreen('traceability-reports')">
+          <div class="section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8 7.5L11 16M16 7.5L13 16"/></svg>
+            <span class="text-md">Traceability Reports</span>
+          </div>
+          <p class="text-sm">Truy xuất lô nguyên liệu → menu → phiên sản xuất.</p>
+        </div>
+
+        <div class="card hub-card" onclick="showScreen('system-usage-metrics')">
+          <div class="section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16M4 19V9M10 19V5M16 19v-7"/></svg>
+            <span class="text-md">System Usage Metrics</span>
+          </div>
+          <p class="text-sm">Active users theo ngày, top tính năng dùng nhiều nhất (phạm vi 1 trường).</p>
+        </div>
+
+        <div class="card hub-card" onclick="showScreen('partnership-reports')">
+          <div class="section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8a3 3 0 1 0-2.83-4M7 8a3 3 0 1 0 2.83-4"/><path d="M2 20c0-3.3 3-5 7-5s7 1.7 7 5M13 20c0-2.5 2-4 5-4s5 1.5 5 4"/></svg>
+            <span class="text-md">Partnership Reports</span>
+          </div>
+          <p class="text-sm">Số đăng ký mới, tỷ lệ approve/reject, thời gian xử lý trung bình.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 4. FOOD SAMPLE RETENTION REPORTS                              -->
+    <!-- ============================================================ -->
+    <div class="screen" id="food-sample-retention">
+      <div class="topbar">
+        <div class="breadcrumb">Báo cáo &amp; Thống kê / Analytics Dashboard / <b>Food Sample Retention Reports</b></div>
+        <div class="back-link"><a class="sketch-link" href="#" onclick="showScreen('analytics-hub');return false;">◀ Quay lại Analytics Dashboard</a></div>
+      </div>
+
+      <div class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6v4l3 12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2l3-12z"/><path d="M8 12h8"/></svg>
+        <span class="text-lg">Food Sample Retention Reports</span>
+      </div>
+
+      <div class="card">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+          <span class="text-md">Filter Date range <span class="assumption-tag">[Giả định]</span></span>
+        </div>
+        <div class="filter-bar">
+          <div class="filter-field">
+            <wired-input placeholder="01/06/2026 – 30/06/2026"></wired-input>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+          <span class="text-md">Bảng tổng hợp lưu mẫu <span class="assumption-tag">[Giả định]</span></span>
+        </div>
+        <table class="sketch-table">
+          <thead><tr><th>Chỉ số</th><th>Giá trị</th></tr></thead>
+          <tbody>
+            <tr><td>Số mẫu lưu trong kỳ</td><td>186</td></tr>
+            <tr><td>Số mẫu hủy đúng hạn (BR-112)</td><td>179</td></tr>
+            <tr><td>Số mẫu thu hồi điều tra (BR-113)</td><td>3</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="alert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 17a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+        <div>
+          <b>Cảnh báo nhiệt độ tủ lưu mẫu vi phạm (BR-110) <span class="assumption-tag">[Giả định]</span></b>
+          <table class="sketch-table" style="margin-top:8px;">
+            <thead><tr><th>Ngày</th><th>Tủ lưu mẫu</th><th>Nhiệt độ ghi nhận</th></tr></thead>
+            <tbody>
+              <tr><td>18/06/2026</td><td>Tủ #02 — Bếp trung tâm</td><td>9.4°C (ngưỡng ≤5°C)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-secondary">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 19h16"/></svg>
+          Export PDF/Excel
+        </button>
+      </div>
+      <div class="status-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.6"><path d="M5 13l4 4L19 7"/></svg>
+        Trạng thái: Success <span class="assumption-tag">[Giả định]</span>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 5. RECEIVING REPORTS                                          -->
+    <!-- ============================================================ -->
+    <div class="screen" id="receiving-reports">
+      <div class="topbar">
+        <div class="breadcrumb">Báo cáo &amp; Thống kê / Analytics Dashboard / <b>Receiving Reports</b></div>
+        <div class="back-link"><a class="sketch-link" href="#" onclick="showScreen('analytics-hub');return false;">◀ Quay lại Analytics Dashboard</a></div>
+      </div>
+
+      <div class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/></svg>
+        <span class="text-lg">Receiving Reports</span>
+      </div>
+
+      <div class="card">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+          <span class="text-md">Bộ lọc <span class="assumption-tag">[Giả định]</span></span>
+        </div>
+        <div class="filter-bar">
+          <div class="filter-field">
+            <div class="field-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+              Date range
+            </div>
+            <wired-input placeholder="01/06/2026 – 30/06/2026"></wired-input>
+          </div>
+          <div class="filter-field">
+            <div class="field-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><path d="M3 9l9-6 9 6-9 6-9-6z"/></svg>
+              Supplier
+            </div>
+            <wired-select>
+              <wired-item value="all">Tất cả</wired-item>
+              <wired-item value="s1">Cty TNHH Rau sạch Đà Lạt</wired-item>
+              <wired-item value="s2">HTX Thực phẩm An Toàn</wired-item>
+            </wired-select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+          <span class="text-md">Bảng tổng hợp nhận hàng</span>
+        </div>
+        <table class="sketch-table">
+          <thead><tr><th>Chỉ số</th><th>Giá trị</th><th>BR</th></tr></thead>
+          <tbody>
+            <tr><td>Số lô nhận</td><td>96</td><td>BR-070</td></tr>
+            <tr><td>Số lô từ chối</td><td>5</td><td>BR-074</td></tr>
+            <tr><td>Tỷ lệ đúng hạn / GPS hợp lệ</td><td>94% / 98%</td><td>BR-078</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-secondary">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 19h16"/></svg>
+          Export PDF/Excel
+        </button>
+      </div>
+      <div class="status-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.6"><path d="M5 13l4 4L19 7"/></svg>
+        Trạng thái: Success <span class="assumption-tag">[Giả định]</span>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 6. TRACEABILITY REPORTS                                       -->
+    <!-- ============================================================ -->
+    <div class="screen" id="traceability-reports">
+      <div class="topbar">
+        <div class="breadcrumb">Báo cáo &amp; Thống kê / Analytics Dashboard / <b>Traceability Reports</b></div>
+        <div class="back-link"><a class="sketch-link" href="#" onclick="showScreen('analytics-hub');return false;">◀ Quay lại Analytics Dashboard</a></div>
+      </div>
+
+      <div class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8 7.5L11 16M16 7.5L13 16"/></svg>
+        <span class="text-lg">Traceability Reports</span>
+      </div>
+
+      <div class="card">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+          <span class="text-md">Bộ lọc <span class="assumption-tag">[Giả định]</span></span>
+        </div>
+        <div class="filter-bar">
+          <div class="filter-field">
+            <div class="field-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+              Date range
+            </div>
+            <wired-input placeholder="01/06/2026 – 30/06/2026"></wired-input>
+          </div>
+          <div class="filter-field">
+            <div class="field-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><path d="M9 2h6v4l3 12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2l3-12z"/></svg>
+              Batch ID / Supplier
+            </div>
+            <wired-input placeholder="VD: LOT-2026-0618-014 hoặc Cty TNHH Rau sạch Đà Lạt"></wired-input>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+          <span class="text-md">Bảng truy xuất lô nguyên liệu → menu → phiên sản xuất</span>
+        </div>
+        <table class="sketch-table">
+          <thead><tr><th>Batch ID</th><th>Supplier</th><th>Menu áp dụng</th><th>Phiên sản xuất</th></tr></thead>
+          <tbody>
+            <tr><td>LOT-2026-0618-014</td><td>Cty TNHH Rau sạch Đà Lạt</td><td>Thực đơn tuần 25 — Thứ 3</td><td>PB-2026-0618-02</td></tr>
+            <tr><td>LOT-2026-0619-007</td><td>HTX Thực phẩm An Toàn</td><td>Thực đơn tuần 25 — Thứ 4</td><td>PB-2026-0619-01</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-secondary">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 19h16"/></svg>
+          Export PDF/Excel
+        </button>
+      </div>
+      <div class="status-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.6"><path d="M5 13l4 4L19 7"/></svg>
+        Trạng thái: Success <span class="assumption-tag">[Giả định]</span>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 7. SYSTEM USAGE METRICS                                       -->
+    <!-- ============================================================ -->
+    <div class="screen" id="system-usage-metrics">
+      <div class="topbar">
+        <div class="breadcrumb">Báo cáo &amp; Thống kê / Analytics Dashboard / <b>System Usage Metrics</b></div>
+        <div class="back-link"><a class="sketch-link" href="#" onclick="showScreen('analytics-hub');return false;">◀ Quay lại Analytics Dashboard</a></div>
+      </div>
+
+      <div class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16M4 19V9M10 19V5M16 19v-7"/></svg>
+        <span class="text-lg">System Usage Metrics</span>
+      </div>
+
+      <div class="card">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+          <span class="text-md">Filter Date range <span class="assumption-tag">[Giả định]</span></span>
+        </div>
+        <div class="filter-bar">
+          <div class="filter-field">
+            <wired-input placeholder="01/06/2026 – 30/06/2026"></wired-input>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16M4 19V9M10 19V5M16 19v-7"/></svg>
+          <span class="text-md">Chart Active users (staff/parent) theo ngày <span class="assumption-tag">[Giả định]</span></span>
+        </div>
+        <div class="chart-placeholder">
+          <div class="chart-bar" style="height:40%"></div>
+          <div class="chart-bar" style="height:60%"></div>
+          <div class="chart-bar" style="height:55%"></div>
+          <div class="chart-bar" style="height:80%"></div>
+          <div class="chart-bar" style="height:70%"></div>
+          <div class="chart-bar" style="height:90%"></div>
+          <div class="chart-bar" style="height:65%"></div>
+        </div>
+        <p class="text-xs" style="color:#666;">Phạm vi: chỉ trong trường (BR-176). Trục X: ngày trong kỳ lọc; Trục Y: số lượt active users.</p>
+      </div>
+
+      <div class="card">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+          <span class="text-md">Bảng Top tính năng được dùng nhiều nhất <span class="assumption-tag">[Giả định]</span></span>
+        </div>
+        <table class="sketch-table">
+          <thead><tr><th>#</th><th>Tính năng</th><th>Số lượt dùng</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Xem Thực đơn tuần</td><td>1,204</td></tr>
+            <tr><td>2</td><td>Ghi nhận kiểm tra 3-bước</td><td>876</td></tr>
+            <tr><td>3</td><td>Xem báo cáo Compliance Dashboard</td><td>512</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-secondary">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 19h16"/></svg>
+          Export PDF/Excel
+        </button>
+      </div>
+      <div class="status-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.6"><path d="M5 13l4 4L19 7"/></svg>
+        Trạng thái: Success — cập nhật trong 5 phút (BR-180) <span class="assumption-tag">[Giả định]</span>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 8. PARTNERSHIP REPORTS                                        -->
+    <!-- ============================================================ -->
+    <div class="screen" id="partnership-reports">
+      <div class="topbar">
+        <div class="breadcrumb">Báo cáo &amp; Thống kê / <b>Partnership Reports</b></div>
+        <div class="back-link"><a class="sketch-link" href="#">◀ Quay lại Dashboard chính</a></div>
+      </div>
+
+      <div class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8a3 3 0 1 0-2.83-4M7 8a3 3 0 1 0 2.83-4"/><path d="M2 20c0-3.3 3-5 7-5s7 1.7 7 5M13 20c0-2.5 2-4 5-4s5 1.5 5 4"/></svg>
+        <span class="text-lg">Partnership Reports</span>
+      </div>
+
+      <div class="card">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+          <span class="text-md">Bộ lọc <span class="assumption-tag">[Giả định]</span></span>
+        </div>
+        <div class="filter-bar">
+          <div class="filter-field">
+            <div class="field-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+              Date range (BR-177 — lưu trữ tối thiểu 12 tháng)
+            </div>
+            <wired-input placeholder="01/01/2026 – 30/06/2026"></wired-input>
+          </div>
+          <div class="filter-field">
+            <div class="field-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><path d="M3 9l9-6 9 6-9 6-9-6z"/></svg>
+              Loại đối tác
+            </div>
+            <wired-select>
+              <wired-item value="all">Tất cả</wired-item>
+              <wired-item value="supplier">Supplier</wired-item>
+              <wired-item value="caterer">Service Caterers</wired-item>
+            </wired-select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+          <span class="text-md">Bảng tổng hợp <span class="assumption-tag">[Giả định]</span></span>
+        </div>
+        <table class="sketch-table">
+          <thead><tr><th>Chỉ số</th><th>Giá trị</th><th>BR</th></tr></thead>
+          <tbody>
+            <tr><td>Số đăng ký mới</td><td>18</td><td>—</td></tr>
+            <tr><td>Tỷ lệ Approve / Reject</td><td>78% / 22%</td><td>BR-176</td></tr>
+            <tr><td>Thời gian xử lý trung bình</td><td>2.4 ngày</td><td>BR-176</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-secondary">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 19h16"/></svg>
+          Export PDF/Excel
+        </button>
+      </div>
+      <div class="status-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.6"><path d="M5 13l4 4L19 7"/></svg>
+        Trạng thái: Success — bảng + export hoạt động <span class="assumption-tag">[Giả định]</span>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 9. PARTNERSHIP APPROVAL HISTORY                                -->
+    <!-- ============================================================ -->
+    <div class="screen" id="partnership-approval-history">
+      <div class="topbar">
+        <div class="breadcrumb">Báo cáo &amp; Thống kê / <b>Partnership Approval History</b></div>
+        <div class="back-link"><a class="sketch-link" href="#">◀ Quay lại Dashboard chính</a></div>
+      </div>
+
+      <div class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 8v4l3 2"/></svg>
+        <span class="text-lg">Partnership Approval History</span>
+      </div>
+      <p class="text-xs" style="color:#666;">View lọc theo Resource Accessed = "Partnership/Supplier/Caterer" trong màn hình Audit Logs dùng chung (UC-106).</p>
+
+      <div class="card">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+          <span class="text-md">Bộ lọc <span class="assumption-tag">[Giả định]</span></span>
+        </div>
+        <div class="filter-bar">
+          <div class="filter-field">
+            <div class="field-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+              Date range
+            </div>
+            <wired-input placeholder="01/06/2026 – 30/06/2026"></wired-input>
+          </div>
+          <div class="filter-field">
+            <div class="field-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><path d="M3 9l9-6 9 6-9 6-9-6z"/></svg>
+              Loại đối tác
+            </div>
+            <wired-select>
+              <wired-item value="all">Tất cả</wired-item>
+              <wired-item value="supplier">Supplier</wired-item>
+              <wired-item value="caterer">Service Caterers</wired-item>
+            </wired-select>
+          </div>
+          <div class="filter-field">
+            <div class="field-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><path d="M5 13l4 4L19 7"/></svg>
+              Kết quả
+            </div>
+            <wired-select>
+              <wired-item value="all">Tất cả</wired-item>
+              <wired-item value="approved">Approved</wired-item>
+              <wired-item value="rejected">Rejected</wired-item>
+            </wired-select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+          <span class="text-md">Bảng lịch sử duyệt (đọc-only) <span class="assumption-tag">[Giả định — cấu trúc cột dựa trên Normal Flow bước 7-9 của UC-004/UC-007]</span></span>
+        </div>
+        <table class="sketch-table">
+          <thead>
+            <tr><th>Tên đối tác</th><th>Loại</th><th>Kết quả</th><th>Người duyệt</th><th>Ngày</th><th>Lý do (nếu Reject)</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Cty TNHH Rau sạch Đà Lạt</td><td>Supplier</td>
+              <td><span class="badge">Approved</span></td>
+              <td>Nguyễn Văn Nam</td><td>15/06/2026</td><td>—</td>
+            </tr>
+            <tr>
+              <td>Cty CP Suất ăn Miền Nam</td><td>Service Caterers</td>
+              <td><span class="badge badge-double">Rejected</span></td>
+              <td>Nguyễn Văn Nam</td><td>20/06/2026</td>
+              <td>Thiếu giấy chứng nhận ATTP còn hiệu lực</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="status-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.6"><path d="M5 13l4 4L19 7"/></svg>
+        Trạng thái: Success — bảng hiển thị đầy đủ
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 10. ALLERGY REVIEW                                             -->
+    <!-- ============================================================ -->
+    <div class="screen" id="allergy-review">
+      <div class="topbar">
+        <div class="breadcrumb">Báo cáo &amp; Thống kê / <b>Allergy Review</b></div>
+        <div class="back-link"><a class="sketch-link" href="#">◀ Quay lại Dashboard chính</a></div>
+      </div>
+
+      <div class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.6-9.3-9C1 8.5 2.6 5 6 5c2 0 3.4 1.2 4 2.2C10.6 6.2 12 5 14 5c3.4 0 5 3.5 3.3 7-2.3 4.4-9.3 9-9.3 9z"/><path d="M9 9v3M9 15h.01"/></svg>
+        <span class="text-lg">Allergy Review</span>
+      </div>
+      <p class="text-xs" style="color:#666;">Chỉ xem (read-only) — không có action Approve/Reject, đó là quyền riêng của Medical Staff (UC-078). Chưa có UC chính thức cho School Admin <span class="assumption-tag">[Giả định — cần team xác nhận]</span>.</p>
+
+      <div class="card">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+          <span class="text-md">Bộ lọc <span class="assumption-tag">[Giả định]</span></span>
+        </div>
+        <div class="filter-bar">
+          <div class="filter-field">
+            <div class="field-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><rect x="14" y="14" width="6" height="6"/></svg>
+              Class / Grade
+            </div>
+            <wired-select>
+              <wired-item value="all">Tất cả</wired-item>
+              <wired-item value="3a">Lớp 3A</wired-item>
+              <wired-item value="4b">Lớp 4B</wired-item>
+            </wired-select>
+          </div>
+          <div class="filter-field">
+            <div class="field-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><path d="M12 21s-7-4.6-9.3-9C1 8.5 2.6 5 6 5c2 0 3.4 1.2 4 2.2C10.6 6.2 12 5 14 5c3.4 0 5 3.5 3.3 7-2.3 4.4-9.3 9-9.3 9z"/></svg>
+              Loại dị ứng (BR-066)
+            </div>
+            <wired-select>
+              <wired-item value="all">Tất cả</wired-item>
+              <wired-item value="peanut">Đậu phộng</wired-item>
+              <wired-item value="seafood">Hải sản</wired-item>
+              <wired-item value="milk">Sữa/Lactose</wired-item>
+            </wired-select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+          <span class="text-md">Bảng danh sách hồ sơ dị ứng đã xác nhận (đọc-only)</span>
+        </div>
+        <table class="sketch-table">
+          <thead>
+            <tr><th>Học sinh</th><th>Lớp</th><th>Loại dị ứng</th><th>Trạng thái xác nhận (Medical Staff)</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Trần Bảo An</td><td>3A</td>
+              <td><span class="badge badge-double">Đậu phộng</span></td>
+              <td>Đã xác nhận — Y tá Lê Thị Hoa</td>
+            </tr>
+            <tr>
+              <td>Phạm Gia Huy</td><td>4B</td>
+              <td><span class="badge badge-double">Hải sản</span></td>
+              <td>Đã xác nhận — Y tá Lê Thị Hoa</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-secondary">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 19h16"/></svg>
+          Export PDF/Excel
+        </button>
+      </div>
+      <div class="status-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.6"><path d="M5 13l4 4L19 7"/></svg>
+        Trạng thái: Success — bảng hiển thị đầy đủ (chỉ xem)
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(function (el) {
+      el.classList.remove('active');
+    });
+    var target = document.getElementById(id);
+    if (target) target.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+</script>
+
+</body>
+</html>

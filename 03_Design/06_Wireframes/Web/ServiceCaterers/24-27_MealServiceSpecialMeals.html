@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>SFMS Wireframe — Service Caterers (Web): Meal Service &amp; Special Meals</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root{ --ink:#333; --paper:#fff; --gray:#777; --lightgray:#d7d7d7; --midgray:#aaa; }
+  * { box-sizing: border-box; }
+  html { font-size: 18px; }
+  body { margin:0; font-family:'Patrick Hand', cursive; color:var(--ink); background-color:#f4f4f4; background-image: radial-gradient(#d7d7d7 1px, transparent 1px); background-size: 20px 20px; font-size:18px; }
+  .text-xs   { font-size: 14px; line-height:1.4; }
+  .text-sm   { font-size: 18px; line-height:1.5; }
+  .text-base { font-size: 22px; line-height:1.5; }
+  .text-md   { font-size: 28px; line-height:1.3; }
+  .text-lg   { font-size: 35px; line-height:1.2; }
+  a { color:#3a5a8c; text-decoration:underline; cursor:pointer; }
+
+  .app { display:flex; min-height:100vh; }
+  .sidebar { width:280px; min-width:280px; background:#eee; border-right:3px solid var(--ink); padding:18px 14px; position:sticky; top:0; height:100vh; overflow-y:auto; }
+  .brand { display:flex; align-items:center; gap:8px; margin-bottom:18px; }
+  .side-group { margin-bottom:6px; }
+  .side-group-title { display:flex; align-items:center; gap:8px; font-size:16px; color:var(--gray); text-transform:uppercase; letter-spacing:1px; margin:14px 0 6px 4px; }
+  .side-link { display:flex; align-items:center; gap:10px; padding:8px 10px; margin:2px 0; border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; font-size:18px; color:var(--ink); cursor:pointer; }
+  .side-link:hover { background:#fff; border:2px dashed var(--midgray); }
+  .side-link.active { background:var(--ink); color:#fff; border:2px solid var(--ink); }
+  .side-link.active svg { stroke:#fff; }
+  .side-link.disabled { color:var(--midgray); cursor:default; }
+  .side-note { font-size:13px; color:var(--midgray); margin-left:32px; }
+  .icon { width:20px; height:20px; flex:none; stroke:var(--ink); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .icon-sm { width:16px; height:16px; }
+
+  .main { flex:1; min-width:0; }
+  .topbar { display:flex; align-items:center; justify-content:space-between; padding:14px 26px; border-bottom:3px solid var(--ink); background:#fafafa; }
+  .breadcrumb { font-size:20px; }
+  .breadcrumb .crumb-group { color:var(--gray); }
+  .user-chip { display:flex; align-items:center; gap:8px; font-size:16px; }
+  .content { padding:26px; }
+
+  .card { border:2px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; padding:18px; }
+  .card + .card { margin-top:18px; }
+
+  .btn-primary { background:#333; color:white; border:2px solid #333; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:10px 22px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+  .btn-primary svg { stroke:#fff; }
+  .btn-secondary { background:white; color:#333; border:2px solid #333; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:8px 18px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+
+  .grid-12 { display:grid; grid-template-columns: repeat(12, 1fr); gap:18px; }
+  .col-4 { grid-column: span 4; } .col-6 { grid-column: span 6; } .col-8 { grid-column: span 8; } .col-12 { grid-column: span 12; }
+  @media (max-width: 980px){ .grid-12 > [class*="col-"] { grid-column: span 12; } }
+
+  .badge { display:inline-flex; align-items:center; gap:6px; padding:3px 12px; font-size:16px; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; }
+  .badge-success { border:2px solid var(--ink); background:#fff; }
+  .badge-warning { border:2px dashed var(--ink); background:#fff; }
+  .badge-danger  { border:3px solid var(--ink); background:#fff; }
+
+  table.sketchy { width:100%; border-collapse:separate; border-spacing:0; font-size:18px; }
+  table.sketchy th, table.sketchy td { text-align:left; padding:10px 12px; border-bottom:2px solid var(--lightgray); }
+  table.sketchy thead th { border-bottom:3px solid var(--ink); color:var(--gray); font-weight:normal; font-size:16px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.sketchy tbody tr.warn { background:#f7f4ea; }
+  table.sketchy tbody tr:hover { background:#f2f2f2; }
+  .table-wrap { border:2px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; overflow:hidden; background:#fff; }
+  .table-wrap table.sketchy { margin:0; }
+
+  .filter-bar { display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-bottom:16px; }
+
+  .screen { display:none; }
+  .screen.active { display:block; }
+  h1.text-lg, h2.text-md { margin:0 0 4px 0; }
+  .page-header { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:20px; flex-wrap:wrap; }
+  .muted { color:var(--gray); }
+  .section-title { display:flex; align-items:center; gap:8px; margin:0 0 12px 0; }
+
+  .alert { display:flex; gap:12px; align-items:flex-start; padding:14px 16px; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; }
+  .alert-danger { border:3px solid var(--ink); }
+  .alert-warning { border:2px dashed var(--ink); }
+  .alert + .alert { margin-top:12px; }
+
+  .sheet-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.3); z-index:60; }
+  .sheet-overlay.active { display:block; }
+  .sheet-panel { position:absolute; right:0; top:0; height:100%; width:420px; max-width:92vw; background:#fff; border-left:3px solid var(--ink); padding:22px; overflow-y:auto; }
+  .close-x { cursor:pointer; }
+
+  .field-label { font-size:18px; margin-bottom:6px; display:flex; gap:6px; align-items:center; }
+  .field-block { margin-bottom:16px; }
+  wired-input, wired-textarea, wired-select { width:100%; display:block; }
+  ul.plain { list-style:none; margin:0; padding:0; }
+  li.list-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:2px solid var(--lightgray); font-size:16px; }
+  li.list-row:last-child { border-bottom:none; }
+
+  .state-legend { margin-top:14px; padding:12px 14px; border:2px dotted var(--midgray); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-size:14px; color:var(--gray); }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><svg class="icon" viewBox="0 0 24 24"><path d="M4 21 L4 9 L12 3 L20 9 L20 21 Z"/><path d="M9 21 L9 14 L15 14 L15 21"/></svg><span class="text-md">SFMS</span></div>
+    <div class="side-note" style="margin-left:0; margin-bottom:14px;">Service Caterers — Bếp trưởng Nguyễn Văn A</div>
+    <div class="side-group"><div class="side-group-title"><svg class="icon" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/></svg>Tổng quan</div><div class="side-link disabled">Dashboard <span class="side-note" style="margin-left:0">(nhóm khác)</span></div></div>
+    <div class="side-group">
+      <div class="side-group-title"><svg class="icon" viewBox="0 0 24 24"><path d="M4 12 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0"/></svg>Phục vụ Bữa ăn</div>
+      <div class="side-link active" data-screen="dashboard" onclick="showScreen('dashboard')">Meal Service Management Dashboard</div>
+      <div class="side-link" data-screen="distlist" onclick="showScreen('distlist')">View Meal Distribution List</div>
+      <div class="side-link" data-screen="allergy" onclick="showScreen('allergy')">View Allergy Alerts Panel</div>
+      <div class="side-link" data-screen="specialmeal" onclick="showScreen('specialmeal')">Manage Special Meals Configuration</div>
+    </div>
+    <div class="side-group"><div class="side-group-title"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6 h16 M4 12 h16 M4 18 h16"/></svg>Thực đơn</div><div class="side-link disabled">Menu Management <span class="side-note" style="margin-left:0">(nhóm khác)</span></div></div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="breadcrumb"><span class="crumb-group">Phục vụ Bữa ăn</span> / <span id="crumb-current">Meal Service Management Dashboard</span></div>
+      <div class="user-chip"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20 a8 8 0 0 1 16 0"/></svg>Bếp trưởng Nguyễn Văn A</div>
+    </div>
+
+    <div class="content">
+
+      <!-- ============ 24: Meal Service Management Dashboard ============ -->
+      <div class="screen active" id="dashboard">
+        <div class="page-header">
+          <div><h1 class="text-lg">Meal Service Management Dashboard</h1></div>
+          <div style="display:flex; gap:10px">
+            <button class="btn-secondary" onclick="showScreen('distlist')">Xem Danh sách Phân phát</button>
+            <button class="btn-secondary" onclick="showScreen('allergy')">Xem Cảnh báo Dị ứng</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="sketchy">
+            <thead><tr><th>Lớp</th><th>Giờ phục vụ</th><th>Số suất</th><th>Trạng thái</th></tr></thead>
+            <tbody>
+              <tr onclick="openSheet('detail-sheet')"><td>2A</td><td>11:30</td><td>32</td><td><span class="badge badge-warning">Đang phục vụ</span></td></tr>
+              <tr><td>3B</td><td>11:45</td><td>30</td><td><span class="badge badge-success">Dự kiến</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="state-legend">Empty: chưa có phiên phục vụ nào lên lịch hôm nay. Loading: Skeleton. Error: Alert destructive MSG-004/MSG-005. Success: Toast sau khi cập nhật cấu hình. Click 1 dòng để mở Sheet chi tiết bên phải.</div>
+      </div>
+
+      <!-- ============ 25: View Meal Distribution List ============ -->
+      <div class="screen" id="distlist">
+        <div class="page-header"><div><h1 class="text-lg">View Meal Distribution List</h1></div><button class="btn-secondary">Xuất PDF/Excel</button></div>
+        <div class="filter-bar"><wired-input placeholder="Ngày"></wired-input><wired-select><wired-item value="all">Tất cả lớp</wired-item></wired-select><wired-select><wired-item value="lunch">Trưa</wired-item></wired-select></div>
+        <div class="table-wrap">
+          <table class="sketchy">
+            <thead><tr><th>Lớp</th><th>Số học sinh</th><th>Số suất đặc biệt</th><th>Trạng thái</th><th>Cảnh báo</th></tr></thead>
+            <tbody>
+              <tr><td>2A</td><td>32</td><td>2</td><td>Đang phục vụ</td><td><span class="badge badge-danger">Dị ứng</span></td></tr>
+              <tr class="warn"><td>3B</td><td>30</td><td>0</td><td>Dự kiến</td><td><span class="text-xs muted">GV chưa xác nhận (BR-120)</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="state-legend">Empty: chưa có phiên phục vụ nào trong khoảng lọc. Loading: Skeleton. Error: Alert destructive MSG-004/MSG-005.</div>
+      </div>
+
+      <!-- ============ 26: View Allergy Alerts Panel ============ -->
+      <div class="screen" id="allergy">
+        <div class="page-header"><div><h1 class="text-lg">View Allergy Alerts Panel</h1></div></div>
+        <div class="alert alert-warning"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/></svg><div class="text-sm">MSG-051 — Thực đơn hôm nay (Canh chua cá lóc) chứa allergen cá, trùng hồ sơ 2 học sinh.</div></div>
+        <div class="table-wrap" style="margin-top:16px">
+          <table class="sketchy">
+            <thead><tr><th>Học sinh</th><th>Lớp</th><th>Loại dị ứng</th><th>Mức độ</th><th>Kế hoạch đặc biệt</th><th>Xác nhận kép</th></tr></thead>
+            <tbody>
+              <tr onclick="openSheet('allergy-detail-sheet')"><td>Nguyễn Thị Mai</td><td>2A</td><td>Hải sản</td><td><span class="badge badge-danger">Severe</span></td><td>Có</td><td><span class="badge badge-warning">Bếp: Đã phát hành</span> <span class="badge badge-warning">GV: Chưa bàn giao</span></td></tr>
+              <tr><td>Trần Văn Nam</td><td>3B</td><td>Đậu phộng</td><td><span class="badge badge-warning">Moderate</span></td><td>Không</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="state-legend">Empty: không có học sinh dị ứng nào — thông báo xác nhận (không phải lỗi). Loading: Skeleton. Click 1 dòng để xem chi tiết.</div>
+      </div>
+
+      <!-- ============ 27: Manage Special Meals Configuration ============ -->
+      <div class="screen" id="specialmeal">
+        <div class="page-header"><div><h1 class="text-lg">Manage Special Meals Configuration</h1></div></div>
+        <div class="grid-12">
+          <div class="col-4">
+            <div class="table-wrap">
+              <table class="sketchy"><thead><tr><th>Học sinh</th><th>Xác minh</th></tr></thead>
+                <tbody><tr><td>Nguyễn Thị Mai — 2A</td><td><span class="badge badge-success">Medical Staff</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-8">
+            <div class="field-label">Loại chế độ ăn đặc biệt <span style="color:var(--ink)">*</span></div>
+            <wired-select><wired-item value="nutfree">Nut-Free</wired-item><wired-item value="halal">Halal</wired-item></wired-select>
+            <div class="field-label" style="margin-top:14px">Công thức + hướng dẫn nấu riêng biệt <span style="color:var(--ink)">*</span></div>
+            <wired-textarea placeholder="Dùng nồi/dụng cụ riêng, khu vực sơ chế cách ly (BR-082)"></wired-textarea>
+            <div class="field-label" style="margin-top:14px">Khai báo nguyên liệu + dấu vết dị ứng tiềm ẩn <span style="color:var(--ink)">*</span></div>
+            <wired-textarea placeholder="Cơm, thịt gà, rau củ — không dấu vết hải sản"></wired-textarea>
+
+            <div class="alert alert-danger" style="margin-top:14px"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9 L15 15 M15 9 L9 15"/></svg><div class="text-sm">MSG-051 — Công thức vẫn trùng allergen hải sản (BR-063). Chặn lưu.</div></div>
+
+            <div style="display:flex; gap:10px; margin-top:14px">
+              <button class="btn-secondary">AI Assist — gợi ý công thức an toàn</button>
+              <button class="btn-primary">Lưu Kế hoạch Bữa ăn Đặc biệt</button>
+            </div>
+          </div>
+        </div>
+        <div class="state-legend">Empty: chưa có học sinh nào cần kế hoạch bữa ăn đặc biệt. Loading: Skeleton. Success: Toast MSG-072.</div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Sheet: Chi tiết phiên phục vụ (field #2 của Screen Spec 24) -->
+<div class="sheet-overlay" id="detail-sheet">
+  <div class="sheet-panel">
+    <div class="page-header" style="margin-bottom:12px"><span class="text-md">Chi tiết Phiên — Lớp 2A</span><svg class="icon close-x" viewBox="0 0 24 24" onclick="closeSheet('detail-sheet')"><path d="M6 6 L18 18 M18 6 L6 18"/></svg></div>
+    <div class="alert alert-warning"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/></svg><div class="text-sm">Session đang phục vụ — chỉ cho sửa nhân sự, chặn giảm số suất (AF1).</div></div>
+    <div class="alert alert-danger"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9 L15 15 M15 9 L9 15"/></svg><div class="text-sm">Lệch số suất: 32 vs 30 học sinh (BR-121). Yêu cầu xác nhận trước khi lưu.</div></div>
+    <div class="field-label" style="margin-top:14px">Giờ phục vụ</div><wired-input value="11:30"></wired-input>
+    <div class="field-label" style="margin-top:10px">Nhân sự phục vụ</div><wired-input value="2 nhân viên"></wired-input>
+    <div class="field-label" style="margin-top:10px">Số suất (đã khoá do session Active)</div><wired-input value="32" disabled></wired-input>
+    <button class="btn-primary" style="margin-top:14px" onclick="closeSheet('detail-sheet')">Xác nhận Lưu Thay đổi</button>
+  </div>
+</div>
+
+<!-- Sheet: Chi tiết dị ứng 1 học sinh (field #3 của Screen Spec 26) -->
+<div class="sheet-overlay" id="allergy-detail-sheet">
+  <div class="sheet-panel">
+    <div class="page-header" style="margin-bottom:12px"><span class="text-md">Chi tiết Dị ứng — Nguyễn Thị Mai</span><svg class="icon close-x" viewBox="0 0 24 24" onclick="closeSheet('allergy-detail-sheet')"><path d="M6 6 L18 18 M18 6 L6 18"/></svg></div>
+    <ul class="plain">
+      <li class="list-row"><span>Dị ứng đã khai báo</span><span>Hải sản (cá, tôm)</span></li>
+      <li class="list-row"><span>Mức độ</span><span>Severe</span></li>
+      <li class="list-row"><span>Ghi chú y tế</span><span>Sốc phản vệ năm 2024</span></li>
+      <li class="list-row"><span>Lịch sử bữa ăn an toàn</span><span>15 ngày liên tiếp</span></li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  function showScreen(id){
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.side-link').forEach(l => l.classList.remove('active'));
+    var activeLink = document.querySelector('.side-link[data-screen="' + id + '"]');
+    if (activeLink) activeLink.classList.add('active');
+    var crumbMap = { dashboard:'Meal Service Management Dashboard', distlist:'View Meal Distribution List', allergy:'View Allergy Alerts Panel', specialmeal:'Manage Special Meals Configuration' };
+    document.getElementById('crumb-current').textContent = crumbMap[id] || id;
+  }
+  function openSheet(id){ document.getElementById(id).classList.add('active'); }
+  function closeSheet(id){ document.getElementById(id).classList.remove('active'); }
+</script>
+</body>
+</html>

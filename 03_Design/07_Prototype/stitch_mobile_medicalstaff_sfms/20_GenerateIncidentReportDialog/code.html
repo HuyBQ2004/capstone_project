@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Incident Workspace - Hộp thoại Xuất báo cáo sự cố</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#d3e4fe",
+                        "on-secondary-container": "#54647a",
+                        "on-primary-fixed": "#001f29",
+                        "tertiary": "#495553",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "primary": "#005a71",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#d3f1ff",
+                        "outline": "#6f787d",
+                        "on-tertiary-fixed": "#121e1c",
+                        "on-background": "#191c1e",
+                        "on-tertiary-fixed-variant": "#3d4947",
+                        "primary-fixed-dim": "#81d1f0",
+                        "surface-container-low": "#f2f4f6",
+                        "on-surface-variant": "#3f484c",
+                        "error-container": "#ffdad6",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#004d62",
+                        "inverse-on-surface": "#eff1f3",
+                        "inverse-primary": "#81d1f0",
+                        "tertiary-fixed-dim": "#bcc9c6",
+                        "surface-variant": "#e0e3e5",
+                        "surface": "#f7f9fb",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#006781",
+                        "on-surface": "#191c1e",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#d8e5e2",
+                        "primary-container": "#0e7490",
+                        "surface-bright": "#f7f9fb",
+                        "surface-container": "#eceef0",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "secondary-container": "#d0e1fb",
+                        "surface-container-highest": "#e0e3e5",
+                        "error": "#ba1a1a",
+                        "background": "#f7f9fb",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d8dadc",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#616d6b",
+                        "inverse-surface": "#2d3133",
+                        "surface-container-high": "#e6e8ea",
+                        "secondary": "#505f76",
+                        "outline-variant": "#bec8cd",
+                        "primary-fixed": "#b9eaff",
+                        "on-tertiary-container": "#e2efec"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "margin-tablet": "24px",
+                        "base": "4px",
+                        "gutter": "16px",
+                        "lg": "24px",
+                        "margin-mobile": "16px",
+                        "xs": "4px",
+                        "md": "16px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Be Vietnam Pro", "sans-serif"],
+                        "label-lg": ["Be Vietnam Pro", "sans-serif"],
+                        "headline-lg": ["Be Vietnam Pro", "sans-serif"],
+                        "headline-lg-mobile": ["Be Vietnam Pro", "sans-serif"],
+                        "label-sm": ["Be Vietnam Pro", "sans-serif"],
+                        "headline-md": ["Be Vietnam Pro", "sans-serif"],
+                        "body-lg": ["Be Vietnam Pro", "sans-serif"],
+                        "title-lg": ["Be Vietnam Pro", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "title-lg": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen relative overflow-hidden flex flex-col">
+<!-- Background Mock Canvas (Investigation Workspace) -->
+<div class="absolute inset-0 z-0 bg-surface-container opacity-50 flex flex-col">
+<!-- Mock TopAppBar -->
+<header class="docked full-width top-0 bg-surface dark:bg-surface-dim bg-surface-container-low dark:bg-surface-container-lowest flat no shadows flex items-center justify-between px-md w-full h-14 z-10 shadow-sm border-b border-surface-variant/50">
+<div class="flex items-center gap-4">
+<button class="p-2 -ml-2 text-primary hover:bg-surface-variant rounded-full transition-colors active:scale-95">
+<span class="material-symbols-outlined font-title-lg text-title-lg">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary font-bold tracking-tight">Incident Workspace</h1>
+</div>
+<button class="p-2 -mr-2 text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors active:scale-95">
+<span class="material-symbols-outlined font-title-lg text-title-lg">more_vert</span>
+</button>
+</header>
+<main class="flex-1 p-gutter overflow-y-auto filter blur-sm">
+<!-- Mock Content -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-lg max-w-7xl mx-auto">
+<div class="md:col-span-8 space-y-md">
+<div class="bg-white rounded-lg p-md border border-surface-variant/30 h-64 shadow-sm">
+<div class="h-4 bg-surface-variant rounded w-1/3 mb-4"></div>
+<div class="h-4 bg-surface-variant/50 rounded w-full mb-2"></div>
+<div class="h-4 bg-surface-variant/50 rounded w-5/6"></div>
+</div>
+</div>
+<div class="md:col-span-4 space-y-md">
+<div class="bg-white rounded-lg p-md border border-surface-variant/30 h-48 shadow-sm">
+<div class="h-4 bg-surface-variant rounded w-1/2 mb-4"></div>
+<div class="space-y-2">
+<div class="h-10 bg-surface-variant/30 rounded w-full"></div>
+<div class="h-10 bg-surface-variant/30 rounded w-full"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Scrim / Backdrop -->
+<div class="absolute inset-0 bg-on-background/40 backdrop-blur-sm z-40 transition-opacity duration-300"></div>
+<!-- Modal Dialog Bottom Sheet (Mobile) / Dialog (Web) -->
+<div class="absolute inset-x-0 bottom-0 md:inset-0 md:flex md:items-center md:justify-center z-50 p-0 md:p-gutter pointer-events-none">
+<div class="bg-surface-container-lowest w-full md:w-auto md:max-w-[560px] rounded-t-xl md:rounded-xl shadow-[0px_4px_12px_rgba(14,116,144,0.08)] pointer-events-auto transform transition-transform duration-300 translate-y-0 md:translate-y-0 flex flex-col max-h-[795px] overflow-hidden border border-outline-variant/20">
+<!-- Mobile Drag Handle -->
+<div class="w-full flex justify-center pt-3 pb-1 md:hidden">
+<div class="w-12 h-1 bg-outline-variant/50 rounded-full"></div>
+</div>
+<!-- Header -->
+<div class="px-md md:px-lg py-md md:pt-lg md:pb-md border-b border-surface-variant flex justify-between items-center bg-surface-bright sticky top-0 z-10">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container/10 flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">description</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md-mobile md:text-headline-md text-on-surface">Xác nhận xuất báo cáo</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5">Vui lòng kiểm tra lại thông tin trước khi xuất PDF.</p>
+</div>
+</div>
+<button class="md:hidden p-2 text-on-surface-variant hover:bg-surface-variant rounded-full active:scale-95 transition-all">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Body / Preview Content -->
+<div class="p-md md:p-lg overflow-y-auto bg-surface flex-1">
+<div class="bg-white rounded-lg border border-surface-variant p-md md:p-lg shadow-sm space-y-md">
+<!-- Report Header -->
+<div class="border-b border-surface-variant pb-md">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm uppercase text-primary font-semibold tracking-wider">Báo Cáo Sự Cố Y Tế</span>
+<span class="px-2.5 py-0.5 bg-error-container text-on-error-container font-label-sm text-label-sm rounded-full">Độ ưu tiên: Cao</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-baseline gap-2">
+<span class="font-body-md text-body-md text-on-surface-variant w-24">Mã sự cố:</span>
+<span class="font-label-lg text-label-lg text-on-surface font-mono bg-surface-container px-1.5 py-0.5 rounded">INC-2023-1024-01</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-body-md text-body-md text-on-surface-variant w-24">Ngày lập:</span>
+<span class="font-body-md text-body-md text-on-surface">24/10/2023</span>
+</div>
+</div>
+</div>
+<!-- Details Grid -->
+<div class="space-y-4">
+<!-- Đối tượng -->
+<div>
+<div class="flex items-center gap-2 mb-1.5">
+<span class="material-symbols-outlined text-secondary text-sm">group</span>
+<h3 class="font-label-lg text-label-lg text-on-surface">Đối tượng bị ảnh hưởng</h3>
+</div>
+<div class="bg-surface-container-lowest border border-surface-variant/50 rounded-lg p-3 pl-4 border-l-4 border-l-secondary">
+<p class="font-body-md text-body-md text-on-surface">05 học sinh bị ngộ độc</p>
+</div>
+</div>
+<!-- Nguyên nhân -->
+<div>
+<div class="flex items-center gap-2 mb-1.5">
+<span class="material-symbols-outlined text-error text-sm">warning</span>
+<h3 class="font-label-lg text-label-lg text-on-surface">Nguyên nhân xác định</h3>
+</div>
+<div class="bg-surface-container-lowest border border-surface-variant/50 rounded-lg p-3 pl-4 border-l-4 border-l-error">
+<p class="font-body-md text-body-md text-on-surface">Nhiễm khuẩn Salmonella từ thịt lợn luộc.</p>
+</div>
+</div>
+<!-- Biện pháp -->
+<div>
+<div class="flex items-center gap-2 mb-1.5">
+<span class="material-symbols-outlined text-primary text-sm">verified</span>
+<h3 class="font-label-lg text-label-lg text-on-surface">Biện pháp xử lý</h3>
+</div>
+<div class="bg-surface-container-lowest border border-surface-variant/50 rounded-lg p-3 pl-4 border-l-4 border-l-primary space-y-2">
+<ul class="list-disc list-inside font-body-md text-body-md text-on-surface space-y-1">
+<li>Đình chỉ dây chuyền chế biến X</li>
+<li>Thay đổi nguồn cung thịt</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Footer Note -->
+<div class="mt-4 pt-4 border-t border-surface-variant border-dashed text-center">
+<p class="font-label-sm text-label-sm text-on-surface-variant italic">Báo cáo sẽ được xuất dưới định dạng PDF có chữ ký điện tử của Trưởng phòng Y tế.</p>
+</div>
+</div>
+</div>
+<!-- Actions Footer -->
+<div class="px-md md:px-lg py-md border-t border-surface-variant bg-surface-bright flex flex-col md:flex-row-reverse gap-sm sticky bottom-0 z-10 pb-safe">
+<button class="bg-primary-container text-white font-label-lg text-label-lg rounded-lg h-[48px] px-lg flex items-center justify-center gap-2 hover:bg-primary-container/90 active:bg-primary-container/80 transition-colors w-full md:w-auto shadow-sm">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">picture_as_pdf</span>
+                    Xuất báo cáo PDF &amp; Gửi School Admin
+                </button>
+<button class="bg-transparent text-primary-container font-label-lg text-label-lg rounded-lg h-[48px] px-lg flex items-center justify-center hover:bg-primary-container/10 active:bg-primary-container/20 transition-colors w-full md:w-auto">
+                    Hủy
+                </button>
+</div>
+</div>
+</div>
+</body></html>

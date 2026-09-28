@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Xác thực OTP - SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#506076",
+                        "on-secondary-container": "#435368",
+                        "error-container": "#fa746f",
+                        "background": "#f7fafc",
+                        "surface": "#f7fafc",
+                        "on-tertiary-fixed-variant": "#3e5175",
+                        "surface-container-low": "#eff4f8",
+                        "secondary-container": "#d3e4fe",
+                        "on-secondary": "#f7f9ff",
+                        "tertiary-fixed": "#bfd2fd",
+                        "on-primary-fixed": "#003b4c",
+                        "surface-dim": "#d2dbe0",
+                        "outline": "#737c81",
+                        "on-background": "#2b3438",
+                        "secondary-dim": "#44546a",
+                        "inverse-on-surface": "#9a9da0",
+                        "surface-tint": "#006882",
+                        "secondary-fixed": "#d3e4fe",
+                        "surface-bright": "#f7fafc",
+                        "on-error-container": "#6e0a12",
+                        "surface-variant": "#dbe4e9",
+                        "primary-fixed-dim": "#81d1f0",
+                        "primary-dim": "#005b72",
+                        "on-surface": "#2b3438",
+                        "tertiary": "#4d5f84",
+                        "surface-container-high": "#e2e9ed",
+                        "on-secondary-fixed": "#314055",
+                        "error": "#a83836",
+                        "inverse-primary": "#8fdfff",
+                        "tertiary-dim": "#415377",
+                        "primary-container": "#8fdfff",
+                        "primary": "#006882",
+                        "error-dim": "#67040d",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#0b0f11",
+                        "tertiary-container": "#bfd2fd",
+                        "on-secondary-fixed-variant": "#4d5d73",
+                        "on-primary": "#f2faff",
+                        "surface-container-highest": "#dbe4e9",
+                        "primary-fixed": "#8fdfff",
+                        "tertiary-fixed-dim": "#b1c4ee",
+                        "on-primary-container": "#005065",
+                        "on-tertiary-fixed": "#213456",
+                        "outline-variant": "#aab3b8",
+                        "on-surface-variant": "#576065",
+                        "surface-container": "#e8eff3",
+                        "on-error": "#fff7f6",
+                        "secondary-fixed-dim": "#c5d6f0",
+                        "on-tertiary": "#f9f8ff",
+                        "on-primary-fixed-variant": "#005a71",
+                        "on-tertiary-container": "#35476b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Be Vietnam Pro"],
+                        "display": ["Be Vietnam Pro"],
+                        "body": ["Be Vietnam Pro"],
+                        "label": ["Public Sans"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body min-h-screen flex flex-col antialiased">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface flex items-center px-4 h-16 max-w-7xl mx-auto shadow-sm">
+<button aria-label="Quay lại" class="p-2 hover:bg-surface-container-high transition-colors rounded-full text-on-surface-variant active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<h1 class="ml-4 font-headline font-bold text-headline-sm text-primary">Xác thực OTP</h1>
+</header>
+<!-- Main Content -->
+<main class="flex-grow flex flex-col items-center pt-24 px-6 pb-12 w-full max-w-md mx-auto">
+<!-- Header Text -->
+<div class="text-center mb-8">
+<p class="text-on-surface-variant text-body-lg">
+                Chúng tôi đã gửi mã xác thực gồm 6 chữ số đến email của bạn
+            </p>
+</div>
+<!-- OTP Inputs -->
+<div class="flex justify-between w-full gap-2 mb-8">
+<input class="w-12 h-14 text-center text-2xl font-semibold bg-surface-container-lowest border-2 border-outline-variant rounded-lg focus:border-primary focus:ring-2 focus:ring-primary-container outline-none transition-all text-on-surface" maxlength="1" type="text"/>
+<input class="w-12 h-14 text-center text-2xl font-semibold bg-surface-container-lowest border-2 border-outline-variant rounded-lg focus:border-primary focus:ring-2 focus:ring-primary-container outline-none transition-all text-on-surface" maxlength="1" type="text"/>
+<input class="w-12 h-14 text-center text-2xl font-semibold bg-surface-container-lowest border-2 border-outline-variant rounded-lg focus:border-primary focus:ring-2 focus:ring-primary-container outline-none transition-all text-on-surface" maxlength="1" type="text"/>
+<input class="w-12 h-14 text-center text-2xl font-semibold bg-surface-container-lowest border-2 border-outline-variant rounded-lg focus:border-primary focus:ring-2 focus:ring-primary-container outline-none transition-all text-on-surface" maxlength="1" type="text"/>
+<input class="w-12 h-14 text-center text-2xl font-semibold bg-surface-container-lowest border-2 border-outline-variant rounded-lg focus:border-primary focus:ring-2 focus:ring-primary-container outline-none transition-all text-on-surface" maxlength="1" type="text"/>
+<input class="w-12 h-14 text-center text-2xl font-semibold bg-surface-container-lowest border-2 border-outline-variant rounded-lg focus:border-primary focus:ring-2 focus:ring-primary-container outline-none transition-all text-on-surface" maxlength="1" type="text"/>
+</div>
+<!-- Timer -->
+<div class="text-center mb-8">
+<p class="text-on-surface-variant text-body-md font-medium">
+                Gửi lại mã sau <span class="text-primary font-semibold" id="countdown">02:00</span>
+</p>
+</div>
+<!-- Verify Button -->
+<button class="w-full bg-primary hover:bg-primary-dim text-on-primary font-label font-bold py-4 px-6 rounded-full shadow-md active:scale-[0.98] transition-all mb-6">
+            Xác minh mã
+        </button>
+<!-- Resend Button -->
+<button class="text-outline hover:text-outline-variant font-label font-medium py-2 px-4 rounded-full transition-colors opacity-50 cursor-not-allowed" disabled="">
+            Gửi lại mã OTP
+        </button>
+</main>
+<script>
+        // Simple auto-focus for OTP inputs
+        const inputs = document.querySelectorAll('input[type="text"]');
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            });
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && e.target.value.length === 0 && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+    </script>
+</body></html>

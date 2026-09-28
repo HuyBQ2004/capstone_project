@@ -1,0 +1,26 @@
+# Override CHỈ dùng trên VPS production — cộng thêm `image:` cho 4 service có CI build
+# (backend/frontend/frs-service/rag-service), để `docker compose pull` kéo đúng bản GitLab CI
+# vừa build+push, KHÔNG build tại chỗ trên VPS (xem trao đổi CI/CD 11/08/2026).
+#
+# Máy dev KHÔNG dùng file này — `docker compose up --build` (không -f docker-compose.prod.yml)
+# vẫn hoạt động y như trước, build thẳng từ `build:` ở docker-compose.yml.
+#
+# Cách dùng trên VPS (đứng ở thư mục chứa cả 2 file):
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml pull backend frontend frs-service rag-service
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+#
+# `REGISTRY_IMAGE`/`IMAGE_TAG` đọc từ `.env` cùng thư mục (docker compose tự load `.env` cạnh
+# file compose đầu tiên `-f`) — xem `.env.example` mục REGISTRY_IMAGE.
+
+services:
+  backend:
+    image: ${REGISTRY_IMAGE}/backend:${IMAGE_TAG:-latest}
+  frontend:
+    image: ${REGISTRY_IMAGE}/frontend:${IMAGE_TAG:-latest}
+  frs-service:
+    image: ${REGISTRY_IMAGE}/frs-service:${IMAGE_TAG:-latest}
+  rag-service:
+    image: ${REGISTRY_IMAGE}/rag-service:${IMAGE_TAG:-latest}
+  # Cổng nginx KHÔNG override ở đây — `ports:` bị Compose GỘP giữa các file, không ghi đè
+  # (đã kiểm bằng `docker compose config`, 11/08/2026). Đổi cổng qua biến `NGINX_HOST_PORT`
+  # trong `.env` — xem chú thích ở service `nginx` trong docker-compose.yml.

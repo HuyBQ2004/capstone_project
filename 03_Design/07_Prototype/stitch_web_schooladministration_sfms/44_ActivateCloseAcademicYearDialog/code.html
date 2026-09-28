@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>School Management System - Close Academic Year Dialog</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-fixed": "#0b1c30",
+                      "inverse-surface": "#283044",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "primary-container": "#0e7490",
+                      "surface": "#faf8ff",
+                      "outline": "#6f787d",
+                      "on-primary-container": "#d3f1ff",
+                      "on-tertiary-fixed": "#171c1f",
+                      "secondary": "#505f76",
+                      "on-primary-fixed": "#001f29",
+                      "secondary-container": "#d0e1fb",
+                      "surface-container-highest": "#dae2fd",
+                      "on-surface": "#131b2e",
+                      "on-error-container": "#93000a",
+                      "inverse-primary": "#81d1f0",
+                      "on-tertiary-container": "#e8edf1",
+                      "surface-container-lowest": "#ffffff",
+                      "inverse-on-surface": "#eef0ff",
+                      "surface-dim": "#d2d9f4",
+                      "outline-variant": "#bec8cd",
+                      "on-secondary-container": "#54647a",
+                      "background": "#faf8ff",
+                      "on-tertiary-fixed-variant": "#43474b",
+                      "surface-container-high": "#e2e7ff",
+                      "tertiary-fixed": "#dfe3e7",
+                      "surface-bright": "#faf8ff",
+                      "tertiary-container": "#666b6f",
+                      "surface-container": "#eaedff",
+                      "on-error": "#ffffff",
+                      "primary": "#005a71",
+                      "tertiary-fixed-dim": "#c3c7cb",
+                      "surface-variant": "#dae2fd",
+                      "on-secondary": "#ffffff",
+                      "primary-fixed-dim": "#81d1f0",
+                      "error-container": "#ffdad6",
+                      "on-background": "#131b2e",
+                      "on-primary-fixed-variant": "#004d62",
+                      "tertiary": "#4e5356",
+                      "error": "#ba1a1a",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "surface-tint": "#006781",
+                      "on-tertiary": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "surface-container-low": "#f2f3ff",
+                      "primary-fixed": "#b9eaff",
+                      "on-surface-variant": "#3f484c",
+                      "secondary-fixed": "#d3e4fe"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "1rem",
+                      "stack-xs": "0.25rem",
+                      "stack-lg": "1.5rem",
+                      "margin-mobile": "1rem",
+                      "container-max": "1440px",
+                      "margin-desktop": "2rem",
+                      "stack-md": "1rem",
+                      "stack-sm": "0.5rem"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": [
+                              "Be Vietnam Pro"
+                      ],
+                      "body-lg": [
+                              "Be Vietnam Pro"
+                      ],
+                      "mono-sm": [
+                              "monospace"
+                      ],
+                      "label-sm": [
+                              "Be Vietnam Pro"
+                      ],
+                      "body-md": [
+                              "Be Vietnam Pro"
+                      ],
+                      "label-md": [
+                              "Be Vietnam Pro"
+                      ],
+                      "headline-lg": [
+                              "Be Vietnam Pro"
+                      ],
+                      "headline-md": [
+                              "Be Vietnam Pro"
+                      ],
+                      "headline-sm": [
+                              "Be Vietnam Pro"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "mono-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg": [
+                              "30px",
+                              {
+                                      "lineHeight": "36px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-sm": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      }
+              }
+            },
+          }
+      </script>
+</head>
+<body class="bg-surface font-body-md text-on-surface h-screen overflow-hidden">
+<!-- Blurred Background Content (Simulating Academic Year Detail screen) -->
+<div class="h-full w-full flex flex-col filter blur-sm pointer-events-none select-none transition-all duration-300">
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] z-40 border-b border-outline-variant bg-surface-container-lowest flex items-center justify-between h-16 px-8 ml-64">
+<div class="text-headline-md font-headline-md text-on-surface">Lớp &amp; Học sinh</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant">settings</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="A small circular avatar image showing a professional, modern profile picture of a school administrator in a bright, clean office setting. The aesthetic is corporate and trustworthy, using subtle gray and white tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDReAb9DzmBq9provyilwLdt5usy3wYclXKQxLq5GF-ITEVc0_DWioyKvxXMdY1lhVxsxHAWNlxojxsX3J8LgV9s9IjL1nuYoB-_PdyeJ5G9xONDNGWQCFbm9zdC0IdqdnP21pTSk3CQ-xtPbqSxWXTR4Q9bnbhwjUFXZOZ56SqwsZ-9H4e_fZC_XvOAvE3ZoFTtqWO0NS3XPcr78Xe8n-0E9KSiQM5uFvj8lvFDF_cGYmHAFQFWJwmRgA8J0JahMO0QXC66ys3MBk"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full w-64 border-r border-outline-variant bg-surface flex flex-col p-4 space-y-2 z-30">
+<div class="mb-8 px-4">
+<div class="text-headline-md font-headline-md font-bold text-primary">sfms</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant">School Food Management</div>
+</div>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-md font-label-md">Tổng quan</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">handshake</span>
+<span class="text-label-md font-label-md">Đối tác</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span class="text-label-md font-label-md">Thực đơn</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold scale-[0.98] transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">groups</span>
+<span class="text-label-md font-label-md">Lớp &amp; Học sinh</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">report_problem</span>
+<span class="text-label-md font-label-md">Sự cố &amp; Kiểm tra</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-label-md font-label-md">Báo cáo &amp; Thống kê</span>
+</a>
+</nav>
+<!-- Main Content Canvas (Blurred) -->
+<main class="ml-64 mt-16 p-8 flex-1">
+<div class="max-w-[1440px] mx-auto">
+<div class="flex justify-between items-start mb-8">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface">Năm học 2024-2025</h1>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">Chi tiết cấu hình và danh sách lớp học</p>
+</div>
+<div class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="text-label-sm font-label-sm font-medium">Active</span>
+</div>
+</div>
+<!-- Simulated detail cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-6">
+<h3 class="text-label-md font-label-md text-on-surface-variant mb-2">Tổng số học sinh</h3>
+<p class="text-headline-sm font-headline-sm text-on-surface">1,245</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-6">
+<h3 class="text-label-md font-label-md text-on-surface-variant mb-2">Tổng số lớp</h3>
+<p class="text-headline-sm font-headline-sm text-on-surface">42</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-6">
+<h3 class="text-label-md font-label-md text-on-surface-variant mb-2">Bữa ăn dự kiến/ngày</h3>
+<p class="text-headline-sm font-headline-sm text-on-surface">1,180</p>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Modal Overlay -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-on-surface/40 backdrop-blur-sm p-4">
+<!-- Dialog Container -->
+<div class="bg-surface-container-lowest w-full max-w-lg rounded-xl shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1)] border border-outline-variant overflow-hidden flex flex-col transform transition-all">
+<!-- Dialog Header -->
+<div class="px-6 py-5 border-b border-surface-container-high flex justify-between items-center bg-surface-bright">
+<h2 class="text-headline-sm font-headline-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-error">warning</span>
+                    Xác nhận đóng năm học
+                </h2>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors p-1 rounded-full hover:bg-surface-container-high focus:outline-none focus:ring-2 focus:ring-primary-container">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Dialog Body -->
+<div class="p-6 space-y-6">
+<p class="text-body-md font-body-md text-on-surface">
+                    Bạn đang thực hiện đóng năm học <strong class="font-semibold text-on-surface">2024-2025</strong>.
+                </p>
+<!-- Alert Warning Banner -->
+<div class="bg-error-container/20 border border-error-container rounded-lg p-4 flex gap-3 items-start">
+<span class="material-symbols-outlined text-error mt-0.5 shrink-0" style="font-variation-settings: 'FILL' 1;">error</span>
+<div>
+<p class="text-body-md font-body-md text-on-error-container">
+<strong class="font-bold">CẢNH BÁO (BR-193):</strong> Khi đóng năm học này, toàn bộ lớp học trực thuộc sẽ chuyển sang trạng thái chỉ xem (Read-only) và không thể chỉnh sửa thông tin lớp hoặc học sinh.
+                        </p>
+</div>
+</div>
+</div>
+<!-- Dialog Actions -->
+<div class="px-6 py-4 bg-surface-container-low border-t border-outline-variant flex justify-end gap-3">
+<button class="px-4 py-2 border border-outline-variant text-on-surface bg-transparent rounded-md text-label-md font-label-md hover:bg-surface-container-high focus:outline-none focus:ring-2 focus:ring-primary-container transition-colors">
+                    Hủy
+                </button>
+<button class="px-4 py-2 bg-error text-on-error rounded-md text-label-md font-label-md hover:bg-on-error-container transition-colors focus:outline-none focus:ring-2 focus:ring-error shadow-sm">
+                    Xác nhận đóng năm học
+                </button>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,823 @@
+@startuml SFMS_ClassDiagram
+
+' ══════════════════════════════════════════════════════════════════════
+' SFMS — SYSTEM CLASS DIAGRAM (aligned with actual backend implementation)
+'
+' Source: 04_Development/Backend/src/main/java/com/sfms/
+' Each class = actual JPA @Entity. All entities extend BaseEntity
+' (UUID id, createdAt, updatedAt, createdBy, updatedBy).
+' Inheritance arrows hidden to keep layout clean — noted below.
+' Cross-module communication via UUID only — no cross-module
+' entity/repository imports (AP-AI-005).
+'
+' Updated: 2026-08-05
+' ══════════════════════════════════════════════════════════════════════
+
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+skinparam packageStyle Rectangle
+skinparam linetype ortho
+skinparam ArrowColor #444444
+skinparam ClassBorderColor #666666
+skinparam ClassBackgroundColor #FFFDE7
+skinparam ClassHeaderBackgroundColor #F9A825
+skinparam NoteBackgroundColor #FFFDE7
+skinparam NoteBorderColor #BDBDBD
+skinparam shadowing false
+
+hide empty members
+
+' ══════════════════════════════════════════════════════════════════════
+' IAM — Identity & Access Management
+' ══════════════════════════════════════════════════════════════════════
+package "IAM — Identity & Access Management" #EEF2FF {
+
+  class UserAccount {
+    code : String
+    email : String
+    status : AccountStatus
+    partnerId : UUID
+    schoolId : UUID
+    failedLoginAttempts : int
+    lockedUntil : Instant
+  }
+
+  class RoleRecord {
+    code : String
+    name : String
+  }
+
+  class UserRoleAssignment {
+    userId : UUID
+    roleCode : String
+    schoolId : UUID
+  }
+
+  class Permission {
+    code : String
+    module : String
+    action : String
+  }
+
+  class SecurityPolicy {
+    maxLoginAttempts : int
+    lockoutMinutes : int
+    passwordMinLength : int
+    active : boolean
+  }
+
+  class AuditLog <<immutable>> {
+    timestamp : Instant
+    actor : String
+    ip : String
+    action : String
+    result : String
+    prevHash : String
+    entryHash : String
+  }
+}
+
+' ══════════════════════════════════════════════════════════════════════
+' MF02 — School Management
+' ══════════════════════════════════════════════════════════════════════
+package "MF02 — School Management" #F0FDF4 {
+
+  class School {
+    code : String
+    name : String
+    status : SchoolStatus
+    latitude : Decimal
+    longitude : Decimal
+  }
+
+  class SchoolConfig {
+    costCeiling : Decimal
+    geofenceRadius : int
+    reportEmails : List<String>
+  }
+
+  class AcademicYear {
+    code : String
+    name : String
+    startDate : Date
+    endDate : Date
+    status : AcademicYearStatus
+  }
+
+  class Classroom {
+    code : String
+    grade : int
+    capacity : int
+    homeroomTeacherId : UUID
+    readOnly : boolean
+  }
+}
+
+' ══════════════════════════════════════════════════════════════════════
+' MF03 — Student & Health
+' ══════════════════════════════════════════════════════════════════════
+package "MF03 — Student & Health" #FEF2F2 {
+
+  class Student {
+    code : String
+    fullName : String
+    status : StudentStatus
+    dateOfBirth : Date
+    classroomId : UUID
+  }
+
+  class AllergyDeclaration {
+    allergen : String
+    severity : Severity
+    status : DeclarationStatus
+    proofFile : String
+  }
+
+  class ChronicConditionDeclaration {
+    conditionName : String
+    category : String
+    status : DeclarationStatus
+  }
+
+  class HealthHistoryEvent <<immutable>> {
+    at : Instant
+    type : HealthHistoryEventType
+    event : String
+  }
+
+  class StudentParent {
+    parentUserId : UUID
+    relationship : String
+    primary : boolean
+  }
+
+  class SpecialMealRequest {
+    dietaryType : String
+    duration : String
+    status : RequestStatus
+  }
+}
+
+' ══════════════════════════════════════════════════════════════════════
+' MF04 — Partner Management
+' ══════════════════════════════════════════════════════════════════════
+package "MF04 — Partner Management" #FFF7ED {
+
+  class Partner {
+    code : String
+    name : String
+    type : PartnerType
+    status : PartnerStatus
+    taxId : String
+    suspendReason : String
+  }
+
+  class PartnershipApplication {
+    code : String
+    companyName : String
+    status : ApplicationStatus
+    schoolId : UUID
+  }
+
+  class SupplierPartnership {
+    status : PartnershipStatus
+    startDate : Date
+    endDate : Date
+  }
+
+  class PartnerDocument {
+    type : DocumentType
+    fileUrl : String
+    expiryDate : Date
+  }
+}
+
+' ══════════════════════════════════════════════════════════════════════
+' MF05 — Menu & Dish Management
+' ══════════════════════════════════════════════════════════════════════
+package "MF05 — Menu & Dish Management" #FEFCE8 {
+
+  class CatalogIngredient {
+    code : String
+    name : String
+    unit : String
+    storageZone : StorageZone
+    refuseFactor : Decimal
+  }
+
+  class Dish {
+    code : String
+    name : String
+    category : DishCategory
+    allergens : List<String>
+    active : boolean
+  }
+
+  class DishIngredient {
+    quantity : Decimal
+    unit : String
+    servingOrder : int
+  }
+
+  class Menu {
+    code : String
+    menuDate : Date
+    mealType : MealType
+    grade : String
+    status : MenuStatus
+    estimatedCost : Decimal
+    costCeiling : Decimal
+  }
+
+  class MenuDish {
+    servingOrder : int
+    dishLabel : String
+  }
+
+  class MenuDishSubstitute {
+    allergenIds : List<String>
+    portions : int
+    dishLabel : String
+  }
+
+  class MenuTemplate {
+    code : String
+    name : String
+    mealType : MealType
+    audience : String
+    active : boolean
+  }
+
+  class MenuTemplateDish {
+    servingOrder : int
+    dishLabel : String
+  }
+
+  class DietGroup {
+    code : String
+    name : String
+    matchDiet : String
+  }
+}
+
+' ══════════════════════════════════════════════════════════════════════
+' MF06 — Inventory & Traceability
+' ══════════════════════════════════════════════════════════════════════
+package "MF06 — Inventory & Traceability" #ECFEFF {
+
+  class InventoryBatch {
+    code : String
+    initialQuantity : Decimal
+    unit : String
+    storageZone : StorageZone
+    receivedDate : Date
+    expiryDate : Date
+    quarantine : QuarantineInfo
+  }
+
+  class InventoryTransaction {
+    code : String
+    type : TransactionType
+    delta : Decimal
+    occurredAt : Instant
+    reasonCode : ReasonCode
+  }
+
+  class IssueSlip {
+    code : String
+    serviceDate : Date
+    status : IssueSlipStatus
+  }
+
+  class PurchaseRequest {
+    code : String
+    requestedDate : Date
+    deliveryDate : Date
+    totalValue : Decimal
+    status : PurchaseRequestStatus
+  }
+
+  class PurchaseItem {
+    quantity : Decimal
+    unitPrice : Decimal
+    unit : String
+  }
+
+  class SupplierProduct {
+    code : String
+    unitPrice : Decimal
+    packaging : String
+    effectiveFrom : Date
+    active : boolean
+  }
+
+  class SupplierBatch {
+    code : String
+    lotNumber : String
+    expirationDate : Date
+    quantity : Decimal
+  }
+
+  class Delivery {
+    code : String
+    scheduledDate : Date
+    status : DeliveryStatus
+  }
+
+  class ReceivingSession {
+    code : String
+    receivedAt : Instant
+    note : String
+  }
+
+  class ReceivingLine {
+    acceptedQty : Decimal
+    rejectedQty : Decimal
+    unit : String
+    rejectReason : String
+  }
+
+  class PreparationRecord {
+    code : String
+    preparedAt : Date
+    portionsProduced : int
+  }
+}
+
+' ══════════════════════════════════════════════════════════════════════
+' MF07 — Food Safety Inspection
+' ══════════════════════════════════════════════════════════════════════
+package "MF07 — Food Safety Inspection" #F5F3FF {
+
+  class InspectionSession {
+    code : String
+    date : Date
+    mealType : MealType
+    step1 : StepStatus
+    step2 : StepStatus
+    step3 : StepStatus
+    overall : StepStatus
+    coreTemp : Decimal
+  }
+
+  class KitchenInspection {
+    code : String
+    date : Date
+    score : int
+    result : StepStatus
+    confirmStatus : ConfirmStatus
+  }
+
+  class ChecklistItemResult {
+    passed : boolean
+    note : String
+  }
+
+  class SafetySignoff {
+    code : String
+    date : Date
+    hygieneScore : int
+    failedSteps : int
+  }
+}
+
+' ══════════════════════════════════════════════════════════════════════
+' MF08 — Food Sample Retention
+' ══════════════════════════════════════════════════════════════════════
+package "MF08 — Food Sample Retention" #FFF0F5 {
+
+  class FoodSample {
+    code : String
+    weight : String
+    retentionDeadline : DateTime
+    status : FoodSampleStatus
+    sampledAt : Instant
+  }
+
+  class SampleLabRequest {
+    code : String
+    handoverType : HandoverType
+    testCriteria : String
+    status : LabRequestStatus
+    seizureNote : String
+  }
+
+  class ReceivingAuthority {
+    code : String
+    name : String
+    type : AuthorityType
+    contact : String
+  }
+
+  class SampleAttachment {
+    fileUrl : String
+    owner : AttachmentOwner
+    uploadedAt : Instant
+  }
+}
+
+' ══════════════════════════════════════════════════════════════════════
+' MF09 — Meal Distribution
+' ══════════════════════════════════════════════════════════════════════
+package "MF09 — Meal Distribution" #F0F9FF {
+
+  class StudentDistribution {
+    code : String
+    date : Date
+    mealType : MealType
+    studentName : String
+    className : String
+    status : DistributionStatus
+    servedAt : Instant
+  }
+
+  class ServingDish {
+    code : String
+    dishName : String
+    substitute : boolean
+    substitutedForDishName : String
+    reason : String
+  }
+
+  class MealConsumptionRecord {
+    rating : int
+    note : String
+    recordedAt : Instant
+  }
+
+  class DistributionErrorReport {
+    code : String
+    errorType : String
+    description : String
+    status : ErrorReportStatus
+  }
+}
+
+' ══════════════════════════════════════════════════════════════════════
+' MF10 — Communication & Notification
+' ══════════════════════════════════════════════════════════════════════
+package "MF10 — Communication & Notification" #F0FFF4 {
+
+  class Feedback {
+    code : String
+    scope : FeedbackScope
+    mealDate : Date
+    mealType : MealType
+    rating : int
+    tags : List<String>
+  }
+
+  class FeedbackResponse {
+    content : String
+    respondedAt : Instant
+  }
+
+  class UserNotification {
+    code : String
+    audience : NotificationAudience
+    type : NotificationType
+    title : String
+    sentAt : Instant
+  }
+
+  class Announcement {
+    code : String
+    title : String
+    status : AnnouncementStatus
+    urgent : boolean
+    publishedAt : Instant
+  }
+
+  class NotificationPreference {
+    type : NotificationType
+    channel : Channel
+    enabled : boolean
+  }
+}
+
+' ══════════════════════════════════════════════════════════════════════
+' MF11 — Incident & Corrective Action
+' ══════════════════════════════════════════════════════════════════════
+package "MF11 — Incident & Corrective Action" #FEE2E2 {
+
+  class IncidentSourceReport {
+    code : String
+    reportedBy : String
+    symptoms : List<String>
+    status : SourceReportStatus
+  }
+
+  class IncidentRecordDraft {
+    status : RecordDraftStatus
+  }
+
+  class Incident {
+    code : String
+    title : String
+    severity : IncidentSeverity
+    status : IncidentStatus
+    reportedAt : Instant
+    mealDate : Date
+    rootCause : String
+  }
+
+  class IncidentAffectedStudent {
+    studentName : String
+    className : String
+    recovered : boolean
+    recoveredAt : Instant
+  }
+
+  class IncidentEvent <<immutable>> {
+    code : String
+    at : Instant
+    type : IncidentEventType
+    description : String
+    actorLabel : String
+  }
+
+  class IncidentEvidence {
+    type : String
+    description : String
+    fileCount : int
+    capturedAt : Instant
+  }
+
+  class IncidentSuspectedDish {
+    dishId : UUID
+    dishName : String
+  }
+
+  class IncidentQuarantineBatch {
+    batchCode : String
+    ingredientLabel : String
+    quarantinedAt : Instant
+  }
+
+  class CorrectiveAction {
+    code : String
+    description : String
+    assigneeLabel : String
+    status : CapaStatus
+    evidencePhotos : int
+    approvedAt : Instant
+  }
+
+  class ViolationRecord {
+    code : String
+    subject : String
+    date : Date
+    severity : ViolationSeverity
+    violationType : ViolationType
+    status : ViolationStatus
+  }
+
+  class ViolationFile {
+    kind : ViolationFileKind
+    fileUrl : String
+    uploadedAt : Instant
+  }
+}
+
+' ══════════════════════════════════════════════════════════════════════
+' MF12 — System & AI Integration
+' ══════════════════════════════════════════════════════════════════════
+package "MF12 — System & AI Integration" #F5F5F5 {
+
+  class AiConversation {
+    code : String
+    title : String
+    startedAt : Instant
+    lastMessageAt : Instant
+  }
+
+  class AiRequest {
+    code : String
+    prompt : String
+    response : String
+    status : AiRequestStatus
+  }
+
+  class ErrorLog {
+    code : String
+    severity : LogSeverity
+    message : String
+    occurredAt : Instant
+    resolved : boolean
+  }
+
+  class SentReport {
+    code : String
+    reportType : ReportType
+    period : ReportPeriod
+    rangeFrom : Date
+    rangeTo : Date
+    sentAt : Instant
+    confidential : boolean
+  }
+}
+
+' ══════════════════════════════════════════════════════════════════════
+' MF13 — Reporting & Scheduling
+' ══════════════════════════════════════════════════════════════════════
+package "MF13 — Reporting & Scheduling" #EFEFFF {
+
+  class ReportSchedule {
+    code : String
+    slug : ReportSlug
+    frequency : ReportFrequency
+    nextRunAt : Instant
+    active : boolean
+  }
+
+  class ReportScheduleRun {
+    ranAt : Instant
+    status : ScheduleRunStatus
+    errorMessage : String
+  }
+
+  class ReportExport {
+    code : String
+    slug : ReportSlug
+    format : ReportFormat
+    rangeFrom : Date
+    rangeTo : Date
+    fileUrl : String
+    generatedAt : Instant
+  }
+}
+
+' ══════════════════════════════════════════════════════════════════════
+' RELATIONSHIPS — IAM
+' ══════════════════════════════════════════════════════════════════════
+UserRoleAssignment "n" --> "1" UserAccount
+UserRoleAssignment "n" --> "1" RoleRecord
+RoleRecord "n" --> "n" Permission
+AuditLog "n" --> "1" UserAccount
+SecurityPolicy "1" --> "n" UserAccount : governs
+
+' ══════════════════════════════════════════════════════════════════════
+' RELATIONSHIPS — MF02
+' ══════════════════════════════════════════════════════════════════════
+School "1" *-- "1" SchoolConfig
+School "1" *-- "n" AcademicYear
+AcademicYear "1" *-- "n" Classroom
+
+' ══════════════════════════════════════════════════════════════════════
+' RELATIONSHIPS — MF03
+' ══════════════════════════════════════════════════════════════════════
+Classroom "1" o-- "n" Student
+Student "1" *-- "n" AllergyDeclaration
+Student "1" *-- "n" ChronicConditionDeclaration
+Student "1" *-- "n" HealthHistoryEvent
+StudentParent "n" --> "1" Student
+StudentParent "n" --> "1" UserAccount : parent account
+SpecialMealRequest "n" --> "1" Student
+
+' ══════════════════════════════════════════════════════════════════════
+' RELATIONSHIPS — MF04
+' ══════════════════════════════════════════════════════════════════════
+Partner "1" o-- "n" PartnershipApplication
+Partner "1" o-- "n" PartnerDocument
+PartnershipApplication "n" --> "1" School : applies to
+SupplierPartnership "n" --> "1" Partner
+SupplierPartnership "n" --> "1" School
+
+' ══════════════════════════════════════════════════════════════════════
+' RELATIONSHIPS — MF05
+' ══════════════════════════════════════════════════════════════════════
+Dish "1" *-- "n" DishIngredient
+DishIngredient "n" --> "1" CatalogIngredient
+Menu "n" --> "1" Partner : caterer
+Menu "1" o-- "n" MenuDish
+MenuDish "n" --> "1" Dish
+MenuDish "1" o-- "n" MenuDishSubstitute
+MenuDishSubstitute "n" --> "1" Dish : substitute dish
+MenuTemplate "1" *-- "n" MenuTemplateDish
+MenuTemplateDish "n" --> "1" Dish
+
+' ══════════════════════════════════════════════════════════════════════
+' RELATIONSHIPS — MF06
+' ══════════════════════════════════════════════════════════════════════
+InventoryBatch "n" --> "1" CatalogIngredient
+InventoryBatch "n" --> "0..1" ReceivingSession
+InventoryTransaction "n" --> "1" InventoryBatch
+InventoryTransaction "n" --> "0..1" IssueSlip
+InventoryTransaction "n" --> "0..1" Menu : traceability
+IssueSlip "n" --> "1" Menu
+PurchaseRequest "n" --> "1" Partner : supplier
+PurchaseRequest "1" *-- "n" PurchaseItem
+PurchaseRequest "1" o-- "n" Delivery
+Delivery "n" --> "0..1" ReceivingSession
+ReceivingSession "1" *-- "n" ReceivingLine
+ReceivingLine "n" --> "1" CatalogIngredient
+SupplierProduct "n" --> "1" Partner
+SupplierProduct "n" --> "1" CatalogIngredient
+SupplierProduct "1" o-- "n" SupplierBatch
+PreparationRecord "n" --> "1" Dish
+PreparationRecord "n" --> "1" Menu
+
+' ══════════════════════════════════════════════════════════════════════
+' RELATIONSHIPS — MF07
+' ══════════════════════════════════════════════════════════════════════
+InspectionSession "n" --> "1" Partner : caterer
+InspectionSession "n" --> "0..1" Dish
+InspectionSession "n" --> "0..1" Menu
+KitchenInspection "n" --> "1" Partner : caterer
+KitchenInspection "1" *-- "n" ChecklistItemResult
+SafetySignoff "n" --> "1" School
+
+' ══════════════════════════════════════════════════════════════════════
+' RELATIONSHIPS — MF08
+' ══════════════════════════════════════════════════════════════════════
+FoodSample "n" --> "1" Dish
+FoodSample "n" --> "0..1" Menu
+FoodSample "1" o-- "n" SampleLabRequest
+SampleLabRequest "n" --> "1" ReceivingAuthority
+FoodSample "1" o-- "n" SampleAttachment
+
+' ══════════════════════════════════════════════════════════════════════
+' RELATIONSHIPS — MF09
+' ══════════════════════════════════════════════════════════════════════
+StudentDistribution "n" --> "1" Student
+StudentDistribution "n" --> "0..1" Menu
+StudentDistribution "1" *-- "n" ServingDish
+ServingDish "n" --> "1" Dish
+StudentDistribution "1" o-- "0..1" MealConsumptionRecord
+DistributionErrorReport "n" --> "1" StudentDistribution
+
+' ══════════════════════════════════════════════════════════════════════
+' RELATIONSHIPS — MF10
+' ══════════════════════════════════════════════════════════════════════
+Feedback "n" --> "1" StudentDistribution : meal session
+Feedback "n" --> "0..1" Student
+Feedback "n" --> "0..1" Dish
+Feedback "1" o-- "0..1" FeedbackResponse
+NotificationPreference "n" --> "1" UserAccount
+
+' ══════════════════════════════════════════════════════════════════════
+' RELATIONSHIPS — MF11
+' ══════════════════════════════════════════════════════════════════════
+IncidentSourceReport "n" --> "0..1" IncidentRecordDraft
+IncidentRecordDraft "1" --> "0..1" Incident
+Incident "1" *-- "n" IncidentAffectedStudent
+Incident "1" *-- "n" IncidentEvent
+Incident "1" *-- "n" IncidentEvidence
+Incident "1" *-- "n" IncidentSuspectedDish
+Incident "1" *-- "n" IncidentQuarantineBatch
+IncidentAffectedStudent "n" --> "1" Student
+IncidentQuarantineBatch "n" --> "1" InventoryBatch : quarantine
+Incident "1" o-- "n" CorrectiveAction
+CorrectiveAction "n" --> "0..1" InspectionSession
+CorrectiveAction "n" --> "0..1" Partner : responsible party
+ViolationRecord "n" --> "0..1" Incident
+ViolationRecord "1" *-- "n" ViolationFile
+
+' ══════════════════════════════════════════════════════════════════════
+' RELATIONSHIPS — MF12
+' ══════════════════════════════════════════════════════════════════════
+AiConversation "1" *-- "n" AiRequest
+AiConversation "n" --> "1" UserAccount
+AiRequest "n" --> "1" UserAccount
+
+' ══════════════════════════════════════════════════════════════════════
+' RELATIONSHIPS — MF13
+' ══════════════════════════════════════════════════════════════════════
+ReportSchedule "1" *-- "n" ReportScheduleRun
+ReportScheduleRun "n" --> "0..1" ReportExport
+
+' ══════════════════════════════════════════════════════════════════════
+' DESIGN NOTES
+' ══════════════════════════════════════════════════════════════════════
+note as N1
+  **Common Architecture:**
+  All entities extend BaseEntity
+  (UUID id, createdAt, updatedAt,
+  createdBy, updatedBy).
+  Business code (D1): "code" field
+  is the public ID in JSON responses;
+  UUID is the internal PK.
+  Cross-module refs use UUID only
+  — no cross-module entity imports
+  (AP-AI-005).
+end note
+
+note as N2
+  **Append-Only Entities (no UPDATE/DELETE):**
+  AuditLog — hash chain for tamper-proof log
+  HealthHistoryEvent — student health trail
+  IncidentEvent — incident audit log
+  ServingDish — frozen at meal handover time
+end note
+
+note as N3
+  **Key Cross-Module UUID References:**
+  Menu.partnerId → Partner (MF04)
+  StudentDistribution.studentId → Student (MF03)
+  InventoryBatch.ingredientId → CatalogIngredient (MF05)
+  IncidentAffectedStudent.studentId → Student (MF03)
+  CorrectiveAction.inspectionId → InspectionSession (MF07)
+  FoodSample.dishId → Dish (MF05)
+end note
+
+@enduml

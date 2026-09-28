@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sức khỏe học sinh - SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-container": "#6cf8bb",
+                    "on-tertiary-container": "#ffe9d4",
+                    "secondary-fixed": "#6ffbbe",
+                    "surface-container-lowest": "#ffffff",
+                    "primary": "#005a71",
+                    "outline": "#6f787d",
+                    "outline-variant": "#bec8cd",
+                    "on-error-container": "#93000a",
+                    "surface-variant": "#d3e4fe",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed": "#002113",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "tertiary": "#764900",
+                    "on-secondary": "#ffffff",
+                    "surface-tint": "#006781",
+                    "on-background": "#0b1c30",
+                    "surface": "#f8f9ff",
+                    "on-tertiary": "#ffffff",
+                    "inverse-primary": "#81d1f0",
+                    "tertiary-container": "#965f00",
+                    "surface-dim": "#cbdbf5",
+                    "on-primary-container": "#d3f1ff",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#213145",
+                    "on-surface": "#0b1c30",
+                    "background": "#f8f9ff",
+                    "on-secondary-container": "#00714d",
+                    "tertiary-fixed": "#ffddb8",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-container-high": "#dce9ff",
+                    "primary-fixed-dim": "#81d1f0",
+                    "on-tertiary-fixed": "#2a1700",
+                    "error": "#ba1a1a",
+                    "primary-fixed": "#b9eaff",
+                    "on-primary-fixed-variant": "#004d62",
+                    "secondary-fixed-dim": "#4edea3",
+                    "on-secondary-fixed-variant": "#005236",
+                    "on-surface-variant": "#3f484c",
+                    "surface-container-highest": "#d3e4fe",
+                    "secondary": "#006c49",
+                    "primary-container": "#0e7490",
+                    "surface-bright": "#f8f9ff",
+                    "on-primary": "#ffffff",
+                    "surface-container-low": "#eff4ff",
+                    "on-primary-fixed": "#001f29",
+                    "surface-container": "#e5eeff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "element-gap": "12px",
+                    "grid-gutter": "16px",
+                    "section-margin": "24px",
+                    "base": "4px",
+                    "container-padding": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Be Vietnam Pro"],
+                    "headline-md": ["Be Vietnam Pro"],
+                    "label-sm": ["Be Vietnam Pro"],
+                    "headline-lg": ["Be Vietnam Pro"],
+                    "headline-lg-mobile": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #f8f9ff; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .medical-card {
+            background-color: white;
+            border: 1px solid #E2E8F0;
+            transition: all 0.2s ease;
+        }
+        .medical-card:hover {
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .allergy-pulse {
+            animation: pulse-danger 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-danger {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .7; }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-container-padding h-14 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-3">
+<button class="active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Nguyễn Minh Anh</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 hover:bg-surface-container-low transition-colors rounded-full active:scale-95">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+</div>
+</header>
+<main class="mt-14 p-container-padding max-w-screen-xl mx-auto">
+<!-- Profile Header Section -->
+<section class="mb-section-margin flex items-center gap-4 py-4">
+<div class="w-16 h-16 rounded-full border-2 border-primary-container overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a young Vietnamese primary school student with a bright smile, wearing a clean white school uniform. The lighting is soft and natural, with a clean, medical-grade slate-50 background that emphasizes purity and academic health. High resolution photography with soft focus on the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB54reY625ne4QRPdvufD6fCdWl5r7PMCl880eo9lpyffcTV-e3xOPrVelWR0vJ8tcrFXoSRz3jemj0QuKPyr3pcX_X00EkUWDctBs5kCkIrD6Gu1Zm_Y0pv5Bu76F0Gzk5IagS3cVo801AWj3B7tQPcoNxEZQnjYGUaI-KvY1yvyZuipLSeCf0it3eOOonxQzWtq4Z-jfr_rXetvAjrrOZxggzme8oHyf5JEWqLEqGVfSfcYWlRDxAnUrklwxLusm9gEhyyBNq4xY"/>
+</div>
+<div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-background">Thông tin sức khỏe</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Lớp 3A1 • Mã học sinh: 20240901</p>
+</div>
+</section>
+<!-- Health Cards Grid -->
+<section class="grid grid-cols-2 md:grid-cols-4 gap-grid-gutter mb-section-margin">
+<!-- Height -->
+<div class="medical-card rounded-xl p-4 flex flex-col gap-2">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[20px]">height</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Chiều cao</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-on-background">135</span>
+<span class="font-body-md text-body-md text-on-surface-variant">cm</span>
+</div>
+</div>
+<!-- Weight -->
+<div class="medical-card rounded-xl p-4 flex flex-col gap-2">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[20px]">weight</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Cân nặng</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-on-background">32</span>
+<span class="font-body-md text-body-md text-on-surface-variant">kg</span>
+</div>
+</div>
+<!-- Blood Type -->
+<div class="medical-card rounded-xl p-4 flex flex-col gap-2">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[20px]">bloodtype</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Nhóm máu</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-on-background">O+</span>
+</div>
+</div>
+<!-- BMI -->
+<div class="medical-card rounded-xl p-4 flex flex-col gap-2 border-secondary">
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-[20px]">monitor_weight</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">BMI</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-on-background">17.5</span>
+<span class="font-label-sm text-label-sm text-on-secondary-container bg-secondary-container/20 px-2 py-0.5 rounded-full w-fit">Bình thường</span>
+</div>
+</div>
+</section>
+<!-- Allergy Summary Section -->
+<section class="mb-section-margin">
+<div class="flex items-center justify-between mb-element-gap">
+<h3 class="font-headline-md text-headline-md text-on-background flex items-center gap-2">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">report</span>
+                    Dị ứng thực phẩm
+                </h3>
+<span class="font-label-sm text-label-sm text-error font-bold uppercase tracking-widest allergy-pulse">Cảnh báo cao</span>
+</div>
+<div class="space-y-grid-gutter">
+<!-- Seafood Allergy Card -->
+<div class="medical-card rounded-xl border-error p-container-padding flex items-center gap-4 bg-error-container/5">
+<div class="w-12 h-12 bg-error-container text-on-error-container rounded-lg flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[28px]">set_meal</span>
+</div>
+<div class="flex-grow">
+<h4 class="font-headline-md text-headline-md text-on-background">Hải sản</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Phản ứng: Mẩn ngứa, khó thở. Cần tiêm khẩn cấp nếu vô tình ăn phải.</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">info</span>
+</div>
+<!-- Peanut Allergy Card -->
+<div class="medical-card rounded-xl border-error p-container-padding flex items-center gap-4 bg-error-container/5">
+<div class="w-12 h-12 bg-error-container text-on-error-container rounded-lg flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[28px]">grass</span>
+</div>
+<div class="flex-grow">
+<h4 class="font-headline-md text-headline-md text-on-background">Đậu phộng</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Phản ứng: Sưng môi, ngứa họng. Tuyệt đối không có trong khẩu phần ăn.</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">info</span>
+</div>
+</div>
+</section>
+<!-- Main CTA -->
+<section class="fixed bottom-20 left-0 w-full px-container-padding pointer-events-none">
+<div class="max-w-screen-xl mx-auto flex justify-center">
+<button class="pointer-events-auto bg-primary-container text-on-primary-container flex items-center gap-2 px-8 py-4 rounded-full font-headline-md text-headline-md shadow-lg active:scale-95 transition-transform hover:brightness-110" onclick="openAllergyForm()">
+<span class="material-symbols-outlined">add_circle</span>
+                    Khai báo dị ứng mới
+                </button>
+</div>
+</section>
+</main>
+<!-- Modal (Form Simulation) -->
+<div class="fixed inset-0 z-[100] hidden items-end sm:items-center justify-center p-container-padding bg-black/40 backdrop-blur-sm" id="allergy-modal">
+<div class="bg-surface w-full max-w-md rounded-t-2xl sm:rounded-2xl p-6 flex flex-col gap-6 animate-slide-up">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-on-background">Khai báo dị ứng</h3>
+<button class="p-2" onclick="closeAllergyForm()"><span class="material-symbols-outlined">close</span></button>
+</div>
+<div class="space-y-4">
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant px-1">Tên thực phẩm gây dị ứng</label>
+<input class="w-full h-12 px-4 rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="VD: Sữa bò, Trứng..." type="text"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant px-1">Mức độ phản ứng</label>
+<select class="w-full h-12 px-4 rounded-lg border border-outline-variant focus:border-primary outline-none">
+<option>Nhẹ (Mẩn đỏ)</option>
+<option>Trung bình (Buồn nôn)</option>
+<option>Nặng (Sốc phản vệ)</option>
+</select>
+</div>
+</div>
+<button class="w-full bg-primary py-4 rounded-xl text-on-primary font-headline-md active:scale-[0.98] transition-transform">Xác nhận gửi</button>
+</div>
+</div>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-container-padding py-2 bg-surface border-t border-outline-variant">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors px-4 py-1 rounded-lg" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Trang chủ</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors px-4 py-1 rounded-lg" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span class="font-label-sm text-label-sm">Thực đơn</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-secondary-fixed-dim font-bold hover:bg-surface-container-low transition-colors px-4 py-1 rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-label-sm text-label-sm">Dinh dưỡng</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors px-4 py-1 rounded-lg" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Cá nhân</span>
+</a>
+</nav>
+<script>
+        function openAllergyForm() {
+            const modal = document.getElementById('allergy-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAllergyForm() {
+            const modal = document.getElementById('allergy-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close on click outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('allergy-modal');
+            if (event.target == modal) {
+                closeAllergyForm();
+            }
+        }
+    </script>
+<style>
+        @keyframes slide-up {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        .animate-slide-up {
+            animation: slide-up 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</body></html>

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wireframe — Violation Management (School Administration)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<style>
+  :root{
+    --ink:#333; --line:#333; --paper:#fff; --muted:#666; --linkblue:#3a5a8c;
+  }
+  html{ font-size:18px; }
+  body{
+    margin:0; font-family:'Patrick Hand', cursive; color:var(--ink);
+    background-color:#f4f4f4;
+    background-image: radial-gradient(#d7d7d7 1px, transparent 1px);
+    background-size: 20px 20px;
+    font-size:18px;
+  }
+  .text-xs{ font-size:14px; line-height:1.4; }
+  .text-sm{ font-size:18px; line-height:1.5; }
+  .text-base{ font-size:22px; line-height:1.5; }
+  .text-md{ font-size:28px; line-height:1.3; }
+  .text-lg{ font-size:35px; line-height:1.2; }
+  .text-xl{ font-size:44px; line-height:1.1; }
+
+  a{ color:var(--linkblue); text-decoration:underline; cursor:pointer; }
+
+  button.btn-primary, button.btn-secondary{
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family:'Patrick Hand', cursive; font-size:18px; padding:10px 22px; cursor:pointer;
+  }
+  .btn-primary{ background:#333; color:#fff; border:2px solid #333; }
+  .btn-primary:disabled{ background:#aaa; border-color:#aaa; color:#eee; cursor:not-allowed; }
+  .btn-secondary{ background:#fff; color:#333; border:2px solid #333; }
+  .btn-danger{ background:#fff; color:#333; border:3px solid #333; font-family:'Patrick Hand', cursive; font-size:18px; padding:10px 22px; cursor:pointer; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; }
+
+  .sketchy{
+    border:2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    background:#fff;
+  }
+
+  /* ===== App shell ===== */
+  .app{ display:flex; min-height:100vh; }
+  .sidebar{
+    width:280px; flex-shrink:0; background:#fff; border-right:2px solid #333;
+    padding:18px 14px; box-sizing:border-box;
+  }
+  .sidebar .brand{ display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+  .sidebar .brand-title{ font-size:28px; }
+  .sidebar .brand-sub{ font-size:14px; color:var(--muted); margin-bottom:14px; }
+  .nav-group{ margin-bottom:10px; }
+  .nav-group-title{ font-size:16px; color:var(--muted); margin:14px 0 4px 4px; text-transform:uppercase; letter-spacing:1px; }
+  .nav-item{
+    display:flex; align-items:center; gap:8px; padding:7px 10px; border-radius:8px;
+    font-size:18px; color:#333; text-decoration:none;
+  }
+  .nav-item.static{ color:#999; font-size:14px; cursor:default; }
+  .nav-item.clickable{ cursor:pointer; border-left:3px solid transparent; }
+  .nav-item.clickable:hover{ background:#f0f0f0; }
+  .nav-item.active{ background:#eaeaea; border-left:3px solid #333; font-weight:bold; }
+  .nav-item svg{ flex-shrink:0; }
+
+  .main{ flex:1; padding:22px 30px; box-sizing:border-box; max-width:calc(100% - 280px); }
+  .breadcrumb{ font-size:14px; color:var(--muted); margin-bottom:6px; }
+  .page-header{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px; flex-wrap:wrap; gap:10px; }
+  .page-title{ font-size:35px; margin:0; display:flex; align-items:center; gap:10px; }
+  .page-actions{ display:flex; gap:10px; flex-wrap:wrap; }
+
+  .grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap:18px; }
+  .col-4{ grid-column: span 4; }
+  .col-6{ grid-column: span 6; }
+  .col-8{ grid-column: span 8; }
+  .col-12{ grid-column: span 12; }
+
+  .card{ padding:16px; box-sizing:border-box; }
+  .card h3{ margin:0 0 8px 0; font-size:22px; display:flex; align-items:center; gap:8px; }
+  .kpi-value{ font-size:35px; margin:4px 0; }
+  .kpi-label{ font-size:16px; color:var(--muted); }
+
+  table{ width:100%; border-collapse:collapse; font-size:18px; }
+  th{ text-align:left; border-bottom:2px solid #333; padding:8px 6px; font-size:16px; color:var(--muted); }
+  td{ padding:9px 6px; border-bottom:1px solid #ccc; }
+  tr.rowlink{ cursor:pointer; }
+  tr.rowlink:hover{ background:#f3f3f3; }
+
+  /* Badges - grayscale, distinguished by border style + icon, not color */
+  .badge{
+    display:inline-flex; align-items:center; gap:5px; padding:3px 10px; font-size:15px;
+    border-radius:12px; background:#fff;
+  }
+  .badge-success{ border:2px solid #333; }
+  .badge-warning{ border:2px dashed #333; }
+  .badge-danger{ border:3px solid #333; }
+  .badge-info{ border:1px solid #333; }
+
+  .filter-bar{ display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-bottom:16px; padding:14px; }
+  .filter-field{ display:flex; flex-direction:column; gap:3px; }
+  .filter-field label{ font-size:14px; color:var(--muted); }
+
+  .field-block{ margin-bottom:14px; }
+  .field-block label{ display:block; font-size:16px; color:var(--muted); margin-bottom:4px; }
+
+  .checklist-item{ display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid #ddd; }
+  .checklist-item:last-child{ border-bottom:none; }
+
+  .placeholder-x{ display:flex; align-items:center; justify-content:center; height:110px; font-size:28px; color:#888; }
+
+  .section-title{ display:flex; align-items:center; gap:8px; font-size:22px; margin:20px 0 8px 0; }
+
+  .note-banner{ padding:10px 14px; font-size:16px; margin-bottom:14px; border:2px dashed #333; background:#fff; border-radius:10px; }
+
+  .screen{ display:none; }
+  .screen.active{ display:block; }
+
+  .disabled-hint{ font-size:14px; color:var(--muted); margin-top:6px; }
+
+  footer.tag{ text-align:center; font-size:14px; color:#999; padding:24px 0 10px; }
+</style>
+</head>
+<body>
+
+<!-- ============ ICONS (inline SVG doodle, line-art) ============ -->
+<svg style="display:none">
+  <symbol id="ic-dashboard" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="14" y="3" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="3" y="14" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="14" y="14" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="ic-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17" cy="9" r="2.4" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M15.5 14c2.8 0 5 2.1 5.3 5" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="ic-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="ic-truck" viewBox="0 0 24 24"><rect x="2" y="7" width="11" height="8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M13 10h4l3 3v2h-7z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="17" r="1.6" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="17" cy="17" r="1.6" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="ic-alert" viewBox="0 0 24 24"><path d="M12 3 2 20h20L12 3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 10v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="17" r="0.9" fill="currentColor"/></symbol>
+  <symbol id="ic-report" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="ic-list" viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="4" cy="6" r="1.2" fill="currentColor"/><circle cx="4" cy="12" r="1.2" fill="currentColor"/><circle cx="4" cy="18" r="1.2" fill="currentColor"/></symbol>
+  <symbol id="ic-file" viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M15 2v5h5" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24"><path d="M4 13l5 5L20 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-cross" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="ic-triangle" viewBox="0 0 24 24"><path d="M12 4 2 20h20L12 4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 10v4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="17" r="0.8" fill="currentColor"/></symbol>
+  <symbol id="ic-export" viewBox="0 0 24 24"><path d="M12 3v11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M7 9l5-6 5 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 15v5h16v-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="ic-clipboard" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="8" y="2" width="8" height="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="ic-search" viewBox="0 0 24 24"><circle cx="10" cy="10" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="ic-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 10V7a4 4 0 018 0v3" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="ic-back" viewBox="0 0 24 24"><path d="M15 5l-8 7 8 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.5-9.5-9C.8 7.3 3 4 6.5 4c2 0 3.3 1.2 4 2.2C11.2 5.2 12.5 4 14.5 4 18 4 20.2 7.3 21.5 11c-2.5 4.5-9.5 9-9.5 9z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="ic-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3.5 7.8-7 9-3.5-1.2-7-4-7-9V6l7-3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-gavel" viewBox="0 0 24 24"><path d="M3 21h9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9 15l6-6M13 5l6 6-3 3-6-6 3-3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 16l4-4 3 3-4 4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-link" viewBox="0 0 24 24"><path d="M9 15l6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M8 17l-3 3a3.5 3.5 0 01-5-5l3-3M16 7l3-3a3.5 3.5 0 015 5l-3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+</svg>
+
+<div class="app">
+  <!-- ============ SIDEBAR ============ -->
+  <div class="sidebar">
+    <div class="brand">
+      <svg width="26" height="26"><use href="#ic-heart"/></svg>
+      <span class="brand-title">SFMS</span>
+    </div>
+    <div class="brand-sub">School Administration</div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Quản lý Lớp/Học sinh</div>
+      <div class="nav-item static"><svg width="18" height="18"><use href="#ic-users"/></svg> Classroom Management (xem file wireframe nhóm khác)</div>
+      <div class="nav-item static"><svg width="18" height="18"><use href="#ic-users"/></svg> Student Profile Management (xem file wireframe nhóm khác)</div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Quản lý Nhà cung cấp</div>
+      <div class="nav-item static"><svg width="18" height="18"><use href="#ic-truck"/></svg> Supplier Partnership Requests (xem file wireframe nhóm khác)</div>
+      <div class="nav-item static"><svg width="18" height="18"><use href="#ic-truck"/></svg> Catering Partnership Requests (xem file wireframe nhóm khác)</div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Kiểm tra &amp; Sự cố</div>
+      <div class="nav-item static"><svg width="18" height="18"><use href="#ic-dashboard"/></svg> Incident Dashboard (xem file wireframe 08_IncidentManagement)</div>
+      <div class="nav-item static"><svg width="18" height="18"><use href="#ic-report"/></svg> Compliance Dashboard (xem file wireframe nhóm khác)</div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Vi phạm / Violation</div>
+      <div class="nav-item clickable active" onclick="showScreen('screen-registry')">
+        <svg width="18" height="18"><use href="#ic-shield"/></svg> Violation Registry
+      </div>
+      <div class="nav-item clickable" id="nav-detail" style="display:none;" onclick="showScreen('screen-detail')">
+        <svg width="18" height="18"><use href="#ic-file"/></svg> Violation Detail (Resolution)
+      </div>
+      <div class="nav-item clickable" id="nav-approve" style="display:none;" onclick="showScreen('screen-approve')">
+        <svg width="18" height="18"><use href="#ic-gavel"/></svg> Approve/Reject Resolution
+      </div>
+      <div class="nav-item clickable" onclick="showScreen('screen-override')">
+        <svg width="18" height="18"><use href="#ic-report"/></svg> Weekly Override Abuse Report
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Báo cáo</div>
+      <div class="nav-item static"><svg width="18" height="18"><use href="#ic-file"/></svg> Analytics Dashboard (xem file wireframe nhóm khác)</div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Khác</div>
+      <div class="nav-item static"><svg width="18" height="18"><use href="#ic-menu"/></svg> School Announcement Management (xem file wireframe nhóm khác)</div>
+      <div class="nav-item static"><svg width="18" height="18"><use href="#ic-users"/></svg> Staff Management (xem file wireframe nhóm khác)</div>
+      <div class="nav-item static"><svg width="18" height="18"><use href="#ic-lock"/></svg> School Configuration (xem file wireframe nhóm khác)</div>
+    </div>
+  </div>
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <div class="main">
+
+    <!-- ======================================================= -->
+    <!-- SCREEN 1: VIOLATION REGISTRY (UC-181) -->
+    <!-- ======================================================= -->
+    <div class="screen active" id="screen-registry">
+      <div class="breadcrumb">Vi phạm / Violation Registry</div>
+      <div class="page-header">
+        <h1 class="page-title"><svg width="30" height="30"><use href="#ic-shield"/></svg> Violation Registry</h1>
+        <div class="page-actions">
+          <button class="btn-secondary" onclick="showScreen('screen-override')"><svg width="16" height="16"><use href="#ic-report"/></svg> Weekly Override Abuse Report</button>
+        </div>
+      </div>
+
+      <div class="filter-bar sketchy">
+        <div class="filter-field">
+          <label>Loại (Process/Staff/Partner)</label>
+          <wired-combo selected="Tất cả" style="width:180px;">
+            <wired-item value="all">Tất cả</wired-item>
+            <wired-item value="process">Process</wired-item>
+            <wired-item value="staff">Staff</wired-item>
+            <wired-item value="partner">Partner</wired-item>
+          </wired-combo>
+        </div>
+        <div class="filter-field">
+          <label>Severity</label>
+          <wired-combo selected="Tất cả" style="width:150px;">
+            <wired-item value="all">Tất cả</wired-item>
+            <wired-item value="high">High</wired-item>
+            <wired-item value="medium">Medium</wired-item>
+            <wired-item value="low">Low</wired-item>
+          </wired-combo>
+        </div>
+        <div class="filter-field">
+          <label>Status</label>
+          <wired-combo selected="Tất cả" style="width:170px;">
+            <wired-item value="all">Tất cả</wired-item>
+            <wired-item value="pending">Pending</wired-item>
+            <wired-item value="approved">Approved</wired-item>
+            <wired-item value="closed">Closed</wired-item>
+          </wired-combo>
+        </div>
+      </div>
+
+      <div class="section-title"><svg width="22" height="22"><use href="#ic-list"/></svg> Bảng danh sách vi phạm hợp nhất (Process + Staff Conduct)</div>
+      <div class="card sketchy" style="padding:0;">
+        <table>
+          <thead>
+            <tr><th>Type</th><th>Actor / Staff Name</th><th>Severity</th><th>Status</th><th>Reported Date</th><th></th></tr>
+          </thead>
+          <tbody>
+            <tr class="rowlink" onclick="showScreen('screen-detail')">
+              <td>Staff Conduct</td>
+              <td>Phạm Thị Kim Yến (Nhân viên bếp)
+                <span class="badge badge-warning" title="Nghi ngờ tái diễn (best-effort, BR-187)"><svg width="12" height="12"><use href="#ic-alert"/></svg> Nghi tái diễn</span>
+              </td>
+              <td><span class="badge badge-warning"><svg width="12" height="12"><use href="#ic-triangle"/></svg> Medium</span></td>
+              <td><span class="badge badge-warning">Pending</span></td>
+              <td>28/06/2026</td>
+              <td><a onclick="event.stopPropagation(); showScreen('screen-detail')">Xem xử lý</a></td>
+            </tr>
+            <tr class="rowlink" onclick="showScreen('screen-detail')">
+              <td>Process</td>
+              <td>Quy trình Three-Step Inspection — Bếp ăn An Lành</td>
+              <td><span class="badge badge-danger"><svg width="12" height="12"><use href="#ic-triangle"/></svg> High</span></td>
+              <td><span class="badge badge-warning">Pending</span></td>
+              <td>26/06/2026</td>
+              <td><a onclick="event.stopPropagation(); showScreen('screen-detail')">Xem xử lý</a></td>
+            </tr>
+            <tr>
+              <td>Staff Conduct</td>
+              <td>Nguyễn Văn Đức (Bảo vệ)</td>
+              <td><span class="badge badge-info">Low</span></td>
+              <td><span class="badge badge-success"><svg width="12" height="12"><use href="#ic-check"/></svg> Closed</span></td>
+              <td>18/06/2026</td>
+              <td><span class="disabled-hint">Chưa có biên bản xử lý</span></td>
+            </tr>
+            <tr class="rowlink" onclick="showScreen('screen-detail')">
+              <td>Partner</td>
+              <td>Nhà cung cấp Rau sạch Ba Vì</td>
+              <td><span class="badge badge-warning"><svg width="12" height="12"><use href="#ic-triangle"/></svg> Medium</span></td>
+              <td><span class="badge badge-success"><svg width="12" height="12"><use href="#ic-check"/></svg> Approved</span></td>
+              <td>10/06/2026</td>
+              <td><a onclick="event.stopPropagation(); showScreen('screen-detail')">Xem xử lý</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="disabled-hint" style="margin-top:10px;">Trạng thái Empty: "Không có vi phạm nào khớp bộ lọc" (trạng thái tích cực). Badge cảnh báo tái diễn hiển thị best-effort, không tự động escalate (BR-187, MSG-088).</div>
+    </div>
+
+    <!-- ======================================================= -->
+    <!-- SCREEN 2: VIOLATION DETAIL / RECORD VIOLATION RESOLUTION (bản xem School Admin) -->
+    <!-- ======================================================= -->
+    <div class="screen" id="screen-detail">
+      <div class="breadcrumb">Vi phạm / Violation Registry / Violation Detail (Resolution)</div>
+      <div class="page-header">
+        <div>
+          <a onclick="showScreen('screen-registry')" style="font-size:16px;"><svg width="14" height="14"><use href="#ic-back"/></svg> Quay lại Violation Registry</a>
+          <h1 class="page-title" style="margin-top:4px;">
+            Biên bản xử lý sai phạm
+            <span class="badge badge-warning">Pending Approval</span>
+          </h1>
+        </div>
+      </div>
+
+      <div class="note-banner">
+        <svg width="16" height="16"><use href="#ic-alert"/></svg>
+        Đây là bản xem (read-only) dành cho School Administration — biên bản do <strong>Medical Staff</strong> lập. School Administration không tự lập biên bản xử lý, chỉ xem lại và chuyển sang duyệt khi cần (BR-186).
+      </div>
+
+      <div class="grid">
+        <div class="col-8">
+          <div class="card sketchy" style="margin-bottom:16px;">
+            <h3><svg width="20" height="20"><use href="#ic-link"/></svg> Vi phạm gốc liên kết</h3>
+            <p class="text-base" style="margin:0 0 6px 0;">Staff Conduct — Phạm Thị Kim Yến (Nhân viên bếp): không tuân thủ quy trình vệ sinh cá nhân trước ca chế biến, bị phát hiện trong đợt kiểm tra Three-Step Inspection ngày 28/06/2026.</p>
+            <a onclick="showScreen('screen-registry')">Xem chi tiết trong Violation Registry</a>
+          </div>
+
+          <div class="card sketchy">
+            <h3><svg width="20" height="20"><use href="#ic-clipboard"/></svg> Hành động xử lý đề xuất</h3>
+            <p class="text-sm" style="margin:0 0 6px 0;">
+              <span class="disabled-hint">(đọc-only ở view School Admin)</span>
+            </p>
+            <p class="text-base" style="margin:0;">Nhắc nhở bằng văn bản, yêu cầu đào tạo lại quy trình vệ sinh cá nhân trong vòng 3 ngày làm việc; theo dõi tái phạm trong 30 ngày tiếp theo.</p>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div class="card sketchy" style="margin-bottom:16px;">
+            <h3 class="text-base"><svg width="18" height="18"><use href="#ic-users"/></svg> Người xử lý</h3>
+            <p class="text-sm" style="margin:0;">Điều dưỡng Trần Thị Hạnh (Medical Staff)</p>
+          </div>
+
+          <div class="card sketchy" style="margin-bottom:16px;">
+            <h3 class="text-base"><svg width="18" height="18"><use href="#ic-gavel"/></svg> Mức độ hình thức kỷ luật</h3>
+            <span class="badge badge-warning"><svg width="14" height="14"><use href="#ic-triangle"/></svg> Cảnh cáo</span>
+            <div class="disabled-hint">Chỉ áp dụng vi phạm nhân viên (BR-185).</div>
+          </div>
+
+          <div class="card sketchy" style="margin-bottom:16px;">
+            <h3 class="text-base"><svg width="18" height="18"><use href="#ic-shield"/></svg> Trạng thái</h3>
+            <span class="badge badge-warning">Pending Approval</span>
+            <div class="disabled-hint">Medium/High cần School Admin phê duyệt (BR-186).</div>
+          </div>
+
+          <button class="btn-primary" style="width:100%;" onclick="showScreen('screen-approve')">Chuyển sang duyệt</button>
+          <div class="disabled-hint">Chỉ hiện nút này nếu Pending Approval (Medium/High).</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================= -->
+    <!-- SCREEN 3: APPROVE/REJECT VIOLATION RESOLUTION (UC-182) -->
+    <!-- ======================================================= -->
+    <div class="screen" id="screen-approve">
+      <div class="breadcrumb">Vi phạm / Violation Registry / Approve/Reject Violation Resolution</div>
+      <div class="page-header">
+        <div>
+          <a onclick="showScreen('screen-detail')" style="font-size:16px;"><svg width="14" height="14"><use href="#ic-back"/></svg> Quay lại Violation Detail</a>
+          <h1 class="page-title" style="margin-top:4px;"><svg width="30" height="30"><use href="#ic-gavel"/></svg> Approve/Reject Violation Resolution</h1>
+        </div>
+        <div class="page-actions">
+          <button class="btn-primary" onclick="approveResolution()"><svg width="16" height="16"><use href="#ic-check"/></svg> Approve</button>
+          <button class="btn-danger" onclick="toggleRejectReason()"><svg width="16" height="16"><use href="#ic-cross"/></svg> Reject</button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="col-8" style="grid-column: span 8; margin: 0 auto; float:none;">
+          <div class="card sketchy" style="margin-bottom:16px;">
+            <h3><svg width="20" height="20"><use href="#ic-alert"/></svg> Chi tiết vi phạm gốc</h3>
+            <p class="text-base" style="margin:0;">Staff Conduct — Phạm Thị Kim Yến (Nhân viên bếp): không tuân thủ quy trình vệ sinh cá nhân trước ca chế biến, bị phát hiện trong đợt kiểm tra Three-Step Inspection ngày 28/06/2026. Severity: Medium.</p>
+          </div>
+
+          <div class="card sketchy" style="margin-bottom:16px;">
+            <h3><svg width="20" height="20"><use href="#ic-clipboard"/></svg> Đề xuất xử lý + mức kỷ luật</h3>
+            <p class="text-base" style="margin:0 0 8px 0;">Nhắc nhở bằng văn bản, yêu cầu đào tạo lại quy trình vệ sinh cá nhân trong vòng 3 ngày làm việc; theo dõi tái phạm trong 30 ngày tiếp theo.</p>
+            <span class="badge badge-warning"><svg width="14" height="14"><use href="#ic-triangle"/></svg> Mức kỷ luật: Cảnh cáo</span>
+          </div>
+
+          <div id="reject-reason-block" class="card sketchy" style="display:none; border-width:3px;">
+            <h3><svg width="20" height="20"><use href="#ic-triangle"/></svg> Lý do Reject (bắt buộc)</h3>
+            <wired-textarea id="reject-reason-input" placeholder="Nhập lý do từ chối — bắt buộc (AF1). Nếu để trống sẽ chặn submit." style="width:100%;" rows="3"></wired-textarea>
+            <div id="reject-error" class="text-sm" style="display:none; margin-top:6px;">
+              <span class="badge badge-danger"><svg width="14" height="14"><use href="#ic-cross"/></svg> Lỗi</span>
+              Vui lòng nhập lý do từ chối trước khi Reject (AF1 — bắt buộc lý do).
+            </div>
+            <div class="disabled-hint">Sau khi Reject, biên bản trả về Medical Staff để sửa lại (revision) — không dựng màn Medical Staff thật trong wireframe này.</div>
+            <div style="margin-top:10px;">
+              <button class="btn-danger" onclick="submitReject()">Xác nhận Reject</button>
+            </div>
+          </div>
+
+          <div id="approve-success" class="note-banner" style="display:none;">
+            <svg width="16" height="16"><use href="#ic-check"/></svg>
+            MSG-089: Phê duyệt thành công — vi phạm gốc đã đóng, mức kỷ luật "Cảnh cáo" đã được áp dụng, log ghi nhận. Đang quay về Violation Registry...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================= -->
+    <!-- SCREEN 4: WEEKLY OVERRIDE ABUSE REPORT (UC-183) -->
+    <!-- ======================================================= -->
+    <div class="screen" id="screen-override">
+      <div class="breadcrumb">Vi phạm / Weekly Override Abuse Report</div>
+      <div class="page-header">
+        <h1 class="page-title"><svg width="30" height="30"><use href="#ic-report"/></svg> Weekly Override Abuse Report</h1>
+        <div class="page-actions">
+          <button class="btn-primary" onclick="exportOverrideReport()"><svg width="16" height="16"><use href="#ic-export"/></svg> Export</button>
+        </div>
+      </div>
+
+      <div class="filter-bar sketchy">
+        <div class="filter-field">
+          <label>Chọn tuần</label>
+          <div style="display:flex; gap:6px; align-items:center;">
+            <wired-input placeholder="Tuần 26 (22/06 - 28/06/2026)" style="width:240px;"></wired-input>
+            <svg width="18" height="18"><use href="#ic-calendar"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-title"><svg width="22" height="22"><use href="#ic-list"/></svg> Bảng báo cáo (tự động biên soạn hàng tuần từ StaffViolationRecord — OVERRIDE_ABUSE)</div>
+      <div class="card sketchy" style="padding:0;">
+        <table>
+          <thead>
+            <tr><th>Staff Name</th><th>Override Count</th><th>Context</th><th>Severity</th></tr>
+          </thead>
+          <tbody>
+            <tr class="rowlink" onclick="showScreen('screen-registry')">
+              <td>Phạm Thị Kim Yến (Nhân viên bếp)</td>
+              <td>6</td>
+              <td>Override nhiệt độ bảo quản nguyên liệu tươi sống, không ghi lý do</td>
+              <td><span class="badge badge-danger"><svg width="12" height="12"><use href="#ic-triangle"/></svg> High</span></td>
+            </tr>
+            <tr class="rowlink" onclick="showScreen('screen-registry')">
+              <td>Lê Văn Sơn (Quản lý kho)</td>
+              <td>3</td>
+              <td>Override cảnh báo hạn sử dụng lô hàng khi nhận</td>
+              <td><span class="badge badge-warning"><svg width="12" height="12"><use href="#ic-triangle"/></svg> Medium</span></td>
+            </tr>
+            <tr class="rowlink" onclick="showScreen('screen-registry')">
+              <td>Đặng Thị Ngọc (Nhân viên bếp)</td>
+              <td>2</td>
+              <td>Override bước kiểm tra cảm quan trong Three-Step Inspection</td>
+              <td><span class="badge badge-info">Low</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="disabled-hint" style="margin-top:10px;">Click 1 dòng để drill down sang Violation Registry (lọc theo staff tương ứng). Trạng thái Empty: "Không có trường hợp lạm dụng override nào trong tuần này" (trạng thái tích cực).</div>
+      <div id="export-hint" class="note-banner" style="display:none; margin-top:14px;">
+        <svg width="16" height="16"><use href="#ic-export"/></svg>
+        Đang xuất file Export CSV/PDF báo cáo Weekly Override Abuse (mô phỏng, AF1 UC-183)...
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer class="tag">Wireframe low-fidelity — SFMS · School Administration · Violation Management (Draft, chưa qua QA)</footer>
+
+<script>
+  function showScreen(id){
+    document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+    document.getElementById(id).classList.add('active');
+
+    // Show contextual nav items once user has navigated into the detail/approve flow
+    if (id === 'screen-detail' || id === 'screen-approve') {
+      document.getElementById('nav-detail').style.display = 'flex';
+      document.getElementById('nav-approve').style.display = 'flex';
+    }
+
+    document.querySelectorAll('.nav-item.clickable').forEach(function(n){ n.classList.remove('active'); });
+    var idToNav = {
+      'screen-registry': 0,
+      'screen-detail': 1,
+      'screen-approve': 2,
+      'screen-override': 3
+    };
+    var clickables = document.querySelectorAll('.nav-item.clickable');
+    var idx = idToNav[id];
+    if (idx !== undefined && clickables[idx] && clickables[idx].style.display !== 'none') {
+      clickables[idx].classList.add('active');
+    } else {
+      clickables[0].classList.add('active');
+    }
+    window.scrollTo(0,0);
+  }
+
+  function toggleRejectReason(){
+    var block = document.getElementById('reject-reason-block');
+    block.style.display = (block.style.display === 'none') ? 'block' : 'none';
+  }
+
+  function submitReject(){
+    var val = document.getElementById('reject-reason-input').value.trim();
+    var err = document.getElementById('reject-error');
+    if (!val) {
+      err.style.display = 'block';
+      return;
+    }
+    err.style.display = 'none';
+    alert('Reject thành công (mô phỏng) — biên bản trả về Medical Staff kèm lý do để sửa lại (revision). Không tự động escalate.');
+  }
+
+  function approveResolution(){
+    document.getElementById('approve-success').style.display = 'block';
+    setTimeout(function(){
+      showScreen('screen-registry');
+      document.getElementById('approve-success').style.display = 'none';
+    }, 1400);
+  }
+
+  function exportOverrideReport(){
+    var hint = document.getElementById('export-hint');
+    hint.style.display = 'block';
+    setTimeout(function(){ hint.style.display = 'none'; }, 2500);
+  }
+</script>
+
+</body>
+</html>

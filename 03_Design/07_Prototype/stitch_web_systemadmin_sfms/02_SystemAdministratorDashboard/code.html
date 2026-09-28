@@ -1,0 +1,267 @@
+<!DOCTYPE html><html class="light" lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>sfms - Tổng quan</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#006781",
+                        "inverse-on-surface": "#eef0ff",
+                        "on-secondary-fixed": "#0b1c30",
+                        "tertiary-fixed-dim": "#ffb86f",
+                        "on-surface": "#131b2e",
+                        "on-background": "#131b2e",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f2f3ff",
+                        "primary-fixed": "#b9eaff",
+                        "inverse-primary": "#81d1f0",
+                        "on-primary-container": "#d3f1ff",
+                        "surface-container-highest": "#dae2fd",
+                        "on-error-container": "#93000a",
+                        "primary-fixed-dim": "#81d1f0",
+                        "primary-container": "#0e7490",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "secondary-container": "#d0e1fb",
+                        "surface-variant": "#dae2fd",
+                        "inverse-surface": "#283044",
+                        "surface": "#faf8ff",
+                        "on-tertiary-fixed": "#2c1600",
+                        "on-tertiary-container": "#ffe8d6",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#505f76",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#faf8ff",
+                        "surface-container": "#eaedff",
+                        "on-primary-fixed-variant": "#004d62",
+                        "primary": "#005a71",
+                        "outline-variant": "#bec8cd",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#794602",
+                        "outline": "#6f787d",
+                        "surface-dim": "#d2d9f4",
+                        "tertiary-container": "#965e1c",
+                        "tertiary-fixed": "#ffdcbd",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-secondary-container": "#54647a",
+                        "on-primary-fixed": "#001f29",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-tertiary-fixed-variant": "#693c00",
+                        "on-surface-variant": "#3f484c",
+                        "surface-container-high": "#e2e7ff",
+                        "background": "#faf8ff",
+                        "on-primary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "1rem",
+                        "component-padding-y": "0.5rem",
+                        "container-margin": "2rem",
+                        "section-gap": "1.5rem",
+                        "component-padding-x": "1rem"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Be Vietnam Pro"],
+                        "display": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "title-md": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "title-lg": ["Be Vietnam Pro"],
+                        "headline-lg-mobile": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "title-lg": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #F8FAFC; /* Custom extremely light gray for background */
+            font-family: 'Be Vietnam Pro', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body class="text-on-background bg-[#F8FAFC]">
+<!-- SideNavBar (from JSON) -->
+<nav class="fixed left-0 top-0 h-full w-[260px] bg-surface dark:bg-inverse-surface border-r border-outline-variant dark:border-outline flex flex-col p-gutter gap-section-gap z-50">
+<!-- Brand Logo -->
+<div class="flex items-center gap-3 px-3 py-4">
+<img alt="sfms Logo" class="w-8 h-8 rounded-md object-contain" data-alt="A small, modern, geometric logo for an educational management system (sfms). Clean lines, tech-focused, professional blue tones. Isolated on white background, high resolution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWEE77e28UqILpx6qAmUXcNfeY-7B2hqlsWs-ZY7pIPzriNdUxm5WjRNVV_cNIw8jbN8BVQsnombTwXUtpBPUr2III67F1kjamzevAuxf8iMEXP19_veE_yniIm1qDmviT7AO1xS9ouxoDB4Is3uPH2MaRDpEr8X4ZNOiMBwmZEt4trYbB8hSJ5-NK8RUDKTNO4VbPY6MzRSn7631Tn3XIEc2_C07s-c6wQkLrw9u479lma0mOzM41eTPD7Z2rS4i4hkEfoSGtvbDh">
+<div>
+<h1 class="font-display text-display font-bold text-primary dark:text-inverse-primary leading-none">sfms</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Hệ thống Quản trị</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<div class="flex flex-col gap-1 flex-1 mt-4">
+<!-- Active: Tổng quan -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary font-bold opacity-90 transition-all duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-md text-label-md">Tổng quan</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined">manage_accounts</span>
+<span class="font-label-md text-label-md">Người dùng &amp; Vai trò</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined">school</span>
+<span class="font-label-md text-label-md">Trường học</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Cấu hình hệ thống</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined">policy</span>
+<span class="font-label-md text-label-md">Giám sát &amp; Audit</span>
+</a>
+</div>
+</nav>
+<!-- TopAppBar (from JSON) -->
+<header class="sticky top-0 z-40 flex justify-between items-center h-16 px-container-margin ml-[260px] bg-surface/80 backdrop-blur-md border-b border-outline-variant dark:border-outline">
+<!-- Search Bar (on_left as per JSON) -->
+<div class="flex-1 max-w-md relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full h-9 pl-10 pr-4 rounded-md border border-outline-variant bg-surface text-on-surface font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="Tìm kiếm hệ thống..." type="text">
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary hover:bg-surface-container-high transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 rounded-full text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary hover:bg-surface-container-high transition-colors">
+<img alt="Admin Avatar" class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="A professional headshot of a system administrator, neutral background, sharp focus, clear lighting. Wearing a neat collared shirt. Square crop, professional tone." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEbYcqLYMPDjsZsLkTkrh2eJS_oZM7FDTtUWyRhq9LycXHvwo6u3wHAiJ86RD_TQHhV_XxcXUzj1AZYqSYbrcvRKR1VyC2JUFkUoOKdeRQ7mmB11zPzf-GA3HMDbDds-gz8qz0w7KAsSNX9XROvRCFQDEuQK0fNCOo5ySHDgOV6KnNANkIutuM7nVdYfTqB8EXQO4NG6aTHyAf2qKI86PQaOLdq40rZIA9O6OY9nOv2zW4H1Dlopoa0FrRlYr6BrKxBcGhYp-GnZBd">
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[260px] p-container-margin pt-6 flex flex-col gap-section-gap">
+<!-- Page Header -->
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-1">Tổng quan Hệ thống</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Cập nhật nhanh tình trạng hoạt động và các cảnh báo quan trọng.</p>
+</div>
+<!-- Critical Alert Card (Red style) -->
+
+<!-- Bento Grid: Stats & Shortcuts -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<!-- Stat 1: Total Schools -->
+<div class="col-span-1 bg-surface border border-outline-variant/50 rounded-lg p-5 flex flex-col justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-md text-label-md text-on-surface-variant">Tổng số Trường học</span>
+<span class="material-symbols-outlined text-outline">school</span>
+</div>
+<div>
+<h4 class="font-display text-display text-on-surface mb-2">1,248</h4>
+<div class="flex items-center gap-2 font-label-sm text-label-sm">
+<span class="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800">1,200 Hoạt động</span>
+<span class="px-1.5 py-0.5 rounded bg-amber-100 text-amber-800">48 Chờ duyệt</span>
+</div>
+</div>
+</div>
+<!-- Stat 2: Active Users -->
+<div class="col-span-1 bg-surface border border-outline-variant/50 rounded-lg p-5 flex flex-col justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-md text-label-md text-on-surface-variant">Người dùng Đang HĐ</span>
+<span class="material-symbols-outlined text-outline">group</span>
+</div>
+<div>
+<h4 class="font-display text-display text-on-surface mb-2">45.2K</h4>
+<div class="flex items-center gap-1 font-label-sm text-label-sm text-emerald-600">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span class="">+12% so với tháng trước</span>
+</div>
+</div>
+</div>
+<!-- Stat 3: System Health -->
+<div class="col-span-1 bg-surface border border-outline-variant/50 rounded-lg p-5 flex flex-col justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-md text-label-md text-on-surface-variant">Trạng thái Hệ thống</span>
+<span class="material-symbols-outlined text-outline">monitor_heart</span>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2">Healthy</h4>
+<div class="flex items-center gap-2 font-label-sm text-label-sm">
+<span class="px-2 py-1 rounded bg-emerald-100 text-emerald-800 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> API: OK
+                        </span>
+<span class="px-2 py-1 rounded bg-amber-100 text-amber-800 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span> DB: High Load
+                        </span>
+</div>
+</div>
+</div>
+<!-- Shortcuts -->
+<div class="col-span-1 bg-surface border border-outline-variant/50 rounded-lg p-5 flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant mb-4">Truy cập nhanh</span>
+<div class="grid grid-cols-2 gap-2 flex-1">
+<button class="flex flex-col items-center justify-center p-2 rounded-md bg-surface-container hover:bg-surface-container-high transition-colors text-on-surface gap-1">
+<span class="material-symbols-outlined text-[20px] text-primary">person_add</span>
+<span class="font-label-sm text-label-sm text-center line-clamp-1">Quản lý người dùng</span>
+</button>
+<button class="flex flex-col items-center justify-center p-2 rounded-md bg-surface-container hover:bg-surface-container-high transition-colors text-on-surface gap-1">
+<span class="material-symbols-outlined text-[20px] text-primary">badge</span>
+<span class="font-label-sm text-label-sm text-center line-clamp-1">Danh sách vai trò</span>
+</button>
+<button class="flex flex-col items-center justify-center p-2 rounded-md bg-surface-container hover:bg-surface-container-high transition-colors text-on-surface gap-1">
+<span class="material-symbols-outlined text-[20px] text-primary">history</span>
+<span class="font-label-sm text-label-sm text-center line-clamp-1">Nhật ký hệ thống</span>
+</button>
+<button class="flex flex-col items-center justify-center p-2 rounded-md bg-surface-container hover:bg-surface-container-high transition-colors text-on-surface gap-1">
+<span class="material-symbols-outlined text-[20px] text-primary">smart_toy</span>
+<span class="font-label-sm text-label-sm text-center line-clamp-1">Cấu hình AI</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Activity Chart Section (Placeholder for functional aesthetic) -->
+<div class="bg-surface border border-outline-variant/50 rounded-lg p-6 h-[400px] flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface">Hoạt động hệ thống (24h qua)</h3>
+<p class="font-body-sm text-label-sm text-on-surface-variant">Lưu lượng truy cập và tác vụ xử lý</p>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-label-sm font-label-sm bg-surface-container-high text-on-surface rounded-md">Ngày</button>
+<button class="px-3 py-1 text-label-sm font-label-sm text-on-surface-variant hover:bg-surface-container rounded-md">Tuần</button>
+</div>
+</div>
+<!-- Mock Chart Area using inline styles for a clean layout -->
+<div class="flex-1 relative flex items-end justify-between px-4 pb-8 pt-4 border-l border-b border-outline-variant/30">
+<!-- Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20">
+<div class="border-t border-outline-variant w-full h-0"></div>
+</div></div></div></main>
+
+</body></html>

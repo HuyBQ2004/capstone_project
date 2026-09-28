@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: sfms-postgres
+    environment:
+      POSTGRES_DB: sfms
+      POSTGRES_USER: sfms
+      POSTGRES_PASSWORD: sfms
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: sfms-mailpit
+    ports:
+      - "1025:1025" # SMTP port
+      - "8025:8025" # Web UI port
+    restart: always
+
+volumes:
+  pgdata:

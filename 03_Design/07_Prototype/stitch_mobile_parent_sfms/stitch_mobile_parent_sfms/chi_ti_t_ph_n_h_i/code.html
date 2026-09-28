@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chi tiết Phản hồi | SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #f8f9ff;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .timeline-line {
+            width: 2px;
+            background: repeating-linear-gradient(to bottom, #005a71 0, #005a71 4px, transparent 4px, transparent 8px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#81d1f0",
+                        "background": "#f8f9ff",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "tertiary": "#764900",
+                        "secondary-container": "#6cf8bb",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#d3e4fe",
+                        "secondary": "#006c49",
+                        "outline": "#6f787d",
+                        "on-secondary-fixed-variant": "#005236",
+                        "surface-dim": "#cbdbf5",
+                        "on-secondary-container": "#00714d",
+                        "on-primary-fixed": "#001f29",
+                        "tertiary-fixed": "#ffddb8",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#005a71",
+                        "surface-container": "#e5eeff",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "surface-container-low": "#eff4ff",
+                        "primary-fixed-dim": "#81d1f0",
+                        "on-background": "#0b1c30",
+                        "on-error": "#ffffff",
+                        "on-surface": "#0b1c30",
+                        "tertiary-container": "#965f00",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-secondary-fixed": "#002113",
+                        "surface-container-highest": "#d3e4fe",
+                        "on-tertiary-container": "#ffe9d4",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#006781",
+                        "surface-bright": "#f8f9ff",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed": "#b9eaff",
+                        "outline-variant": "#bec8cd",
+                        "on-error-container": "#93000a",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-primary-fixed-variant": "#004d62",
+                        "on-surface-variant": "#3f484c",
+                        "secondary-fixed": "#6ffbbe",
+                        "surface-container-high": "#dce9ff",
+                        "secondary-fixed-dim": "#4edea3",
+                        "inverse-surface": "#213145",
+                        "surface": "#f8f9ff",
+                        "primary-container": "#0e7490",
+                        "on-primary-container": "#d3f1ff",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "container-padding": "16px",
+                        "section-margin": "24px",
+                        "grid-gutter": "16px",
+                        "element-gap": "12px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-md": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface antialiased mb-20">
+<!-- TopAppBar -->
+<header class="bg-surface sticky top-0 z-50 border-b border-outline-variant flex items-center justify-between px-container-padding h-16 w-full">
+<div class="flex items-center gap-4">
+<button aria-label="Go back" class="active:scale-95 transition-transform p-2 hover:bg-surface-container rounded-full">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary">Chi tiết Phản hồi</h1>
+</div>
+<button aria-label="Notifications" class="active:scale-95 transition-transform p-2 hover:bg-surface-container rounded-full">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+</header>
+<main class="max-w-screen-md mx-auto px-container-padding py-section-margin">
+<!-- Status Tracker (Bento-style layout) -->
+<section class="mb-section-margin bg-white border border-outline-variant rounded-xl p-container-padding shadow-sm overflow-hidden">
+<div class="flex items-center justify-between mb-6">
+<h2 class="font-headline-md text-headline-md text-primary">Trạng thái xử lý</h2>
+<span class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                    Đã hoàn thành
+                </span>
+</div>
+<div class="relative flex justify-between items-start">
+<!-- Progress Line -->
+<div class="absolute top-4 left-6 right-6 h-0.5 bg-outline-variant z-0"></div>
+<div class="absolute top-4 left-6 w-full h-0.5 bg-primary z-0 origin-left" style="transform: scaleX(1);"></div>
+<!-- Step 1 -->
+<div class="flex flex-col items-center gap-2 z-10 bg-white px-2">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white ring-4 ring-white">
+<span class="material-symbols-outlined text-sm">send</span>
+</div>
+<div class="text-center">
+<p class="font-label-sm text-label-sm text-primary">Đã gửi</p>
+<p class="text-[10px] text-outline">10:20, 15/10</p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center gap-2 z-10 bg-white px-2">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white ring-4 ring-white">
+<span class="material-symbols-outlined text-sm">visibility</span>
+</div>
+<div class="text-center">
+<p class="font-label-sm text-label-sm text-primary">Đã xem</p>
+<p class="text-[10px] text-outline">14:15, 15/10</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center gap-2 z-10 bg-white px-2">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white ring-4 ring-white">
+<span class="material-symbols-outlined text-sm">task_alt</span>
+</div>
+<div class="text-center">
+<p class="font-label-sm text-label-sm text-primary">Hoàn tất</p>
+<p class="text-[10px] text-outline">09:30, 16/10</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Original Feedback Content -->
+<section class="mb-section-margin">
+<div class="flex flex-col gap-element-gap">
+<div class="bg-white border border-outline-variant rounded-xl p-container-padding">
+<div class="flex items-center gap-2 mb-3">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">
+                            Vệ sinh thực phẩm
+                        </span>
+<span class="text-outline text-[12px]">•</span>
+<span class="text-outline font-label-sm text-label-sm">Mã số: #FB-2904</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-2 text-on-surface">Phản hồi về chất lượng bữa trưa</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">
+                        Hôm nay con tôi có báo lại là món canh cá có vị hơi lạ. Mong nhà trường kiểm tra lại quy trình bảo quản nguyên liệu vào buổi sáng để đảm bảo độ tươi ngon nhất cho các con. Cảm ơn nhà trường.
+                    </p>
+<div class="grid grid-cols-2 gap-2 mb-2">
+<div class="rounded-lg overflow-hidden h-40 bg-surface-container-low cursor-pointer hover:opacity-90 transition-opacity" data-alt="A macro photograph of a healthy school lunch tray featuring grilled fish and fresh vegetables in a clean, brightly lit cafeteria environment. The shot uses a professional food photography style with soft natural lighting and a shallow depth of field to emphasize the quality and freshness of the school food." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCl_NSdjRUVZO1Xb-k1cE98kCgRFO0O_fNphvco6pShJgYDmqAt5iswzHQ5Vge4cMEHJMvWObfogZW__A8G3w-y4j0vX--K6teedfaqr6o62CzdJlQN3rxpiSfKReqNaPglPwLK-WhpzkKppvhhmO5cSW3BhfJSznUnKABVs5xXmWIRyCvJ9qF7dFvoAD6PaqbwXqpcG-c5OmEbgU5RLSijOv0ZWbLVKoyjK8OrqS1h01YCwwfL1YdIrW-pR30R3kdUR_fsuOx9lTA')"></div>
+<div class="rounded-lg overflow-hidden h-40 bg-surface-container-low cursor-pointer hover:opacity-90 transition-opacity" data-alt="A close-up shot of a steaming bowl of clear vegetable soup served in a clinical, clean school cafeteria setting. The lighting is high-key and bright, highlighting the vibrant colors of the herbs and vegetables. The composition is minimalist and organized, reflecting a medical-grade hygiene standard." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCpxySUX1-1t9kc1wNOWhy4AcjeAl6p3cYaLB-_bhIMwua5IcvI02pD3mCo6YJ9phAXSBVry7n_qMwEp29HH13bvkkKv-h33fIUBkY22PtAQ6QF8oUufTVE-6bvx7B-7ueBQ_IZQ481z5eiDhr72GiIOVk_7Elec6vyGvMcXxjTqhJDVUFXKUKUfI-XIpVfqN0j-j1TO2dUXXjmAsujdee2gzkeJgVYegu17eTYY9qUFunl_F_BwnWOOj2CLtK9leZ-MfryUJwij0A')"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Response from School -->
+<section class="mb-section-margin relative">
+<div class="absolute left-6 top-0 bottom-0 timeline-line opacity-20"></div>
+<div class="bg-primary-container/10 border border-primary/20 rounded-xl p-container-padding ml-4 relative">
+<!-- Decoration Icon -->
+<div class="absolute -left-10 top-4 w-6 h-6 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-white" style="font-variation-settings: 'FILL' 1;">reply</span>
+</div>
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold">
+                        QT
+                    </div>
+<div>
+<p class="font-headline-md text-[16px] text-primary">Ban Quản lý Bán trú</p>
+<p class="font-label-sm text-label-sm text-outline">Phản hồi lúc 09:30, 16/10/2023</p>
+</div>
+</div>
+<div class="space-y-4">
+<div>
+<p class="font-label-sm text-label-sm text-primary mb-1 uppercase tracking-wider">Nội dung phản hồi:</p>
+<p class="font-body-md text-body-md text-on-surface">
+                            Chào Phụ huynh, nhà trường đã tiếp nhận thông tin và lập tức làm việc với bộ phận bếp. Sau khi kiểm tra mẫu lưu thực phẩm, chúng tôi xác định do thời tiết nồm ẩm nên vị của nguyên liệu bị ảnh hưởng nhẹ dù vẫn đảm bảo an toàn. Chúng tôi đã tiến hành nhắc nhở tổ bếp và thay đổi quy trình nhập hàng sáng sớm.
+                        </p>
+</div>
+<div class="bg-white/50 rounded-lg p-3 border border-primary/10">
+<p class="font-label-sm text-label-sm text-primary mb-1 uppercase tracking-wider">Hành động khắc phục:</p>
+<ul class="list-disc list-inside font-body-md text-body-md text-on-surface-variant space-y-1">
+<li>Kiểm tra lại toàn bộ kho lạnh bảo quản.</li>
+<li>Thay đổi nhà cung cấp rau củ cho tuần kế tiếp.</li>
+<li>Tăng cường giám sát đầu giờ bởi ban đại diện cha mẹ.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Rating Section -->
+<section class="mb-section-margin text-center bg-surface-container-low rounded-xl p-6 border border-dashed border-primary/30">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Đánh giá xử lý</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Bạn có hài lòng với cách nhà trường giải quyết vấn đề này không?</p>
+<div class="flex justify-center gap-4 mb-6">
+<button class="flex flex-col items-center gap-1 group active:scale-90 transition-transform">
+<div class="w-12 h-12 rounded-full border-2 border-outline-variant flex items-center justify-center group-hover:border-primary group-hover:bg-primary-container/20 transition-colors">
+<span class="material-symbols-outlined text-outline group-hover:text-primary">sentiment_very_satisfied</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline group-hover:text-primary">Hài lòng</span>
+</button>
+<button class="flex flex-col items-center gap-1 group active:scale-90 transition-transform">
+<div class="w-12 h-12 rounded-full border-2 border-outline-variant flex items-center justify-center group-hover:border-error group-hover:bg-error-container/20 transition-colors">
+<span class="material-symbols-outlined text-outline group-hover:text-error">sentiment_dissatisfied</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline group-hover:text-error">Chưa tốt</span>
+</button>
+</div>
+<button class="w-full bg-primary text-white py-3 rounded-xl font-headline-md text-[16px] shadow-sm active:scale-[0.98] transition-transform">
+                Gửi đánh giá
+            </button>
+</section>
+</main>
+<!-- BottomNavBar (Suppressed as per rules for sub-page/transactional view, but shown for flow if needed) -->
+<!-- Suppressing nav as this is a specific detail task screen -->
+<script>
+        // Micro-interactions for rating buttons
+        const ratingButtons = document.querySelectorAll('section button.group');
+        ratingButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Clear others
+                ratingButtons.forEach(b => {
+                    const circle = b.querySelector('div');
+                    const text = b.querySelector('span:last-child');
+                    const icon = b.querySelector('.material-symbols-outlined');
+                    circle.classList.remove('bg-primary-container/30', 'border-primary', 'bg-error-container/30', 'border-error');
+                    text.classList.remove('text-primary', 'text-error');
+                    icon.classList.remove('text-primary', 'text-error');
+                    icon.style.fontVariationSettings = "'FILL' 0";
+                });
+                
+                // Set active
+                const isSatisfied = btn.textContent.includes('Hài lòng');
+                const circle = btn.querySelector('div');
+                const text = btn.querySelector('span:last-child');
+                const icon = btn.querySelector('.material-symbols-outlined');
+                
+                if(isSatisfied) {
+                    circle.classList.add('bg-primary-container/30', 'border-primary');
+                    text.classList.add('text-primary');
+                    icon.classList.add('text-primary');
+                } else {
+                    circle.classList.add('bg-error-container/30', 'border-error');
+                    text.classList.add('text-error');
+                    icon.classList.add('text-error');
+                }
+                icon.style.fontVariationSettings = "'FILL' 1";
+            });
+        });
+    </script>
+</body></html>

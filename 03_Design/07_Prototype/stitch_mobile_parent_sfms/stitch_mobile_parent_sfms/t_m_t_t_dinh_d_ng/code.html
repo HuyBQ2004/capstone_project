@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SFMS - Tóm tắt Dinh dưỡng</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#81d1f0",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "surface-variant": "#d3e4fe",
+                        "on-secondary-fixed-variant": "#005236",
+                        "on-primary-fixed-variant": "#004d62",
+                        "on-secondary": "#ffffff",
+                        "surface-container": "#e5eeff",
+                        "on-primary-fixed": "#001f29",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#b9eaff",
+                        "on-tertiary-fixed": "#2a1700",
+                        "inverse-primary": "#81d1f0",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "inverse-surface": "#213145",
+                        "surface-dim": "#cbdbf5",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#005a71",
+                        "secondary-fixed-dim": "#4edea3",
+                        "surface-container-high": "#dce9ff",
+                        "on-primary-container": "#d3f1ff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-secondary-fixed": "#002113",
+                        "background": "#f8f9ff",
+                        "surface-bright": "#f8f9ff",
+                        "surface-tint": "#006781",
+                        "on-tertiary-container": "#ffe9d4",
+                        "on-surface": "#0b1c30",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#ffddb8",
+                        "tertiary-container": "#965f00",
+                        "surface-container-highest": "#d3e4fe",
+                        "primary-container": "#0e7490",
+                        "on-secondary-container": "#00714d",
+                        "outline-variant": "#bec8cd",
+                        "surface-container-low": "#eff4ff",
+                        "secondary": "#006c49",
+                        "outline": "#6f787d",
+                        "surface": "#f8f9ff",
+                        "secondary-fixed": "#6ffbbe",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#764900",
+                        "secondary-container": "#6cf8bb",
+                        "on-background": "#0b1c30",
+                        "on-surface-variant": "#3f484c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "element-gap": "12px",
+                        "container-padding": "16px",
+                        "base": "4px",
+                        "section-margin": "24px",
+                        "grid-gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "headline-lg-mobile": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "headline-md": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #f8f9ff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .medical-card { background: white; border: 1px solid #e2e8f0; border-radius: 0.75rem; transition: all 0.2s ease; }
+        .medical-card:hover { border-color: #0e7490; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05); }
+        .nutrition-ring { transform: rotate(-90deg); stroke-linecap: round; }
+        .glass-panel { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(8px); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface mb-24 md:mb-0 md:pt-14">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-container-padding h-14 bg-surface dark:bg-on-background border-b border-outline-variant dark:border-outline">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform text-primary dark:text-primary-fixed">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">SFMS</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform text-on-surface-variant dark:text-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<main class="max-w-[1200px] mx-auto px-container-padding py-section-margin mt-14">
+<!-- Welcome Section -->
+<section class="mb-section-margin">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Thống kê Dinh dưỡng</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Dữ liệu cập nhật cho học sinh: <span class="font-bold text-primary">Nguyễn Minh Quân</span></p>
+</div>
+<div class="flex items-center gap-2 text-primary bg-primary-container/10 px-4 py-2 rounded-full border border-primary-container/20">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Tuần 14 - Tháng 10</span>
+</div>
+</div>
+</section>
+<!-- Bento Grid Stats -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-grid-gutter">
+<!-- Energy Summary Card -->
+<div class="md:col-span-4 medical-card p-6 flex flex-col justify-between min-h-[220px]">
+<div class="flex justify-between items-start">
+<div class="p-3 bg-primary-container/10 rounded-xl text-primary">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<span class="text-secondary font-label-sm text-label-sm bg-secondary-container px-2 py-1 rounded">+12% vs tuần trước</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Tổng năng lượng tiêu thụ</p>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-lg text-headline-lg text-on-surface">12,450</span>
+<span class="font-body-md text-body-md text-on-surface-variant">kcal</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden mt-4">
+<div class="bg-primary h-full" style="width: 82%"></div>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-2">82% so với nhu cầu khuyến nghị</p>
+</div>
+<!-- Completed Meals Card -->
+<div class="md:col-span-4 medical-card p-6 flex flex-col justify-between min-h-[220px]">
+<div class="flex justify-between items-start">
+<div class="p-3 bg-secondary-container/10 rounded-xl text-secondary">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Số bữa ăn đã hoàn thành</p>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-lg text-headline-lg text-on-surface">18</span>
+<span class="font-body-md text-body-md text-on-surface-variant">/ 21 bữa</span>
+</div>
+</div>
+<div class="flex -space-x-2 mt-4">
+<div class="w-8 h-8 rounded-full border-2 border-white bg-primary-fixed flex items-center justify-center text-primary-fixed-dim">
+<span class="material-symbols-outlined text-xs">done</span>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-primary-fixed flex items-center justify-center text-primary-fixed-dim">
+<span class="material-symbols-outlined text-xs">done</span>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-primary-fixed flex items-center justify-center text-primary-fixed-dim">
+<span class="material-symbols-outlined text-xs">done</span>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-surface-container-high flex items-center justify-center text-on-surface-variant text-[10px] font-bold">
+                        +15
+                    </div>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-2">Tỷ lệ tham gia ăn bán trú: 85%</p>
+</div>
+<!-- Macronutrients Circular Chart -->
+<div class="md:col-span-4 medical-card p-6 flex flex-col items-center justify-center relative min-h-[220px]">
+<p class="absolute top-6 left-6 font-label-sm text-label-sm text-on-surface-variant uppercase">Cân bằng nhóm chất</p>
+<div class="relative w-32 h-32 mt-4">
+<svg class="w-full h-full" viewbox="0 0 36 36">
+<circle cx="18" cy="18" fill="none" r="15.915" stroke="#e2e8f0" stroke-width="3"></circle>
+<!-- Tinh bột: 50% (Cyan) -->
+<circle class="nutrition-ring" cx="18" cy="18" fill="none" r="15.915" stroke="#0e7490" stroke-dasharray="50 100" stroke-dashoffset="0" stroke-width="3"></circle>
+<!-- Đạm: 30% (Green) -->
+<circle class="nutrition-ring" cx="18" cy="18" fill="none" r="15.915" stroke="#006c49" stroke-dasharray="30 100" stroke-dashoffset="-50" stroke-width="3"></circle>
+<!-- Béo: 20% (Orange) -->
+<circle class="nutrition-ring" cx="18" cy="18" fill="none" r="15.915" stroke="#764900" stroke-dasharray="20 100" stroke-dashoffset="-80" stroke-width="3"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center flex-col">
+<span class="font-bold text-headline-md text-on-surface">Tốt</span>
+</div>
+</div>
+<div class="flex gap-4 mt-6">
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-[#0e7490]"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Tinh bột</span>
+</div>
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-[#006c49]"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Đạm</span>
+</div>
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-[#764900]"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Béo</span>
+</div>
+</div>
+</div>
+<!-- Detailed Nutrients Bar Chart -->
+<div class="md:col-span-12 medical-card p-6">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Chi tiết vi chất hàng tuần</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Tình trạng hấp thụ các Vitamin và Khoáng chất thiết yếu</p>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-lg font-label-sm text-label-sm hover:opacity-90 active:scale-95 transition-all">
+                        Tải báo cáo PDF
+                    </button>
+</div>
+<div class="space-y-6">
+<!-- Vitamin A -->
+<div class="space-y-2">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-on-surface">Vitamin A (Retinol)</span>
+<span class="text-primary font-bold">95%</span>
+</div>
+<div class="w-full bg-surface-container-low h-3 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 95%"></div>
+</div>
+</div>
+<!-- Calcium -->
+<div class="space-y-2">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-on-surface">Canxi (Hỗ trợ phát triển xương)</span>
+<span class="text-secondary font-bold">72%</span>
+</div>
+<div class="w-full bg-surface-container-low h-3 rounded-full overflow-hidden">
+<div class="bg-secondary h-full" style="width: 72%"></div>
+</div>
+</div>
+<!-- Iron -->
+<div class="space-y-2">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-on-surface">Sắt (Hỗ trợ tạo máu)</span>
+<span class="text-tertiary font-bold">45%</span>
+</div>
+<div class="w-full bg-surface-container-low h-3 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full" style="width: 45%"></div>
+</div>
+<p class="font-label-sm text-label-sm text-error flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">warning</span> Dưới mức trung bình
+                        </p>
+</div>
+</div>
+</div>
+<!-- Expert Advice Section -->
+<div class="md:col-span-8 medical-card p-6 bg-primary-container/5 border-primary-container/20">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-12 h-12 rounded-full bg-white border border-outline-variant flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional, warm, and approachable medical doctor or nutritionist portrait for a school food management app. High-key lighting, clean clinical background with soft pastel tones. Professional attire with a stethoscope or lab coat, conveying trust and academic excellence. Light mode aesthetic with crisp details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHptOfWCP_lkGEptSJ3eB2kGwJFzV_ID-_bzKB2vxYWAJyuxwASsMKhAVNsMsqmGXvQiOZPZkpUzEnBvV1a5yrTxFqfLghM1crEGMixmPrlmwlYRB-ytyYJzvjGqkr_vQiKhAWr6e0cZpwhriD05uubzJZTmoN11hDbaA1rL_ZkUnIQBecQnu_4iDX5nDetrzDLqs5oh-RvEBYdHEV6--mKPeyRbwMAqj7gKUax7kuhDVHec8LUKU8rQLqNb3_86D7zLiODVwsZDo"/>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface">Lời khuyên từ Chuyên gia</h4>
+<p class="font-label-sm text-label-sm text-primary font-bold">ThS. BS. Lê Thị Tuyết - Viện Dinh dưỡng</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-white p-4 rounded-xl border border-outline-variant/30 shadow-sm">
+<p class="font-body-md text-body-md text-on-surface italic">
+                            "Dựa trên dữ liệu tuần này, Quân có chỉ số hấp thụ Tinh bột và Vitamin A rất tốt. Tuy nhiên, lượng Sắt đang ở mức báo động thấp (45%). Điều này có thể dẫn đến mệt mỏi trong giờ học."
+                        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+<p class="font-body-md text-body-md text-on-surface-variant">Bổ sung thêm các loại thịt đỏ hoặc rau chân vịt vào bữa tối tại nhà.</p>
+</div>
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+<p class="font-body-md text-body-md text-on-surface-variant">Hạn chế uống trà ngay sau bữa ăn để không cản trở hấp thu sắt.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Promotion / Action Card -->
+<div class="md:col-span-4 bg-primary text-on-primary p-6 rounded-xl flex flex-col justify-between overflow-hidden relative">
+<div class="relative z-10">
+<h4 class="font-headline-md text-headline-md mb-2">Đăng ký Thực đơn Riêng?</h4>
+<p class="font-body-md text-body-md opacity-90 mb-6">Tùy chỉnh bữa ăn theo tình trạng sức khỏe của con ngay hôm nay.</p>
+<button class="bg-white text-primary px-4 py-2 rounded-lg font-label-sm text-label-sm font-bold uppercase tracking-wide active:scale-95 transition-transform">
+                        Khám phá ngay
+                    </button>
+</div>
+<div class="absolute -right-12 -bottom-12 opacity-10 rotate-12">
+<span class="material-symbols-outlined text-[160px]">nutrition</span>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-container-padding py-2 bg-surface dark:bg-on-background border-t border-outline-variant dark:border-outline md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Trang chủ</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span class="font-label-sm text-label-sm">Thực đơn</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-secondary-fixed-dim font-bold hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-label-sm text-label-sm">Dinh dưỡng</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Cá nhân</span>
+</a>
+</nav>
+<script>
+        // Simple Micro-interactions
+        document.querySelectorAll('.medical-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                // Potential hover effect script if needed beyond CSS
+            });
+        });
+    </script>
+</body></html>

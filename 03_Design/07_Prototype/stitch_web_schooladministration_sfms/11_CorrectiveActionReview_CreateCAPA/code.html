@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tạo yêu cầu CAPA - SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#004d62",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#81d1f0",
+                        "surface-container-high": "#e2e7ff",
+                        "surface": "#faf8ff",
+                        "on-secondary-container": "#54647a",
+                        "surface-tint": "#006781",
+                        "secondary-container": "#d0e1fb",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-background": "#131b2e",
+                        "primary": "#005a71",
+                        "tertiary-fixed": "#dfe3e7",
+                        "tertiary": "#4e5356",
+                        "surface-container-highest": "#dae2fd",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#131b2e",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#283044",
+                        "surface-container-low": "#f2f3ff",
+                        "secondary-fixed": "#d3e4fe",
+                        "error-container": "#ffdad6",
+                        "inverse-on-surface": "#eef0ff",
+                        "on-surface-variant": "#3f484c",
+                        "primary-container": "#0e7490",
+                        "primary-fixed-dim": "#81d1f0",
+                        "on-primary-container": "#d3f1ff",
+                        "primary-fixed": "#b9eaff",
+                        "surface-variant": "#dae2fd",
+                        "surface-dim": "#d2d9f4",
+                        "tertiary-container": "#666b6f",
+                        "outline-variant": "#bec8cd",
+                        "outline": "#6f787d",
+                        "tertiary-fixed-dim": "#c3c7cb",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "secondary": "#505f76",
+                        "surface-container": "#eaedff",
+                        "surface-bright": "#faf8ff",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#171c1f",
+                        "on-primary-fixed": "#001f29",
+                        "on-tertiary-fixed-variant": "#43474b",
+                        "on-tertiary": "#ffffff",
+                        "background": "#faf8ff",
+                        "on-tertiary-container": "#e8edf1",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "element-gap": "0.5rem",
+                        "container-padding": "2rem",
+                        "gutter": "1rem",
+                        "section-gap": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Be Vietnam Pro", "sans-serif"],
+                        "label-sm": ["Be Vietnam Pro", "sans-serif"],
+                        "h2": ["Be Vietnam Pro", "sans-serif"],
+                        "body-base": ["Be Vietnam Pro", "sans-serif"],
+                        "label-md": ["Be Vietnam Pro", "sans-serif"],
+                        "h1-mobile": ["Be Vietnam Pro", "sans-serif"],
+                        "h3": ["Be Vietnam Pro", "sans-serif"],
+                        "h1": ["Be Vietnam Pro", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-base": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "h1-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "h3": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "h1": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col antialiased">
+<!-- Canvas/Main Content Area -->
+<main class="flex-grow flex items-center justify-center p-6 md:p-12 relative overflow-hidden">
+<!-- Subtle Background Decorative Elements -->
+<div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-error-container rounded-full mix-blend-multiply filter blur-[100px] opacity-30 animate-pulse"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-primary-container rounded-full mix-blend-multiply filter blur-[100px] opacity-20"></div>
+<div class="w-full max-w-2xl z-10">
+<!-- Header Section -->
+<div class="mb-8">
+<a class="inline-flex items-center text-secondary hover:text-primary transition-colors font-label-md text-label-md mb-4 group" href="#">
+<span class="material-symbols-outlined mr-1 text-sm group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                    Quay lại chi tiết vi phạm
+                </a>
+<h1 class="font-h1 text-h1 text-on-surface mb-2">Tạo yêu cầu CAPA</h1>
+<p class="font-body-base text-body-base text-on-surface-variant">Tạo Kế hoạch Hành động Khắc phục và Phòng ngừa (Corrective and Preventive Action) cho vi phạm ghi nhận.</p>
+</div>
+<!-- Main Form Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_1px_3px_0_rgb(0,0,0,0.1),0_1px_2px_-1px_rgb(0,0,0,0.1)] border border-outline-variant overflow-hidden">
+<!-- BR-152 Critical Warning Banner -->
+<div class="bg-[#FEF2F2] border-l-4 border-[#EF4444] p-4 flex items-start">
+<span class="material-symbols-outlined text-[#EF4444] mr-3 mt-0.5">warning</span>
+<div>
+<h4 class="font-label-md text-label-md text-[#991B1B] mb-1">Cảnh báo vi phạm nghiêm trọng (BR-152)</h4>
+<p class="font-body-sm text-body-sm text-[#7F1D1D]">Lỗi vi phạm ở mức độ cao. Thời hạn khắc phục tối đa là 24 giờ kể từ thời điểm ghi nhận. Vui lòng thiết lập thời hạn phù hợp.</p>
+</div>
+</div>
+<form class="p-6 md:p-8 space-y-6">
+<!-- Title Input -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="capa-title">Tiêu đề yêu cầu <span class="text-error">*</span></label>
+<input class="w-full rounded-lg border-outline-variant bg-surface-bright font-body-base text-body-base text-on-surface px-4 py-2.5 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm outline-none placeholder:text-on-surface-variant/50" id="capa-title" name="capa-title" placeholder="Nhập tiêu đề yêu cầu..." required="" type="text" value="Khắc phục sự cố nhiệt độ tủ bảo quản số 03"/>
+</div>
+<!-- Description Input -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="capa-description">Nội dung yêu cầu chi tiết <span class="text-error">*</span></label>
+<textarea class="w-full rounded-lg border-outline-variant bg-surface-bright font-body-base text-body-base text-on-surface px-4 py-3 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm outline-none resize-y placeholder:text-on-surface-variant/50" id="capa-description" name="capa-description" placeholder="Mô tả chi tiết các hành động cần thực hiện..." required="" rows="5">Yêu cầu đối tác Catering Toàn Cầu cử nhân viên kỹ thuật kiểm tra và sửa chữa ngay lập tức hệ thống làm lạnh. Chuyển toàn bộ thực phẩm nhạy cảm sang tủ lạnh dự phòng để đảm bảo an toàn thực phẩm. Báo cáo lại kết quả sau khi hoàn thành.</textarea>
+</div>
+<!-- Deadline Picker (Pre-filled for 24h as per BR-152) -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="capa-deadline">Thời hạn phản hồi (Deadline) <span class="text-error">*</span></label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant text-lg">calendar_clock</span>
+</div>
+<input class="w-full rounded-lg border-outline-variant bg-surface-bright font-body-base text-body-base text-on-surface pl-10 pr-4 py-2.5 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm outline-none" id="capa-deadline" name="capa-deadline" required="" type="datetime-local"/>
+<!-- Visual cue that this is restricted -->
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-[#FEF2F2] text-[#EF4444] border border-[#FCA5A5]">
+                                    Max 24h
+                                </span>
+</div>
+</div>
+<p class="mt-1.5 font-body-sm text-body-sm text-on-surface-variant">Hệ thống tự động đề xuất thời hạn dựa trên mức độ nghiêm trọng của vi phạm.</p>
+</div>
+<!-- Actions -->
+<div class="pt-4 mt-6 border-t border-outline-variant flex items-center justify-end gap-3">
+<button class="px-5 py-2.5 rounded-lg font-label-md text-label-md text-on-surface border border-outline-variant bg-surface hover:bg-surface-container-low transition-colors focus:ring-2 focus:ring-primary/20 outline-none" type="button">
+                            Hủy bỏ
+                        </button>
+<button class="px-5 py-2.5 rounded-lg font-label-md text-label-md text-on-primary bg-primary-container hover:bg-[#0c667e] transition-colors focus:ring-2 focus:ring-primary/50 outline-none shadow-sm flex items-center" type="submit">
+<span class="material-symbols-outlined mr-2 text-sm">send</span>
+                            Gửi yêu cầu CAPA
+                        </button>
+</div>
+</form>
+</div>
+</div>
+</main>
+<script>
+        // Set default datetime to 24 hours from now to simulate BR-152 logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const deadlineInput = document.getElementById('capa-deadline');
+            const now = new Date();
+            now.setHours(now.getHours() + 24);
+            
+            // Format to YYYY-MM-DDTHH:mm for datetime-local input
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            
+            const formattedDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+            deadlineInput.value = formattedDateTime;
+            
+            // Optional: prevent setting date beyond 24h
+            deadlineInput.max = formattedDateTime;
+        });
+    </script>
+</body></html>

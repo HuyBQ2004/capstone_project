@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tích hợp ngoại vi - sfms</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary": "#005a71",
+                      "surface-container-highest": "#e0e3e5",
+                      "outline": "#6f787d",
+                      "tertiary-fixed": "#ffdcbd",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "on-surface": "#181c1e",
+                      "surface-dim": "#d7dadd",
+                      "surface-container": "#ebeef0",
+                      "tertiary-container": "#965e1c",
+                      "on-secondary-container": "#54647a",
+                      "error-container": "#ffdad6",
+                      "on-primary-fixed-variant": "#004d62",
+                      "on-tertiary-fixed-variant": "#693c00",
+                      "error": "#ba1a1a",
+                      "surface-bright": "#f7fafc",
+                      "surface": "#f7fafc",
+                      "on-error-container": "#93000a",
+                      "outline-variant": "#bec8cd",
+                      "inverse-surface": "#2d3133",
+                      "on-secondary-fixed": "#0b1c30",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "on-tertiary": "#ffffff",
+                      "secondary": "#505f76",
+                      "inverse-on-surface": "#eef1f3",
+                      "on-primary-container": "#d3f1ff",
+                      "secondary-container": "#d0e1fb",
+                      "on-tertiary-fixed": "#2c1600",
+                      "inverse-primary": "#81d1f0",
+                      "surface-container-lowest": "#ffffff",
+                      "primary-fixed-dim": "#81d1f0",
+                      "secondary-fixed": "#d3e4fe",
+                      "primary-container": "#0e7490",
+                      "tertiary": "#794602",
+                      "surface-variant": "#e0e3e5",
+                      "on-primary": "#ffffff",
+                      "surface-container-low": "#f1f4f6",
+                      "on-tertiary-container": "#ffe8d6",
+                      "on-error": "#ffffff",
+                      "primary-fixed": "#b9eaff",
+                      "tertiary-fixed-dim": "#ffb86f",
+                      "on-secondary": "#ffffff",
+                      "surface-container-high": "#e6e8eb",
+                      "surface-tint": "#006781",
+                      "on-surface-variant": "#3f484c",
+                      "background": "#f7fafc",
+                      "on-primary-fixed": "#001f29",
+                      "on-background": "#181c1e"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "grid-gutter": "20px",
+                      "base": "4px",
+                      "element-gap": "16px",
+                      "container-padding": "24px",
+                      "sidebar-width": "260px"
+              },
+              "fontFamily": {
+                      "body-lg": [
+                              "Be Vietnam Pro"
+                      ],
+                      "label-md": [
+                              "Be Vietnam Pro"
+                      ],
+                      "body-md": [
+                              "Be Vietnam Pro"
+                      ],
+                      "h3": [
+                              "Be Vietnam Pro"
+                      ],
+                      "body-sm": [
+                              "Be Vietnam Pro"
+                      ],
+                      "h1": [
+                              "Be Vietnam Pro"
+                      ],
+                      "h2": [
+                              "Be Vietnam Pro"
+                      ],
+                      "label-sm": [
+                              "Be Vietnam Pro"
+                      ]
+              },
+              "fontSize": {
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "h3": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "h1": [
+                              "30px",
+                              {
+                                      "lineHeight": "36px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "h2": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<!-- SideNavBar -->
+<nav class="w-sidebar-width h-screen fixed left-0 top-0 bg-surface dark:bg-inverse-surface border-r border-outline-variant dark:border-outline flex flex-col h-full py-container-padding px-4 flat no shadows z-10">
+<div class="mb-8 flex items-center gap-3">
+<img alt="sfms Logo" class="w-10 h-10 rounded object-cover" data-alt="A minimalist and modern vector logo design for a system called 'sfms'. The logo features clean geometric lines in primary blue tones on a bright white background, conveying a sense of security, data management, and enterprise-grade software. The design is sleek, simple, and flat." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCasWs2ypy5obrxkR73_kqzU0n19sEbLPARsObp090HuWJvrbfLybP_BFQVjWjf4epd7YY4ctNoFNz-pCRjUgxgiGSOMv_6GT2TZehtLlT0EClEjLr7BxlDc1WqzvIU9e_Fe6oMPQP5FLBNkFfCh0YgbCdmQqhQL06FYrQ44c74p8b6wDt58l3hDSQjd4_I-dwtQEhDzGE57fGolgRF3UDZtGhabo6DxrYB70i2SIcKpuMBs6PiClGBS9vHmUoQJfrv3BVg7kkcz914"/>
+<div>
+<h1 class="font-h2 text-h2 font-bold text-primary dark:text-primary-fixed">sfms</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">System Admin</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto space-y-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant hover:bg-surface-container dark:hover:bg-surface-variant transition-colors duration-200 font-body-md text-body-md group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-on-surface" data-icon="dashboard">dashboard</span>
+                Tổng quan
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant hover:bg-surface-container dark:hover:bg-surface-variant transition-colors duration-200 font-body-md text-body-md group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-on-surface" data-icon="group">group</span>
+                Người dùng &amp; Vai trò
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant hover:bg-surface-container dark:hover:bg-surface-variant transition-colors duration-200 font-body-md text-body-md group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-on-surface" data-icon="school">school</span>
+                Trường học
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed font-semibold border-l-4 border-primary hover:bg-surface-container dark:hover:bg-surface-variant transition-colors duration-200 font-body-md text-body-md group Active: scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined text-primary" data-icon="settings" style="font-variation-settings: 'FILL' 1;">settings</span>
+                Cấu hình hệ thống
+            </a>
+<!-- Sub-menu for active item -->
+<div class="pl-10 space-y-1 mt-1">
+<a class="block py-1.5 px-2 rounded font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high" href="#">Tham số chung</a>
+<a class="block py-1.5 px-2 rounded font-body-sm text-body-sm text-primary font-medium bg-primary-container/10" href="#">Tích hợp ngoại vi</a>
+</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant hover:bg-surface-container dark:hover:bg-surface-variant transition-colors duration-200 font-body-md text-body-md group mt-2" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-on-surface" data-icon="shield_person">shield_person</span>
+                Giám sát &amp; Audit
+            </a>
+</div>
+</nav>
+<!-- TopNavBar -->
+<header class="h-16 fixed top-0 right-0 w-[calc(100%-260px)] bg-surface-container-lowest dark:bg-surface-dim border-b border-outline-variant dark:border-outline flat no shadows flex justify-between items-center px-container-padding transition-all duration-150 z-10">
+<div class="flex items-center gap-4">
+<!-- Search -->
+<div class="relative w-64 hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm" data-icon="search">search</span>
+<input class="w-full pl-9 pr-4 py-1.5 bg-surface-container-low border border-outline-variant rounded-full font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary" placeholder="Tìm kiếm..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-element-gap">
+<button class="p-2 text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Admin Avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a system administrator. The individual is looking confident and approachable, wearing smart-casual attire. The background is a slightly blurred, modern office setting with cool, bright lighting that matches a clean UI aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR_yAXWXafV-p7ibyCkYztfN5pWNoqm2Uma8HR_u0JY29bZ-w9DPd4Igx_44Nbup3JjPjcZbDhSA65vBj6cQP5IZKAGbCE9RAkSPaGKQmrKejO0n00iFZ5ooHJfLTixugz8LaCMAXKVUgEpyez92mMgnO5ULGj9UUOplT7vPDN6KZXAQ1rNEIuAVNixHAcfmXiQbqhW9cgvURufaNxpppj2qpUjZKDlizc0rnX7pHF4uce7CVJeJg4CaBPlHEZkumZbGzThgxtcz4C"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-sidebar-width mt-16 p-container-padding w-full max-w-[1200px] mx-auto flex-1">
+<!-- Header -->
+<div class="mb-8">
+<h2 class="font-h1 text-h1 text-on-surface mb-1">Tích hợp ngoại vi</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Quản lý kết nối API với các dịch vụ bên thứ ba</p>
+</div>
+<!-- Bento Grid Layout for Settings -->
+<div class="grid grid-cols-12 gap-grid-gutter">
+<!-- Left Column: Navigation / Tabs -->
+<div class="col-span-12 md:col-span-3">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-2 flex flex-col gap-1 sticky top-24">
+<button class="text-left px-4 py-2.5 rounded-DEFAULT font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-low transition-colors w-full">GPS Tracking</button>
+<button class="text-left px-4 py-2.5 rounded-DEFAULT font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-low transition-colors w-full">Email SMTP</button>
+<button class="text-left px-4 py-2.5 rounded-DEFAULT font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-low transition-colors w-full">Firebase Push Notification</button>
+<button class="text-left px-4 py-2.5 rounded-DEFAULT font-label-md text-label-md bg-surface-container shadow-sm text-primary font-semibold flex items-center justify-between w-full border border-outline-variant/30">
+                        Gemini AI
+                        <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Right Column: Active Content -->
+<div class="col-span-12 md:col-span-9">
+<div class="glass-panel rounded-xl p-6 relative overflow-hidden">
+<!-- Subtle background decoration -->
+<div class="absolute -top-24 -right-24 w-64 h-64 bg-primary-container/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex items-center gap-3 mb-6 border-b border-outline-variant/50 pb-4">
+<div class="p-2 bg-primary-container/20 rounded-lg text-primary">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-on-surface">Cấu hình Gemini AI</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Tích hợp mô hình ngôn ngữ lớn để hỗ trợ phân tích dữ liệu tự động.</p>
+</div>
+</div>
+<form class="space-y-6">
+<!-- API Endpoint -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-2" for="api-endpoint">API Endpoint</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-DEFAULT px-3 py-2 font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-shadow" id="api-endpoint" type="text" value="https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"/>
+<p class="mt-1 font-body-sm text-body-sm text-on-surface-variant">Đường dẫn gốc đến API của Google Gemini.</p>
+</div>
+<!-- API Key -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-2" for="api-key">API Key / Client Credentials</label>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-DEFAULT pl-3 pr-10 py-2 font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-shadow font-mono" id="api-key" type="password" value="AIzaSyAxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface p-1 rounded" type="button">
+<span class="material-symbols-outlined text-sm" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<!-- Connection Test Area -->
+<div class="bg-surface-container-low rounded-lg p-4 border border-outline-variant/50 flex items-center justify-between">
+<div>
+<p class="font-label-md text-label-md text-on-surface">Trạng thái kết nối</p>
+<!-- Success Badge -->
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-secondary-container text-on-secondary-container mt-2 border border-secondary-container">
+<span class="material-symbols-outlined text-[14px]" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label-sm text-label-sm">Đã kết nối thành công</span>
+</div>
+</div>
+<button class="px-4 py-2 border border-outline rounded-DEFAULT font-label-md text-label-md text-on-surface hover:bg-surface-container-high transition-colors flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-sm" data-icon="sync">sync</span>
+                                Kiểm tra kết nối
+                            </button>
+</div>
+<!-- Actions -->
+<div class="pt-6 border-t border-outline-variant/50 flex justify-end gap-3">
+<button class="px-4 py-2 rounded-DEFAULT font-label-md text-label-md text-on-surface hover:bg-surface-container-high transition-colors" type="button">Hủy</button>
+<button class="px-6 py-2 rounded-DEFAULT font-label-md text-label-md bg-primary text-on-primary hover:bg-surface-tint transition-colors shadow-sm" type="button">Lưu tích hợp</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</main>
+</body></html>

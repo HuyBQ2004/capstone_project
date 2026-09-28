@@ -1,0 +1,292 @@
+<!DOCTYPE html><html class="light" lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Yêu cầu chế độ ăn đặc biệt - SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#3f484c",
+                        "surface-variant": "#d3e4fe",
+                        "secondary-fixed": "#a2eeff",
+                        "on-surface": "#0b1c30",
+                        "surface-container-high": "#dce9ff",
+                        "inverse-surface": "#213145",
+                        "tertiary": "#4b5459",
+                        "secondary": "#006877",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-secondary-container": "#00616f",
+                        "primary-fixed": "#b9eaff",
+                        "on-tertiary-fixed-variant": "#3f484d",
+                        "error": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "outline-variant": "#bec8cd",
+                        "on-primary-fixed-variant": "#004d62",
+                        "secondary-fixed-dim": "#2fd9f4",
+                        "primary": "#005a71",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#e5eeff",
+                        "on-tertiary-fixed": "#141d21",
+                        "on-secondary-fixed": "#001f25",
+                        "secondary-container": "#3fe1fd",
+                        "error-container": "#ffdad6",
+                        "background": "#f8f9ff",
+                        "tertiary-fixed": "#dbe4ea",
+                        "primary-fixed-dim": "#81d1f0",
+                        "on-tertiary-container": "#e5eef4",
+                        "primary-container": "#0e7490",
+                        "on-secondary-fixed-variant": "#004e5a",
+                        "surface-container-low": "#eff4ff",
+                        "inverse-primary": "#81d1f0",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#636c71",
+                        "on-primary-container": "#d3f1ff",
+                        "tertiary-fixed-dim": "#bfc8ce",
+                        "surface-dim": "#cbdbf5",
+                        "surface-container-highest": "#d3e4fe",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#006781",
+                        "on-background": "#0b1c30",
+                        "surface-bright": "#f8f9ff",
+                        "on-primary-fixed": "#001f29",
+                        "surface": "#f8f9ff",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#6f787d",
+                        "on-primary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-gap": "12px",
+                        "gutter": "12px",
+                        "container-padding": "16px",
+                        "base": "4px",
+                        "section-margin": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "headline-md": ["Be Vietnam Pro"],
+                        "label-lg": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["22px", {"lineHeight": "30px", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #f8f9ff;
+            color: #0b1c30;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .safe-bottom {
+            padding-bottom: calc(56px + env(safe-area-inset-bottom));
+        }
+        .tonal-card {
+            box-shadow: 0 10px 20px -5px rgba(14, 116, 144, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-surface">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-surface shadow-sm transition-colors duration-200 ease-in-out flex justify-between items-center px-container-padding h-14">
+<div class="flex items-center gap-3">
+<button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-surface-container-low transition-colors text-primary">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md-mobile text-primary">Yêu cầu chế độ ăn đặc biệt - Lớp 2A</h1>
+</div>
+<div class="flex items-center">
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A professional medical headshot of a female school healthcare officer in a white lab coat, smiling gently. The background is a clean, softly blurred clinic interior with high-key lighting. The aesthetic is bright, professional, and corporate modern, using the hospital's primary teal and white color scheme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDD8sGiX0Qc79B7uquH_dNUX-lCrW4NfB7FbFC-l4tTn-6Cvi9m4cys7EcHEy7TLRswNRQGjDeFeiDbHvzOhM7DigtFfcb8N4hO17qjeTu9azHW-3mnsEbwLGrKOfKrbA5ayTR8UVD7eQny9fb4nAPUwisHje1e-C9uGtP7Y5n5KuFeGocLTTc42r3_BteRYFvrzGzpVFpVxCsKwWt731EPD56LrFQs8N-w7Zc_XSKXhVF0252hJOBS">
+</div>
+</div>
+</header>
+<main class="pt-14 px-container-padding safe-bottom">
+<!-- Description Block -->
+<div class="py-4">
+<p class="font-body-md text-body-md text-outline leading-relaxed">
+                Danh sách tổng hợp giúp kiểm soát các suất ăn riêng biệt đã được xác minh y tế.
+            </p>
+</div>
+<!-- Dashboard Card List -->
+<div class="flex flex-col gap-stack-gap">
+<!-- Thẻ 1: Nguyễn Minh Anh -->
+<div class="tonal-card bg-surface-container-lowest border border-surface-container-high rounded-lg p-4 transition-all active:scale-[0.98]">
+<div class="flex items-start gap-3">
+<div class="relative">
+<img class="w-14 h-14 rounded-full object-cover border-2 border-primary-container" data-alt="A portrait of a cheerful young elementary school student, a 7-year-old girl named Minh Anh, with a clean and bright school setting background. The lighting is soft and natural, emphasizing a professional yet warm educational atmosphere. The color palette aligns with the SFMS system's blue and white tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpPHBowdb3bmTGkFa6FViWCh64Upf-X7QVsJcY_6is5qS1KdaeC6hVmXQkcDNAzpxCUf6pt4KkmPziVGx_GFI9Q-GlCQ8L-vR04VRMJal38irWP0JhHJLMNjW3P9ZjR0rGSxgXuQnVKakq0rMJ45PCcmqhKsQIGR2nHSFAfvUAXv7xYJ9it3CFm-4z2O22f9tRCnJzBCi4njhucs9GDRFc9-JivDYoLzG1lzs8Gu8N4iT_te-y-a2p">
+<div class="absolute -bottom-1 -right-1 bg-error rounded-full p-1 border-2 border-surface-container-lowest flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-white" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h2 class="font-label-lg text-label-lg text-on-surface">Nguyễn Minh Anh</h2>
+<span class="bg-green-100 text-green-700 font-label-sm text-[10px] px-2 py-0.5 rounded-full border border-green-200">Đã duyệt kế hoạch</span>
+</div>
+<div class="mt-2 flex flex-wrap gap-2">
+<div class="flex items-center gap-1 bg-surface-container-low px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-primary text-[18px]">no_meals</span>
+<span class="font-label-sm text-on-surface-variant">Không Đậu phộng</span>
+</div>
+<div class="flex items-center gap-1 bg-error-container px-2 py-1 rounded-lg">
+<span class="font-label-sm text-on-error-container">Yêu cầu y tế (Dị ứng)</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-4 p-3 bg-surface-container-low rounded-lg border-l-4 border-error">
+<p class="font-body-md text-body-md text-on-surface-variant italic">
+                        "Sử dụng khay ăn riêng biệt, tuyệt đối không tiếp xúc chéo với các thực phẩm chứa đậu phộng."
+                    </p>
+</div>
+</div>
+<!-- Thẻ 2: Trần Đức Mạnh -->
+<div class="tonal-card bg-surface-container-lowest border border-surface-container-high rounded-lg p-4 transition-all">
+<div class="flex items-start gap-3">
+<img class="w-14 h-14 rounded-full object-cover border-2 border-primary-container" data-alt="A clear, high-quality photograph of a young boy student with a friendly expression. He is wearing a blue school uniform, photographed against a minimalist grey background. The shot is well-lit with professional corporate lighting, maintaining the clean aesthetic of the health food management system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFwnxFgUgzAFB0I_gkVEjqQiM6J2SMU9kz9Wl9rFsYpCdQ9bVr_hQEPrCz2hiXFFUex115XVoRrSIqBjnIWj7j6p_DGF7x-jM5Mg6g7M-21CGQVFlPrPAyuSGSwMxKIL22aKtoIyE7e2dGs6mHzs8uuJZ1Wai6igMhmoYyWrJkuqQFyC50RQKiV6pjKP7UnfFF6DBJ9lxltmxQ_ElTkJp4PmWX6quevpIB0xCwkRtC-sf8-PaYLazu">
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h2 class="font-label-lg text-label-lg text-on-surface">Trần Đức Mạnh</h2>
+<span class="bg-green-100 text-green-700 font-label-sm text-[10px] px-2 py-0.5 rounded-full border border-green-200">Đã duyệt kế hoạch</span>
+</div>
+<div class="mt-2 flex flex-wrap gap-2">
+<div class="flex items-center gap-1 bg-surface-container-low px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-primary text-[18px]">eco</span>
+<span class="font-label-sm text-on-surface-variant">Ăn chay (Vegetarian)</span>
+</div>
+<div class="flex items-center gap-1 bg-surface-container px-2 py-1 rounded-lg">
+<span class="font-label-sm text-on-surface-variant">Yêu cầu tôn giáo</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-4 p-3 bg-surface-container-low rounded-lg border-l-4 border-primary">
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        "Cung cấp suất ăn chay theo thực đơn tháng."
+                    </p>
+</div>
+</div>
+<!-- Thẻ 3: Lê Thanh Trúc -->
+<div class="tonal-card bg-surface-container-lowest border border-surface-container-high rounded-lg p-4 transition-all">
+<div class="flex items-start gap-3">
+<img class="w-14 h-14 rounded-full object-cover border-2 border-primary-container" data-alt="A professional portrait of a elementary school girl student with a polite smile. The image has a clean, high-key white and light blue background suitable for a medical or school application. The lighting is flat and clear, emphasizing the student's identification clearly. High-end corporate modern style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjERm8-plxz7-w4fedIDJu4v8pWUpZnTyizbv_hKJ4NzQf9WcS-dkjLLUFhbIfES3XlunNAHwKB3u6GWNp9aqx7-G0zhHgO3LHPvAHG_sKJxkSmANdXS2dOTBOvnTb3B2piks7DJAj5Dp7yIpGzSW1sR9r_USV1ehoiiMLe4MJK4qHCvD_PN-BRPLHlkLgtdybD5M-YXIlCzNcnYe1o1tzmVWYOI54wk3Y-rL8Oa9XLAg4bDmoM57w">
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h2 class="font-label-lg text-label-lg text-on-surface">Lê Thanh Trúc</h2>
+<span class="bg-yellow-100 text-yellow-700 font-label-sm text-[10px] px-2 py-0.5 rounded-full border border-yellow-200">Chưa có kế hoạch</span>
+</div>
+<div class="mt-2 flex flex-wrap gap-2">
+<div class="flex items-center gap-1 bg-surface-container-low px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-primary text-[18px]">grain</span>
+<span class="font-label-sm text-on-surface-variant">Không Gluten</span>
+</div>
+<div class="flex items-center gap-1 bg-error-container px-2 py-1 rounded-lg">
+<span class="font-label-sm text-on-error-container">Yêu cầu y tế (Celiac)</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-4 p-3 bg-surface-container-low rounded-lg border-l-4 border-yellow-500">
+<p class="font-body-md text-body-md text-on-surface-variant italic">
+                        "Đang chờ xác nhận nguyên liệu thay thế từ nhà cung cấp."
+                    </p>
+</div>
+</div>
+<!-- Thẻ 4: Phạm Văn Nam -->
+<div class="tonal-card bg-surface-container-lowest border border-surface-container-high rounded-lg p-4 transition-all mb-4">
+<div class="flex items-start gap-3">
+<img class="w-14 h-14 rounded-full object-cover border-2 border-primary-container" data-alt="A portrait of a male primary student, 8 years old, named Nam. He is wearing a clean white school shirt, posed against a soft teal background that matches the school's brand colors. The visual is sharp, professionally composed, and evokes a sense of care and safety in a school environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXjf-O3Vg2e9PGSrUFYNYOMeCpjACCaU8d1qtguomcKFCHJeY53cNkGqSuoOPMN1jZq4ZzdWkfwBxk3Y6wP-HRW7PUH0jV0YwRhliz37QgS5Jodo3I9xkYMkt3c9RE_fCKBJgxksfkzjKAxCUgiSueGkv4WSNybOQhhNPc4g65lIsXD87lMaBeTkzYG1n-IPSpCrGEnP9z2S-iYbAu-huXxYkZamLB8Wz4RoqC1_Ly8WHCzkMR-d4V">
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h2 class="font-label-lg text-label-lg text-on-surface">Phạm Văn Nam</h2>
+<span class="bg-green-100 text-green-700 font-label-sm text-[10px] px-2 py-0.5 rounded-full border border-green-200">Đã duyệt kế hoạch</span>
+</div>
+<div class="mt-2 flex flex-wrap gap-2">
+<div class="flex items-center gap-1 bg-surface-container-low px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-primary text-[18px]">opacity</span>
+<span class="font-label-sm text-on-surface-variant">Không Bơ sữa (Dairy-free)</span>
+</div>
+<div class="flex items-center gap-1 bg-error-container px-2 py-1 rounded-lg">
+<span class="font-label-sm text-on-error-container">Yêu cầu y tế</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-4 p-3 bg-surface-container-low rounded-lg border-l-4 border-primary">
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        "Tuyệt đối không sử dụng sữa, bơ hoặc phô mai trong chế biến."
+                    </p>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe bg-surface/80 backdrop-blur-md shadow-[0_-1px_10px_rgba(14,116,144,0.04)] h-[56px]">
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-2xl px-5 py-1 active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+<span class="font-label-sm text-label-sm">Meals</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline px-5 py-1 hover:text-primary active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-sm text-label-sm">Students</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline px-5 py-1 hover:text-primary active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">assignment_turned_in</span>
+<span class="font-label-sm text-label-sm">Staff</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline px-5 py-1 hover:text-primary active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for scroll effects on the header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 10) {
+                header.classList.add('shadow-md');
+                header.classList.remove('shadow-sm');
+            } else {
+                header.classList.add('shadow-sm');
+                header.classList.remove('shadow-md');
+            }
+        });
+
+        // Tap feedback simulation for cards
+        document.querySelectorAll('.tonal-card').forEach(card => {
+            card.addEventListener('touchstart', function() {
+                this.classList.add('bg-surface-container');
+            });
+            card.addEventListener('touchend', function() {
+                this.classList.remove('bg-surface-container');
+            });
+        });
+    </script>
+</body></html>

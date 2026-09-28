@@ -1,0 +1,206 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="aU6N_1gG9OK36FIhs2_i">
+    <mxGraphModel grid="0" page="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-1" parent="1" style="swimlane;childLayout=stackLayout;resizeParent=1;resizeParentMax=0;startSize=20;html=1;" value="Ingredient Storge And Inventory Management" vertex="1">
+          <mxGeometry height="1624" width="653" x="212" y="102" as="geometry" />
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-2" parent="-sh7pVslkDdcTl_FKHnu-1" style="swimlane;startSize=20;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="System" vertex="1">
+          <mxGeometry height="1604" width="316" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-3" parent="-sh7pVslkDdcTl_FKHnu-2" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="89" y="24" as="geometry" />
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-4" edge="1" parent="-sh7pVslkDdcTl_FKHnu-2" source="-sh7pVslkDdcTl_FKHnu-3" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;rounded=0;fontSize=12;curved=1;entryX=0.574;entryY=0.053;entryDx=0;entryDy=0;entryPerimeter=0;" target="-sh7pVslkDdcTl_FKHnu-5" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="92" y="99" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-5" parent="-sh7pVslkDdcTl_FKHnu-2" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;1. Receive Approved Batch&lt;/b&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;Receive approved batches&lt;/span&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;from Receiving Workflow&lt;/span&gt;" vertex="1">
+          <mxGeometry height="88" width="132" x="29" y="76" as="geometry" />
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-6" parent="-sh7pVslkDdcTl_FKHnu-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#99ccff;strokeColor=#0066cc;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;4. Record Storage Info&lt;/b&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;Records location, batch info,&lt;/span&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;quantity &amp;amp; expiration date&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="142" x="26" y="180.5" as="geometry" />
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-7" edge="1" parent="-sh7pVslkDdcTl_FKHnu-2" source="-sh7pVslkDdcTl_FKHnu-6" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.35;entryY=0.047;entryDx=0;entryDy=0;entryPerimeter=0;" target="-sh7pVslkDdcTl_FKHnu-18" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="184" y="317" as="sourcePoint" />
+            <mxPoint x="97" y="259" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-8" parent="-sh7pVslkDdcTl_FKHnu-2" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;6. Expiration Alert Required?&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#0066cc&quot; style=&quot;font-size:9px&quot;&gt;&lt;b&gt;BR-205, BR-075, BR-202&lt;/b&gt;&lt;br/&gt;Luật ATTP 55/2010 Điều 10&lt;/font&gt;" vertex="1">
+          <mxGeometry height="125" width="190" x="32" y="467" as="geometry" />
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-9" edge="1" parent="-sh7pVslkDdcTl_FKHnu-2" source="-sh7pVslkDdcTl_FKHnu-18" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="-sh7pVslkDdcTl_FKHnu-8" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="94.10099999999989" y="403.3000000000002" as="sourcePoint" />
+            <mxPoint x="213" y="453" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-12" parent="-sh7pVslkDdcTl_FKHnu-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#99ccff;strokeColor=#0066cc;" value="&lt;div&gt;&lt;b&gt;7. Generate Expiration Alert&lt;/b&gt;&lt;/div&gt;&lt;div&gt;Sends expiration alert to&lt;/div&gt;&lt;div&gt;Staff &amp;amp; School Administrator&lt;/div&gt;" vertex="1">
+          <mxGeometry height="96" width="128" x="63" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-13" edge="1" parent="-sh7pVslkDdcTl_FKHnu-2" source="-sh7pVslkDdcTl_FKHnu-8" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="-sh7pVslkDdcTl_FKHnu-12" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="160.5" y="595" as="sourcePoint" />
+            <mxPoint x="237" y="596" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-14" connectable="0" parent="-sh7pVslkDdcTl_FKHnu-13" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" value="Yes" vertex="1">
+          <mxGeometry relative="1" x="-0.3377" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-15" parent="-sh7pVslkDdcTl_FKHnu-2" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="108" y="783" as="geometry" />
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-16" edge="1" parent="-sh7pVslkDdcTl_FKHnu-2" source="-sh7pVslkDdcTl_FKHnu-12" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.475;exitY=0.983;exitDx=0;exitDy=0;exitPerimeter=0;" target="-sh7pVslkDdcTl_FKHnu-15" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="126" y="733" as="sourcePoint" />
+            <mxPoint x="242" y="760" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-18" parent="-sh7pVslkDdcTl_FKHnu-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#99ccff;strokeColor=#0066cc;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;5. Monitor Inventory &amp;amp;&amp;nbsp;&lt;/b&gt;&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;Expiration&lt;/b&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;Continuously tracks&lt;/span&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;balances &amp;amp; availability and&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;expiration dates&lt;/span&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;of stored ingredients&lt;/span&gt;" vertex="1">
+          <mxGeometry height="89" width="196" x="29" y="267" as="geometry" />
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-20" parent="-sh7pVslkDdcTl_FKHnu-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;9. Verify Availability&lt;/b&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;Verifies sufficient inventory&lt;/span&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;for requested ingredients&lt;/span&gt;" vertex="1">
+          <mxGeometry height="79" width="123" x="27" y="826" as="geometry" />
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-21" parent="-sh7pVslkDdcTl_FKHnu-2" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;10. Inventory Available?&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#0066cc&quot; style=&quot;font-size:9px&quot;&gt;&lt;b&gt;BR-077, BR-075, BR-205&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="118" width="180" x="10" y="956" as="geometry" />
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-22" edge="1" parent="-sh7pVslkDdcTl_FKHnu-2" source="-sh7pVslkDdcTl_FKHnu-20" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="-sh7pVslkDdcTl_FKHnu-21" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="169" y="962" as="sourcePoint" />
+            <mxPoint x="219" y="912" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-23" parent="-sh7pVslkDdcTl_FKHnu-2" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;b&gt;14. Generate Shortage Alert&lt;/b&gt;&lt;/div&gt;&lt;div&gt;Generates inventory shortage&lt;/div&gt;&lt;div&gt;alert for Catering Staff&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="123" x="26" y="1105" as="geometry" />
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-24" edge="1" parent="-sh7pVslkDdcTl_FKHnu-2" source="-sh7pVslkDdcTl_FKHnu-21" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="-sh7pVslkDdcTl_FKHnu-23" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="89" y="1079" as="sourcePoint" />
+            <mxPoint x="261" y="1004" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-25" connectable="0" parent="-sh7pVslkDdcTl_FKHnu-24" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" value="No" vertex="1">
+          <mxGeometry relative="1" x="-0.1104" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-26" edge="1" parent="-sh7pVslkDdcTl_FKHnu-2" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="-sh7pVslkDdcTl_FKHnu-40" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="145" y="1015" as="sourcePoint" />
+            <mxPoint x="385" y="1015" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-27" connectable="0" parent="-sh7pVslkDdcTl_FKHnu-26" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" value="Yes" vertex="1">
+          <mxGeometry relative="1" x="-0.1014" y="5" as="geometry">
+            <mxPoint x="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-28" parent="-sh7pVslkDdcTl_FKHnu-2" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="73.5" y="1227" as="geometry" />
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-29" edge="1" parent="-sh7pVslkDdcTl_FKHnu-2" source="-sh7pVslkDdcTl_FKHnu-23" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="-sh7pVslkDdcTl_FKHnu-28" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="167" y="1266" as="sourcePoint" />
+            <mxPoint x="217" y="1216" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-30" parent="-sh7pVslkDdcTl_FKHnu-2" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;12. Update Inventory Quantity&lt;/b&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;Updates inventory balance&lt;/span&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;&amp;amp; batch quantity&lt;/span&gt;" vertex="1">
+          <mxGeometry height="76" width="136" x="29" y="1293" as="geometry" />
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-31" parent="-sh7pVslkDdcTl_FKHnu-2" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;b&gt;13. Record Transaction&lt;/b&gt;&lt;/div&gt;&lt;div&gt;Records inventory movement&lt;/div&gt;&lt;div&gt;in audit log &amp;amp; history&lt;/div&gt;" vertex="1">
+          <mxGeometry height="78" width="124" x="36" y="1419" as="geometry" />
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-32" parent="-sh7pVslkDdcTl_FKHnu-2" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="1535" as="geometry" />
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-33" edge="1" parent="-sh7pVslkDdcTl_FKHnu-2" source="-sh7pVslkDdcTl_FKHnu-31" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="-sh7pVslkDdcTl_FKHnu-32" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="193" y="1529" as="sourcePoint" />
+            <mxPoint x="243" y="1479" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-34" edge="1" parent="-sh7pVslkDdcTl_FKHnu-2" source="-sh7pVslkDdcTl_FKHnu-30" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="-sh7pVslkDdcTl_FKHnu-31" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="179" y="1441" as="sourcePoint" />
+            <mxPoint x="229" y="1391" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-35" parent="-sh7pVslkDdcTl_FKHnu-1" style="swimlane;startSize=20;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Service Caterers&amp;nbsp;" vertex="1">
+          <mxGeometry height="1604" width="337" x="316" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-36" parent="-sh7pVslkDdcTl_FKHnu-35" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#99ccff;strokeColor=#0066cc;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;2. Assign Storage Location&lt;/b&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;Assigns batch to dry/refrig/&lt;/span&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;freezer storage location&lt;/span&gt;" vertex="1">
+          <mxGeometry height="70" width="164" x="89" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-37" parent="-sh7pVslkDdcTl_FKHnu-35" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#99ccff;strokeColor=#0066cc;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;3. Store Ingredient Batch&lt;/b&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;Places batch in designated&lt;/span&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;physical storage area&lt;/span&gt;" vertex="1">
+          <mxGeometry height="59" width="151.5" x="95.25" y="181.5" as="geometry" />
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-38" edge="1" parent="-sh7pVslkDdcTl_FKHnu-35" source="-sh7pVslkDdcTl_FKHnu-36" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="-sh7pVslkDdcTl_FKHnu-37" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="232" y="242" as="sourcePoint" />
+            <mxPoint x="282" y="192" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-39" parent="-sh7pVslkDdcTl_FKHnu-35" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;8. Ingredient&lt;br&gt;Request&lt;br&gt;Received?&lt;/b&gt;" vertex="1">
+          <mxGeometry height="117" width="127" x="107.5" y="472" as="geometry" />
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-40" parent="-sh7pVslkDdcTl_FKHnu-35" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#99ccff;strokeColor=#0066cc;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;11. Issue Ingredient Batch&lt;/b&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;Issues batches from storage&lt;/span&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;according to FIFO/FEFO&lt;/span&gt;" vertex="1">
+          <mxGeometry height="88" width="135" x="64" y="970" as="geometry" />
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-41" edge="1" parent="-sh7pVslkDdcTl_FKHnu-1" source="-sh7pVslkDdcTl_FKHnu-5" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="-sh7pVslkDdcTl_FKHnu-36" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="156" y="141" as="sourcePoint" />
+            <mxPoint x="206" y="91" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-42" edge="1" parent="-sh7pVslkDdcTl_FKHnu-1" source="-sh7pVslkDdcTl_FKHnu-37" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="-sh7pVslkDdcTl_FKHnu-6" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="190" y="313" as="sourcePoint" />
+            <mxPoint x="240" y="263" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-43" edge="1" parent="-sh7pVslkDdcTl_FKHnu-1" source="-sh7pVslkDdcTl_FKHnu-39" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;fontSize=12;startSize=8;endSize=8;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;" target="-sh7pVslkDdcTl_FKHnu-18" value="No">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="450" y="409" as="sourcePoint" />
+            <mxPoint x="215.2840000000001" y="331.09600000000023" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-44" edge="1" parent="-sh7pVslkDdcTl_FKHnu-1" source="-sh7pVslkDdcTl_FKHnu-39" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;fontSize=12;startSize=8;endSize=8;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.986;entryY=0.624;entryDx=0;entryDy=0;entryPerimeter=0;edgeStyle=orthogonalEdgeStyle;" target="-sh7pVslkDdcTl_FKHnu-20" value="Yes">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <Array as="points">
+              <mxPoint x="487" y="895" />
+            </Array>
+            <mxPoint x="456" y="767" as="sourcePoint" />
+            <mxPoint x="536" y="767" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-45" edge="1" parent="-sh7pVslkDdcTl_FKHnu-1" source="-sh7pVslkDdcTl_FKHnu-40" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;fontSize=12;startSize=8;endSize=8;exitX=0.431;exitY=0.964;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="-sh7pVslkDdcTl_FKHnu-30" value="">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <Array as="points">
+              <mxPoint x="438" y="1351" />
+            </Array>
+            <mxPoint x="445" y="1197" as="sourcePoint" />
+            <mxPoint x="206" y="1351" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-10" edge="1" parent="-sh7pVslkDdcTl_FKHnu-1" source="-sh7pVslkDdcTl_FKHnu-8" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="-sh7pVslkDdcTl_FKHnu-39" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="141" y="570" as="sourcePoint" />
+            <mxPoint x="364" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-sh7pVslkDdcTl_FKHnu-11" connectable="0" parent="-sh7pVslkDdcTl_FKHnu-10" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" value="No" vertex="1">
+          <mxGeometry relative="1" x="-0.2705" y="2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

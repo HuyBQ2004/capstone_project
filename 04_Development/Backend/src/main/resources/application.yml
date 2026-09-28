@@ -1,0 +1,204 @@
+spring:
+  application:
+    name: sfms-backend
+
+  # Trần upload. MẶC ĐỊNH CỦA SPRING LÀ 1MB — và trước 09/08/2026 không ai khai đè, nên MỌI
+  # giới hạn 10MB/5MB khai trong code (FileValidationSupport của MF04 và MF06,
+  # KnowledgeTextExtractor của MF12) đều là lời hứa suông: Tomcat chặn từ 1MB, request chết
+  # bằng MaxUploadSizeExceededException TRƯỚC khi tới service, và trồi lên thành 500 chưa xử lý.
+  # Đo được khi nạp một file .docx 1.9MB vào kho tri thức. Ảnh chụp bằng điện thoại thường
+  # 2–5MB ⇒ ảnh bằng chứng kiểm thực/sự cố cũng nằm trong vùng hỏng này.
+  # 10MB khớp giới hạn khai trong code; 15MB tổng khớp `client_max_body_size 15m` của nginx.
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 15MB
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/sfms}
+    username: ${DB_USER:sfms}
+    password: ${DB_PASSWORD:sfms}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      # CHỜ KHOÁ THÌ PHẢI BỎ CUỘC, KHÔNG TREO VÔ HẠN (thêm 09/08/2026).
+      #
+      # Đăng nhập Google lần đầu từng treo mãi mãi: transaction ngoài giữ khoá ghi trên
+      # `user_accounts` (cập nhật `google_sub` — cột có unique index), còn `AuditService`
+      # (REQUIRES_NEW, kết nối khác) chờ khoá đó để chèn `audit_logs` do khoá ngoại
+      # `actor_user_id`. Postgres KHÔNG phát hiện được vì phiên ngoài ở trạng thái
+      # `idle in transaction` nên không thành chu trình. Kết quả: luồng web đứng im, nginx
+      # 504 sau 60s, và backend không ghi nổi một dòng log.
+      #
+      # Nguyên nhân gốc đã sửa ở `OAuth2LoginService` (audit trước, update sau). Hai tham số
+      # dưới đây là HÀNG RÀO cho lần sau: chờ khoá quá 10s ⇒ ném lỗi có stack trace chỉ đúng
+      # câu SQL, thay vì treo im lặng. 10s dư sức cho mọi truy vấn hợp lệ của hệ thống này.
+      connection-init-sql: SET lock_timeout = '10s'
+      connection-timeout: 30000
+      # 10/08/2026 — mặc định Hikari (10) không đủ cho các thao tác ghi HÀNG LOẠT: mọi
+      # `@Transactional` gọi `CodeGenerator.next()` (REQUIRES_NEW, sinh mã CCR-xxxx/U-xxxx/…)
+      # cần 2 connection ĐỒNG THỜI — 1 giữ transaction ngoài, 1 cho transaction lồng bên
+      # trong. Đo thật: 16 request `POST /catalog-change-requests` bắn song song từ FE (bulk
+      # submit) ⇒ cần tới 32 connection cùng lúc, vượt xa pool mặc định ⇒ tự bó tay nhau,
+      # phần lớn chết theo "Could not open JPA EntityManager for transaction" sau khi Hikari
+      # chờ đủ 30s. 20 vẫn còn xa mức `max_connections` mặc định của Postgres (100).
+      maximum-pool-size: 20
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      # Flyway là nguồn schema DUY NHẤT (V1 do Nam giữ). Hibernate không được đụng schema.
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc.time_zone: UTC
+        format_sql: false
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: false
+    # An toàn: không bao giờ cho clean chạy ngoài môi trường test (TestSpec §7).
+    clean-disabled: true
+
+# spring.jackson is configured in JacksonConfig bean for Jackson 2 & 3 compatibility
+
+  mail:
+    host: ${SMTP_HOST:localhost}
+    port: ${SMTP_PORT:1025}
+    username: ${SMTP_USER:}
+    password: ${SMTP_PASSWORD:}
+    properties:
+      mail.smtp.auth: ${SMTP_AUTH:false}
+      mail.smtp.starttls.enable: ${SMTP_TLS:false}
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            # BR-164 / ADR-000: secret đọc từ ENV, TUYỆT ĐỐI không hardcode.
+            client-id: ${GOOGLE_CLIENT_ID:dummy-google-client-id}
+            client-secret: ${GOOGLE_CLIENT_SECRET:dummy-google-client-secret}
+            scope:
+              - openid
+              - email
+              - profile
+            # Endpoint chuẩn của Spring Security OAuth2 Client (TDS §17 C5 — KHÔNG tự viết flow tay):
+            #   vào     : /oauth2/authorization/google
+            #   callback: /login/oauth2/code/google
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+
+server:
+  port: ${SERVER_PORT:8080}
+  # Sau Nginx/Cloudflare Tunnel — Nginx gửi X-Forwarded-Proto: https, nhưng Spring vẫn thấy
+  # request tới bằng http (kết nối nội bộ Docker network không có TLS) trừ khi bật cái này.
+  # Thiếu dòng này ⇒ Spring Security OAuth2 Client tự tính SAI scheme (http) khi dựng
+  # {baseUrl} cho redirect_uri Google OAuth ⇒ Google từ chối vì lệch URI đã đăng ký.
+  forward-headers-strategy: framework
+  error:
+    # SEC-010: không bao giờ để stack trace / message nội bộ ra response body.
+    include-stacktrace: never
+    include-message: never
+    include-binding-errors: never
+
+# ─── D8 — springdoc / Swagger ────────────────────────────────────────────────
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui/index.html
+    operations-sorter: alpha
+    tags-sorter: alpha
+  # S1 — gom đúng 13 nhóm theo @Tag "MFxx — <Tên module>"
+  writer-with-order-by-keys: true
+
+sfms:
+  mail:
+    # Gmail SMTP thật: PHẢI = SMTP_USER (hoặc alias đã verify trong Gmail), không thì Gmail
+    # từ chối/tự ghi đè (xem EmailService.java).
+    from: ${MAIL_FROM:no-reply@sfsm.io.vn}
+  jwt:
+    # HS256 ≥ 256-bit. Prod BẮT BUỘC đặt qua ENV; giá trị dưới chỉ để chạy local.
+    secret: ${JWT_SECRET:sfms-local-dev-secret-key-change-me-in-production-0123456789}
+    issuer: ${JWT_ISSUER:sfms}
+    # ⚠️ KHÔNG có `access-token-minutes` ở đây — TTL access token đọc từ
+    #    SecurityPolicy.sessionTimeoutMinutes (BR-004, TDS §17 C3). Hardcode ở đây
+    #    làm màn `system-admin/security-policies` thành trang trí (MF01-TC-SEC-003 bước 5).
+  refresh-token:
+    # BR-004 v1.9 — sliding 14 ngày. Đây là hằng của BR, không phải tham số vận hành,
+    # nên nằm ở config chứ không ở SecurityPolicy (SecurityPolicy chỉ có sessionTimeoutMinutes).
+    sliding-days: 14
+  activation-token:
+    hours: 48        # BR-011
+  reset-token:
+    minutes: 60      # BR-003
+    request-window-minutes: 15   # BR-003 — 1 req/15'/email
+  oauth2:
+    # Nơi FE nhận token sau khi Google callback thành công.
+    success-redirect-uri: ${OAUTH2_SUCCESS_REDIRECT:}
+  profile-photo:
+    # MSG-008 nói 10MB (CF-4: UC-097 nói 5MB — theo MSG vì D7 lấy error_message.md làm chuẩn).
+    max-bytes: 10485760
+    allowed-types: application/pdf,image/jpeg,image/png
+  health-document:
+    # POST /students/{code}/health-documents (quyết định nhóm 04/08/2026) — cùng ngưỡng
+    # profile-photo ở trên, tách config riêng vì thuộc MF03 không phải MF01.
+    max-bytes: 10485760
+    allowed-types: application/pdf,image/jpeg,image/png
+  storage:
+    # ADR-001 mục 6: production BẮT BUỘC "r2" (Cloudflare R2). ADR-000: dev/local dùng "local"
+    # (ghi vào ./data/uploads) để không cần credentials R2 khi phát triển.
+    provider: ${STORAGE_PROVIDER:local}
+    local:
+      base-dir: ${STORAGE_LOCAL_DIR:./data/uploads}
+      public-base-path: /media
+    r2:
+      # ADR-001 mục 2 / ADR-000 mục 2: KHÔNG hardcode — chỉ đọc qua ENV, không có default thật.
+      endpoint: ${R2_ENDPOINT:}
+      access-key: ${R2_ACCESS_KEY:}
+      secret-key: ${R2_SECRET_KEY:}
+      bucket: ${R2_BUCKET:}
+      # Custom domain (Cloudflare) thay vì raw S3 endpoint — có CDN cache + TLS riêng
+      public-base-url: ${R2_PUBLIC_BASE_URL:}
+  mf04:
+    # ADR-M04-5/PDPD — khóa AES-256 mã hóa CCCD nhân viên giao hàng at-rest. Prod BẮT BUỘC đặt
+    # qua ENV (32 byte, base64); giá trị dưới chỉ để chạy local/test, KHÔNG dùng thật.
+    national-id-key: ${MF04_NATIONAL_ID_KEY:c2Ztcy1tZjA0LWRldi1vbmx5LTMyLWJ5dGUta2V5ISE=}
+    face-image:
+      max-bytes: 5242880   # BR-051/D10-BIS — ảnh khuôn mặt ≤5MB
+  frs:
+    enabled: ${SFMS_FRS_ENABLED:false}
+    url: ${SFMS_FRS_URL:http://localhost:8000}
+  rag:
+    enabled: ${SFMS_RAG_ENABLED:true}
+    url: ${SFMS_RAG_URL:http://rag-service:8001}
+  menu:
+    # BR-061 — số ngày tối thiểu trước ngày phục vụ phải nộp duyệt thực đơn.
+    # Prod: 3. Đặt = 0 qua ENV khi test/demo để bỏ qua ràng buộc thời gian.
+    lead-time-days: ${MENU_LEAD_TIME_DAYS:3}
+  fcm:
+    # ADR-000 — false ở dev/test (không gọi mạng thật). DB (System Admin UI) là nguồn credential
+    # THẬT; file dưới chỉ để bootstrap khi UI chưa cấu hình (xem FcmPushGatewayAdapter).
+    enabled: ${SFMS_FCM_ENABLED:false}
+    service-account-file: ${FIREBASE_SERVICE_ACCOUNT_FILE:}
+  # ADR-M06-7 — BR-074: xác minh vị trí nhận hàng. Dev = no-op (ADR-000); prod BẮT BUỘC bật.
+  geofence:
+    enforced: ${SFMS_GEOFENCE_ENFORCED:false}
+  backup:
+    # BR-160/161 — cần binary `pg_dump` trong container (Backend/Dockerfile: apk add postgresql-client).
+    dir: ${SFMS_BACKUP_DIR:./data/backups}
+    cron: ${SFMS_BACKUP_CRON:0 0 2 * * *}
+    # Chỉ để tính storageUtilizationPercent hiển thị UI — không phải quota thật bị chặn ghi.
+    capacity-bytes: ${SFMS_BACKUP_CAPACITY_BYTES:5368709120}
+
+delivery:
+  # CF-M06-6 — ngưỡng cảnh báo lệch giờ giao hàng là THAM SỐ cấu hình, không hard-code luật.
+  deviation-alert-minutes: ${DELIVERY_DEVIATION_ALERT_MINUTES:30}
+
+logging:
+  level:
+    root: INFO
+    com.sfms: INFO
+    # SEC-012: KHÔNG bật org.hibernate.SQL=DEBUG hay web request-body logging ở prod —
+    # sẽ ghi mật khẩu / refresh token thô vào log (trigger rollback theo TDS §12.1).
+    org.hibernate.SQL: WARN

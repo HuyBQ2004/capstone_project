@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Wireframe — Violation Management (Medical Staff, Mobile)</title>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<style>
+  * { box-sizing:border-box; } html{font-size:18px;}
+  body { margin:0; font-family:'Patrick Hand',cursive; color:#333; background-image: radial-gradient(#d7d7d7 1px, transparent 1px); background-size:20px 20px; display:flex; flex-direction:column; align-items:center; padding:20px 10px 60px; }
+  .demo-nav { display:flex; gap:6px; flex-wrap:wrap; justify-content:center; margin-bottom:16px; max-width:430px; }
+  .demo-nav button { font-size:11px; background:white; border:2px solid #333; border-radius:10px; padding:5px 8px; cursor:pointer; }
+  .demo-nav button.active { background:#333; color:white; }
+  .phone { width:390px; max-width:100%; min-height:800px; background:white; border:3px solid #333; border-radius:32px; overflow:hidden; }
+  .screen { display:none; flex-direction:column; min-height:800px; } .screen.visible { display:flex; }
+  .appbar { display:flex; align-items:center; gap:10px; padding:14px; border-bottom:2px solid #333; }
+  .appbar .title { font-size:18px; flex:1; text-align:center; } .appbar .icon-slot { width:22px; }
+  .content { padding:14px 16px 30px; flex:1; overflow:auto; }
+  .filter-bar { display:flex; gap:6px; margin-bottom:10px; flex-wrap:wrap; }
+  .list-card { border:2px solid #333; border-radius:12px; padding:10px; margin-bottom:8px; font-size:13px; }
+  .badge { display:inline-flex; gap:4px; padding:2px 6px; border-radius:6px; font-size:11px; border:2px solid #333; }
+  .badge.warning { border-style:dashed; } .badge.secondary { border-style:dotted; }
+  .field { margin-bottom:10px; } .field label { display:block; margin-bottom:4px; font-size:13px; }
+  textarea, wired-input, wired-combo { width:100%; font-family:'Patrick Hand',cursive; }
+  textarea { border:2px solid #333; border-radius:8px; padding:6px; font-size:14px; }
+  .upload-box { border:2px dashed #333; border-radius:10px; padding:14px; text-align:center; color:#666; font-size:13px; }
+  .btn-primary { background:#333; color:white; border:2px solid #333; border-radius:255px 15px 225px 15px/15px 225px 15px 255px; font-family:'Patrick Hand',cursive; font-size:16px; padding:11px; cursor:pointer; width:100%; margin-top:8px; }
+  .fab { position:absolute; right:18px; bottom:18px; width:52px; height:52px; border-radius:50%; background:#333; color:white; display:flex; align-items:center; justify-content:center; border:2px solid #333; font-size:26px; }
+  .icon { width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; }
+  .toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#333; color:white; padding:10px 18px; border-radius:10px; display:none; align-items:center; gap:8px; z-index:20; }
+  .toast.show { display:flex; }
+  .note { font-size:12px; color:#666; }
+  .banner { border:2px dashed #333; border-radius:10px; padding:8px; margin-bottom:10px; font-size:12px; }
+</style>
+</head>
+<body>
+
+<svg style="display:none">
+  <symbol id="ic-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-linecap="round"/></symbol>
+  <symbol id="ic-warn" viewBox="0 0 24 24"><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v4M12 17h.01"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24"><path d="M4 12l6 6L20 6" stroke-linecap="round"/></symbol>
+</svg>
+
+<div class="demo-nav">
+  <button data-go="screen-registry" class="active">1. Registry</button>
+  <button data-go="screen-process">2. Process Violation</button>
+  <button data-go="screen-staff">3. Staff Violation</button>
+  <button data-go="screen-resolution">4. Resolution</button>
+</div>
+
+<div class="phone" style="position:relative;">
+  <!-- 27 Violation Registry -->
+  <div class="screen visible" id="screen-registry">
+    <div class="appbar"><span class="title">Violation Registry</span></div>
+    <div class="content">
+      <div class="filter-bar">
+        <wired-combo selected="Tất cả loại" style="flex:1"><wired-item>Tất cả loại</wired-item><wired-item>Quy trình</wired-item><wired-item>Nhân viên</wired-item></wired-combo>
+      </div>
+      <div class="list-card" onclick="showScreen('screen-resolution')">
+        <b>Trần Văn Bếp</b> (Đầu bếp) — <span class="badge warning">MEDIUM</span><br>
+        <span class="note">Pending Approval · 29/06/2026</span>
+      </div>
+      <div class="list-card"><b>Bếp trung tâm</b> — <span class="badge secondary">LOW</span><br><span class="note">Closed · 15/06/2026</span></div>
+    </div>
+    <div class="fab" data-go="screen-staff" title="Report Staff/Process Violation">+</div>
+  </div>
+
+  <!-- 21 Record Process Violation -->
+  <div class="screen" id="screen-process">
+    <div class="appbar"><span data-go="screen-registry" class="icon-slot"><svg class="icon"><use href="#ic-back"/></svg></span><span class="title">Record Process Violation</span><span class="icon-slot"></span></div>
+    <div class="content">
+      <div class="field"><label>Nguồn gốc vi phạm (tuỳ chọn)</label><wired-combo selected="Không liên kết"><wired-item>Không liên kết</wired-item><wired-item>Audit thất bại 29/06</wired-item></wired-combo></div>
+      <div class="field"><label>Người phát hiện</label><wired-input value="Nguyễn Thị Y Tá (auto)" disabled></wired-input></div>
+      <div class="field"><label>Mô tả vi phạm (bắt buộc)</label><textarea rows="2"></textarea></div>
+      <div class="upload-box">Take a photo (bắt buộc)</div>
+      <div class="field" style="margin-top:8px;"><label>Mức độ nghiêm trọng (bắt buộc)</label><wired-combo selected="LOW"><wired-item>LOW</wired-item><wired-item>MEDIUM</wired-item><wired-item>HIGH</wired-item></wired-combo></div>
+      <div class="field"><label>Nhân chứng (bắt buộc nếu ≥ MEDIUM)</label><wired-combo><wired-item>Lê Thị Phụ Bếp</wired-item></wired-combo></div>
+      <button class="btn-primary" onclick="toast('MSG-086: Đã lưu.'); showScreen('screen-resolution')">Save Violation</button>
+    </div>
+  </div>
+
+  <!-- 22 Record Staff Violation -->
+  <div class="screen" id="screen-staff">
+    <div class="appbar"><span data-go="screen-registry" class="icon-slot"><svg class="icon"><use href="#ic-back"/></svg></span><span class="title">Record Staff Violation</span><span class="icon-slot"></span></div>
+    <div class="content">
+      <div class="banner"><svg class="icon"><use href="#ic-warn"/></svg> MSG-088: Trùng với 1 bản ghi Medium+ trong 90 ngày — xác minh thủ công (không chặn lưu).</div>
+      <div class="field"><label>Tên nhân viên (bắt buộc)</label><wired-input value="Trần Văn Bếp"></wired-input></div>
+      <div class="field"><label>Chức vụ nhân viên (tuỳ chọn)</label><wired-input value="Đầu bếp"></wired-input></div>
+      <div class="field"><label>Loại vi phạm (bắt buộc)</label><wired-combo selected="Bỏ qua quy trình vệ sinh"><wired-item>Bỏ qua quy trình vệ sinh</wired-item><wired-item>OVERRIDE_ABUSE</wired-item></wired-combo></div>
+      <div class="field"><label>Mô tả vi phạm (bắt buộc)</label><textarea rows="2">Không đeo lưới tóc trong ca làm việc.</textarea></div>
+      <div class="upload-box">Take a photo (bắt buộc)</div>
+      <div class="field" style="margin-top:8px;"><label>Mức độ nghiêm trọng (bắt buộc)</label><wired-combo selected="MEDIUM"><wired-item>LOW</wired-item><wired-item>MEDIUM</wired-item><wired-item>HIGH</wired-item></wired-combo></div>
+      <div class="field"><label>Ngày giờ xảy ra vi phạm (bắt buộc)</label><wired-input value="29/06/2026 10:30"></wired-input></div>
+      <button class="btn-primary" onclick="toast('MSG-086: Đã lưu. MSG-088 hiện ở banner.'); showScreen('screen-resolution')">Save Violation</button>
+    </div>
+  </div>
+
+  <!-- 24 Record Violation Resolution -->
+  <div class="screen" id="screen-resolution">
+    <div class="appbar"><span data-go="screen-registry" class="icon-slot"><svg class="icon"><use href="#ic-back"/></svg></span><span class="title">Violation Resolution</span><span class="icon-slot"></span></div>
+    <div class="content">
+      <p class="note">Vi phạm gốc: Trần Văn Bếp — Bỏ qua quy trình vệ sinh (MEDIUM)</p>
+      <div class="field"><label>Hành động xử lý (bắt buộc)</label><textarea rows="2">Nhắc nhở bằng văn bản, đào tạo lại quy trình.</textarea></div>
+      <div class="field"><label>Người xử lý</label><wired-input value="Nguyễn Thị Y Tá (auto)" disabled></wired-input></div>
+      <div class="field"><label>Mức độ hình thức kỷ luật (bắt buộc)</label><wired-combo selected="Cảnh cáo bằng văn bản"><wired-item>Nhắc nhở</wired-item><wired-item>Cảnh cáo bằng văn bản</wired-item><wired-item>Đình chỉ tạm thời</wired-item><wired-item>Đề xuất chấm dứt hợp đồng</wired-item></wired-combo></div>
+      <p><span class="badge warning">Pending Approval</span></p>
+      <button class="btn-primary" onclick="toast('MSG-087: Đã gửi School Administration phê duyệt.'); showScreen('screen-registry')">Gửi School Administration phê duyệt</button>
+      <p class="note">Nút "Đóng biên bản" (MSG-089) chỉ hiện khi mức LOW.</p>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><svg class="icon" style="stroke:white"><use href="#ic-check"/></svg><span id="toast-text"></span></div>
+
+<script>
+function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('visible')); document.getElementById(id).classList.add('visible'); document.querySelectorAll('.demo-nav button').forEach(b=>b.classList.toggle('active', b.dataset.go===id)); }
+document.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>showScreen(el.dataset.go)));
+function toast(msg){ const t=document.getElementById('toast'); document.getElementById('toast-text').textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600); }
+</script>
+</body>
+</html>

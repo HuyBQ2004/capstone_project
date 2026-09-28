@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vi phạm nhân viên</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#81d1f0",
+                        "secondary-fixed": "#d3e4fe",
+                        "surface-variant": "#e0e3e5",
+                        "on-secondary-fixed": "#0b1c30",
+                        "primary-fixed-dim": "#81d1f0",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-primary-container": "#d3f1ff",
+                        "surface-dim": "#d8dadc",
+                        "on-error": "#ffffff",
+                        "on-background": "#191c1e",
+                        "surface-container": "#eceef0",
+                        "on-surface-variant": "#3f484c",
+                        "surface-container-low": "#f2f4f6",
+                        "secondary": "#505f76",
+                        "surface-tint": "#006781",
+                        "tertiary-fixed": "#d8e5e2",
+                        "tertiary-container": "#616d6b",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#eff1f3",
+                        "surface": "#f7f9fb",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-primary-fixed": "#001f29",
+                        "outline-variant": "#bec8cd",
+                        "on-primary-fixed-variant": "#004d62",
+                        "surface-container-high": "#e6e8ea",
+                        "primary-container": "#0e7490",
+                        "outline": "#6f787d",
+                        "on-tertiary-fixed": "#121e1c",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#f7f9fb",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#bcc9c6",
+                        "error": "#ba1a1a",
+                        "background": "#f7f9fb",
+                        "on-tertiary": "#ffffff",
+                        "inverse-surface": "#2d3133",
+                        "on-secondary-container": "#54647a",
+                        "tertiary": "#495553",
+                        "primary": "#005a71",
+                        "primary-fixed": "#b9eaff",
+                        "on-tertiary-fixed-variant": "#3d4947",
+                        "secondary-container": "#d0e1fb",
+                        "on-tertiary-container": "#e2efec",
+                        "on-surface": "#191c1e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-tablet": "24px",
+                        "base": "4px",
+                        "md": "16px",
+                        "margin-mobile": "16px",
+                        "xl": "32px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "title-lg": ["Be Vietnam Pro"],
+                        "label-lg": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "headline-md": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-lg-mobile": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "title-lg": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky bg-surface dark:bg-surface-dim z-50">
+<div class="flex items-center px-4 h-16 w-full max-w-7xl mx-auto">
+<button aria-label="Go back" class="mr-4 p-2 rounded-full hover:bg-surface-container-high transition-colors text-primary active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined" data-icon="arrow_back" data-weight="regular">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary flex-1 truncate">Vi phạm nhân viên</h1>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full max-w-7xl mx-auto px-margin-mobile md:px-margin-tablet py-lg">
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-surface-variant p-md md:p-lg max-w-2xl mx-auto">
+<h2 class="font-title-lg text-title-lg text-on-surface mb-lg">Lập biên bản vi phạm</h2>
+<form class="space-y-lg">
+<!-- Tên nhân viên vi phạm -->
+<div class="flex flex-col gap-sm">
+<label class="font-label-lg text-label-lg text-on-surface" for="employee-name">Tên nhân viên vi phạm</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="person">person</span>
+<input class="w-full pl-10 pr-4 py-3 rounded-lg border border-outline-variant bg-surface-container-lowest focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-colors font-body-lg text-body-lg text-on-surface placeholder-on-surface-variant" id="employee-name" name="employee-name" placeholder="Nhập tên nhân viên..." type="text"/>
+</div>
+</div>
+<!-- Loại hành vi -->
+<div class="flex flex-col gap-sm">
+<label class="font-label-lg text-label-lg text-on-surface" for="violation-type">Loại hành vi</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="warning">warning</span>
+<select class="w-full pl-10 pr-10 py-3 rounded-lg border border-outline-variant bg-surface-container-lowest focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-colors font-body-lg text-body-lg text-on-surface appearance-none" id="violation-type" name="violation-type">
+<option disabled="" selected="" value="">Chọn loại hành vi</option>
+<option value="uniform">Không mặc đồng phục</option>
+<option value="late">Đi làm muộn</option>
+<option value="attitude">Thái độ không chuẩn mực</option>
+<option value="other">Khác</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none" data-icon="arrow_drop_down">arrow_drop_down</span>
+</div>
+</div>
+<!-- Mức độ nghiêm trọng -->
+<div class="flex flex-col gap-sm">
+<label class="font-label-lg text-label-lg text-on-surface" for="severity">Mức độ nghiêm trọng</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="thermostat">thermostat</span>
+<select class="w-full pl-10 pr-10 py-3 rounded-lg border border-outline-variant bg-surface-container-lowest focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-colors font-body-lg text-body-lg text-on-surface appearance-none" id="severity" name="severity">
+<option disabled="" selected="" value="">Chọn mức độ</option>
+<option value="low">Thấp</option>
+<option value="medium">Trung bình</option>
+<option value="high">Cao</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none" data-icon="arrow_drop_down">arrow_drop_down</span>
+</div>
+</div>
+<!-- Ghi chú thêm (Optional) -->
+<div class="flex flex-col gap-sm">
+<label class="font-label-lg text-label-lg text-on-surface" for="notes">Ghi chú chi tiết</label>
+<textarea class="w-full p-4 rounded-lg border border-outline-variant bg-surface-container-lowest focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-colors font-body-lg text-body-lg text-on-surface placeholder-on-surface-variant resize-none" id="notes" name="notes" placeholder="Mô tả chi tiết vi phạm..." rows="4"></textarea>
+</div>
+<!-- Action Buttons -->
+<div class="pt-md flex flex-col sm:flex-row gap-4 justify-end">
+<button class="px-6 py-3 rounded-lg font-label-lg text-label-lg text-primary hover:bg-primary-container/10 transition-colors w-full sm:w-auto text-center border border-transparent" type="button">
+                        Hủy
+                    </button>
+<button class="px-6 py-3 rounded-lg bg-primary-container text-on-primary font-label-lg text-label-lg hover:bg-primary-container/90 active:scale-95 transition-all shadow-sm w-full sm:w-auto text-center flex items-center justify-center gap-2" type="submit">
+<span class="material-symbols-outlined text-[20px]" data-icon="save">save</span>
+                        Lưu biên bản
+                    </button>
+</div>
+</form>
+</div>
+</main>
+<script>
+        // Simple form interaction prevention for demo
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin" data-icon="progress_activity">progress_activity</span> Đang lưu...';
+            btn.classList.add('opacity-80', 'pointer-events-none');
+            
+            setTimeout(() => {
+                btn.innerHTML = '<span class="material-symbols-outlined text-[20px]" data-icon="check">check</span> Đã lưu';
+                btn.classList.remove('bg-primary-container');
+                btn.classList.add('bg-primary');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalContent;
+                    btn.classList.add('bg-primary-container');
+                    btn.classList.remove('bg-primary', 'opacity-80', 'pointer-events-none');
+                    e.target.reset();
+                }, 2000);
+            }, 1000);
+        });
+    </script>
+</body></html>

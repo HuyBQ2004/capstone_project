@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Báo cáo Sự cố An toàn - SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-primary": "#81d1f0",
+                    "background": "#f8f9ff",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "tertiary": "#764900",
+                    "secondary-container": "#6cf8bb",
+                    "on-secondary": "#ffffff",
+                    "surface-variant": "#d3e4fe",
+                    "secondary": "#006c49",
+                    "outline": "#6f787d",
+                    "on-secondary-fixed-variant": "#005236",
+                    "surface-dim": "#cbdbf5",
+                    "on-secondary-container": "#00714d",
+                    "on-primary-fixed": "#001f29",
+                    "tertiary-fixed": "#ffddb8",
+                    "surface-container-lowest": "#ffffff",
+                    "primary": "#005a71",
+                    "surface-container": "#e5eeff",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-container-low": "#eff4ff",
+                    "primary-fixed-dim": "#81d1f0",
+                    "on-background": "#0b1c30",
+                    "on-error": "#ffffff",
+                    "on-surface": "#0b1c30",
+                    "tertiary-container": "#965f00",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-secondary-fixed": "#002113",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-tertiary-container": "#ffe9d4",
+                    "error-container": "#ffdad6",
+                    "surface-tint": "#006781",
+                    "surface-bright": "#f8f9ff",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed": "#b9eaff",
+                    "outline-variant": "#bec8cd",
+                    "on-error-container": "#93000a",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed": "#2a1700",
+                    "on-primary-fixed-variant": "#004d62",
+                    "on-surface-variant": "#3f484c",
+                    "secondary-fixed": "#6ffbbe",
+                    "surface-container-high": "#dce9ff",
+                    "secondary-fixed-dim": "#4edea3",
+                    "inverse-surface": "#213145",
+                    "surface": "#f8f9ff",
+                    "primary-container": "#0e7490",
+                    "on-primary-container": "#d3f1ff",
+                    "error": "#ba1a1a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "container-padding": "16px",
+                    "section-margin": "24px",
+                    "grid-gutter": "16px",
+                    "element-gap": "12px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Be Vietnam Pro"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "headline-md": ["Be Vietnam Pro"],
+                    "label-sm": ["Be Vietnam Pro"],
+                    "headline-lg": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #f8f9ff;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .severity-btn input:checked + div {
+            border-color: var(--tw-border-opacity);
+            background-color: rgba(14, 116, 144, 0.1);
+        }
+        .severity-high input:checked + div {
+            border-color: #ba1a1a;
+            background-color: #ffdad6;
+            color: #410002;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline flex items-center justify-between px-container-padding h-16 w-full sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<button aria-label="Quay lại" class="active:scale-95 transition-transform p-2 rounded-full hover:bg-surface-container">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" style="font-size: 24px;">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim">Báo cáo Sự cố An toàn</h1>
+</div>
+<button aria-label="Thông báo" class="active:scale-95 transition-transform p-2 rounded-full hover:bg-surface-container">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim">notifications</span>
+</button>
+</header>
+<main class="max-w-xl mx-auto p-container-padding space-y-section-margin">
+<!-- Emergency Alert Banner -->
+<section class="bg-error text-on-error rounded-xl p-4 flex items-start gap-4 shadow-sm animate-pulse">
+<span class="material-symbols-outlined shrink-0" style="font-variation-settings: 'FILL' 1; font-size: 32px;">emergency</span>
+<div class="space-y-1">
+<h2 class="font-headline-md text-headline-md leading-none">Báo cáo Khẩn cấp</h2>
+<p class="font-body-md text-body-md opacity-90">Sử dụng biểu mẫu này để thông báo ngay lập tức về các vấn đề đe dọa trực tiếp đến sức khỏe của học sinh.</p>
+</div>
+</section>
+<!-- Form Content -->
+<form class="space-y-section-margin">
+<!-- Student Selection -->
+<div class="space-y-element-gap">
+<label class="block font-headline-md text-headline-md text-on-surface">Chọn học sinh liên quan</label>
+<div class="grid grid-cols-2 gap-3">
+<label class="relative cursor-pointer">
+<input checked="" class="peer sr-only" name="student" type="radio"/>
+<div class="flex items-center gap-3 p-3 border border-outline-variant rounded-xl peer-checked:border-primary peer-checked:bg-primary-container/10 transition-all">
+<div class="w-10 h-10 rounded-full bg-cover bg-center" data-alt="A professional studio portrait of a young Vietnamese primary school student smiling gently, wearing a crisp white school uniform with a blue necktie. The background is a soft, out-of-focus classroom setting with natural morning light, maintaining a bright, clean, and modern medical-grade aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDHKcij8gu0nlPUUwECzyC4Cva2stuz__phNEsgqsWHhmGDZTBssC8DC8yfFtZHTQgPM7azx-PrA_rl1uUTkF9-yWFCnatta1dMref7XYv7rVGhAeSViA_GhJW7lUmLqTOD9RNyZjBrdUKNG_hXecsbGlAw31cGFhQrAeQ24hs9TANZmFZWbLWLmXzfdCdqdjeg29PrFO5bWzYkFmNCXR8aZhYIICnHbLviGXPKrF2ZTqj0wA-3fzzsfbyf-O9nXDgCARQxlpVl50Y')"></div>
+<div class="overflow-hidden">
+<p class="font-body-lg text-body-lg truncate font-semibold">Minh Khôi</p>
+<p class="font-label-sm text-label-sm text-outline">Lớp 3A2</p>
+</div>
+</div>
+</label>
+<label class="relative cursor-pointer">
+<input class="peer sr-only" name="student" type="radio"/>
+<div class="flex items-center gap-3 p-3 border border-outline-variant rounded-xl peer-checked:border-primary peer-checked:bg-primary-container/10 transition-all">
+<div class="w-10 h-10 rounded-full bg-cover bg-center" data-alt="A high-quality portrait of a young Vietnamese girl student with braided hair, wearing a clean school uniform. She has a bright expression, captured in a clean, brightly lit environment that reflects safety and academic professionalism. The colors are soft slates and whites, echoing the medical-grade design system." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDA973r-0jxvqebJV0GUIYztmQtsihqoI94dNNumj-AB6xxdbW_m0myufU3mMsB4_M4T8HoE9NKGFYSgBxranNB-Z2sxEoOS_IEPEEyJCEekatvvSUJG9sqmRd0c7dc9QNDlAeP3zflrp-vUWD2ev9HPvNnDVFjGCPz2ngVSPqQ2lvxN0McHJpq4GLzDmifLNhzxVKBTy0bJpJuUbBTJqyJtWEnESPCOL3ogEkHmVX-Jyqa_UstIPm6-WHY-kQezI-EiSTus0v_b80')"></div>
+<div class="overflow-hidden">
+<p class="font-body-lg text-body-lg truncate font-semibold">Bảo An</p>
+<p class="font-label-sm text-label-sm text-outline">Lớp 1C1</p>
+</div>
+</div>
+</label>
+</div>
+</div>
+<!-- Severity Selection -->
+<div class="space-y-element-gap">
+<label class="block font-headline-md text-headline-md text-on-surface">Mức độ nghiêm trọng</label>
+<div class="flex gap-2">
+<label class="flex-1 severity-btn cursor-pointer">
+<input class="sr-only peer" name="severity" type="radio" value="low"/>
+<div class="flex flex-col items-center justify-center p-3 border border-outline-variant rounded-xl transition-all peer-checked:border-primary peer-checked:bg-primary-container/10">
+<span class="material-symbols-outlined text-outline peer-checked:text-primary mb-1">info</span>
+<span class="font-label-sm text-label-sm">Thấp</span>
+</div>
+</label>
+<label class="flex-1 severity-btn cursor-pointer">
+<input checked="" class="sr-only peer" name="severity" type="radio" value="medium"/>
+<div class="flex flex-col items-center justify-center p-3 border border-outline-variant rounded-xl transition-all peer-checked:border-primary peer-checked:bg-primary-container/10">
+<span class="material-symbols-outlined text-outline peer-checked:text-primary mb-1">warning</span>
+<span class="font-label-sm text-label-sm">Vừa</span>
+</div>
+</label>
+<label class="flex-1 severity-high cursor-pointer">
+<input class="sr-only peer" name="severity" type="radio" value="high"/>
+<div class="flex flex-col items-center justify-center p-3 border border-outline-variant rounded-xl transition-all peer-checked:border-error peer-checked:bg-error-container peer-checked:text-on-error-container">
+<span class="material-symbols-outlined mb-1">priority_high</span>
+<span class="font-label-sm text-label-sm">Cao</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Incident Description -->
+<div class="space-y-element-gap">
+<label class="block font-headline-md text-headline-md text-on-surface" for="description">Mô tả sự cố</label>
+<textarea class="w-full bg-white border border-outline-variant rounded-xl p-4 focus:ring-2 focus:ring-primary focus:border-primary transition-all text-body-lg font-body-lg placeholder:text-outline/60" id="description" placeholder="Vui lòng mô tả chi tiết sự cố (ví dụ: thực phẩm lạ, triệu chứng sau ăn, vi phạm vệ sinh...)" rows="4"></textarea>
+</div>
+<!-- Image Upload Section -->
+<div class="space-y-element-gap">
+<div class="flex justify-between items-center">
+<label class="block font-headline-md text-headline-md text-on-surface">Hình ảnh minh chứng</label>
+<span class="font-label-sm text-label-sm text-outline">Tối đa 5 ảnh</span>
+</div>
+<div class="grid grid-cols-3 gap-3">
+<div class="aspect-square rounded-xl border-2 border-dashed border-outline-variant flex flex-col items-center justify-center text-outline hover:border-primary hover:text-primary cursor-pointer transition-colors active:scale-95">
+<span class="material-symbols-outlined" style="font-size: 32px;">add_a_photo</span>
+<span class="font-label-sm text-label-sm mt-1">Thêm ảnh</span>
+</div>
+<!-- Placeholder for uploaded image -->
+<div class="relative group aspect-square rounded-xl overflow-hidden border border-outline-variant">
+<div class="w-full h-full bg-cover bg-center" data-alt="A clear, close-up photograph of a school lunch tray with organized food sections, used as a reference for safety reporting. The image is bright and clinical, emphasizing food quality and presentation within a professional school canteen environment. The lighting is bright and even, highlighting textures and colors of fresh vegetables." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCZ79L_LmMi0tpCnbaRbN_ISGtTTEP-IAocjLkzUpQssQ6Q2GCUfLwJoCzixvIEJAuAJkvDhE17bJr2q2LCL1Vq0Pk4MgaAn-Diz3g43Ux-ineA64YlqXINKO_JFAt-8Lia_73PomKWuPJm3qnnG67ZIpherUDeLgJDCzVG9hdnb34qs1ftMnNM_36TwphlSj9ylgGFf2eF4Z5UrH07qAaaAIRoYn3bzheTewSoGYkLx5vRTNEB3rSkUxiFxvjwHY2hfAKXtb8Y5as')"></div>
+<button class="absolute top-1 right-1 bg-black/50 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined" style="font-size: 16px;">close</span>
+</button>
+</div>
+<div class="relative group aspect-square rounded-xl overflow-hidden border border-outline-variant">
+<div class="w-full h-full bg-cover bg-center" data-alt="A detailed macro shot of a food label or packaging in a school kitchen, showing ingredients clearly for safety inspection purposes. The style is modern, professional, and high-legibility, consistent with a healthcare or safety application's aesthetic. Deep primary blues and clean whites dominate the composition." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDBaD-meyVy6okHy8ITN9Ej7VHBChDz7gq_iR-rFfTfco2wRoCCJw74ooJS7hxWFCEafX_kElhOy_ACMhjtg7nexkXnq29SOICxjIIK30Ot32fALkhrUNytbhymlAUmInHjWidLVmr7EBkVBpcUdxhsy7dNTwnxLXHe6zPdd4rBkjTuRxPOoTl3A2qi9kkH-dfzlwsFRJQgC8p4SzMM3hIbF3JU6u3c6lgal1x86xfwKsy3cy7wNGkvGuO8W3RtSdIBlCr0bo03G10')"></div>
+<button class="absolute top-1 right-1 bg-black/50 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined" style="font-size: 16px;">close</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Submit Button -->
+<div class="pt-4 pb-8">
+<button class="w-full bg-error text-on-error py-4 rounded-xl font-headline-md text-headline-md shadow-lg shadow-error/20 flex items-center justify-center gap-2 active:scale-[0.98] transition-transform" type="submit">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+                    Gửi báo cáo khẩn cấp
+                </button>
+<p class="text-center font-label-sm text-label-sm text-outline mt-4">
+                    Thông tin sẽ được gửi trực tiếp đến Ban quản lý An toàn Thực phẩm và Ban Giám hiệu nhà trường.
+                </p>
+</div>
+</form>
+</main>
+<!-- Bottom Navigation (Shared Component Logic - Filtered for focused task) -->
+<!-- Navigation suppressed per 'Semantic Shell Mandate' for task-focused/transactional screens -->
+<script>
+        // Micro-interaction for form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalContent = btn.innerHTML;
+            
+            btn.disabled = true;
+            btn.innerHTML = `<span class="material-symbols-outlined animate-spin">sync</span> Đang gửi...`;
+            
+            setTimeout(() => {
+                btn.classList.replace('bg-error', 'bg-secondary');
+                btn.innerHTML = `<span class="material-symbols-outlined">check_circle</span> Đã gửi thành công`;
+                
+                setTimeout(() => {
+                    // In a real app, this would navigate back
+                    alert('Báo cáo của bạn đã được tiếp nhận. Đội ngũ an toàn thực phẩm sẽ kiểm tra ngay lập tức.');
+                    btn.disabled = false;
+                    btn.classList.replace('bg-secondary', 'bg-error');
+                    btn.innerHTML = originalContent;
+                }, 1000);
+            }, 1500);
+        });
+
+        // Severity selection color shifting for visual feedback
+        const severityInputs = document.querySelectorAll('input[name="severity"]');
+        severityInputs.forEach(input => {
+            input.addEventListener('change', (e) => {
+                const banner = document.querySelector('section.bg-error');
+                if(e.target.value === 'high') {
+                    banner.classList.add('animate-pulse');
+                } else {
+                    banner.classList.remove('animate-pulse');
+                }
+            });
+        });
+    </script>
+</body></html>

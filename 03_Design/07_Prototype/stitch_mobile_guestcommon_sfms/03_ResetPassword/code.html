@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Đặt lại mật khẩu - SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Public+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#506076",
+                    "on-secondary-container": "#435368",
+                    "error-container": "#fa746f",
+                    "background": "#f7fafc",
+                    "surface": "#f7fafc",
+                    "on-tertiary-fixed-variant": "#3e5175",
+                    "surface-container-low": "#eff4f8",
+                    "secondary-container": "#d3e4fe",
+                    "on-secondary": "#f7f9ff",
+                    "tertiary-fixed": "#bfd2fd",
+                    "on-primary-fixed": "#003b4c",
+                    "surface-dim": "#d2dbe0",
+                    "outline": "#737c81",
+                    "on-background": "#2b3438",
+                    "secondary-dim": "#44546a",
+                    "inverse-on-surface": "#9a9da0",
+                    "surface-tint": "#006882",
+                    "secondary-fixed": "#d3e4fe",
+                    "surface-bright": "#f7fafc",
+                    "on-error-container": "#6e0a12",
+                    "surface-variant": "#dbe4e9",
+                    "primary-fixed-dim": "#81d1f0",
+                    "primary-dim": "#005b72",
+                    "on-surface": "#2b3438",
+                    "tertiary": "#4d5f84",
+                    "surface-container-high": "#e2e9ed",
+                    "on-secondary-fixed": "#314055",
+                    "error": "#a83836",
+                    "inverse-primary": "#8fdfff",
+                    "tertiary-dim": "#415377",
+                    "primary-container": "#8fdfff",
+                    "primary": "#006882",
+                    "error-dim": "#67040d",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#0b0f11",
+                    "tertiary-container": "#bfd2fd",
+                    "on-secondary-fixed-variant": "#4d5d73",
+                    "on-primary": "#f2faff",
+                    "surface-container-highest": "#dbe4e9",
+                    "primary-fixed": "#8fdfff",
+                    "tertiary-fixed-dim": "#b1c4ee",
+                    "on-primary-container": "#005065",
+                    "on-tertiary-fixed": "#213456",
+                    "outline-variant": "#aab3b8",
+                    "on-surface-variant": "#576065",
+                    "surface-container": "#e8eff3",
+                    "on-error": "#fff7f6",
+                    "secondary-fixed-dim": "#c5d6f0",
+                    "on-tertiary": "#f9f8ff",
+                    "on-primary-fixed-variant": "#005a71",
+                    "on-tertiary-container": "#35476b"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Be Vietnam Pro"],
+                    "display": ["Be Vietnam Pro"],
+                    "body": ["Be Vietnam Pro"],
+                    "label": ["Public Sans"]
+            }
+          },
+        }
+      }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        
+        /* Interactive element transitions */
+        .interactive-element {
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+        }
+        .interactive-element:active {
+            transform: scale(0.98);
+        }
+
+        /* Input field floating label styles */
+        .md3-input-container {
+            position: relative;
+            padding-top: 8px;
+        }
+        .md3-input {
+            width: 100%;
+            height: 56px;
+            padding: 16px;
+            background: transparent;
+            border: 1px solid var(--tw-colors-outline);
+            border-radius: 4px;
+            color: var(--tw-colors-on-surface);
+            font-family: 'Be Vietnam Pro', sans-serif;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .md3-input:focus {
+            border-color: var(--tw-colors-primary);
+            border-width: 2px;
+            padding: 15px; /* Adjust for border width change to prevent jank */
+        }
+        .md3-label {
+            position: absolute;
+            left: 12px;
+            top: 24px;
+            background: var(--tw-colors-surface);
+            padding: 0 4px;
+            color: var(--tw-colors-on-surface-variant);
+            font-family: 'Be Vietnam Pro', sans-serif;
+            font-size: 16px;
+            pointer-events: none;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+        }
+        .md3-input:focus ~ .md3-label,
+        .md3-input:not(:placeholder-shown) ~ .md3-label {
+            top: 0;
+            font-size: 12px;
+            color: var(--tw-colors-primary);
+        }
+        
+        /* Snackbar styles */
+        #snackbar {
+            visibility: hidden;
+            min-width: 288px;
+            margin-left: -144px;
+            background-color: var(--tw-colors-inverse-surface);
+            color: var(--tw-colors-inverse-on-surface);
+            text-align: left;
+            border-radius: 4px;
+            padding: 14px 16px;
+            position: fixed;
+            z-index: 100;
+            left: 50%;
+            bottom: 30px;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            opacity: 0;
+            transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+            transform: translateY(20px);
+        }
+        #snackbar.show {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-top: 4px;
+            cursor: pointer;
+            color: var(--tw-colors-on-surface-variant);
+            background: none;
+            border: none;
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .toggle-password:hover {
+            background-color: var(--tw-colors-surface-variant);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col font-body antialiased">
+<!-- TopAppBar from JSON -->
+<header class="fixed top-0 w-full z-50 bg-surface flex items-center px-4 h-16 max-w-7xl mx-auto justify-center border-b-0 flat no shadows">
+<h1 class="font-headline font-bold text-primary text-headline-sm">SFMS</h1>
+</header>
+<!-- Main Content Area -->
+<main class="flex-grow flex items-center justify-center p-4 pt-20">
+<div class="w-full max-w-md bg-surface-container-lowest rounded-xl p-8 shadow-sm border border-surface-variant">
+<div class="text-center mb-8">
+<span class="material-symbols-outlined text-4xl text-primary mb-4 block" style="font-variation-settings: 'FILL' 1;">lock_reset</span>
+<h2 class="text-2xl font-headline font-semibold text-on-surface mb-2">Đặt lại mật khẩu</h2>
+<p class="text-on-surface-variant text-sm">Vui lòng nhập mật khẩu mới cho tài khoản của bạn</p>
+</div>
+<form class="space-y-6" id="resetPasswordForm" onsubmit="event.preventDefault(); handleSubmit();">
+<!-- New Password Field -->
+<div class="md3-input-container">
+<input class="md3-input" id="newPassword" minlength="8" placeholder=" " required="" type="password"/>
+<label class="md3-label bg-surface-container-lowest" for="newPassword">Mật khẩu mới</label>
+<button aria-label="Hiện mật khẩu" class="toggle-password" onclick="togglePasswordVisibility('newPassword', 'toggleIcon1')" type="button">
+<span class="material-symbols-outlined text-[20px]" id="toggleIcon1">visibility_off</span>
+</button>
+</div>
+<p class="text-xs text-on-surface-variant mt-1 ml-4">Ít nhất 8 ký tự</p>
+<!-- Confirm Password Field -->
+<div class="md3-input-container mt-4">
+<input class="md3-input" id="confirmPassword" minlength="8" placeholder=" " required="" type="password"/>
+<label class="md3-label bg-surface-container-lowest" for="confirmPassword">Xác nhận mật khẩu mới</label>
+<button aria-label="Hiện mật khẩu" class="toggle-password" onclick="togglePasswordVisibility('confirmPassword', 'toggleIcon2')" type="button">
+<span class="material-symbols-outlined text-[20px]" id="toggleIcon2">visibility_off</span>
+</button>
+</div>
+<div class="text-error text-sm hidden mt-2 ml-2 flex items-center gap-1" id="error-message">
+<span class="material-symbols-outlined text-[16px]">error</span>
+<span>Mật khẩu không khớp. Vui lòng thử lại.</span>
+</div>
+<!-- Submit Button -->
+<button class="w-full h-10 mt-8 bg-[#006882] text-on-primary rounded-full font-label font-medium interactive-element hover:bg-primary-dim focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors flex items-center justify-center gap-2" type="submit">
+                    Cập nhật mật khẩu
+                </button>
+<div class="text-center mt-6">
+<a class="text-primary text-sm font-medium hover:underline flex items-center justify-center gap-1" href="#">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                        Quay lại Đăng nhập
+                    </a>
+</div>
+</form>
+</div>
+</main>
+<!-- SnackBar -->
+<div id="snackbar">
+<span>Cập nhật mật khẩu thành công!</span>
+<button class="text-inverse-primary font-label font-medium uppercase ml-4 p-2 rounded hover:bg-[#ffffff1a] transition-colors" onclick="hideSnackbar()">
+            Đóng
+        </button>
+</div>
+<script>
+        function togglePasswordVisibility(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+            
+            if (input.type === "password") {
+                input.type = "text";
+                icon.textContent = "visibility";
+            } else {
+                input.type = "password";
+                icon.textContent = "visibility_off";
+            }
+        }
+
+        function handleSubmit() {
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const errorMessage = document.getElementById('error-message');
+            const submitBtn = document.querySelector('button[type="submit"]');
+
+            if (newPassword !== confirmPassword) {
+                errorMessage.classList.remove('hidden');
+                document.getElementById('confirmPassword').style.borderColor = 'var(--tw-colors-error)';
+                document.getElementById('newPassword').style.borderColor = 'var(--tw-colors-error)';
+                return;
+            }
+
+            // Reset errors
+            errorMessage.classList.add('hidden');
+            document.getElementById('confirmPassword').style.borderColor = 'var(--tw-colors-outline)';
+            document.getElementById('newPassword').style.borderColor = 'var(--tw-colors-outline)';
+
+            // Simulate loading state
+            const originalContent = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[20px]">progress_activity</span> Đang cập nhật...';
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-80', 'cursor-not-allowed');
+
+            setTimeout(() => {
+                // Show success snackbar
+                const snackbar = document.getElementById("snackbar");
+                snackbar.classList.add("show");
+                
+                // Reset button
+                submitBtn.innerHTML = originalContent;
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-80', 'cursor-not-allowed');
+                
+                // Redirect logic would go here in a real app
+                // setTimeout(() => window.location.href = '/login', 2000);
+                
+                // Auto hide snackbar after 4 seconds
+                setTimeout(() => hideSnackbar(), 4000);
+            }, 1500);
+        }
+
+        function hideSnackbar() {
+            const snackbar = document.getElementById("snackbar");
+            snackbar.classList.remove("show");
+        }
+    </script>
+</body></html>

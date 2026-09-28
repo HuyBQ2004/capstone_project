@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Wireframe — Profile & Notification (Guest &amp; Common, Mobile)</title>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<style>
+  * { box-sizing: border-box; }
+  html { font-size:18px; }
+  body { margin:0; font-family:'Patrick Hand',cursive; color:#333; background-image: radial-gradient(#d7d7d7 1px, transparent 1px); background-size:20px 20px; display:flex; flex-direction:column; align-items:center; padding:20px 10px 60px; }
+  .demo-nav { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-bottom:16px; max-width:420px; }
+  .demo-nav button { font-size:12px; background:white; border:2px solid #333; border-radius:10px; padding:5px 8px; cursor:pointer; }
+  .demo-nav button.active { background:#333; color:white; }
+
+  .phone { width:390px; max-width:100%; min-height:780px; background:white; border:3px solid #333; border-radius:32px; overflow:hidden; }
+  .screen { display:none; flex-direction:column; min-height:780px; }
+  .screen.visible { display:flex; }
+  .appbar { display:flex; align-items:center; gap:10px; padding:16px 14px; border-bottom:2px solid #333; }
+  .appbar .title { font-size:21px; flex:1; text-align:center; }
+  .appbar .icon-slot { width:26px; }
+  .content { padding:18px 20px 30px; flex:1; }
+
+  .profile-head { display:flex; flex-direction:column; align-items:center; gap:6px; margin: 10px 0 20px; }
+  .avatar-lg { width:74px; height:74px; border-radius:50%; border:2px solid #333; display:flex; align-items:center; justify-content:center; }
+  .menu-item { display:flex; align-items:center; gap:12px; padding:14px 4px; border-bottom:1px dashed #ccc; font-size:19px; }
+  .field { margin-bottom:14px; }
+  .field label { display:block; margin-bottom:4px; }
+  wired-input { width:100%; }
+  .upload-box { border:2px dashed #333; border-radius:12px; padding:14px; text-align:center; margin-bottom:10px; color:#555; }
+
+  .btn-primary { background:#333; color:white; border:2px solid #333; border-radius:255px 15px 225px 15px/15px 225px 15px 255px; font-family:'Patrick Hand',cursive; font-size:19px; padding:12px; cursor:pointer; width:100%; margin-top:10px; }
+  .btn-text { background:none; border:none; color:#345; text-decoration:underline; font-family:'Patrick Hand',cursive; font-size:16px; cursor:pointer; }
+
+  .toggle-row { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px dashed #ccc; }
+
+  .notif-card { border:2px solid #333; border-radius:12px; padding:10px 12px; margin-bottom:10px; background:white; }
+  .badge { display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:8px; font-size:12px; border:2px solid #333; }
+  .badge.danger { border-width:3px; }
+  .badge.warning { border-style:dashed; }
+  .badge.secondary { border-style:dotted; }
+  .sent-time { font-size:12px; color:#666; float:right; }
+
+  .icon { width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; }
+  .toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#333; color:white; padding:10px 18px; border-radius:10px; display:none; align-items:center; gap:8px; z-index:10; }
+  .toast.show { display:flex; }
+  .note { font-size:13px; color:#666; }
+  .banner { border:3px solid #333; border-radius:10px; padding:8px 10px; margin-bottom:12px; display:flex; gap:8px; font-size:14px; }
+</style>
+</head>
+<body>
+
+<svg style="display:none">
+  <symbol id="ic-user" viewBox="0 0 24 24"><path d="M12 12a4 4 0 100-8 4 4 0 000 8zM4 21c0-4 4-6 8-6s8 2 8 6" stroke-linecap="round"/></symbol>
+  <symbol id="ic-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-linecap="round"/></symbol>
+  <symbol id="ic-edit" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></symbol>
+  <symbol id="ic-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="1"/><path d="M8 11V7a4 4 0 018 0v4"/></symbol>
+  <symbol id="ic-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 00-.2-1.6l2-1.6-2-3.4-2.4 1a7 7 0 00-2.8-1.6L13 2h-4l-.6 2.8a7 7 0 00-2.8 1.6l-2.4-1-2 3.4 2 1.6A7 7 0 003 12a7 7 0 00.2 1.6l-2 1.6 2 3.4 2.4-1a7 7 0 002.8 1.6L9 22h4l.6-2.8a7 7 0 002.8-1.6l2.4 1 2-3.4-2-1.6c.1-.5.2-1.1.2-1.6z"/></symbol>
+  <symbol id="ic-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></symbol>
+  <symbol id="ic-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9z"/><path d="M13.7 21a2 2 0 01-3.4 0"/></symbol>
+  <symbol id="ic-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 20h16"/></symbol>
+  <symbol id="ic-warn" viewBox="0 0 24 24"><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v4M12 17h.01"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24"><path d="M4 12l6 6L20 6" stroke-linecap="round"/></symbol>
+  <symbol id="ic-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></symbol>
+</svg>
+
+<div class="demo-nav">
+  <button data-go="screen-profile" class="active">1. Profile</button>
+  <button data-go="screen-editprofile">1b. Edit Profile</button>
+  <button data-go="screen-changepw">2. Change Password</button>
+  <button data-go="screen-notifcenter">3. Notification Center</button>
+  <button data-go="screen-notifdetail">4. Notification Detail</button>
+  <button data-go="screen-notifsettings">5. Notification Settings</button>
+</div>
+
+<div class="phone">
+
+  <!-- 1. Profile Management -->
+  <div class="screen visible" id="screen-profile">
+    <div class="content">
+      <div class="profile-head">
+        <div class="avatar-lg"><svg class="icon" style="width:34px;height:34px"><use href="#ic-user"/></svg></div>
+        <div style="font-size:24px;">Nguyễn Thị Y Tá</div>
+        <div class="note">Medical Staff · Trường Tiểu học ABC</div>
+      </div>
+      <div class="menu-item" data-go="screen-editprofile"><svg class="icon"><use href="#ic-edit"/></svg> Edit Profile</div>
+      <div class="menu-item" data-go="screen-changepw"><svg class="icon"><use href="#ic-lock"/></svg> Change Password</div>
+      <div class="menu-item" data-go="screen-notifsettings"><svg class="icon"><use href="#ic-settings"/></svg> Notification Settings</div>
+      <div class="menu-item" onclick="confirmLogout()"><svg class="icon"><use href="#ic-logout"/></svg> Logout</div>
+    </div>
+  </div>
+
+  <!-- 1b. Edit Profile -->
+  <div class="screen" id="screen-editprofile">
+    <div class="appbar"><span data-go="screen-profile" class="icon-slot"><svg class="icon"><use href="#ic-back"/></svg></span><span class="title">Edit Profile</span><span class="icon-slot"></span></div>
+    <div class="content">
+      <div class="upload-box" onclick="toast('image_picker — JPG/PNG tối đa 5MB (BR-013).')"><svg class="icon" style="width:26px;height:26px"><use href="#ic-upload"/></svg><br>Avatar Upload</div>
+      <div class="field"><label>Full Name</label><wired-input value="Nguyễn Thị Y Tá"></wired-input></div>
+      <div class="field"><label>Phone Number</label><wired-input value="0912 345 678"></wired-input></div>
+      <div class="field"><label>Email Address (read-only)</label><wired-input value="ytaboyte@sfms.vn" disabled></wired-input></div>
+      <button class="btn-primary" onclick="toast('MSG-029: Đã lưu.'); showScreen(&quot;screen-profile&quot;)">Save</button>
+    </div>
+  </div>
+
+  <!-- 2. Change Password -->
+  <div class="screen" id="screen-changepw">
+    <div class="appbar"><span data-go="screen-profile" class="icon-slot"><svg class="icon"><use href="#ic-back"/></svg></span><span class="title">Change Password</span><span class="icon-slot"></span></div>
+    <div class="content">
+      <div class="banner" id="cp-error" style="display:none;"><svg class="icon"><use href="#ic-warn"/></svg> MSG-002: Current Password không đúng.</div>
+      <div class="field"><label>Current Password</label><wired-input type="password" id="cp-current"></wired-input></div>
+      <div class="field"><label>New Password</label><wired-input type="password" id="cp-new"></wired-input></div>
+      <div class="field"><label>Confirm New Password</label><wired-input type="password" id="cp-confirm"></wired-input></div>
+      <button class="btn-primary" onclick="doChangePassword()">Save Password</button>
+    </div>
+  </div>
+
+  <!-- 3. Notification Center/List -->
+  <div class="screen" id="screen-notifcenter">
+    <div class="appbar"><span class="icon-slot"><svg class="icon"><use href="#ic-bell"/></svg></span><span class="title">Notification Center</span><span class="icon-slot"></span></div>
+    <div class="content">
+      <div class="notif-card" data-go="screen-notifdetail"><span class="badge danger"><svg class="icon" style="width:13px;height:13px"><use href="#ic-warn"/></svg> Dị ứng</span><span class="sent-time">10:32</span><div style="margin-top:6px;">Học sinh Trần Bảo An có dấu hiệu dị ứng sau bữa trưa</div></div>
+      <div class="notif-card" data-go="screen-notifdetail"><span class="badge warning">Tin tức</span><span class="sent-time">08:15</span><div style="margin-top:6px;">Thực đơn tuần sau đã được duyệt</div></div>
+      <div class="notif-card" data-go="screen-notifdetail"><span class="badge secondary">Hệ thống</span><span class="sent-time">Hôm qua</span><div style="margin-top:6px;">Bảo trì hệ thống lúc 23:00 tối nay</div></div>
+      <p class="note">Pull-to-refresh bắt buộc. Empty: "Chưa có thông báo nào".</p>
+    </div>
+  </div>
+
+  <!-- 4. Notification Detail -->
+  <div class="screen" id="screen-notifdetail">
+    <div class="appbar"><span data-go="screen-notifcenter" class="icon-slot"><svg class="icon"><use href="#ic-back"/></svg></span><span class="title">Chi tiết thông báo</span><span class="icon-slot"></span></div>
+    <div class="content">
+      <span class="badge danger"><svg class="icon" style="width:13px;height:13px"><use href="#ic-warn"/></svg> Cảnh báo dị ứng</span>
+      <h3>Phát hiện dấu hiệu dị ứng thực phẩm</h3>
+      <p>Học sinh <b>Trần Bảo An</b> (Lớp 3A) có dấu hiệu phát ban sau bữa trưa 10:15. Món nghi vấn: Súp tôm.</p>
+      <p class="note"><svg class="icon" style="width:13px;height:13px;vertical-align:-2px"><use href="#ic-clock"/></svg> Sent Time: 10:32, hôm nay</p>
+      <button class="btn-primary" onclick="toast('Deep-link sang hồ sơ dị ứng học sinh.')">Xem hồ sơ dị ứng học sinh</button>
+    </div>
+  </div>
+
+  <!-- 5. Notification Settings -->
+  <div class="screen" id="screen-notifsettings">
+    <div class="appbar"><span data-go="screen-profile" class="icon-slot"><svg class="icon"><use href="#ic-back"/></svg></span><span class="title">Notification Settings</span><span class="icon-slot"></span></div>
+    <div class="content">
+      <div class="toggle-row"><span>Push Notifications</span><wired-checkbox checked></wired-checkbox></div>
+      <div class="toggle-row"><span>Email Notifications</span><wired-checkbox checked></wired-checkbox></div>
+      <div class="toggle-row"><span>Allergy Warnings</span><wired-checkbox checked></wired-checkbox></div>
+      <div class="toggle-row"><span>Food Safety Alerts</span><wired-checkbox checked></wired-checkbox></div>
+      <div class="field" style="margin-top:14px;">
+        <label><svg class="icon" style="width:15px;height:15px;vertical-align:-2px"><use href="#ic-clock"/></svg> Quiet Hours</label>
+        <div style="display:flex;gap:8px;"><wired-input value="22:00" style="flex:1"></wired-input><span style="align-self:center;">–</span><wired-input value="06:00" style="flex:1"></wired-input></div>
+      </div>
+      <button class="btn-primary" onclick="toast('Đã lưu cài đặt thông báo.')">Save Settings</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"><svg class="icon" style="stroke:white"><use href="#ic-check"/></svg><span id="toast-text"></span></div>
+
+<script>
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('visible'));
+  document.getElementById(id).classList.add('visible');
+  document.querySelectorAll('.demo-nav button').forEach(b=>b.classList.toggle('active', b.dataset.go===id));
+}
+document.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>showScreen(el.dataset.go)));
+function toast(msg){ const t=document.getElementById('toast'); document.getElementById('toast-text').textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600); }
+function confirmLogout(){ if(confirm('Xác nhận đăng xuất?')) toast('Đã đăng xuất (mô phỏng).'); }
+function doChangePassword(){
+  document.getElementById('cp-error').style.display='none';
+  if(!document.getElementById('cp-current').value){ document.getElementById('cp-error').style.display='flex'; return; }
+  toast('MSG-030: Đổi mật khẩu thành công.');
+  showScreen('screen-profile');
+}
+</script>
+</body>
+</html>

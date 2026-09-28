@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Chi tiết hồ sơ - SFMS Health</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#d3f1ff",
+                        "secondary-container": "#d0e1fb",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#bec8cd",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#e2efec",
+                        "inverse-surface": "#2d3133",
+                        "on-surface-variant": "#3f484c",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#004d62",
+                        "inverse-primary": "#81d1f0",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#54647a",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "outline": "#6f787d",
+                        "on-primary-fixed": "#001f29",
+                        "inverse-on-surface": "#eff1f3",
+                        "secondary": "#505f76",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#81d1f0",
+                        "surface": "#f7f9fb",
+                        "surface-tint": "#006781",
+                        "primary-container": "#0e7490",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#e0e3e5",
+                        "surface-dim": "#d8dadc",
+                        "surface-container": "#eceef0",
+                        "background": "#f7f9fb",
+                        "tertiary-fixed-dim": "#bcc9c6",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-tertiary-fixed-variant": "#3d4947",
+                        "on-surface": "#191c1e",
+                        "primary": "#005a71",
+                        "tertiary": "#495553",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "surface-container-highest": "#e0e3e5",
+                        "tertiary-container": "#616d6b",
+                        "surface-bright": "#f7f9fb",
+                        "surface-container-high": "#e6e8ea",
+                        "on-background": "#191c1e",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-tertiary-fixed": "#121e1c",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "tertiary-fixed": "#d8e5e2",
+                        "primary-fixed": "#b9eaff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "32px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "base": "4px",
+                        "gutter": "16px",
+                        "lg": "24px",
+                        "margin-mobile": "16px",
+                        "margin-tablet": "24px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-lg-mobile": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "label-lg": ["Be Vietnam Pro"],
+                        "title-lg": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600" }],
+                        "title-lg": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .material-symbols-outlined.filled { font-variation-settings: 'FILL' 1; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background antialiased h-screen flex flex-col md:max-w-md md:mx-auto md:border-x md:border-surface-variant md:shadow-xl relative overflow-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full md:max-w-md bg-surface shadow-sm z-50">
+<div class="flex items-center justify-between px-margin-mobile h-14 w-full">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors active:scale-95 text-on-surface-variant">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-on-background flex-1 text-center truncate px-2">Chi tiết hồ sơ</h1>
+<div class="w-10 h-10"></div> <!-- Placeholder for balance -->
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto pt-16 pb-28 px-margin-mobile flex flex-col gap-md">
+<!-- General Info Card -->
+<section class="bg-surface-container-lowest rounded-xl p-md shadow-sm border border-surface-variant flex flex-col items-center gap-sm">
+<div class="relative w-24 h-24 rounded-full overflow-hidden border-2 border-primary-container shadow-sm mb-2">
+<img class="w-full h-full object-cover" data-alt="A brightly lit, professional portrait photo of a young elementary school boy wearing a neat blue and white school uniform. The background is a soft, out-of-focus clinical setting indicative of a clean school medical room. The lighting is soft and even, highlighting a calm and healthy expression, fitting a medical profile avatar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2UrSJrC4XDiokS36dx7ZS2Q-WRQ9M6fL9bcIsYZAAtzNCNjkbxGk5LdZvLbnwVw3ZbZb4V20qYTKh8XRxtvLQXDeG2-f4k8hxftW0JoSoXO6bqPKFWgP1pZRqQC5OEAArvymGwr1uol3-xiYDJBeLW4We7tNCbaBI4R80yhCZ_QUgYkDMnEQbLnQxitqcErMkXFeuWChKrTtnrTWJmpMV1rTNP4xuoI611Sbfxc9hvwLmSfYG7tlNSeA6NUfqpLsUSwKko6N9Ry4"/>
+</div>
+<h2 class="font-title-lg text-title-lg text-on-background text-center">Trần Minh Khoa</h2>
+<div class="flex flex-wrap justify-center gap-2 mt-1 w-full">
+<div class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">school</span>
+                    Lớp 3A2
+                </div>
+<div class="bg-surface-container text-on-surface-variant px-3 py-1 rounded-full font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">badge</span>
+                    HS-2023-0142
+                </div>
+<div class="bg-primary-container/10 text-primary-container px-3 py-1 rounded-full font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">male</span>
+                    Nam
+                </div>
+<div class="bg-surface-container text-on-surface-variant px-3 py-1 rounded-full font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">cake</span>
+                    05/09/2015
+                </div>
+</div>
+</section>
+<!-- Confirmed Allergies -->
+<section class="bg-surface-container-lowest rounded-xl p-md shadow-sm border border-surface-variant flex flex-col gap-3">
+<div class="flex items-center gap-2 text-primary-container border-b border-surface-variant pb-2">
+<span class="material-symbols-outlined filled">coronavirus</span>
+<h3 class="font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant">Dị ứng đã xác nhận</h3>
+</div>
+<div class="flex items-start gap-3 p-3 bg-error-container/20 rounded-lg border border-error-container/50">
+<div class="w-10 h-10 rounded-full bg-error-container text-on-error-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-xl">grocery</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between mb-1">
+<span class="font-title-lg text-[16px] font-semibold text-on-background">Đậu phộng</span>
+<span class="bg-error text-on-error px-2 py-0.5 rounded-full font-label-sm text-[10px] uppercase font-bold tracking-wide">Nghiêm trọng</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Gây phản ứng sốc phản vệ. Yêu cầu có Epipen dự phòng tại phòng y tế.</p>
+</div>
+</div>
+</section>
+<!-- Underlying Conditions -->
+<section class="bg-surface-container-lowest rounded-xl p-md shadow-sm border border-surface-variant flex flex-col gap-3">
+<div class="flex items-center gap-2 text-primary-container border-b border-surface-variant pb-2">
+<span class="material-symbols-outlined filled">pulmonology</span>
+<h3 class="font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant">Bệnh lý nền</h3>
+</div>
+<div class="flex items-start gap-3 p-3 bg-surface-container-low rounded-lg">
+<div class="w-10 h-10 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-xl">air</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between mb-1">
+<span class="font-title-lg text-[16px] font-semibold text-on-background">Hen suyễn nhẹ</span>
+<span class="bg-tertiary-container/20 text-tertiary px-2 py-0.5 rounded-full font-label-sm text-[10px] uppercase font-bold tracking-wide">Đang theo dõi</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Cần lưu ý khi học thể dục ngoài trời vào những ngày không khí lạnh hoặc ô nhiễm.</p>
+</div>
+</div>
+</section>
+<!-- Medical History -->
+<section class="bg-surface-container-lowest rounded-xl p-md shadow-sm border border-surface-variant flex flex-col gap-3">
+<div class="flex items-center gap-2 text-primary-container border-b border-surface-variant pb-2">
+<span class="material-symbols-outlined filled">history_edu</span>
+<h3 class="font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant">Tiền sử y tế (Ghi chú gần nhất)</h3>
+</div>
+<div class="relative pl-6 border-l-2 border-surface-variant ml-2 pb-2">
+<div class="absolute w-3 h-3 bg-primary-container rounded-full -left-[7px] top-1 border-2 border-surface-container-lowest"></div>
+<div class="font-label-sm text-label-sm text-primary-container font-semibold mb-1">15/09/2023 - Khám sức khỏe đầu năm</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Thị lực tốt (10/10). Chiều cao, cân nặng đạt chuẩn. Đã cập nhật mũi tiêm phòng cúm mùa.</p>
+</div>
+<div class="relative pl-6 border-l-2 border-surface-variant ml-2 pb-2 border-transparent">
+<div class="absolute w-3 h-3 bg-outline rounded-full -left-[7px] top-1 border-2 border-surface-container-lowest"></div>
+<div class="font-label-sm text-label-sm text-outline font-semibold mb-1">12/04/2023 - Y tế học đường</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Trẻ bị trầy xước nhẹ ở đầu gối do ngã trong giờ ra chơi. Đã sát trùng và băng bó, không có dấu hiệu nhiễm trùng.</p>
+</div>
+</section>
+</main>
+<!-- Fixed Bottom Actions -->
+<div class="fixed bottom-0 left-0 w-full md:max-w-md md:left-auto bg-surface-container-lowest border-t border-surface-variant p-4 pb-safe shadow-[0_-4px_12px_rgba(0,0,0,0.05)] z-50 flex gap-3">
+<button class="flex-1 h-12 rounded-lg border-2 border-primary-container text-primary-container font-label-lg text-label-lg flex items-center justify-center gap-2 active:bg-primary-container/10 transition-colors">
+<span class="material-symbols-outlined text-[20px]">history</span>
+            Lịch sử y tế
+        </button>
+<button class="flex-1 h-12 rounded-lg bg-primary-container text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-sm active:bg-primary-container/90 transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit_document</span>
+            Cập nhật hồ sơ
+        </button>
+</div>
+</body></html>

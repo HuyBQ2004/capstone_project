@@ -1,0 +1,25 @@
+fastapi>=0.115.0
+uvicorn>=0.30.0
+pydantic>=2.10.0
+# Nhà cung cấp Gemini (production).
+google-genai>=1.0.0
+# Nhà cung cấp OpenAI-compatible (LM Studio/Ollama/vLLM) — xem SFMS_AI_PROVIDER trong rag_chain.py.
+requests>=2.32.0
+
+# ─────────────────────────────────────────────────────────────────────────────────
+# ĐÃ GỠ 09/08/2026 — cài nhưng KHÔNG dòng nào import (kiểm bằng grep toàn bộ *.py):
+#   langchain, langchain-core, langchain-google-genai, pgvector, psycopg2-binary, python-dotenv
+#
+# Cái tên "RAG service" gây hiểu nhầm là có truy hồi bằng vector. Thực tế KHÔNG có:
+#   · Postgres của dự án là `postgres:15-alpine`, không phải image pgvector — extension `vector`
+#     còn chưa cài được; DB thật chỉ có `plpgsql` + `pgcrypto`;
+#   · không migration nào tạo bảng/cột embedding;
+#   · service này chỉ nhận `context_docs` do backend Java gửi sang rồi nhét vào prompt.
+# Phần chọn lọc tài liệu ("R" của RAG) hiện nằm ở Java: `KnowledgeContextSelector` — truy hồi
+# bằng TỪ KHOÁ, có ngân sách ký tự.
+#
+# Khi nào làm truy hồi bằng vector thật thì thêm lại (và đổi image Postgres sang pgvector,
+# thêm migration tạo bảng embedding):
+#   pgvector>=0.3.0
+#   psycopg2-binary>=2.9.9
+# ─────────────────────────────────────────────────────────────────────────────────

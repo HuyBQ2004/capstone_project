@@ -1,0 +1,327 @@
+<!DOCTYPE html><html class="light" lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>SFMS - Xác Thực Suất Ăn</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .qr-scanner-line {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #0E7490, transparent);
+            box-shadow: 0 0 15px #81d1f0;
+            animation: scan 2s infinite ease-in-out;
+        }
+        @keyframes scan {
+            0% { top: 0%; }
+            50% { top: 100%; }
+            100% { top: 0%; }
+        }
+        .pulse-warning {
+            animation: pulse-red 2s infinite;
+        }
+        @keyframes pulse-red {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        .zebra-stripe:nth-child(even) { background-color: #F9FAFB; }
+    </style>
+<!-- Injected Tailwind Config from Brand Anchors -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#dbe4ea",
+                        "error": "#ba1a1a",
+                        "secondary": "#21667d",
+                        "on-surface": "#141b2b",
+                        "on-background": "#141b2b",
+                        "on-tertiary-fixed": "#141d21",
+                        "inverse-on-surface": "#edf0ff",
+                        "primary": "#005a71",
+                        "on-tertiary-container": "#e5eef4",
+                        "surface": "#f9f9ff",
+                        "tertiary-container": "#636c71",
+                        "secondary-fixed-dim": "#91cfea",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#0e7490",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#dce2f7",
+                        "outline-variant": "#bec8cd",
+                        "on-primary-fixed-variant": "#004d62",
+                        "primary-fixed-dim": "#81d1f0",
+                        "inverse-primary": "#81d1f0",
+                        "secondary-fixed": "#baeaff",
+                        "on-surface-variant": "#3f484c",
+                        "on-secondary-fixed": "#001f29",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "outline": "#6f787d",
+                        "surface-dim": "#d3daef",
+                        "primary-fixed": "#b9eaff",
+                        "secondary-container": "#a5e3fe",
+                        "surface-container-highest": "#dce2f7",
+                        "on-tertiary-fixed-variant": "#3f484d",
+                        "surface-container-low": "#f1f3ff",
+                        "surface-container": "#e9edff",
+                        "surface-container-high": "#e1e8fd",
+                        "on-error": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#293040",
+                        "tertiary-fixed-dim": "#bfc8ce",
+                        "background": "#f9f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#006781",
+                        "tertiary": "#4b5459",
+                        "on-primary-fixed": "#001f29",
+                        "on-primary-container": "#d3f1ff",
+                        "on-secondary-container": "#22667e",
+                        "surface-bright": "#f9f9ff",
+                        "on-secondary-fixed-variant": "#004d62"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "margin-desktop": "40px",
+                        "base": "8px",
+                        "gutter-mobile": "16px",
+                        "gutter-desktop": "24px",
+                        "touch-target": "44px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Be Vietnam Pro"],
+                        "headline-lg-mobile": ["Be Vietnam Pro"],
+                        "body-sm": ["Be Vietnam Pro"],
+                        "headline-sm": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-md": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface font-body-md text-on-surface min-h-screen">
+<!-- TopNavBar -->
+<nav class="flex justify-between items-center w-full px-margin-desktop h-16 sticky top-0 z-50 bg-surface dark:bg-on-surface border-b border-outline-variant dark:border-outline">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">SFMS</span>
+<div class="hidden md:flex gap-6 ml-8">
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-tertiary-fixed-variant hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors" href="#">Trang chủ</a>
+<a class="font-label-md text-label-md text-primary dark:text-primary-fixed-dim border-b-2 border-primary dark:border-primary-fixed-dim pb-1" href="#">Xác thực suất ăn</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-tertiary-fixed-variant hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors" href="#">Học sinh</a>
+</div>
+</div>
+<div class="flex items-center gap-base">
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors material-symbols-outlined text-primary">notifications</button>
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors material-symbols-outlined text-primary">account_circle</button>
+</div>
+</nav>
+<!-- Main Content Grid -->
+<main class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-base md:py-8 grid grid-cols-1 md:grid-cols-12 gap-gutter-desktop">
+<!-- Left Side: Scanner & Identity -->
+<div class="md:col-span-8 flex flex-col gap-gutter-desktop">
+<!-- Camera View Container -->
+<div class="relative bg-black rounded-xl overflow-hidden aspect-video md:aspect-[16/9] border-4 border-outline-variant shadow-lg group">
+<div class="absolute inset-0 z-0 bg-cover bg-center opacity-70" data-alt="A high-resolution first-person view of a school canteen background with students blurred in the distance. The lighting is bright and clean, typical of a modern educational facility. A camera interface overlay is active, focusing on a wooden table surface where a meal card is placed. The overall aesthetic is professional and high-tech." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCtudgYfKOR3CAhOaTV0VhdKhVt9pQo2SgOjGpqaM07L8zqSYj9BtKpz2q8sYuOBG4ogR2LCWVhwJEHS3IE0cGLZAFGQH3u5ZUW3WegEZm2oqtFt3mvcgzISzdul-Q5jcDLL0v8huAVEgEOhEfYbhrHEbnrT4zQ2i8A_nt6UeIKEz1N0pPoW0dAhZyYe1-Qd-5B0zf-y5fEjUZ7_2vd_X0uYfKPrlXMyg83hKmbMzcCmdQICnOrZsDiEGnC2uC5WYG7oOBRtn_zXg')"></div>
+<!-- Scanner Frame -->
+<div class="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+<div class="relative w-64 h-64 md:w-80 md:h-80 border-2 border-primary-fixed-dim/50">
+<!-- Corners -->
+<div class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-primary-fixed"></div>
+<div class="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-primary-fixed"></div>
+<div class="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-primary-fixed"></div>
+<div class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-primary-fixed"></div>
+<!-- Scanning Line -->
+<div class="qr-scanner-line absolute w-full top-0"></div>
+</div>
+</div>
+<!-- HUD Overlays -->
+<div class="absolute top-4 left-4 z-20 flex gap-2">
+<span class="bg-black/60 text-white px-3 py-1 rounded-full text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">videocam</span> CAMERA: ON
+                    </span>
+<span class="bg-black/60 text-white px-3 py-1 rounded-full text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">qr_code_scanner</span> CHẾ ĐỘ: TỰ ĐỘNG
+                    </span>
+</div>
+</div>
+<!-- Identity Card & Action -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full border-2 border-primary overflow-hidden bg-tertiary-fixed">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a young Vietnamese primary school student, male, with a friendly expression. He is wearing a white school uniform with a blue collar. The background is a soft, solid light blue. The lighting is even and bright, emphasizing a clean and clinical educational atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC78-bzK1u5IGSScNzzHJYjHeSURi1NEj-XnIDB9kXU2GVrPYvkJWO5mGRnvrTeOTU2Aoy--ky2AKDqbmFp1hWrQcVC2XBofG7LP0635TFuCgyFiiclQoy-2SfwwB31M-V9RIDJ2LwCFUNdWvdWjMZjBAS-tHqltblC5Q9Ur0pre-YPY5R3eTKab43KnHpojmB6unpHL5bQ_ExAyuBb7_sGd6y67028kM_Lg412WtxvmnbBC4v5qUwGf1sFM5oULQbltVj99P8aIA">
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Nguyễn Gia Bảo</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Mã số: <span class="font-bold">STU-10294</span> • Lớp: <span class="font-bold">1A</span></p>
+</div>
+</div>
+<!-- Special Warning -->
+<div class="pulse-warning bg-error-container border border-error text-on-error-container px-4 py-3 rounded-lg flex items-center gap-3">
+<span class="material-symbols-outlined text-error font-bold" style="font-variation-settings: 'FILL' 1;">warning</span>
+<div>
+<p class="font-label-md text-label-md uppercase tracking-wider">Cảnh báo đặc biệt</p>
+<p class="font-headline-sm text-headline-sm font-bold">DỊ ỨNG HẢI SẢN</p>
+</div>
+</div>
+</div>
+<div class="mt-8 flex flex-col sm:flex-row gap-4">
+<button class="flex-1 min-h-[48px] bg-primary-container text-white font-bold rounded-lg px-6 flex items-center justify-center gap-2 hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined">check_circle</span>
+                        XÁC NHẬN NHẬN SUẤT
+                    </button>
+<button class="flex-1 min-h-[48px] border border-primary text-primary font-bold rounded-lg px-6 flex items-center justify-center gap-2 hover:bg-surface-container transition-all active:scale-95">
+<span class="material-symbols-outlined">refresh</span>
+                        HỦY / QUÉT LẠI
+                    </button>
+</div>
+</div>
+</div>
+<!-- Right Side: Recent History -->
+<div class="md:col-span-4 flex flex-col gap-gutter-desktop">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl h-full flex flex-col">
+<div class="p-4 border-b border-outline-variant bg-tertiary-fixed/30 rounded-t-xl">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">history</span>
+                            Lịch sử quét
+                        </h3>
+<span class="bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full">HÔM NAY</span>
+</div>
+</div>
+<!-- Scan List -->
+<div class="flex-1 overflow-y-auto">
+<table class="w-full text-left border-collapse">
+<tbody>
+<tr class="zebra-stripe border-b border-outline-variant/50">
+<td class="p-4">
+<p class="font-label-md text-on-surface">Lê Minh Anh</p>
+<p class="text-[12px] text-on-surface-variant">Lớp 2B • 11:32 AM</p>
+</td>
+<td class="p-4 text-right">
+<span class="text-success text-[12px] font-bold text-primary">ĐÃ NHẬN</span>
+</td>
+</tr>
+<tr class="zebra-stripe border-b border-outline-variant/50">
+<td class="p-4">
+<p class="font-label-md text-on-surface">Trần Hoàng Nam</p>
+<p class="text-[12px] text-on-surface-variant">Lớp 1C • 11:30 AM</p>
+</td>
+<td class="p-4 text-right">
+<span class="text-success text-[12px] font-bold text-primary">ĐÃ NHẬN</span>
+</td>
+</tr>
+<tr class="zebra-stripe border-b border-outline-variant/50">
+<td class="p-4">
+<p class="font-label-md text-on-surface">Phạm Mỹ Linh</p>
+<p class="text-[12px] text-on-surface-variant">Lớp 3A • 11:28 AM</p>
+</td>
+<td class="p-4 text-right">
+<span class="bg-tertiary-fixed text-on-tertiary-fixed text-[10px] px-2 py-0.5 rounded">SUẤT CHAY</span>
+</td>
+</tr>
+<tr class="zebra-stripe border-b border-outline-variant/50">
+<td class="p-4">
+<p class="font-label-md text-on-surface">Đỗ Quốc Bảo</p>
+<p class="text-[12px] text-on-surface-variant">Lớp 1A • 11:25 AM</p>
+</td>
+<td class="p-4 text-right">
+<span class="text-error text-[12px] font-bold">LỖI THẺ</span>
+</td>
+</tr>
+<tr class="zebra-stripe border-b border-outline-variant/50">
+<td class="p-4">
+<p class="font-label-md text-on-surface">Nguyễn Tuyết Mai</p>
+<p class="text-[12px] text-on-surface-variant">Lớp 5D • 11:20 AM</p>
+</td>
+<td class="p-4 text-right">
+<span class="text-success text-[12px] font-bold text-primary">ĐÃ NHẬN</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4">
+<button class="w-full py-2 text-primary font-bold text-label-md hover:underline">
+                        Xem tất cả lịch sử (24 suất)
+                    </button>
+</div>
+</div>
+<!-- Stats Card -->
+<div class="bg-primary-container text-on-primary-container rounded-xl p-4 shadow-md">
+<div class="flex justify-between items-center mb-2">
+<span class="text-label-md opacity-80 uppercase">Tiến độ hôm nay</span>
+<span class="material-symbols-outlined">restaurant_menu</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="font-headline-lg text-headline-lg">142</span>
+<span class="font-body-md text-body-md pb-1.5">/ 350 học sinh</span>
+</div>
+<div class="w-full bg-white/20 h-2 rounded-full mt-4 overflow-hidden">
+<div class="bg-white h-full" style="width: 40%"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- SideNavBar (Mobile Bottom Navigation) -->
+<div class="md:hidden fixed bottom-0 left-0 w-full bg-surface border-t border-outline-variant flex justify-around items-center h-16 z-50">
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px]">Tổng quan</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">qr_code_scanner</span>
+<span class="text-[10px] font-bold">Quét mã</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[10px]">Học sinh</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px]">Cài đặt</span>
+</button>
+</div>
+<!-- Script for simple UI feedback -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    this.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+        });
+    </script>
+</body></html>

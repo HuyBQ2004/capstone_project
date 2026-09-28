@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Wireframe — Authentication (Guest &amp; Common, Mobile)</title>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<style>
+  * { box-sizing: border-box; }
+  html { font-size: 18px; }
+  body {
+    margin:0; font-family:'Patrick Hand', cursive; color:#333;
+    background-image: radial-gradient(#d7d7d7 1px, transparent 1px); background-size:20px 20px;
+    display:flex; flex-direction:column; align-items:center; padding: 20px 10px 60px;
+  }
+  .demo-nav { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-bottom:16px; max-width:390px; }
+  .demo-nav button { font-size:13px; background:white; border:2px solid #333; border-radius:10px; padding:5px 10px; cursor:pointer; }
+  .demo-nav button.active { background:#333; color:white; }
+
+  .phone {
+    width: 390px; max-width: 100%; min-height: 760px; background: white;
+    border: 3px solid #333; border-radius: 32px; overflow: hidden; position: relative;
+  }
+  .screen { display:none; flex-direction:column; min-height:760px; }
+  .screen.visible { display:flex; }
+
+  .appbar { display:flex; align-items:center; gap:10px; padding:16px 14px; border-bottom:2px solid #333; }
+  .appbar .title { font-size:22px; flex:1; text-align:center; }
+  .appbar .icon-slot { width:26px; }
+
+  .content { padding: 20px 20px 30px; flex:1; display:flex; flex-direction:column; }
+  .content.center { justify-content:center; }
+
+  .logo { text-align:center; font-family:'Caveat',cursive; font-size:40px; font-weight:700; margin-bottom:10px; }
+  .field { margin-bottom:16px; }
+  .field label { display:block; margin-bottom:4px; }
+  wired-input { width:100%; }
+  .pw-row { position:relative; }
+  .pw-toggle { position:absolute; right:10px; top:10px; }
+
+  .btn-primary { background:#333; color:white; border:2px solid #333; border-radius:255px 15px 225px 15px/15px 225px 15px 255px; font-family:'Patrick Hand',cursive; font-size:19px; padding:12px; cursor:pointer; width:100%; margin-top:8px; display:flex; align-items:center; justify-content:center; gap:8px;}
+  .btn-primary:disabled { opacity:.45; }
+  .btn-text { background:none; border:none; color:#345; text-decoration:underline; font-family:'Patrick Hand',cursive; font-size:16px; cursor:pointer; }
+  .row-center { text-align:center; margin-top:10px; }
+
+  .banner { border:2px solid #333; border-radius:10px; padding:10px; margin-bottom:14px; display:flex; gap:8px; font-size:15px; }
+  .banner.danger { border-width:3px; }
+  .banner.warning { border-style:dashed; }
+
+  .otp-row { display:flex; gap:6px; justify-content:center; margin-bottom:14px; }
+  .otp-box { width:38px; height:48px; border:2px solid #333; border-radius:8px; text-align:center; font-size:22px; font-family:'Patrick Hand',cursive; }
+  .countdown { text-align:center; font-size:15px; margin-bottom:14px; }
+
+  .icon { width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2; }
+  .toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#333; color:white; padding:10px 18px; border-radius:10px; display:none; align-items:center; gap:8px; z-index:10; }
+  .toast.show { display:flex; }
+  .note { font-size:13px; color:#666; }
+</style>
+</head>
+<body>
+
+<svg style="display:none">
+  <symbol id="ic-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-linecap="round"/></symbol>
+  <symbol id="ic-eye" viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="ic-warn" viewBox="0 0 24 24"><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v4M12 17h.01"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24"><path d="M4 12l6 6L20 6" stroke-linecap="round"/></symbol>
+  <symbol id="ic-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></symbol>
+  <symbol id="ic-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/></symbol>
+  <symbol id="ic-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M14 9l2 2"/></symbol>
+</svg>
+
+<div class="demo-nav">
+  <button data-go="screen-login" class="active">1. Login</button>
+  <button data-go="screen-forgot">2. Forgot Password</button>
+  <button data-go="screen-otp">3. Verify OTP</button>
+  <button data-go="screen-reset">4. Reset Password</button>
+</div>
+
+<div class="phone">
+
+  <!-- 1. Login -->
+  <div class="screen visible" id="screen-login">
+    <div class="content center">
+      <div class="logo"><svg class="icon" style="width:36px;height:36px;vertical-align:-6px"><use href="#ic-shield"/></svg> SFMS</div>
+      <div class="banner danger" id="login-error" style="display:none;"><svg class="icon"><use href="#ic-warn"/></svg><span>MSG-002: Sai tên đăng nhập hoặc mật khẩu.</span></div>
+      <div class="field"><label>Username/Email</label><wired-input placeholder="ten.dangnhap@sfms.vn" id="login-username"></wired-input></div>
+      <div class="field">
+        <label>Password</label>
+        <div class="pw-row"><wired-input type="password" id="login-password"></wired-input><span class="pw-toggle" onclick="togglePw('login-password')"><svg class="icon"><use href="#ic-eye"/></svg></span></div>
+      </div>
+      <button class="btn-primary" id="login-btn" onclick="doLogin()"><span class="btn-label">Login</span></button>
+      <div class="row-center"><button class="btn-text" data-go="screen-forgot">Forgot Password?</button></div>
+      <div class="row-center"><button class="btn-text" onclick="toast('Điều hướng Guest Portal — ngoài phạm vi 9 màn giao.')">Register Options</button></div>
+    </div>
+  </div>
+
+  <!-- 2. Forgot Password -->
+  <div class="screen" id="screen-forgot">
+    <div class="appbar"><span data-go="screen-login" class="icon-slot"><svg class="icon"><use href="#ic-back"/></svg></span><span class="title">Quên mật khẩu</span><span class="icon-slot"></span></div>
+    <div class="content">
+      <div class="banner danger" id="forgot-error" style="display:none;"><svg class="icon"><use href="#ic-warn"/></svg><span>Email chưa đăng ký hoặc sai định dạng.</span></div>
+      <div class="field"><label>Email Address</label><wired-input type="email" id="forgot-email"></wired-input></div>
+      <button class="btn-primary" onclick="doSendOtp()">Send OTP</button>
+      <p class="note">Giới hạn 1 yêu cầu/15 phút/email (BR-003).</p>
+    </div>
+  </div>
+
+  <!-- 3. Verify OTP -->
+  <div class="screen" id="screen-otp">
+    <div class="appbar"><span data-go="screen-forgot" class="icon-slot"><svg class="icon"><use href="#ic-back"/></svg></span><span class="title">Nhập mã OTP</span><span class="icon-slot"></span></div>
+    <div class="content">
+      <div class="banner warning" id="otp-error" style="display:none;"><svg class="icon"><use href="#ic-warn"/></svg><span>Mã OTP không đúng.</span></div>
+      <div class="otp-row">
+        <input class="otp-box" maxlength="1" value="4"><input class="otp-box" maxlength="1" value="2">
+        <input class="otp-box" maxlength="1" value="9"><input class="otp-box" maxlength="1">
+        <input class="otp-box" maxlength="1"><input class="otp-box" maxlength="1">
+      </div>
+      <div class="countdown"><svg class="icon" style="width:15px;height:15px;vertical-align:-2px"><use href="#ic-clock"/></svg> Còn lại 04:58</div>
+      <button class="btn-primary" onclick="doVerifyOtp()">Verify Code</button>
+      <div class="row-center"><button class="btn-text" disabled onclick="toast('Đã gửi lại mã OTP.')">Resend OTP</button></div>
+    </div>
+  </div>
+
+  <!-- 4. Reset Password -->
+  <div class="screen" id="screen-reset">
+    <div class="content center">
+      <div class="logo" style="font-size:30px;"><svg class="icon" style="width:26px;height:26px;vertical-align:-5px"><use href="#ic-key"/></svg> Đặt lại mật khẩu</div>
+      <div class="banner danger" id="reset-error" style="display:none;"><svg class="icon"><use href="#ic-warn"/></svg><span>Link đã hết hạn (BR-003). <button class="btn-text" data-go="screen-forgot">Gửi lại link</button></span></div>
+      <div class="field"><label>New Password</label><wired-input type="password" id="reset-new"></wired-input></div>
+      <div class="field"><label>Confirm New Password</label><wired-input type="password" id="reset-confirm"></wired-input></div>
+      <button class="btn-primary" onclick="doResetPassword()">Update Password</button>
+      <p class="note">Không trùng 3 mật khẩu gần nhất (BR-006).</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"><svg class="icon" style="stroke:white"><use href="#ic-check"/></svg><span id="toast-text"></span></div>
+
+<script>
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('visible'));
+  document.getElementById(id).classList.add('visible');
+  document.querySelectorAll('.demo-nav button').forEach(b=>b.classList.toggle('active', b.dataset.go===id));
+}
+document.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>showScreen(el.dataset.go)));
+function togglePw(id){ const el=document.getElementById(id); el.type = el.type==='password'?'text':'password'; }
+function toast(msg){ const t=document.getElementById('toast'); document.getElementById('toast-text').textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600); }
+
+function doLogin(){
+  document.getElementById('login-error').style.display='none';
+  const u=document.getElementById('login-username').value.trim();
+  const p=document.getElementById('login-password').value.trim();
+  if(!u||!p){ document.getElementById('login-error').style.display='flex'; return; }
+  toast('MSG-026: Đăng nhập thành công.');
+}
+function doSendOtp(){
+  document.getElementById('forgot-error').style.display='none';
+  const email=document.getElementById('forgot-email').value.trim();
+  if(!email||!email.includes('@')){ document.getElementById('forgot-error').style.display='flex'; return; }
+  showScreen('screen-otp');
+}
+function doVerifyOtp(){ document.getElementById('otp-error').style.display='none'; showScreen('screen-reset'); }
+function doResetPassword(){
+  document.getElementById('reset-error').style.display='none';
+  const n=document.getElementById('reset-new').value, c=document.getElementById('reset-confirm').value;
+  if(n!==c){ toast('Confirm không khớp.'); return; }
+  toast('MSG-030: Đổi mật khẩu thành công.');
+  setTimeout(()=>showScreen('screen-login'), 900);
+}
+</script>
+</body>
+</html>

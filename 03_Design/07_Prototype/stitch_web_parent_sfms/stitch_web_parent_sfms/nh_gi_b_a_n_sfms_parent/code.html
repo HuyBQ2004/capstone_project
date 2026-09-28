@@ -1,0 +1,300 @@
+<!DOCTYPE html><html lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>SFMS Parent - Đánh giá bữa ăn</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "outline": "#6f787d",
+                        "surface-container-highest": "#d3e4fe",
+                        "tertiary-container": "#686b6d",
+                        "surface-variant": "#d3e4fe",
+                        "on-secondary-container": "#00616f",
+                        "background": "#f8f9ff",
+                        "on-secondary-fixed": "#001f25",
+                        "on-secondary-fixed-variant": "#004e5a",
+                        "on-surface-variant": "#3f484c",
+                        "on-tertiary-fixed": "#191c1e",
+                        "on-primary-fixed": "#001f29",
+                        "surface-bright": "#f8f9ff",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "outline-variant": "#bec8cd",
+                        "inverse-surface": "#213145",
+                        "primary-fixed-dim": "#81d1f0",
+                        "surface": "#f8f9ff",
+                        "tertiary-fixed": "#e0e3e5",
+                        "primary-container": "#0e7490",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#81d1f0",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#004d62",
+                        "primary": "#005a71",
+                        "on-background": "#0b1c30",
+                        "on-error-container": "#93000a",
+                        "on-primary-container": "#d3f1ff",
+                        "surface-container-high": "#dce9ff",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#a2eeff",
+                        "surface-container": "#e5eeff",
+                        "surface-tint": "#006781",
+                        "on-surface": "#0b1c30",
+                        "on-tertiary-container": "#eaecee",
+                        "surface-container-low": "#eff4ff",
+                        "surface-dim": "#cbdbf5",
+                        "primary-fixed": "#b9eaff",
+                        "secondary-container": "#3fe1fd",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#2fd9f4",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "secondary": "#006877",
+                        "on-error": "#ffffff",
+                        "tertiary": "#505355"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "xl": "32px",
+                        "lg": "24px",
+                        "base": "8px",
+                        "sm": "12px",
+                        "md": "16px",
+                        "container-max": "1200px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-lg-mobile": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "data-mono": ["monospace"],
+                        "body-sm": ["Be Vietnam Pro"],
+                        "display-lg": ["Be Vietnam Pro"],
+                        "headline-md": ["Be Vietnam Pro"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .star-rating .star.active {
+            font-variation-settings: 'FILL' 1;
+            color: #EAB308;
+        }
+        .tag-chip.active {
+            background-color: #005a71;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<div class="flex h-screen overflow-hidden">
+<!-- SideNavBar - Predicted Component -->
+<aside class="hidden md:flex flex-col h-full bg-surface-container-low shadow-sm w-72">
+<div class="p-lg">
+<h1 class="text-headline-md font-headline-md text-primary">SFMS Parent</h1>
+<p class="text-body-sm text-on-surface-variant">Hệ thống giám sát thực phẩm</p>
+</div>
+<nav class="flex-1 mt-md px-md space-y-base">
+<a class="flex items-center gap-md p-md rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-md">Bảng điều khiển</span>
+</a>
+<a class="flex items-center gap-md p-md rounded-lg text-primary font-bold border-r-4 border-primary bg-primary-container/10 transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="restaurant_menu">restaurant_menu</span>
+<span class="font-body-md">Thực đơn</span>
+</a>
+<a class="flex items-center gap-md p-md rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="monitor_heart">monitor_heart</span>
+<span class="font-body-md">Sức khỏe học sinh</span>
+</a>
+<a class="flex items-center gap-md p-md rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="clinical_notes">clinical_notes</span>
+<span class="font-body-md">Chế độ ăn đặc biệt</span>
+</a>
+</nav>
+<div class="p-lg mt-auto flex items-center gap-md">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="A professional studio portrait of a friendly-looking mother in her late 30s, smiling warmly. She has soft studio lighting and a clean, blurred professional background. The aesthetic is high-end, corporate, and trustworthy, with a soft color palette that aligns with a clean health-focused UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEHpCOcqlmNnTc3m8GFtc6g4zKyhJw1OCZfW52JjDJEJ6BBWlm3sPvq-9j7ZEmZ_oFJLE0FpJ3XKYD2btvEHfDCk1tq9zXb4kwxhRGhECOndjLXR71cIMsyrx4fX66vwdYuzoDMyMIiVWFx8U3wM6jouf06G9qtWhoj4UUlzMKCfc3yX66UgiQsx-zq5aS-Ey3cefpBbcnrlQ-VunmIRKnUbOg6LoSkwQL5VpBBXpss5HYHz--Ocf3gyQg5JcCLVxlBHC6lEjjFQ">
+<div>
+<p class="font-body-sm font-bold">Nguyễn Minh Anh</p>
+<p class="text-xs text-on-surface-variant">Lớp 4A</p>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-full relative overflow-y-auto">
+<!-- TopNavBar - Predicted Component -->
+<header class="sticky top-0 z-10 bg-surface border-b border-outline-variant flex justify-between items-center px-lg py-md w-full">
+<div class="flex items-center gap-md">
+<button class="md:hidden p-base">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h2 class="font-headline-md text-primary md:hidden">SFMS Parent</h2>
+<div class="hidden md:flex flex-col">
+<span class="text-label-md text-on-surface-variant uppercase">Trang hiện tại</span>
+<h2 class="font-headline-md text-primary">Đánh giá bữa ăn</h2>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<span class="hidden md:block font-body-lg text-on-surface-variant">Nguyễn Minh Anh - Lớp 4A</span>
+<button class="p-base relative hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+</div>
+</header>
+<!-- Page Content (Canvas) -->
+<div class="p-md md:p-xl max-w-4xl mx-auto w-full">
+<!-- Back Button for Transactional Context -->
+<button class="flex items-center gap-xs text-primary mb-lg hover:underline transition-all">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+<span class="font-body-md font-bold">Quay lại thực đơn</span>
+</button>
+<!-- Review Section -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-lg">
+<!-- Left Side: Meal Info Card -->
+<div class="md:col-span-5">
+<div class="bg-surface-container-lowest rounded-xl p-lg shadow-sm border border-outline-variant/30 sticky top-xl">
+<div class="mb-md">
+<span class="bg-primary/10 text-primary text-label-md px-sm py-xs rounded-full">Bữa trưa • 24/05/2024</span>
+</div>
+<img class="w-full aspect-square object-cover rounded-lg mb-md" data-alt="A high-quality, clinical and clean food photography of a balanced school meal. It features steamed salmon, brown rice, broccoli, and a small portion of fresh seasonal fruit. The lighting is bright and natural, emphasizing freshness and transparency. The background is a clean white marble texture, evoking a professional and safe dining environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAk7-MNeJZAQVbnoFVPwrR0m-ymmWLS4iN1gt8h1yjQkAXQppglt2Ed9BMf3pjvt00QxJh18otzfdp7Fs7IV4Lky82DGt9rTVv80KHqjqr4pdzRj8QGTtobzXVM1eXKWCYicoXZfK3dFC8QejQuLJrwM64CnuM3_qt-L5esG3u8T8GhvL7RimX8QzvCQeUvqrXSh9oz8peGYHBAsAiU6tBkbpnukLjoGwaKJg8axuG9Fop0POxRhGUQ17TUK-6LQ7Jb7QeUKfvcaQ">
+<h3 class="font-headline-md text-on-surface mb-xs">Cơm Cá Hồi Hấp &amp; Bông Cải</h3>
+<p class="text-body-md text-on-surface-variant mb-lg">Hệ thống ghi nhận bé đã hoàn thành 95% suất ăn.</p>
+<div class="space-y-sm border-t border-outline-variant pt-md">
+<div class="flex justify-between items-center">
+<span class="text-body-sm text-on-surface-variant">Năng lượng</span>
+<span class="font-bold">450 kcal</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-body-sm text-on-surface-variant">Độ tươi ngon</span>
+<span class="flex items-center text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="verified_user">verified_user</span>
+<span class="ml-1">Đạt chuẩn</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Side: Evaluation Form -->
+<div class="md:col-span-7">
+<div class="bg-surface-container-lowest rounded-xl p-lg shadow-sm border border-outline-variant/30">
+<h2 class="text-headline-md font-bold mb-md">Chia sẻ cảm nghĩ của bạn</h2>
+<p class="text-body-md text-on-surface-variant mb-xl">Ý kiến của phụ huynh giúp chúng tôi cải thiện chất lượng bữa ăn mỗi ngày.</p>
+<!-- Overall Rating -->
+<div class="mb-xl text-center md:text-left">
+<p class="font-bold mb-sm">Đánh giá chung</p>
+<div class="star-rating flex gap-sm justify-center md:justify-start">
+<button class="star material-symbols-outlined text-4xl cursor-pointer active:scale-90 transition-transform active" data-icon="star" onclick="toggleStars(1)">star</button>
+<button class="star material-symbols-outlined text-4xl cursor-pointer active:scale-90 transition-transform active" data-icon="star" onclick="toggleStars(2)">star</button>
+<button class="star material-symbols-outlined text-4xl cursor-pointer active:scale-90 transition-transform active" data-icon="star" onclick="toggleStars(3)">star</button>
+<button class="star material-symbols-outlined text-4xl cursor-pointer active:scale-90 transition-transform active" data-icon="star" onclick="toggleStars(4)">star</button>
+<button class="star material-symbols-outlined text-4xl cursor-pointer active:scale-90 transition-transform" data-icon="star" onclick="toggleStars(5)">star</button>
+</div>
+</div>
+<!-- Evaluation Criteria -->
+<div class="mb-xl">
+<p class="font-bold mb-md">Bạn hài lòng nhất về điều gì?</p>
+<div class="flex flex-wrap gap-sm">
+<button class="tag-chip px-md py-sm rounded-lg border border-outline-variant font-label-md text-on-surface-variant transition-all hover:border-primary active:scale-95" onclick="this.classList.toggle('active')">Hương vị</button>
+<button class="tag-chip px-md py-sm rounded-lg border border-outline-variant font-label-md text-on-surface-variant transition-all hover:border-primary active:scale-95" onclick="this.classList.toggle('active')">Trình bày</button>
+<button class="tag-chip px-md py-sm rounded-lg border border-outline-variant font-label-md text-on-surface-variant transition-all hover:border-primary active:scale-95" onclick="this.classList.toggle('active')">Độ tươi ngon</button>
+<button class="tag-chip px-md py-sm rounded-lg border border-outline-variant font-label-md text-on-surface-variant transition-all hover:border-primary active:scale-95" onclick="this.classList.toggle('active')">Dinh dưỡng</button>
+<button class="tag-chip px-md py-sm rounded-lg border border-outline-variant font-label-md text-on-surface-variant transition-all hover:border-primary active:scale-95" onclick="this.classList.toggle('active')">Vệ sinh</button>
+</div>
+</div>
+<!-- Detailed Feedback -->
+<div class="mb-xl">
+<p class="font-bold mb-sm">Phản hồi chi tiết</p>
+<textarea class="w-full p-md rounded-lg border border-outline-variant bg-surface-container-lowest focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all placeholder:text-outline-variant text-body-md" placeholder="Hãy cho chúng tôi biết ý kiến của bạn về bữa ăn hôm nay..." rows="5"></textarea>
+</div>
+<!-- Submission -->
+<div class="flex flex-col gap-md">
+<button class="bg-primary text-on-primary py-md px-xl rounded-lg font-bold text-body-lg shadow-sm active:scale-95 transition-all hover:bg-primary-container" onclick="submitFeedback()">
+                                    Gửi đánh giá
+                                </button>
+<p class="text-xs text-center text-on-surface-variant italic">Cảm ơn bạn đã đóng góp vì sức khỏe của các con.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Success Toast (Hidden by default) -->
+<div class="fixed bottom-lg right-lg bg-inverse-surface text-inverse-on-surface p-md rounded-xl shadow-lg flex items-center gap-md transform translate-y-20 opacity-0 transition-all duration-300" id="success-toast">
+<span class="material-symbols-outlined text-primary-fixed-dim" data-icon="check_circle">check_circle</span>
+<p class="font-body-md">Đánh giá của bạn đã được gửi thành công!</p>
+</div>
+</main>
+</div>
+<script>
+        function toggleStars(rating) {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        function submitFeedback() {
+            const toast = document.getElementById('success-toast');
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3000);
+        }
+
+        // Add micro-interactions to buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                let ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.style.width = '0px';
+                ripple.style.height = '0px';
+                ripple.style.background = 'rgba(255,255,255,0.3)';
+                ripple.style.borderRadius = '50%';
+                ripple.style.transition = 'all 0.5s ease-out';
+                ripple.style.transform = 'translate(-50%, -50%)';
+                
+                this.appendChild(ripple);
+                
+                requestAnimationFrame(() => {
+                    ripple.style.width = (rect.width * 2) + 'px';
+                    ripple.style.height = (rect.width * 2) + 'px';
+                    ripple.style.opacity = '0';
+                });
+                
+                setTimeout(() => ripple.remove(), 500);
+            });
+        });
+    </script>
+</body></html>

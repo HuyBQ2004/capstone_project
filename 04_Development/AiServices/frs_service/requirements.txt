@@ -1,0 +1,15 @@
+fastapi>=0.115.0
+uvicorn>=0.30.0
+python-multipart>=0.0.12
+pillow>=10.4.0
+numpy>=1.26.0
+pydantic>=2.10.0
+deepface>=0.0.100
+# tensorflow>=2.16 mặc định dùng Keras 3 — deepface (viết cho Keras 2 API) cần shim này,
+# thiếu thì DeepFace.represent() luôn except, rơi về fallback hash-vector (không phải sinh
+# trắc học thật — 2 ảnh khác nhau của CÙNG 1 người sẽ KHÔNG khớp).
+tf-keras>=2.16.0
+# 10/08/2026 — persist embedding khuôn mặt vào Postgres (bảng driver_face_embeddings, service
+# tự tạo lúc khởi động). Trước đây chỉ giữ trong dict RAM (`FACE_EMBEDDINGS_DB`), MỌI lần
+# restart container xoá sạch đăng ký, verify() luôn 404 cho tới khi đăng ký lại.
+psycopg2-binary>=2.9.9

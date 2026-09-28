@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Thông báo - SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;family=Public+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed": "#bfd2fd",
+                      "error": "#a83836",
+                      "on-surface": "#2b3438",
+                      "on-tertiary-fixed": "#213456",
+                      "on-background": "#2b3438",
+                      "secondary": "#506076",
+                      "inverse-on-surface": "#9a9da0",
+                      "on-primary": "#f2faff",
+                      "surface": "#f7fafc",
+                      "primary-dim": "#005b72",
+                      "primary-container": "#8fdfff",
+                      "tertiary-dim": "#415377",
+                      "secondary-fixed": "#d3e4fe",
+                      "on-primary-fixed-variant": "#005a71",
+                      "on-surface-variant": "#576065",
+                      "on-error-container": "#6e0a12",
+                      "error-container": "#fa746f",
+                      "on-secondary-fixed": "#314055",
+                      "surface-dim": "#d2dbe0",
+                      "primary-fixed": "#8fdfff",
+                      "surface-container-highest": "#dbe4e9",
+                      "secondary-container": "#d3e4fe",
+                      "on-tertiary-fixed-variant": "#3e5175",
+                      "error-dim": "#67040d",
+                      "surface-container-high": "#e2e9ed",
+                      "on-secondary": "#f7f9ff",
+                      "inverse-surface": "#0b0f11",
+                      "surface-tint": "#006882",
+                      "secondary-dim": "#44546a",
+                      "primary": "#006882",
+                      "on-tertiary-container": "#35476b",
+                      "tertiary-container": "#bfd2fd",
+                      "secondary-fixed-dim": "#c5d6f0",
+                      "on-tertiary": "#f9f8ff",
+                      "surface-variant": "#dbe4e9",
+                      "outline-variant": "#aab3b8",
+                      "primary-fixed-dim": "#81d1f0",
+                      "inverse-primary": "#8fdfff",
+                      "outline": "#737c81",
+                      "surface-container-low": "#eff4f8",
+                      "surface-container": "#e8eff3",
+                      "surface-container-lowest": "#ffffff",
+                      "on-error": "#fff7f6",
+                      "tertiary-fixed-dim": "#b1c4ee",
+                      "background": "#f7fafc",
+                      "on-primary-container": "#005065",
+                      "tertiary": "#4d5f84",
+                      "on-primary-fixed": "#003b4c",
+                      "on-secondary-fixed-variant": "#4d5d73",
+                      "surface-bright": "#f7fafc",
+                      "on-secondary-container": "#435368"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {},
+              "fontFamily": {
+                      "headline": [
+                              "Be Vietnam Pro"
+                      ],
+                      "display": [
+                              "Be Vietnam Pro"
+                      ],
+                      "body": [
+                              "Be Vietnam Pro"
+                      ],
+                      "label": [
+                              "Public Sans"
+                      ]
+              },
+              "fontSize": {}
+      },
+          },
+        }
+    </script>
+<style>
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body antialiased flex flex-col h-screen overflow-hidden">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface-dim fixed top-0 w-full bg-surface-container dark:bg-surface-container-highest shadow-sm flex items-center justify-between px-4 h-16 w-full z-50">
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-variant transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<h1 class="font-headline text-headline-sm text-primary dark:text-primary-dim font-bold text-center flex-1 pr-10">Thông báo</h1>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto mt-16 mb-20 px-4 py-6 space-y-4 no-scrollbar">
+<!-- Notification Item 1: Danger -->
+<a class="block bg-surface-container-lowest rounded-xl p-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-surface-variant hover:bg-surface-container-low transition-colors active:scale-[0.98]" href="SCREEN_NOTIF_DETAIL">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-full bg-error-container text-on-error-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<span class="inline-flex items-center rounded-full bg-error-container/20 px-2 py-0.5 text-xs font-semibold text-error">Nguy hiểm</span>
+<span class="text-xs text-on-surface-variant font-label">5 phút trước</span>
+</div>
+<h3 class="font-headline font-semibold text-on-surface leading-tight mb-1 text-base">Cảnh báo dị ứng: Học sinh Trần Văn B</h3>
+<p class="text-sm text-on-surface-variant truncate">Hệ thống phát hiện thành phần dị ứng trong bữa ăn dự kiến.</p>
+</div>
+</div>
+</a>
+<!-- Notification Item 2: Warning -->
+<a class="block bg-surface-container-lowest rounded-xl p-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-surface-variant hover:bg-surface-container-low transition-colors active:scale-[0.98]" href="SCREEN_NOTIF_DETAIL">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<span class="inline-flex items-center rounded-full bg-tertiary-container/40 px-2 py-0.5 text-xs font-semibold text-tertiary-dim">Cảnh báo</span>
+<span class="text-xs text-on-surface-variant font-label">30 phút trước</span>
+</div>
+<h3 class="font-headline font-semibold text-on-surface leading-tight mb-1 text-base">Kiểm tra an toàn thực phẩm khu vực bếp</h3>
+<p class="text-sm text-on-surface-variant truncate">Yêu cầu kiểm tra định kỳ chất lượng bảo quản.</p>
+</div>
+</div>
+</a>
+<!-- Notification Item 3: Info -->
+<a class="block bg-surface-container-lowest rounded-xl p-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-surface-variant hover:bg-surface-container-low transition-colors active:scale-[0.98]" href="SCREEN_NOTIF_DETAIL">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">info</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<span class="inline-flex items-center rounded-full bg-secondary-container/40 px-2 py-0.5 text-xs font-semibold text-secondary-dim">Thông tin</span>
+<span class="text-xs text-on-surface-variant font-label">2 giờ trước</span>
+</div>
+<h3 class="font-headline font-semibold text-on-surface leading-tight mb-1 text-base">Cập nhật hệ thống định kỳ</h3>
+<p class="text-sm text-on-surface-variant truncate">Hệ thống sẽ bảo trì từ 22:00 đến 23:00 tối nay.</p>
+</div>
+</div>
+</a>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-surface-container dark:bg-surface-container-lowest font-label text-label-medium fixed bottom-0 w-full rounded-t-xl bg-surface-container dark:bg-surface-container-lowest shadow-[0_-1px_3px_rgba(0,0,0,0.1)] fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-2 pb-safe md:hidden">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high active:scale-90 transition-transform w-16 h-full">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 0;">home</span>
+<span>Trang chủ</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high active:scale-90 transition-transform w-16 h-full">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 0;">monitoring</span>
+<span>Giám sát</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container dark:bg-secondary-fixed dark:text-on-secondary-fixed rounded-full px-5 py-1 hover:bg-surface-container-high active:scale-90 transition-transform h-[80%]">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">notifications</span>
+<span>Thông báo</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high active:scale-90 transition-transform w-16 h-full">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 0;">person</span>
+<span>Cá nhân</span>
+</button>
+</nav>
+</body></html>

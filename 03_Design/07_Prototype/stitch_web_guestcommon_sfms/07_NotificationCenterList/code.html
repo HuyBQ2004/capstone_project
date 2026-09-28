@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Trung tâm thông báo - sfms</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-secondary-fixed": "#0b1c30",
+                        "surface-container-high": "#e2e7ff",
+                        "on-secondary-container": "#54647a",
+                        "inverse-primary": "#81d1f0",
+                        "tertiary-container": "#666b6f",
+                        "surface-bright": "#faf8ff",
+                        "primary": "#005a71",
+                        "primary-fixed": "#b9eaff",
+                        "tertiary-fixed": "#dfe3e7",
+                        "surface-container-highest": "#dae2fd",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "outline-variant": "#bec8cd",
+                        "surface-tint": "#006781",
+                        "on-surface": "#131b2e",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#d2d9f4",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#505f76",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "tertiary": "#4e5356",
+                        "surface-container-low": "#f2f3ff",
+                        "on-background": "#131b2e",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#d0e1fb",
+                        "surface": "#faf8ff",
+                        "primary-fixed-dim": "#81d1f0",
+                        "on-tertiary-fixed-variant": "#43474b",
+                        "on-primary-fixed-variant": "#004d62",
+                        "inverse-on-surface": "#eef0ff",
+                        "on-primary-container": "#d3f1ff",
+                        "surface-variant": "#dae2fd",
+                        "on-primary-fixed": "#001f29",
+                        "background": "#faf8ff",
+                        "primary-container": "#0e7490",
+                        "on-tertiary-fixed": "#171c1f",
+                        "tertiary-fixed-dim": "#c3c7cb",
+                        "outline": "#6f787d",
+                        "on-tertiary-container": "#e8edf1",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#eaedff",
+                        "inverse-surface": "#283044",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-surface-variant": "#3f484c",
+                        "on-tertiary": "#ffffff"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "container-max-width": "1280px",
+                        "base-unit": "4px",
+                        "gutter": "24px",
+                        "auth-card-width": "448px"
+                    },
+                    fontFamily: {
+                        "h3": ["Be Vietnam Pro"],
+                        "body-base": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "h1": ["Be Vietnam Pro"],
+                        "body-sm": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "h2": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "h1-mobile": ["Be Vietnam Pro"]
+                    },
+                    fontSize: {
+                        "h3": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+                        "body-base": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "label-sm": ["12px", { lineHeight: "16px", fontWeight: "500" }],
+                        "h1": ["36px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "body-sm": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "label-md": ["14px", { lineHeight: "20px", fontWeight: "500" }],
+                        "h2": ["30px", { lineHeight: "36px", letterSpacing: "-0.01em", fontWeight: "600" }],
+                        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+                        "h1-mobile": ["28px", { lineHeight: "34px", fontWeight: "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .material-symbols-outlined.fill { font-variation-settings: 'FILL' 1; }
+        
+        /* Table Row Hover & Click */
+        .notification-row { cursor: pointer; transition: background-color 0.2s ease; }
+        .notification-row:hover { background-color: theme('colors.surface-container-low'); }
+        
+        /* Right Panel Slide-in */
+        #detail-panel {
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #detail-panel.open {
+            transform: translateX(0);
+        }
+        
+        /* Overlay */
+        #panel-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        #panel-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface flex min-h-screen">
+<!-- SIDE NAV (Shared Component mapping) -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 p-4 flex flex-col bg-surface-container-low dark:bg-on-secondary-fixed border-r border-outline-variant dark:border-outline z-40 hidden md:flex">
+<!-- Brand/Header inside Sidebar if needed, but usually TopNav handles it. Replicating SideNav from JSON -->
+<div class="mb-6 px-4">
+<h3 class="font-h3 text-h3 text-primary mb-1">Quản trị viên</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Hệ thống SFMS</p>
+</div>
+<nav class="flex-1 flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container-high dark:hover:bg-secondary-fixed transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="person">person</span>
+<span class="font-label-md text-label-md">Chỉnh sửa hồ sơ</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container-high dark:hover:bg-secondary-fixed transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="lock">lock</span>
+<span class="font-label-md text-label-md">Đổi mật khẩu</span>
+</a>
+<!-- ACTIVE STATE -->
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container dark:bg-secondary-fixed-dim text-on-secondary-container dark:text-on-secondary-fixed font-bold rounded-lg transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="notifications_active">notifications_active</span>
+<span class="font-label-md text-label-md">Cài đặt thông báo</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mt-auto rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container-high dark:hover:bg-secondary-fixed transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="logout">logout</span>
+<span class="font-label-md text-label-md">Đăng xuất</span>
+</a>
+</nav>
+</aside>
+<!-- MAIN WRAPPER -->
+<div class="flex-1 flex flex-col md:pl-64 w-full">
+<!-- TOP NAV (Shared Component mapping) -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface dark:bg-inverse-surface shadow-sm">
+<div class="flex items-center gap-4">
+<!-- Mobile menu toggle placeholder -->
+<button class="md:hidden p-2 text-on-surface-variant">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="font-h2 text-h2 font-bold text-primary dark:text-primary-fixed-dim">sfms</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full font-body-sm text-body-sm focus:ring-2 focus:ring-primary w-64" placeholder="Tìm kiếm..." type="text"/>
+</div>
+<button class="p-2 text-primary dark:text-primary-fixed-dim hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest cursor-pointer border border-outline-variant">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="A small, professional portrait photograph of an Asian male healthcare administrator in his 40s. He is wearing a crisp white shirt and a subtle grey tie. The background is a clean, bright, and slightly blurred modern clinic office setting. The lighting is soft and flattering, typical of high-end corporate headshots. The image serves as a user profile avatar in a healthcare management system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhGrlIZ-7b6iJWt6VRXJJJGI2ud3hR6GjbLlZGH_MTWdgSYBWIy-8nWAGfTDwqVhfJzfGgAi7TD_AdjYFTfs7Bnu4QnNRWP4T9Y7T8ypc2BstlM8f0P71oG1ssdeczqpnGvQBPAQ2BFR8YtsbDc7JFfT9VQIyX9EHrjqQJ9C8pyoYWzmz0NK8qL1yA_lPcUnT_bfuwzZeo9vpS042bvmfcT92EZkx8eIzy6CTydhDHcmGsI0GAhISmvKzHp1sC1aaVdvnMSiF7hng"/>
+</div>
+</div>
+</header>
+<!-- CONTENT CANVAS -->
+<main class="flex-1 mt-16 p-6 sm:p-gutter overflow-x-hidden">
+<!-- Page Header -->
+<div class="mb-8">
+<h1 class="font-h1 text-h1 text-on-surface mb-2">Trung tâm thông báo</h1>
+<p class="font-body-base text-body-base text-on-surface-variant">Quản lý và theo dõi các cảnh báo từ hệ thống.</p>
+</div>
+<!-- Dashboard Card / Table -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-[0_4px_6px_-1px_rgb(0,0,0,0.1),0_2px_4px_-2px_rgb(0,0,0,0.1)] overflow-hidden flex flex-col">
+<!-- Toolbar/Filters (Optional visual enhancement) -->
+<div class="p-4 border-b border-outline-variant bg-surface-bright flex justify-between items-center">
+<div class="flex gap-2">
+<button class="px-4 py-2 bg-primary-container text-on-primary-container font-label-md text-label-md rounded-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                            Lọc
+                        </button>
+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Hiển thị 3 thông báo mới nhất</div>
+</div>
+<!-- Table -->
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant bg-surface-container-low">
+<th class="p-4 font-label-md text-label-md text-on-surface-variant font-semibold">Trạng thái</th>
+<th class="p-4 font-label-md text-label-md text-on-surface-variant font-semibold">Nội dung</th>
+<th class="p-4 font-label-md text-label-md text-on-surface-variant font-semibold hidden sm:table-cell">Người gửi</th>
+<th class="p-4 font-label-md text-label-md text-on-surface-variant font-semibold">Thời gian</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1: Danger -->
+<tr class="notification-row" onclick="openPanel('danger')">
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px] fill">warning</span>
+                                        Nguy hiểm
+                                    </span>
+</td>
+<td class="p-4">
+<p class="font-body-sm text-body-sm text-on-surface font-medium truncate max-w-xs md:max-w-md">Phát hiện dị ứng lạc trong thực đơn sáng</p>
+</td>
+<td class="p-4 hidden sm:table-cell font-body-sm text-body-sm text-on-surface-variant">Hệ thống</td>
+<td class="p-4 font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">10:30 - 20/05/2024</td>
+</tr>
+<!-- Row 2: Warning -->
+<tr class="notification-row" onclick="openPanel('warning')">
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#fef08a] text-[#854d0e] font-label-sm text-label-sm"> <!-- Using custom color for yellow warning badge as it's not strictly in the primary palette but common for 'warning' -->
+<span class="material-symbols-outlined text-[16px] fill">info</span>
+                                        Cảnh báo
+                                    </span>
+</td>
+<td class="p-4">
+<p class="font-body-sm text-body-sm text-on-surface font-medium truncate max-w-xs md:max-w-md">Kiểm tra an toàn thực phẩm định kỳ</p>
+</td>
+<td class="p-4 hidden sm:table-cell font-body-sm text-body-sm text-on-surface-variant">Quản lý</td>
+<td class="p-4 font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">08:00 - 20/05/2024</td>
+</tr>
+<!-- Row 3: Info -->
+<tr class="notification-row" onclick="openPanel('info')">
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px] fill">notifications</span>
+                                        Thông tin
+                                    </span>
+</td>
+<td class="p-4">
+<p class="font-body-sm text-body-sm text-on-surface font-medium truncate max-w-xs md:max-w-md">Cập nhật hệ thống phiên bản 2.0</p>
+</td>
+<td class="p-4 hidden sm:table-cell font-body-sm text-body-sm text-on-surface-variant">Kỹ thuật</td>
+<td class="p-4 font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">15:20 - 19/05/2024</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+<!-- FOOTER (Shared Component mapping) -->
+<footer class="w-full py-4 px-gutter flex justify-between items-center mt-auto bg-surface-bright dark:bg-on-secondary-fixed border-t border-outline-variant">
+<p class="font-label-sm text-label-sm text-secondary dark:text-secondary-fixed-dim">© 2024 sfms Healthcare Management System</p>
+<div class="flex gap-4">
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors cursor-pointer" href="#">Terms</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors cursor-pointer" href="#">Privacy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors cursor-pointer" href="#">Support</a>
+</div>
+</footer>
+</div>
+<!-- Right Panel (Sheet) & Overlay -->
+<div class="fixed inset-0 bg-on-background/20 backdrop-blur-sm z-[60]" id="panel-overlay" onclick="closePanel()"></div>
+<div class="fixed top-0 right-0 w-full max-w-md h-full bg-surface-container-lowest shadow-[0_20px_25px_-5px_rgb(0,0,0,0.1),0_8px_10px_-6px_rgb(0,0,0,0.1)] z-[70] border-l border-outline-variant flex flex-col" id="detail-panel">
+<!-- Panel Header -->
+<div class="flex justify-between items-center p-6 border-b border-outline-variant bg-surface-bright">
+<h2 class="font-h3 text-h3 text-on-surface">Chi tiết thông báo</h2>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors" onclick="closePanel()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Panel Content (Dynamic via JS, mocked for visual) -->
+<div class="p-6 flex-1 overflow-y-auto">
+<div class="mb-4" id="panel-badge-container">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-error-container text-on-error-container font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px] fill">warning</span>
+                    Nguy hiểm
+                </span>
+</div>
+<h3 class="font-h2 text-h2 text-on-surface mb-2" id="panel-title">Phát hiện dị ứng lạc trong thực đơn sáng</h3>
+<div class="flex items-center gap-4 mb-6 pb-6 border-b border-outline-variant">
+<div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">person</span>
+<span id="panel-sender">Hệ thống</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span id="panel-time">10:30 - 20/05/2024</span>
+</div>
+</div>
+<div class="prose prose-sm prose-slate font-body-base text-body-base text-on-surface">
+<p>Hệ thống quét tự động đã phát hiện thành phần "Lạc" (Đậu phộng) trong thực đơn sáng dành cho bệnh nhân tại phòng 302, Khoa Nội. Bệnh nhân này có tiền sử dị ứng nghiêm trọng với lạc đã được ghi nhận trong hồ sơ bệnh án số #HS-2034.</p>
+<p>Yêu cầu ngay lập tức đình chỉ việc chuẩn bị suất ăn này và thông báo cho bộ phận bếp để chuẩn bị suất ăn thay thế theo đúng phác đồ dinh dưỡng.</p>
+<div class="mt-6 p-4 bg-surface-container-low rounded-lg border border-outline-variant">
+<h4 class="font-label-md text-label-md font-semibold text-primary mb-2">Hành động đề xuất</h4>
+<ul class="list-disc list-inside space-y-1 text-body-sm">
+<li>Hủy suất ăn hiện tại (#M-1023)</li>
+<li>Tạo yêu cầu suất ăn mới thay thế</li>
+<li>Xác nhận với điều dưỡng trực khoa</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Panel Footer -->
+<div class="p-6 border-t border-outline-variant bg-surface-bright flex justify-end gap-3">
+<button class="px-4 py-2 border border-outline text-on-surface font-label-md text-label-md rounded-lg hover:bg-surface-container-low transition-colors" onclick="closePanel()">
+                Đóng
+            </button>
+<button class="px-4 py-2 bg-primary text-on-primary font-label-md text-label-md rounded-lg hover:brightness-90 transition-all shadow-sm">
+                Xử lý ngay
+            </button>
+</div>
+</div>
+<script>
+        const panel = document.getElementById('detail-panel');
+        const overlay = document.getElementById('panel-overlay');
+
+        function openPanel(type) {
+            // In a real app, 'type' or 'id' would fetch specific data. 
+            // Here we just trigger the UI animation.
+            panel.classList.add('open');
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closePanel() {
+            panel.classList.remove('open');
+            overlay.classList.remove('open</script></body></html>

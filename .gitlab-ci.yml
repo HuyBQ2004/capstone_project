@@ -1,0 +1,305 @@
+# CI/CD SFMS — khớp kiến trúc: GitLab SaaS build+scan (Semgrep/Trivy/Snyk) → GitLab Container
+# Registry → VPS chỉ `docker compose pull && up -d` (KHÔNG build trên VPS, xem trao đổi 11/08/2026).
+#
+# CI/CD Variables cần khai ở GitLab: Settings → CI/CD → Variables (xem hướng dẫn đi kèm) —
+# KHÔNG khai trực tiếp trong file này:
+#   SSH_PRIVATE_KEY        (Type: File, Protected — key nhiều dòng không mask được)
+#   VPS_HOST               VPS ở NHÀ, sau Cloudflare Access — VD: ssh.vnbooth.io.vn (KHÔNG phải IP)
+#   VPS_USER               VD: deploy
+#   VPS_DEPLOY_PATH         VD: /opt/sfms
+#   SNYK_TOKEN              (snyk.io → Account Settings → Auth Token), Masked
+#   CF_ACCESS_CLIENT_ID     Cloudflare Zero Trust → Access → Service Auth → Service Tokens, Masked
+#   CF_ACCESS_CLIENT_SECRET cùng chỗ trên, Masked
+#
+# VPS không có IP public (máy mini PC ở nhà) — SSH phải đi qua Cloudflare Access bằng
+# `cloudflared access ssh`, xác thực bằng Service Token thay vì email+OTP (OTP chỉ dành cho
+# người, CI chạy tự động không bấm được). Nhớ vào Access → Applications → app đang bảo vệ
+# $VPS_HOST → Policies → thêm rule cho phép đúng Service Token này (Bước B, 11/08/2026).
+
+stages:
+  - test
+  - scan
+  - build
+  - container-scan
+  - deploy
+
+variables:
+  DOCKER_TLS_CERTDIR: "/certs"
+
+# ───────────────────────────── test ─────────────────────────────
+
+backend-test:
+  stage: test
+  image: maven:3.9-eclipse-temurin-25
+  # 11/08/2026 — một số test (VD AbstractIamIntegrationTest) dùng Testcontainers, tự bật
+  # container Postgres thật để test — cần Docker daemon thật, image Maven trần không có.
+  # Thêm docker:27-dind (cùng cách các job build bên dưới đã dùng) + biến DOCKER_HOST/
+  # DOCKER_TLS_* để Testcontainers (docker-java client) nối được, KHÔNG cần cài docker CLI
+  # trong image Maven (docker-java nói thẳng HTTP/TLS với daemon, không qua CLI).
+  services:
+    - docker:27-dind
+  rules:
+    - changes:
+        - 04_Development/Backend/**/*
+  script:
+    - cd 04_Development/Backend
+    - mvn -B -q -DskipTests=false test
+  cache:
+    key: maven-$CI_COMMIT_REF_SLUG
+    paths:
+      - .m2/repository
+  variables:
+    MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+    DOCKER_HOST: tcp://docker:2376
+    DOCKER_TLS_VERIFY: "1"
+    DOCKER_CERT_PATH: "/certs/client"
+
+frontend-typecheck:
+  stage: test
+  image: node:20-alpine
+  rules:
+    - changes:
+        - 04_Development/Frontend/**/*
+  script:
+    - cd 04_Development/Frontend
+    - npm ci
+    - npx tsc --noEmit
+    - npm run lint
+
+# ───────────────────────────── scan ─────────────────────────────
+# Semgrep (SAST) — template có sẵn của GitLab, tự chọn analyzer theo ngôn ngữ (Java/TS/Python).
+sast:
+  stage: scan
+include:
+  - template: Security/SAST.gitlab-ci.yml
+  - template: Jobs/Container-Scanning.gitlab-ci.yml # Trivy — job nền `container_scanning`, xem cách dùng ở stage container-scan bên dưới
+
+# 11/08/2026 — BUG tìm thấy: include ở trên tự thêm job `container_scanning` chạy stage `test`
+# mặc định (SỚM HƠN build → image chưa tồn tại) và tự đoán CS_IMAGE theo tên project
+# (`.../main:sha`, sai — ta có 4 image KHÁC TÊN, không phải 1). Tắt bản mặc định, dựng lại 4
+# job riêng ở stage container-scan (SAU build), mỗi job trỏ đúng CS_IMAGE vừa build/push.
+container_scanning:
+  rules:
+    - when: never
+
+# Snyk — GitLab không có template sẵn (khác Semgrep/Trivy), chạy CLI trực tiếp.
+# Quét dependency của cả 2 project con (Backend pom.xml, Frontend package.json).
+snyk-backend:
+  stage: scan
+  # snyk test --file=pom.xml tự gọi ra `mvn` để dựng dependency tree — image node:20-alpine
+  # trần không có Maven nên child process chết (exit code -2). Dùng image Maven có sẵn, cài
+  # thêm Node/npm để chạy CLI Snyk.
+  image: maven:3.9-eclipse-temurin-25
+  rules:
+    - changes:
+        - 04_Development/Backend/**/*
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq nodejs npm
+    - npm install -g snyk
+    - snyk auth "$SNYK_TOKEN"
+  script:
+    - cd 04_Development/Backend
+    - snyk test --file=pom.xml --severity-threshold=high
+  allow_failure: true # không chặn pipeline lúc mới bật — bỏ dòng này khi đã dọn hết lỗ hổng cũ
+
+snyk-frontend:
+  stage: scan
+  image: node:20-alpine
+  rules:
+    - changes:
+        - 04_Development/Frontend/**/*
+  before_script:
+    - npm install -g snyk
+    - snyk auth "$SNYK_TOKEN"
+  script:
+    - cd 04_Development/Frontend
+    - npm ci
+    - snyk test --severity-threshold=high
+  allow_failure: true
+
+# ───────────────────────────── build ─────────────────────────────
+# 4 image build song song, mỗi cái CHỈ chạy khi thư mục tương ứng đổi (tiết kiệm phút CI).
+# Tag = SHA ngắn (truy vết chính xác bản nào đang chạy) + `latest` (VPS pull theo tag này).
+#
+# 11/08/2026 — BUG tìm thấy: rules trước đây chỉ có `changes:`, KHÔNG giới hạn nhánh — push lên
+# nhánh phụ (VD `dev`, `namnvhe180863`) có sửa Backend/Frontend vẫn build + PUSH ĐÈ tag `:latest`
+# trên registry, dù `deploy-vps` không tự chạy ở nhánh đó. Tag `:latest` vì vậy có thể là bản
+# CHƯA merge vào `main` — ai lỡ tay `docker compose pull` thủ công trên VPS giữa lúc đó sẽ kéo
+# nhầm. `if` + `changes` trong CÙNG một rule là AND — chỉ build khi VỪA ở main VỪA có đổi file.
+.build_template: &build_template
+  stage: build
+  image: docker:27
+  services:
+    - docker:27-dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+
+build-backend:
+  <<: *build_template
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - 04_Development/Backend/**/*
+  script:
+    - docker build -t "$CI_REGISTRY_IMAGE/backend:$CI_COMMIT_SHORT_SHA" -t "$CI_REGISTRY_IMAGE/backend:latest" 04_Development/Backend
+    - docker push "$CI_REGISTRY_IMAGE/backend:$CI_COMMIT_SHORT_SHA"
+    - docker push "$CI_REGISTRY_IMAGE/backend:latest"
+
+build-frontend:
+  <<: *build_template
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - 04_Development/Frontend/**/*
+  script:
+    - docker build -t "$CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_SHORT_SHA" -t "$CI_REGISTRY_IMAGE/frontend:latest" 04_Development/Frontend
+    - docker push "$CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_SHORT_SHA"
+    - docker push "$CI_REGISTRY_IMAGE/frontend:latest"
+
+build-frs-service:
+  <<: *build_template
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - 04_Development/AiServices/frs_service/**/*
+  script:
+    - docker build -t "$CI_REGISTRY_IMAGE/frs-service:$CI_COMMIT_SHORT_SHA" -t "$CI_REGISTRY_IMAGE/frs-service:latest" 04_Development/AiServices/frs_service
+    - docker push "$CI_REGISTRY_IMAGE/frs-service:$CI_COMMIT_SHORT_SHA"
+    - docker push "$CI_REGISTRY_IMAGE/frs-service:latest"
+
+build-rag-service:
+  <<: *build_template
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - 04_Development/AiServices/rag_service/**/*
+  script:
+    - docker build -t "$CI_REGISTRY_IMAGE/rag-service:$CI_COMMIT_SHORT_SHA" -t "$CI_REGISTRY_IMAGE/rag-service:latest" 04_Development/AiServices/rag_service
+    - docker push "$CI_REGISTRY_IMAGE/rag-service:$CI_COMMIT_SHORT_SHA"
+    - docker push "$CI_REGISTRY_IMAGE/rag-service:latest"
+
+# ───────────────────────────── container-scan ─────────────────────────────
+# Trivy (qua template GitLab) — SAU build vì cần image đã có trên registry. `needs:` vừa ép
+# thứ tự vừa cho job chạy ngay khi build xong (không đợi hết stage build như mặc định), `rules`
+# giữ y hệt job build tương ứng (cùng lý do giới hạn `main` — chỉ scan image thật sự build).
+container-scan-backend:
+  extends: container_scanning
+  stage: container-scan
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - 04_Development/Backend/**/*
+  needs: ["build-backend"]
+  variables:
+    CS_IMAGE: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_SHORT_SHA
+
+container-scan-frontend:
+  extends: container_scanning
+  stage: container-scan
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - 04_Development/Frontend/**/*
+  needs: ["build-frontend"]
+  variables:
+    CS_IMAGE: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_SHORT_SHA
+
+container-scan-frs-service:
+  extends: container_scanning
+  stage: container-scan
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - 04_Development/AiServices/frs_service/**/*
+  needs: ["build-frs-service"]
+  variables:
+    CS_IMAGE: $CI_REGISTRY_IMAGE/frs-service:$CI_COMMIT_SHORT_SHA
+
+container-scan-rag-service:
+  extends: container_scanning
+  stage: container-scan
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - 04_Development/AiServices/rag_service/**/*
+  needs: ["build-rag-service"]
+  variables:
+    CS_IMAGE: $CI_REGISTRY_IMAGE/rag-service:$CI_COMMIT_SHORT_SHA
+
+# ───────────────────────────── deploy ─────────────────────────────
+# CHỈ chạy trên nhánh main, và CHỈ khi build + container-scan phía trên xong (needs). `needs`
+# chuyển job này sang chế độ DAG (không tự đợi hết stage trước như mặc định) — PHẢI liệt kê cả
+# 4 job container-scan ở đây, không chỉ 4 job build, nếu không deploy có thể chạy song song
+# với scan thay vì đợi kết quả (mất tác dụng gate bảo mật trước khi lên production).
+deploy-vps:
+  stage: deploy
+  image: alpine:3.20
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  needs:
+    - job: build-backend
+      optional: true
+    - job: build-frontend
+      optional: true
+    - job: build-frs-service
+      optional: true
+    - job: build-rag-service
+      optional: true
+    - job: container-scan-backend
+      optional: true
+    - job: container-scan-frontend
+      optional: true
+    - job: container-scan-frs-service
+      optional: true
+    - job: container-scan-rag-service
+      optional: true
+  before_script:
+    - apk add --no-cache openssh-client curl
+    # Cài cloudflared (binary tĩnh, official release) — dùng làm ProxyCommand cho ssh bên dưới,
+    # tự chèn header xác thực Service Token vào lúc bắt tay với Cloudflare Access.
+    - curl -fsSL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /usr/local/bin/cloudflared
+    - chmod +x /usr/local/bin/cloudflared
+    - eval $(ssh-agent -s)
+    # 11/08/2026 — 3 bug liên tiếp khi nạp SSH_PRIVATE_KEY (Type: File), mỗi bug xác nhận bằng
+    # tái hiện cục bộ (Docker + alpine:3.20 + openssh-client), không đoán suông:
+    #   1) Biến "File" chứa ĐƯỜNG DẪN tới file key, không phải nội dung — `echo "$VAR" | ssh-add -`
+    #      (đúng cho biến "Variable") đưa nhầm chuỗi đường dẫn vào ssh-add.
+    #   2) GitLab lưu file với quyền 0666 — ssh-add từ chối key có quyền lỏng ("UNPROTECTED
+    #      PRIVATE KEY FILE"), phải tự chmod 600.
+    #   3) GitLab CẮT MẤT newline cuối file khi lưu giá trị biến (411 byte gốc → 410 byte trên
+    #      CI, xác nhận qua sha256/wc -c/hex dump) — định dạng OpenSSH private key (khác PEM
+    #      thường, không dung thứ) cần đúng newline cuối sau dòng "-----END...-----", thiếu là
+    #      "error in libcrypto". Thêm lại bằng lệnh `echo` rỗng nối vào cuối.
+    - (tr -d '\r' < "$SSH_PRIVATE_KEY"; echo) > /tmp/deploy_key
+    - chmod 600 /tmp/deploy_key
+    - ssh-add /tmp/deploy_key
+    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
+    # VPS ở nhà, không có IP public/host key ổn định để pin qua ssh-keyscan như VPS thường —
+    # xác thực thật sự nằm ở 2 lớp CHỒNG NHAU: Cloudflare Access (Service Token) + SSH key
+    # (ssh-agent ở trên). Tắt kiểm host key CHỈ cho đúng host này, không áp dụng toàn cục.
+    - |
+      cat >> ~/.ssh/config <<EOF
+      Host $VPS_HOST
+        User $VPS_USER
+        ProxyCommand cloudflared access ssh --hostname %h --service-token-id=$CF_ACCESS_CLIENT_ID --service-token-secret=$CF_ACCESS_CLIENT_SECRET
+        StrictHostKeyChecking no
+        UserKnownHostsFile /dev/null
+      EOF
+      chmod 600 ~/.ssh/config
+  script:
+    # `-f docker-compose.yml -f docker-compose.prod.yml`: file thứ 2 CHỈ thêm `image:` cho 4
+    # service có CI build — `docker compose pull` nhờ vậy kéo đúng bản vừa push, không đụng
+    # postgres/nginx/mailpit/cloudflared (dùng image công khai, không qua registry riêng).
+    #
+    # 13/08/2026 — BUG tìm thấy: `up -d` chỉ RECREATE (đổi IP nội bộ Docker network) đúng những
+    # service có image mới (VD backend/frontend), KHÔNG đụng tới nginx. Nginx resolve hostname
+    # `backend`/`frontend` → IP MỘT LẦN lúc worker khởi động rồi cache, không tự re-resolve —
+    # sau khi backend/frontend bị recreate (IP mới), nginx vẫn giữ IP CŨ đã chết → toàn bộ request
+    # qua nginx trả 502 "connect() failed (111: Connection refused)" dù backend/frontend đang chạy
+    # khoẻ mạnh. Restart thêm `nginx` ở đây (không cần image mới, chỉ cần buộc nó re-resolve DNS).
+    - >
+      ssh "$VPS_HOST" "cd $VPS_DEPLOY_PATH &&
+      docker compose -f docker-compose.yml -f docker-compose.prod.yml pull backend frontend frs-service rag-service &&
+      docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d &&
+      docker compose -f docker-compose.yml -f docker-compose.prod.yml restart nginx &&
+      docker image prune -f"

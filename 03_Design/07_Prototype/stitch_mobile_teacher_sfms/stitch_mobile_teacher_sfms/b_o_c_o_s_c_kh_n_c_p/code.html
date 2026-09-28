@@ -1,0 +1,277 @@
+<!DOCTYPE html><html class="light" lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
+<title>Báo cáo sự cố khẩn cấp - SFMS Teacher</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#006781",
+                    "error": "#ba1a1a",
+                    "surface": "#f8f9ff",
+                    "primary-fixed-dim": "#81d1f0",
+                    "secondary": "#006877",
+                    "inverse-on-surface": "#eaf1ff",
+                    "outline": "#6f787d",
+                    "on-primary-fixed": "#001f29",
+                    "secondary-fixed-dim": "#2fd9f4",
+                    "on-tertiary": "#ffffff",
+                    "inverse-primary": "#81d1f0",
+                    "on-secondary-container": "#00616f",
+                    "on-error": "#ffffff",
+                    "on-surface-variant": "#3f484c",
+                    "inverse-surface": "#213145",
+                    "on-primary-fixed-variant": "#004d62",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-container": "#e5eef4",
+                    "on-error-container": "#93000a",
+                    "outline-variant": "#bec8cd",
+                    "on-primary": "#ffffff",
+                    "on-primary-container": "#d3f1ff",
+                    "secondary-container": "#3fe1fd",
+                    "tertiary-fixed": "#dbe4ea",
+                    "primary-fixed": "#b9eaff",
+                    "surface-container-low": "#eff4ff",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed": "#a2eeff",
+                    "on-tertiary-fixed": "#141d21",
+                    "surface-bright": "#f8f9ff",
+                    "surface-container-high": "#dce9ff",
+                    "on-background": "#0b1c30",
+                    "tertiary-container": "#636c71",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-secondary-fixed-variant": "#004e5a",
+                    "on-surface": "#0b1c30",
+                    "tertiary": "#4b5459",
+                    "primary": "#005a71",
+                    "on-tertiary-fixed-variant": "#3f484d",
+                    "tertiary-fixed-dim": "#bfc8ce",
+                    "on-secondary-fixed": "#001f25",
+                    "surface-container": "#e5eeff",
+                    "background": "#f8f9ff",
+                    "surface-dim": "#cbdbf5",
+                    "surface-variant": "#d3e4fe",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#0e7490"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "section-margin": "24px",
+                    "stack-gap": "12px",
+                    "gutter": "12px",
+                    "base": "4px",
+                    "container-padding": "16px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Be Vietnam Pro"],
+                    "headline-lg-mobile": ["Be Vietnam Pro"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "label-sm": ["Be Vietnam Pro"],
+                    "headline-lg": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "label-lg": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["22px", {"lineHeight": "30px", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #f8f9ff;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #bec8cd;
+            border-radius: 10px;
+        }
+        .severity-radio:checked + label {
+            border-color: currentColor;
+            background-color: rgba(var(--bg-opacity-color), 0.1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col min-h-screen text-on-surface">
+<!-- TopAppBar -->
+<header class="bg-surface shadow-sm w-full top-0 sticky z-50 flex justify-between items-center px-container-padding h-14">
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md-mobile font-bold text-primary">Báo cáo sự cố</h1>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="Close up portrait of a professional female teacher with a warm smile, wearing a modern blue medical-style scrub uniform, standing in a brightly lit, clean school infirmary background. The aesthetic is professional, clinical, and reassuring with soft daylighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQLw1ZZ_Iwendh87UUba5kN0vpw79V83HbRNZsgeyXcNoeIWmSfguTHZaHepRsF5FKvNeJxa8BZSWJ8XDPKDstu6Y473if8CgY-ta9_3E9o9MsLSvCA6eyG4_BuppqsxGPV9vNus122HXgR8mKqtJ1RO8FrEPFb29Fa4pzKS6NUI92tDo16oZIALTbhbhOirfQAaTCalFmFYF-JyQDyQETYqUHiGhtznzwamUJK96BT2KW28ycpd34E51cO46MAkpqhz4tJI_8Uug">
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">settings</span>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto pb-32">
+<div class="max-w-md mx-auto p-container-padding space-y-6">
+<!-- Section Title & Status -->
+<div class="space-y-1">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Báo cáo sự cố khẩn cấp</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Vui lòng điền chính xác thông tin để đội ngũ y tế xử lý kịp thời.</p>
+</div>
+<!-- Form -->
+<form class="space-y-5">
+<!-- Chọn học sinh -->
+<div class="space-y-2">
+<label class="font-label-lg text-label-lg text-on-surface">Chọn học sinh bị ảnh hưởng *</label>
+<div class="relative">
+<div class="min-h-[56px] w-full bg-white border border-outline-variant rounded-xl p-3 flex flex-wrap gap-2 items-center focus-within:border-primary-container focus-within:ring-2 focus-within:ring-primary-container/20 transition-all cursor-pointer shadow-sm">
+<div class="flex -space-x-2 mr-2">
+<div class="w-8 h-8 rounded-full border-2 border-white bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a young Asian elementary student smiling softly, clean white background, soft studio lighting, clinical and modern education style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqtJVD2YI1CQNBbFJn_YNOqnn4bZ6ZlNVQb-drCVtFuYcJoUQY-pCLTchDXkdA84wq3sQg3_7eXg1mtFp8sRRE4iJlRB__EaKeuTAFOiyUI11JPndK4nLMYYAmU9B51KMmhW6f1jQ9VoVECNAof9QNJnwY4hcMPHOMCsd0oMR-N42GYAAzbER9LN5u_BGK0E5wmbS8qk76TVQBqmbFJQxPaswhLgHvLCPvMDt-VXCIph1PrpxeWjR5KN6tkdg5mXyEgNWTzq7oThk">
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a small Asian boy with glasses, school uniform, bright and clean environment, high-end commercial photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAz0DqMGFOF3KPL_5Kc4_SBEGHGEGhcHsQ_G2e7CkYSIFq1lZVifx-o5tz6KnLY7p6HhRXYo3nkOMOXnsUihyCYSFEWTWgooGQO48tf7vxNojYFD3zyY3smgW6c1YoheHJZFPZSlpip-7EEhjOwJeiTpJOfoi6lEk-FSxnWJy8rY4oAX_hO_zx1eKJpurxVMvVyvHioisBNcGFOvjJfzhJemGm5msOcr_s1PGaz67MPQg_HK_aFKEYB974upcZu1iULQNkRicInxHc">
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-primary-container flex items-center justify-center text-[10px] text-white font-bold">
+                                    +3
+                                </div>
+</div>
+<span class="text-body-md text-on-surface-variant">Đã chọn 5 học sinh</span>
+<span class="material-symbols-outlined ml-auto text-on-surface-variant">add_circle</span>
+</div>
+</div>
+</div>
+<!-- Số lượng & Thời gian -->
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="font-label-lg text-label-lg text-on-surface">Số lượng</label>
+<input class="w-full h-[48px] px-4 rounded-xl border-outline-variant focus:border-primary focus:ring-primary bg-white shadow-sm font-body-md" type="number" value="5">
+</div>
+<div class="space-y-2">
+<label class="font-label-lg text-label-lg text-on-surface">Ngày &amp; Giờ *</label>
+<input class="w-full h-[48px] px-4 rounded-xl border-outline-variant focus:border-primary focus:ring-primary bg-white shadow-sm font-body-md" type="datetime-local">
+</div>
+</div>
+<!-- Triệu chứng -->
+<div class="space-y-2">
+<label class="font-label-lg text-label-lg text-on-surface">Triệu chứng chính *</label>
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-2 rounded-full border border-primary text-primary bg-primary-container/10 font-label-sm text-label-sm hover:bg-primary-container/20 transition-colors" type="button">Đau bụng</button>
+<button class="px-4 py-2 rounded-full border border-outline-variant text-on-surface-variant font-label-sm text-label-sm hover:bg-surface-container transition-colors" type="button">Nôn mửa</button>
+<button class="px-4 py-2 rounded-full border border-outline-variant text-on-surface-variant font-label-sm text-label-sm hover:bg-surface-container transition-colors" type="button">Phát ban</button>
+<button class="px-4 py-2 rounded-full border border-outline-variant text-on-surface-variant font-label-sm text-label-sm hover:bg-surface-container transition-colors" type="button">Sốt</button>
+<button class="px-4 py-2 rounded-full border border-outline-variant text-on-surface-variant font-label-sm text-label-sm hover:bg-surface-container transition-colors" type="button">Khác</button>
+</div>
+</div>
+<!-- Món ăn nghi ngờ -->
+<div class="space-y-2">
+<label class="font-label-lg text-label-lg text-on-surface">Món ăn nghi ngờ (Thực đơn hôm nay)</label>
+<div class="relative">
+<select class="w-full h-[56px] appearance-none px-4 rounded-xl border-outline-variant focus:border-primary focus:ring-primary bg-white shadow-sm font-body-md pr-10">
+<option>Chọn món ăn từ thực đơn...</option>
+<option>Thịt kho trứng</option>
+<option>Canh bí đỏ</option>
+<option>Sữa tươi tiệt trùng (Xế)</option>
+<option>Cơm trắng</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">keyboard_arrow_down</span>
+</div>
+</div>
+<!-- Mức độ -->
+<div class="space-y-3">
+<label class="font-label-lg text-label-lg text-on-surface">Mức độ nghiêm trọng *</label>
+<div class="grid grid-cols-3 gap-3">
+<div>
+<input checked="" class="hidden severity-radio peer" id="low" name="severity" type="radio">
+<label class="flex flex-col items-center justify-center p-3 rounded-xl border-2 border-outline-variant peer-checked:border-green-500 peer-checked:bg-green-50 text-on-surface-variant peer-checked:text-green-700 cursor-pointer transition-all" for="low" style="--bg-opacity-color: 34, 197, 94;">
+<span class="material-symbols-outlined mb-1">info</span>
+<span class="text-label-sm">Nhẹ</span>
+</label>
+</div>
+<div>
+<input class="hidden severity-radio peer" id="medium" name="severity" type="radio">
+<label class="flex flex-col items-center justify-center p-3 rounded-xl border-2 border-outline-variant peer-checked:border-orange-500 peer-checked:bg-orange-50 text-on-surface-variant peer-checked:text-orange-700 cursor-pointer transition-all" for="medium" style="--bg-opacity-color: 245, 158, 11;">
+<span class="material-symbols-outlined mb-1">warning</span>
+<span class="text-label-sm">Trung bình</span>
+</label>
+</div>
+<div>
+<input class="hidden severity-radio peer" id="high" name="severity" type="radio">
+<label class="flex flex-col items-center justify-center p-3 rounded-xl border-2 border-outline-variant peer-checked:border-red-500 peer-checked:bg-red-50 text-on-surface-variant peer-checked:text-red-700 cursor-pointer transition-all" for="high" style="--bg-opacity-color: 225, 29, 72;">
+<span class="material-symbols-outlined mb-1">emergency</span>
+<span class="text-label-sm">Nghiêm trọng</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Mô tả chi tiết -->
+<div class="space-y-2">
+<label class="font-label-lg text-label-lg text-on-surface">Mô tả chi tiết triệu chứng</label>
+<textarea class="w-full px-4 py-3 rounded-xl border-outline-variant focus:border-primary focus:ring-primary bg-white shadow-sm font-body-md resize-none" placeholder="Nhập chi tiết các biểu hiện của học sinh..." rows="4"></textarea>
+</div>
+</form>
+</div>
+</main>
+<!-- Bottom Action Bar (Mobile Only) -->
+<div class="fixed bottom-0 left-0 w-full bg-white/80 backdrop-blur-md p-container-padding pb-safe border-t border-outline-variant/30 flex flex-col gap-3 shadow-[0_-4px_10px_rgba(0,0,0,0.02)]">
+<button class="w-full h-12 bg-primary text-white rounded-full font-label-lg flex items-center justify-center gap-2 active:scale-[0.98] transition-transform">
+            Tiếp tục: Thêm minh chứng
+            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<!-- Bottom Navigation Bar (Contextual Filter applied - hidden on transactional forms usually, but keeping shell logic for destination context) -->
+<!-- Note: As per instructions, transaction-focused task-pages should suppress navigation. However, the requirement includes Shared Components as anchors. I will suppress the global nav to focus on the form as requested by "Task-Focused" rule in System Prompt. -->
+<script>
+        // Micro-interactions for form controls
+        document.querySelectorAll('button[type="button"]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if(this.closest('.flex-wrap')) {
+                    this.classList.toggle('border-primary');
+                    this.classList.toggle('text-primary');
+                    this.classList.toggle('bg-primary-container/10');
+                    this.classList.toggle('border-outline-variant');
+                    this.classList.toggle('text-on-surface-variant');
+                }
+            });
+        });
+
+        // Current time as default
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        const dateTimeInput = document.querySelector('input[type="datetime-local"]');
+        if(dateTimeInput) {
+            dateTimeInput.value = now.toISOString().slice(0, 16);
+        }
+    </script>
+</body></html>

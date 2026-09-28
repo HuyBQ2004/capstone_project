@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Wireframe — Food Sample Retention (Medical Staff, Web)</title>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<style>
+  * { box-sizing:border-box; } html{font-size:18px;}
+  body { margin:0; font-family:'Patrick Hand',cursive; color:#333; background-image: radial-gradient(#d7d7d7 1px, transparent 1px); background-size:20px 20px; }
+  .app { display:flex; min-height:100vh; }
+  .sidebar { width:250px; background:white; border-right:2px solid #333; padding:16px 12px; }
+  .brand { font-family:'Caveat',cursive; font-size:30px; font-weight:700; margin-bottom:16px; padding-left:6px; }
+  .side-group-title { font-size:13px; text-transform:uppercase; color:#888; margin:10px 0 4px 6px; }
+  .side-item { padding:8px 10px; border-radius:8px; font-size:16px; cursor:pointer; }
+  .side-item.active { background:#333; color:white; }
+  .main { flex:1; padding:26px 30px; }
+  .page-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+  .page-title { font-size:26px; }
+  .screen { display:none; } .screen.visible { display:block; }
+  .filter-bar { display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap; }
+  table { width:100%; border-collapse:collapse; background:white; font-size:14px; }
+  th,td { border:2px solid #333; padding:6px 8px; text-align:left; }
+  th { background:#f0f0f0; }
+  tr.clickable:hover { cursor:pointer; background:#f7f7f7; }
+  .badge { display:inline-flex; gap:4px; align-items:center; padding:2px 8px; border-radius:8px; font-size:12px; border:2px solid #333; }
+  .badge.info { border-style:solid; } .badge.warning { border-style:dashed; } .badge.secondary { border-style:dotted; }
+  .modal-backdrop { display:none; position:fixed; inset:0; background:rgba(0,0,0,.2); z-index:8; align-items:center; justify-content:center; }
+  .modal-backdrop.show { display:flex; }
+  .modal { background:white; border:2px solid #333; border-radius:16px; padding:22px; width:480px; max-height:85vh; overflow:auto; }
+  .field { margin-bottom:12px; } .field label { display:block; margin-bottom:4px; font-size:15px; }
+  wired-input { width:100%; }
+  .btn-primary { background:#333; color:white; border:2px solid #333; border-radius:255px 15px 225px 15px/15px 225px 15px 255px; font-family:'Patrick Hand',cursive; font-size:17px; padding:10px 20px; cursor:pointer; }
+  .btn-secondary { background:white; color:#333; border:2px solid #333; border-radius:255px 15px 225px 15px/15px 225px 15px 255px; font-family:'Patrick Hand',cursive; font-size:17px; padding:10px 20px; cursor:pointer; }
+  .btn-row { display:flex; gap:10px; margin-top:14px; }
+  .icon { width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; }
+  .toast { position:fixed; bottom:24px; right:24px; background:#333; color:white; padding:12px 20px; border-radius:10px; display:none; align-items:center; gap:8px; }
+  .toast.show { display:flex; }
+  .note { font-size:13px; color:#666; }
+  .sample-pick { display:flex; justify-content:space-between; padding:8px; border:2px solid #333; border-radius:8px; margin-bottom:6px; cursor:pointer; }
+  .sample-pick.selected { background:#333; color:white; }
+</style>
+</head>
+<body>
+
+<svg style="display:none">
+  <symbol id="ic-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-6 10a2 2 0 002 3h12a2 2 0 002-3l-6-10V3"/></symbol>
+  <symbol id="ic-export" viewBox="0 0 24 24"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M4 15v4a2 2 0 002 2h12a2 2 0 002-2v-4"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24"><path d="M4 12l6 6L20 6" stroke-linecap="round"/></symbol>
+  <symbol id="ic-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="1"/><path d="M8 11V7a4 4 0 018 0v4"/></symbol>
+</svg>
+
+<div class="app">
+  <div class="sidebar">
+    <div class="brand">SFMS · MS</div>
+    <div class="side-group-title">Lưu mẫu Thực phẩm</div>
+    <div class="side-item active" data-go="screen-records">Food Sample Records — Mẫu số 5</div>
+  </div>
+  <div class="main">
+
+    <!-- 13 Food Sample Records -->
+    <div class="screen visible" id="screen-records">
+      <div class="page-header"><span class="page-title"><svg class="icon" style="width:22px;height:22px;vertical-align:-4px"><use href="#ic-flask"/></svg> Food Sample Records — Mẫu số 5</span><button class="btn-secondary" onclick="toast('Đã xuất Excel/PDF sổ lưu mẫu.')"><svg class="icon" style="width:14px;height:14px"><use href="#ic-export"/></svg> Export</button></div>
+      <div class="filter-bar">
+        <wired-input placeholder="Khoảng ngày"></wired-input>
+        <wired-combo selected="Tất cả trạng thái"><wired-item value="all">Tất cả trạng thái</wired-item><wired-item value="retained">Retained</wired-item><wired-item value="retrieved">Retrieved</wired-item><wired-item value="disposed">Disposed</wired-item></wired-combo>
+      </div>
+      <table>
+        <thead><tr><th>#</th><th>Tên mẫu</th><th>Bữa</th><th>Batch</th><th>Thời gian thu</th><th>Nhiệt độ bảo quản</th><th>Trạng thái</th><th>Thời gian lưu còn lại</th></tr></thead>
+        <tbody>
+          <tr class="clickable" onclick="openRetrieve('Súp tôm — Bữa trưa 30/06', 'còn 22 giờ')"><td>1</td><td>Súp tôm</td><td>Trưa</td><td>B-2260630</td><td>30/06 11:00</td><td>4°C</td><td><span class="badge info">Retained</span></td><td>còn 22 giờ</td></tr>
+          <tr><td>2</td><td>Cơm gà xối mỡ</td><td>Trưa</td><td>B-2260629</td><td>29/06 11:00</td><td>3°C</td><td><span class="badge warning">Retrieved</span></td><td>—</td></tr>
+          <tr><td>3</td><td>Sữa chua</td><td>Xế</td><td>B-2260628</td><td>28/06 14:00</td><td>5°C</td><td><span class="badge secondary">Disposed</span></td><td>—</td></tr>
+        </tbody>
+      </table>
+      <p class="note">Đủ 12 cột theo Mẫu số 5 — bảng trên rút gọn hiển thị các cột trọng yếu cho wireframe, đúng bộ field Business Logic nguồn (không bớt field khi triển khai thật).</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- 14 Retrieve Food Sample Records Dialog -->
+<div class="modal-backdrop" id="modal-retrieve">
+  <div class="modal">
+    <h3><svg class="icon" style="width:20px;height:20px"><use href="#ic-lock"/></svg> Retrieve Food Sample Records</h3>
+    <div class="field"><label>Tìm mẫu theo ngày/món/batch</label><wired-input placeholder="VD: Súp tôm, 30/06"></wired-input></div>
+    <label class="note">Danh sách mẫu khớp kết quả</label>
+    <div id="sample-results">
+      <div class="sample-pick selected" id="sample-0">Súp tôm — Bữa trưa 30/06 (B-2260630) — <span id="sample-time-left"></span></div>
+    </div>
+    <button class="btn-secondary" style="margin:10px 0;" onclick="toast('Authorize Retrieval — mẫu chuyển Under Investigation.')">Authorize Retrieval</button>
+    <div class="field"><label>Incident ID (bắt buộc, phải active)</label><wired-input placeholder="INC-2026-014"></wired-input></div>
+    <div class="field"><label>Tên người ủy quyền</label><wired-input placeholder="Nguyễn Thị Y Tá"></wired-input></div>
+    <div class="field"><label>Phòng lab đích</label><wired-input placeholder="Trung tâm Kiểm nghiệm ATTP Quận 1"></wired-input></div>
+    <div class="btn-row">
+      <button class="btn-primary" onclick="toast('MSG: Đã khóa mẫu, in biên nhận thu hồi.'); closeRetrieve()">Submit</button>
+      <button class="btn-secondary" onclick="closeRetrieve()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><svg class="icon" style="stroke:white"><use href="#ic-check"/></svg><span id="toast-text"></span></div>
+
+<script>
+function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('visible')); document.getElementById(id).classList.add('visible'); }
+function toast(msg){ const t=document.getElementById('toast'); document.getElementById('toast-text').textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600); }
+function openRetrieve(name, timeLeft){ document.getElementById('sample-time-left').textContent = timeLeft; document.getElementById('modal-retrieve').classList.add('show'); }
+function closeRetrieve(){ document.getElementById('modal-retrieve').classList.remove('show'); }
+</script>
+</body>
+</html>

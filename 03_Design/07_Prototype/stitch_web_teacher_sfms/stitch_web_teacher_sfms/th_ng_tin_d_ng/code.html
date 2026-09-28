@@ -1,0 +1,431 @@
+<!DOCTYPE html><html class="light" lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Thông tin dị ứng - SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#191c1e",
+                    "primary": "#005a71",
+                    "inverse-primary": "#81d1f0",
+                    "on-surface": "#0b1c30",
+                    "outline-variant": "#bec8cd",
+                    "on-primary": "#ffffff",
+                    "background": "#f8f9ff",
+                    "on-primary-container": "#d3f1ff",
+                    "on-surface-variant": "#3f484c",
+                    "error-container": "#ffdad6",
+                    "inverse-surface": "#213145",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "on-background": "#0b1c30",
+                    "surface-bright": "#f8f9ff",
+                    "outline": "#6f787d",
+                    "primary-fixed": "#b9eaff",
+                    "on-primary-fixed": "#001f29",
+                    "tertiary-container": "#686b6d",
+                    "tertiary": "#505355",
+                    "surface": "#f8f9ff",
+                    "secondary-fixed": "#d8e3fb",
+                    "surface-container-low": "#eff4ff",
+                    "secondary": "#545f73",
+                    "surface-variant": "#d3e4fe",
+                    "on-error": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-secondary-container": "#586377",
+                    "surface-tint": "#006781",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-container": "#eaecee",
+                    "tertiary-fixed-dim": "#c4c7c9",
+                    "secondary-container": "#d5e0f8",
+                    "primary-fixed-dim": "#81d1f0",
+                    "secondary-fixed-dim": "#bcc7de",
+                    "surface-container": "#e5eeff",
+                    "surface-dim": "#cbdbf5",
+                    "inverse-on-surface": "#eaf1ff",
+                    "primary-container": "#0e7490",
+                    "on-primary-fixed-variant": "#004d62",
+                    "on-tertiary-fixed-variant": "#444749",
+                    "surface-container-high": "#dce9ff",
+                    "on-error-container": "#93000a",
+                    "on-secondary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#111c2d",
+                    "tertiary-fixed": "#e0e3e5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "unit": "4px",
+                    "container-padding": "24px",
+                    "max-width-desktop": "1440px",
+                    "stack-lg": "32px",
+                    "stack-sm": "8px",
+                    "stack-md": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Be Vietnam Pro"],
+                    "headline-md": ["Be Vietnam Pro"],
+                    "title-sm": ["Be Vietnam Pro"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .clinical-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-0 z-50 flex justify-between items-center px-container-padding h-16 bg-surface-bright shadow-sm">
+<div class="flex items-center gap-4">
+<span class="text-title-sm font-title-sm text-primary font-bold">SFMS</span>
+<div class="hidden md:flex items-center bg-surface-container-low px-4 py-2 rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-outline mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-sm w-64" placeholder="Tìm kiếm học sinh..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-container-low rounded-full transition-colors cursor-pointer">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-container-low rounded-full transition-colors cursor-pointer">account_circle</button>
+</div>
+</header>
+<!-- SideNavBar (Desktop Only) -->
+<nav class="hidden md:flex fixed left-0 top-0 h-screen w-72 flex-col p-stack-md pt-20 bg-surface-container-lowest border-r border-outline-variant">
+<div class="mb-8 px-4">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary-container">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a middle-aged Vietnamese teacher with a kind smile, wearing a clean white clinical lab coat. The background is a brightly lit, modern school office with soft-focus medical charts. The lighting is crisp and clinical yet warm, emphasizing trust and professionalism in a healthcare setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEw40-Xg29ipeAwKAVaYMz4-6cmC-FVwqNCbD5rOc9Q4DGcHaJITTm1Sd9cbtQNK3xVKtPcGLty9mBZgu6B_UEpI5eIbcSptCCepxrIL6ZIxChgGewUUbMt4UoI2xcljHwb9WH-fD0PecNx2I9L6bTJpMj6pic1H9Yj45RvKdHspfJ4idcata5WQGsZMCOCxHWVRk1WLqTL7U1QGeGGUr6cCOMb9VFJOALDZdrV_mN_GjMXNUvae1YI3nzgg5hGJuIYkoGBQb2qA">
+</div>
+<div>
+<p class="font-headline-md text-sm text-primary font-bold">GV. Nguyễn Văn A</p>
+<p class="text-body-sm text-on-surface-variant">Phòng Y tế</p>
+</div>
+</div>
+<button class="w-full py-3 px-4 bg-primary text-on-primary rounded-lg font-bold flex items-center justify-center gap-2 hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined">add_circle</span>
+                Ghi nhận nhanh
+            </button>
+</div>
+<ul class="space-y-1 flex-1">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md">Bảng điều khiển</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-primary font-bold bg-secondary-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-md">Danh sách học sinh</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">restaurant</span>
+<span class="font-body-md">Bữa ăn đặc biệt</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-body-md">Ghi chép bữa ăn</span>
+</a>
+</li>
+</ul>
+<div class="border-t border-outline-variant pt-4">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md">Cài đặt</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body-md">Đăng xuất</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="md:ml-72 pt-20 pb-12 px-container-padding">
+<div class="max-w-6xl mx-auto">
+<!-- Breadcrumb -->
+<nav class="flex items-center text-body-sm text-on-surface-variant mb-6">
+<span>Danh sách học sinh</span>
+<span class="material-symbols-outlined text-sm mx-2">chevron_right</span>
+<span class="text-primary font-bold">Thông tin dị ứng</span>
+</nav>
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+<div class="flex items-center gap-6">
+<div class="w-24 h-24 rounded-2xl overflow-hidden border-4 border-white shadow-md">
+<img class="w-full h-full object-cover" data-alt="A portrait of a primary school student named Nguyen Van B, a young Vietnamese boy with short black hair and a bright, energetic expression. He is wearing a blue school uniform against a clean, soft-focus classroom background. The image is bright, professional, and captures a sense of youthful health and school identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgZvAZUspJOrX0xV5jzLdzefu6D3lGfj-WMMhfrd2ANBFKT4Z5co2SWRO1OU9f9y99llxbHJWiCi0T7sL_gzqJtFE10Lb19xkwZ5pckI9cZW4yVCjB86e8hbzTqjoUPXwv4PxoNcSo_fUh3zQ0F5YfyKNCdbBHmXv4NikRboastvsKgeCKJeqZu46oX3j3DjPzj2TZUxCnI_UoZLF2GAwcAmbiDO36EdYFvKy7RRX8vAzXY3K9ca72FVkfbD4SvfMRIrrG1s6nMA">
+</div>
+<div>
+<h1 class="font-display-lg text-primary text-3xl md:text-4xl mb-1">Thông tin dị ứng - Nguyễn Văn B</h1>
+<div class="flex items-center gap-4">
+<span class="text-body-md text-on-surface-variant">Mã học sinh: <strong>HS2024-0012</strong></span>
+<span class="w-1 h-1 bg-outline rounded-full"></span>
+<span class="text-body-md text-on-surface-variant">Lớp: <strong>3A2</strong></span>
+</div>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2.5 bg-white border border-outline text-primary rounded-lg font-bold flex items-center gap-2 hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-[20px]">print</span>
+                        In hồ sơ
+                    </button>
+<button class="px-6 py-2.5 bg-primary-container text-on-primary-container rounded-lg font-bold flex items-center gap-2 hover:opacity-90 transition-all">
+<span class="material-symbols-outlined text-[20px]">history</span>
+                        Lịch sử y tế
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Content -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Critical Warning Banner (Full Width within Grid Context) -->
+<div class="lg:col-span-12 bg-error-container/30 border border-error/20 p-6 rounded-2xl flex items-start gap-4 mb-2">
+<div class="bg-error text-on-error p-3 rounded-full flex items-center justify-center animate-pulse">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div class="flex-1">
+<h3 class="font-headline-md text-error text-lg mb-1">CẢNH BÁO DỊ ỨNG NGUY HIỂM</h3>
+<p class="text-body-md text-on-error-container">
+                            Học sinh có phản ứng <strong>Sốc phản vệ</strong> với đậu phộng. Luôn mang theo bút tiêm Adrenaline (EpiPen) trong các hoạt động ngoại khóa và bữa ăn. Không được tiếp xúc dù chỉ một lượng nhỏ.
+                        </p>
+</div>
+</div>
+<!-- Allergy Table/List Card -->
+<div class="lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-2xl clinical-shadow overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center">
+<h2 class="font-headline-md text-primary text-xl">Danh sách dị ứng chi tiết</h2>
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-full text-xs font-bold uppercase tracking-wider">3 Hồ sơ đã ghi nhận</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-bright">
+<tr>
+<th class="px-6 py-4 font-bold text-on-surface-variant text-sm uppercase tracking-tight">Chất gây dị ứng</th>
+<th class="px-6 py-4 font-bold text-on-surface-variant text-sm uppercase tracking-tight text-center">Mức độ</th>
+<th class="px-6 py-4 font-bold text-on-surface-variant text-sm uppercase tracking-tight">Triệu chứng</th>
+<th class="px-6 py-4 font-bold text-on-surface-variant text-sm uppercase tracking-tight">Xử lý sơ cứu</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1: Severe -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-error/10 text-error rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">nutrition</span>
+</div>
+<span class="font-bold text-on-surface">Đậu phộng (Lạc)</span>
+</div>
+</td>
+<td class="px-6 py-5 text-center">
+<span class="px-3 py-1 bg-error/15 text-error border border-error/30 rounded-full text-xs font-bold flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">priority_high</span>
+                                            Nguy kịch
+                                        </span>
+</td>
+<td class="px-6 py-5 text-body-sm text-on-surface-variant leading-relaxed">
+                                        Sưng họng, khó thở nhanh, nổi mề đay toàn thân, tụt huyết áp.
+                                    </td>
+<td class="px-6 py-5">
+<div class="text-body-sm text-primary font-semibold underline cursor-pointer hover:text-primary-container">Xem quy trình EpiPen</div>
+</td>
+</tr>
+<!-- Row 2: Mild -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-secondary-container text-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">pets</span>
+</div>
+<span class="font-bold text-on-surface">Lông mèo</span>
+</div>
+</td>
+<td class="px-6 py-5 text-center">
+<span class="px-3 py-1 bg-on-tertiary-container/30 text-tertiary border border-outline-variant rounded-full text-xs font-bold flex items-center justify-center gap-1">
+                                            Nhẹ
+                                        </span>
+</td>
+<td class="px-6 py-5 text-body-sm text-on-surface-variant leading-relaxed">
+                                        Hắt hơi liên tục, chảy nước mắt, ngứa mũi.
+                                    </td>
+<td class="px-6 py-5">
+<p class="text-body-sm text-on-surface-variant">Rửa mặt bằng nước sạch, uống thuốc kháng histamine nếu cần.</p>
+</td>
+</tr>
+<!-- Row 3: Special Diet -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-secondary-container text-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">medication</span>
+</div>
+<span class="font-bold text-on-surface">Kháng sinh Penicillin</span>
+</div>
+</td>
+<td class="px-6 py-5 text-center">
+<span class="px-3 py-1 bg-on-secondary-fixed-variant/10 text-on-secondary-fixed-variant border border-outline-variant rounded-full text-xs font-bold flex items-center justify-center gap-1">
+                                            Trung bình
+                                        </span>
+</td>
+<td class="px-6 py-5 text-body-sm text-on-surface-variant leading-relaxed">
+                                        Phát ban da, ngứa ngáy sau 30 phút sử dụng.
+                                    </td>
+<td class="px-6 py-5">
+<p class="text-body-sm text-on-surface-variant">Ngưng thuốc ngay, báo cho bác sĩ điều trị và phụ huynh.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 bg-surface-bright text-center">
+<button class="text-primary text-sm font-bold flex items-center justify-center gap-2 w-full">
+                            Tải xuống báo cáo y tế đầy đủ (PDF)
+                            <span class="material-symbols-outlined text-sm">download</span>
+</button>
+</div>
+</div>
+<!-- Metric & Contact Side Column -->
+<div class="lg:col-span-4 flex flex-col gap-gutter">
+<!-- Quick Stats Cards -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant clinical-shadow border-l-4 border-l-primary">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-label-caps text-on-surface-variant mb-1 uppercase">Tình trạng hiện tại</p>
+<h4 class="font-headline-md text-primary">Đang theo dõi</h4>
+</div>
+<span class="material-symbols-outlined text-primary-container">monitor_heart</span>
+</div>
+<p class="text-body-sm text-on-surface-variant">Lần cập nhật cuối: 12/10/2023 bởi BS. Trần Thu Hà</p>
+</div>
+<!-- Emergency Contact -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant clinical-shadow">
+<h4 class="font-headline-md text-on-surface text-lg mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">contact_phone</span>
+                            Liên hệ khẩn cấp
+                        </h4>
+<div class="space-y-4">
+<div class="p-3 bg-background rounded-xl flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold">M</div>
+<div>
+<p class="text-sm font-bold">Mẹ: Nguyễn Thanh Hoa</p>
+<p class="text-xs text-primary">0903.XXX.888</p>
+</div>
+<button class="ml-auto w-8 h-8 rounded-full bg-white border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-sm text-primary">call</span>
+</button>
+</div>
+<div class="p-3 bg-background rounded-xl flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-bold">B</div>
+<div>
+<p class="text-sm font-bold">Bố: Nguyễn Văn Hùng</p>
+<p class="text-xs text-primary">0912.XXX.999</p>
+</div>
+<button class="ml-auto w-8 h-8 rounded-full bg-white border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-sm text-primary">call</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Diet Notes -->
+<div class="bg-primary text-on-primary p-6 rounded-2xl clinical-shadow relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="font-headline-md text-lg mb-2">Lưu ý nhà bếp</h4>
+<p class="text-body-sm opacity-90 mb-4">Suất ăn của học sinh B cần được dán nhãn "NO PEANUTS" màu đỏ đậm và chuẩn bị ở khu vực riêng biệt.</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">restaurant_menu</span>
+<span class="text-xs font-bold uppercase tracking-widest">Mã thực đơn: 3A-SPE</span>
+</div>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-9xl">restaurant</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Additional Documentation Section -->
+<div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="p-4 border border-outline-variant rounded-xl flex items-center gap-4 bg-white/50 hover:bg-white transition-all cursor-pointer">
+<div class="w-12 h-12 rounded bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">description</span>
+</div>
+<div>
+<p class="text-sm font-bold">Giấy xác nhận y tế</p>
+<p class="text-xs text-on-surface-variant">PDF • 1.2 MB</p>
+</div>
+</div>
+<div class="p-4 border border-outline-variant rounded-xl flex items-center gap-4 bg-white/50 hover:bg-white transition-all cursor-pointer">
+<div class="w-12 h-12 rounded bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">medication_liquid</span>
+</div>
+<div>
+<p class="text-sm font-bold">Đơn thuốc chỉ định</p>
+<p class="text-xs text-on-surface-variant">JPG • 2.5 MB</p>
+</div>
+</div>
+<div class="p-4 border border-outline-variant rounded-xl flex items-center gap-4 bg-white/50 hover:bg-white transition-all cursor-pointer">
+<div class="w-12 h-12 rounded bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">photo_camera</span>
+</div>
+<div>
+<p class="text-sm font-bold">Ảnh chụp triệu chứng</p>
+<p class="text-xs text-on-surface-variant">3 tệp • 5.0 MB</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-surface-container-lowest flex justify-around items-center border-t border-outline-variant z-50">
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px]">Tổng quan</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="text-[10px] font-bold">Học sinh</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">restaurant</span>
+<span class="text-[10px]">Bữa ăn</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px]">Cài đặt</span>
+</button>
+</nav>
+<script>
+        // Micro-interaction: Row highlight pulse on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const warningRow = document.querySelector('tr');
+            if (warningRow) {
+                warningRow.classList.add('bg-error/5');
+                setTimeout(() => {
+                    warningRow.classList.remove('bg-error/5');
+                }, 2000);
+            }
+        });
+    </script>
+</body></html>

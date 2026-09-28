@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Wireframe — Dashboard & Health Record (Medical Staff, Mobile)</title>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<style>
+  * { box-sizing:border-box; } html{font-size:18px;}
+  body { margin:0; font-family:'Patrick Hand',cursive; color:#333; background-image: radial-gradient(#d7d7d7 1px, transparent 1px); background-size:20px 20px; display:flex; flex-direction:column; align-items:center; padding:20px 10px 60px; }
+  .demo-nav { display:flex; gap:6px; flex-wrap:wrap; justify-content:center; margin-bottom:16px; max-width:420px; }
+  .demo-nav button { font-size:12px; background:white; border:2px solid #333; border-radius:10px; padding:5px 8px; cursor:pointer; }
+  .demo-nav button.active { background:#333; color:white; }
+  .phone { width:390px; max-width:100%; min-height:800px; background:white; border:3px solid #333; border-radius:32px; overflow:hidden; position:relative; }
+  .screen { display:none; flex-direction:column; min-height:800px; }
+  .screen.visible { display:flex; }
+  .appbar { display:flex; align-items:center; gap:10px; padding:14px; border-bottom:2px solid #333; }
+  .appbar .title { font-size:20px; flex:1; text-align:center; }
+  .appbar .icon-slot { width:24px; position:relative; }
+  .content { padding:16px 18px 90px; flex:1; overflow:auto; }
+  .badge-dot { position:absolute; top:-6px; right:-6px; background:#333; color:white; border-radius:50%; width:15px; height:15px; font-size:9px; display:flex; align-items:center; justify-content:center; }
+
+  .banner-welcome { font-size:15px; color:#555; margin-bottom:14px; }
+  .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px; }
+  .card { border:2px solid #333; border-radius:14px; padding:12px; background:white; }
+  .card .num { font-size:26px; font-weight:bold; }
+  .card .label { font-size:13px; color:#555; }
+  .action-card { display:flex; align-items:center; gap:10px; padding:12px; border:2px solid #333; border-radius:12px; margin-bottom:10px; cursor:pointer; }
+
+  .bottom-nav { position:absolute; bottom:0; left:0; right:0; display:flex; border-top:2px solid #333; background:white; }
+  .bottom-nav .nav-item { flex:1; text-align:center; padding:10px 0; font-size:12px; cursor:pointer; }
+  .bottom-nav .nav-item.active { font-weight:bold; }
+
+  .tabs { display:flex; gap:6px; margin-bottom:10px; }
+  .tab-btn { flex:1; text-align:center; border:2px solid #333; border-radius:10px; padding:6px; cursor:pointer; background:white; font-size:14px; }
+  .tab-btn.active { background:#333; color:white; }
+  .notif-card, .list-card { border:2px solid #333; border-radius:12px; padding:10px 12px; margin-bottom:10px; background:white; cursor:pointer; }
+  .badge { display:inline-flex; gap:4px; align-items:center; padding:2px 8px; border-radius:8px; font-size:12px; border:2px solid #333; }
+  .badge.warning { border-style:dashed; } .badge.success { border-width:3px; } .badge.danger { border-width:3px; border-style:double; }
+
+  .field { margin-bottom:12px; } .field label { display:block; margin-bottom:4px; font-size:14px; }
+  textarea, wired-input { width:100%; font-family:'Patrick Hand',cursive; }
+  textarea { border:2px solid #333; border-radius:8px; padding:6px; font-size:15px; }
+  .readonly-block { background:#f7f7f7; border:2px dashed #999; border-radius:10px; padding:10px; font-size:13px; color:#555; }
+  .field-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px dashed #ccc; font-size:14px; }
+
+  .btn-primary { background:#333; color:white; border:2px solid #333; border-radius:255px 15px 225px 15px/15px 225px 15px 255px; font-family:'Patrick Hand',cursive; font-size:17px; padding:11px; cursor:pointer; width:100%; margin-top:8px; }
+  .btn-secondary { background:white; color:#333; border:2px solid #333; border-radius:255px 15px 225px 15px/15px 225px 15px 255px; font-family:'Patrick Hand',cursive; font-size:15px; padding:8px 14px; cursor:pointer; }
+  .btn-row { display:flex; gap:8px; margin-top:10px; }
+
+  .sheet-backdrop { display:none; position:absolute; inset:0; background:rgba(0,0,0,.2); z-index:8; }
+  .sheet-backdrop.show { display:block; }
+  .bottom-sheet { display:none; position:absolute; left:0; right:0; bottom:0; background:white; border:2px solid #333; border-radius:20px 20px 0 0; padding:18px; max-height:70%; overflow:auto; z-index:9; }
+  .bottom-sheet.show { display:block; }
+
+  .doc-preview { border:2px dashed #333; border-radius:10px; padding:20px; text-align:center; color:#666; font-size:13px; }
+  .timeline { border-left:3px solid #333; margin-left:8px; padding-left:14px; }
+  .timeline-item { margin-bottom:14px; position:relative; font-size:14px; }
+  .timeline-item:before { content:''; position:absolute; left:-19px; top:4px; width:9px; height:9px; border-radius:50%; background:#333; }
+
+  .icon { width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; }
+  .toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#333; color:white; padding:10px 18px; border-radius:10px; display:none; align-items:center; gap:8px; z-index:20; }
+  .toast.show { display:flex; }
+  .note { font-size:12px; color:#666; }
+</style>
+</head>
+<body>
+
+<svg style="display:none">
+  <symbol id="ic-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></symbol>
+  <symbol id="ic-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9z"/><path d="M13.7 21a2 2 0 01-3.4 0"/></symbol>
+  <symbol id="ic-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-linecap="round"/></symbol>
+  <symbol id="ic-warn" viewBox="0 0 24 24"><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v4M12 17h.01"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24"><path d="M4 12l6 6L20 6" stroke-linecap="round"/></symbol>
+  <symbol id="ic-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></symbol>
+  <symbol id="ic-file" viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5"/></symbol>
+  <symbol id="ic-export" viewBox="0 0 24 24"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M4 15v4a2 2 0 002 2h12a2 2 0 002-2v-4"/></symbol>
+</svg>
+
+<div class="demo-nav">
+  <button data-go="screen-dashboard" class="active">1. Dashboard</button>
+  <button data-go="screen-list">2. Health Record List</button>
+  <button data-go="screen-review">3. Allergy Review</button>
+  <button data-go="screen-detail">4. Record Detail</button>
+  <button data-go="screen-update">5. Update Record</button>
+  <button data-go="screen-history">6. Health History</button>
+</div>
+
+<div class="phone">
+
+  <!-- 01 Dashboard -->
+  <div class="screen visible" id="screen-dashboard">
+    <div class="appbar"><span class="title">Medical Staff Dashboard</span>
+      <span class="icon-slot"><svg class="icon"><use href="#ic-plus"/></svg></span>
+      <span class="icon-slot"><svg class="icon"><use href="#ic-bell"/></svg><span class="badge-dot">2</span></span>
+    </div>
+    <div class="content">
+      <div class="banner-welcome">Xin chào, Nguyễn Thị Y Tá — Phòng Y tế — 01/07/2026</div>
+      <div class="stat-grid">
+        <div class="card" onclick="showScreen('screen-review')"><div class="num">6</div><div class="label">Allergy pending approval</div></div>
+        <div class="card"><div class="num">3</div><div class="label">Meal order needs approval</div></div>
+        <div class="card"><div class="num">1</div><div class="label">Issue being resolved</div></div>
+        <div class="card"><div class="num">…</div><div class="label">Compliance Points (loading)</div></div>
+      </div>
+      <div class="action-card" onclick="showScreen('screen-list')">Health Profile</div>
+      <div class="action-card" onclick="showScreen('screen-review')">Student Allergy Review</div>
+      <div class="action-card">Approve Special Meal <span class="note">(07_SpecialMealApproval)</span></div>
+      <div class="action-card">City Safety Incident <span class="note">(25_IncidentHandling)</span></div>
+      <div class="action-card">Food Compliance & Monitoring Board <span class="note">(11_InspectionCompliance)</span></div>
+      <div class="action-card">View food inspection results in 3 steps <span class="note">(11_InspectionCompliance)</span></div>
+    </div>
+    <div class="bottom-nav">
+      <div class="nav-item active">Home</div><div class="nav-item">Health</div><div class="nav-item">Meals</div><div class="nav-item">Profile</div>
+    </div>
+  </div>
+
+  <!-- 03 Student Health Record List -->
+  <div class="screen" id="screen-list">
+    <div class="appbar"><span data-go="screen-dashboard" class="icon-slot"><svg class="icon"><use href="#ic-back"/></svg></span><span class="title">Health Record</span><span class="icon-slot"></span></div>
+    <div class="content">
+      <div class="tabs"><div class="tab-btn active">All students</div><div class="tab-btn">Waiting (2)</div></div>
+      <wired-search-input placeholder="Tìm theo tên/lớp" style="width:100%; margin-bottom:10px;"></wired-search-input>
+      <div class="list-card" onclick="showScreen('screen-detail')">
+        <b>Trần Bảo An — 3A</b> <span class="badge warning">Awaiting Approval</span>
+        <div class="note">Đậu phộng — Severe</div><div class="note">Nộp bởi PH, 28/06</div>
+      </div>
+      <div class="list-card" onclick="showScreen('screen-detail')">
+        <b>Vũ Gia Hân — 1C</b> <span class="badge success">Confirmed</span>
+        <div class="note">Sữa — Mild</div><div class="note">Duyệt bởi MS, 20/06</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 Review Health Information -->
+  <div class="screen" id="screen-review">
+    <div class="appbar"><span data-go="screen-dashboard" class="icon-slot"><svg class="icon"><use href="#ic-back"/></svg></span><span class="title">Student Allergy Review</span><span class="icon-slot"></span></div>
+    <div class="content">
+      <div class="list-card" onclick="openSheet()"><b>Trần Bảo An — 3A</b> <span class="badge danger">Severe — Đậu phộng</span></div>
+      <div class="list-card" onclick="openSheet()"><b>Lê Minh Khôi — 2B</b> <span class="badge warning">Mild — Sữa</span></div>
+    </div>
+    <div class="sheet-backdrop" id="review-backdrop" onclick="closeSheet()"></div>
+    <div class="bottom-sheet" id="review-sheet">
+      <div style="text-align:right;" onclick="closeSheet()"><svg class="icon"><use href="#ic-x"/></svg></div>
+      <h3>Trần Bảo An — 3A</h3>
+      <p>Loại dị ứng: Đậu phộng — <span class="badge danger">Severe</span></p>
+      <div class="doc-preview"><svg class="icon" style="width:22px;height:22px"><use href="#ic-file"/></svg><br>giay-xac-nhan-di-ung.pdf</div>
+      <div class="field" id="reject-reason-box" style="display:none;"><label>Lý do từ chối (bắt buộc)</label><textarea rows="2"></textarea></div>
+      <div class="btn-row">
+        <button class="btn-primary" onclick="toast('MSG-036: Đã Approve.'); closeSheet()">Approve</button>
+        <button class="btn-secondary" onclick="document.getElementById('reject-reason-box').style.display='block'">Reject</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 Student Health Record Detail -->
+  <div class="screen" id="screen-detail">
+    <div class="appbar"><span data-go="screen-list" class="icon-slot"><svg class="icon"><use href="#ic-back"/></svg></span><span class="title">Trần Bảo An — 3A</span><span class="icon-slot"></span></div>
+    <div class="content">
+      <div class="field-row"><span>Status</span><span class="badge warning">Awaiting Approval</span></div>
+      <div class="field-row"><span>Medical conditions</span><span>Hen suyễn nhẹ</span></div>
+      <div class="field-row"><span>Medications</span><span>Ventolin (khi cần)</span></div>
+      <div class="field-row"><span>Emergency contacts</span><span>Mẹ — 0912 345 678</span></div>
+      <div class="field-row"><span>Allergy Declaration</span><span class="badge danger">Đậu phộng — Severe</span></div>
+      <label class="note">Tài liệu y tế đính kèm</label>
+      <div class="doc-preview"><svg class="icon" style="width:22px;height:22px"><use href="#ic-file"/></svg><br>giay-xac-nhan-di-ung.pdf</div>
+      <div class="btn-row"><button class="btn-secondary" onclick="showScreen('screen-update')" style="flex:1">Update Record</button><button class="btn-secondary" onclick="showScreen('screen-history')" style="flex:1">Health History</button></div>
+    </div>
+  </div>
+
+  <!-- 05 Update Health Record -->
+  <div class="screen" id="screen-update">
+    <div class="appbar"><span data-go="screen-detail" class="icon-slot"><svg class="icon"><use href="#ic-back"/></svg></span><span class="title">Update Health Record</span><span class="icon-slot"></span></div>
+    <div class="content">
+      <div class="field"><label>Clinical Annotation mới (bắt buộc)</label><textarea rows="2" placeholder="Đã tái khám 01/07"></textarea></div>
+      <div class="field"><label>Medications</label><textarea rows="2">Ventolin (khi cần)</textarea></div>
+      <div class="field"><label>Emergency Instructions</label><textarea rows="2">Gọi phụ huynh ngay nếu khó thở</textarea></div>
+      <label class="note">Lịch sử log đã xác minh (chỉ đọc, BR-172)</label>
+      <div class="readonly-block">20/06/2026 — Xác nhận hồ sơ ban đầu (MS Nguyễn Thị Y Tá)</div>
+      <button class="btn-primary" onclick="toast('MSG-036: Đã lưu.'); showScreen('screen-detail')">Save</button>
+      <button class="btn-secondary" style="width:100%; margin-top:8px;" onclick="showScreen('screen-detail')">Cancel</button>
+    </div>
+  </div>
+
+  <!-- 06 Health History -->
+  <div class="screen" id="screen-history">
+    <div class="appbar"><span data-go="screen-detail" class="icon-slot"><svg class="icon"><use href="#ic-back"/></svg></span><span class="title">Health History</span><span class="icon-slot" onclick="toast('Đã xuất báo cáo.')"><svg class="icon"><use href="#ic-export"/></svg></span></div>
+    <div class="content">
+      <div class="timeline">
+        <div class="timeline-item"><b>28/06/2026</b> — Khai báo dị ứng Đậu phộng (Phụ huynh)</div>
+        <div class="timeline-item"><b>20/06/2026</b> — Xác nhận hồ sơ ban đầu (Medical Staff)</div>
+        <div class="timeline-item"><b>15/03/2026</b> — Ghi nhận Hen suyễn nhẹ (Medical Staff)</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"><svg class="icon" style="stroke:white"><use href="#ic-check"/></svg><span id="toast-text"></span></div>
+
+<script>
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('visible'));
+  document.getElementById(id).classList.add('visible');
+  document.querySelectorAll('.demo-nav button').forEach(b=>b.classList.toggle('active', b.dataset.go===id));
+}
+document.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>showScreen(el.dataset.go)));
+function openSheet(){ document.getElementById('review-sheet').classList.add('show'); document.getElementById('review-backdrop').classList.add('show'); }
+function closeSheet(){ document.getElementById('review-sheet').classList.remove('show'); document.getElementById('review-backdrop').classList.remove('show'); document.getElementById('reject-reason-box').style.display='none'; }
+function toast(msg){ const t=document.getElementById('toast'); document.getElementById('toast-text').textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600); }
+</script>
+</body>
+</html>

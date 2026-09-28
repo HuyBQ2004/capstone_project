@@ -1,0 +1,17 @@
+# Override CHỈ DÙNG KHI TEST: bắt email kích hoạt về Mailpit thay vì gửi Gmail thật.
+# Không tự động nạp (không phải docker-compose.override.yml) — phải chỉ định rõ:
+#
+#   docker compose -f docker-compose.yml -f docker-compose.mailpit.yml up -d backend
+#
+# Quay lại Gmail thật: `docker compose up -d backend` (không truyền file này).
+# Giao diện Mailpit: http://localhost:8026
+services:
+  backend:
+    environment:
+      SMTP_HOST: mailpit
+      SMTP_PORT: "1025"
+      SMTP_USER: ""
+      SMTP_PASSWORD: ""
+      SMTP_AUTH: "false"
+      SMTP_TLS: "false"
+      MAIL_FROM: no-reply@sfms.local

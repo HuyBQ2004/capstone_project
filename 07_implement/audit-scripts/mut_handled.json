@@ -1,0 +1,1181 @@
+[
+ {
+  "file": "medical-staff/compliance/report/page.tsx",
+  "line": 77,
+  "var": "send",
+  "hook": "useCreateAt",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/conduct-inspection/page.tsx",
+  "line": 85,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/conduct-inspection/checklist/page.tsx",
+  "line": 77,
+  "var": "createGroup",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/conduct-inspection/checklist/page.tsx",
+  "line": 78,
+  "var": "updateGroup",
+  "hook": "useUpdate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/conduct-inspection/checklist/page.tsx",
+  "line": 79,
+  "var": "deleteGroup",
+  "hook": "useDelete",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/corrective-actions/[id]/page.tsx",
+  "line": 36,
+  "var": "doAction",
+  "hook": "useAction",
+  "sites": 3,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/health-records/[id]/page.tsx",
+  "line": 65,
+  "var": "patchHealthFile",
+  "hook": "usePatchAction",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/health-reviews/page.tsx",
+  "line": 98,
+  "var": "review",
+  "hook": "useAction",
+  "sites": 4,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/health-reviews/page.tsx",
+  "line": 318,
+  "var": "review",
+  "hook": "useAction",
+  "sites": 4,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/incidents/page.tsx",
+  "line": 73,
+  "var": "createRecord",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/incidents/page.tsx",
+  "line": 74,
+  "var": "reportAction",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/incidents/page.tsx",
+  "line": 75,
+  "var": "recordAction",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/incidents/page.tsx",
+  "line": 76,
+  "var": "openInvestigationAction",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/incidents/records/[id]/page.tsx",
+  "line": 74,
+  "var": "patchRecord",
+  "hook": "usePatch",
+  "sites": 2,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/incidents/records/[id]/page.tsx",
+  "line": 75,
+  "var": "recordAction",
+  "hook": "useAction",
+  "sites": 2,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/incidents/records/[id]/page.tsx",
+  "line": 76,
+  "var": "openInvestigationAction",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/incidents/[id]/page.tsx",
+  "line": 199,
+  "var": "draftAction",
+  "hook": "usePatchAction",
+  "sites": 4,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/incidents/[id]/page.tsx",
+  "line": 200,
+  "var": "doAction",
+  "hook": "useAction",
+  "sites": 7,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/incidents/[id]/page.tsx",
+  "line": 201,
+  "var": "capaAction",
+  "hook": "useAction",
+  "sites": 3,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/incidents/[id]/evidence/page.tsx",
+  "line": 56,
+  "var": "addEvidence",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/inspections/[id]/page.tsx",
+  "line": 68,
+  "var": "medicalReview",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/samples/page.tsx",
+  "line": 117,
+  "var": "linkIncident",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/samples/page.tsx",
+  "line": 174,
+  "var": "handOver",
+  "hook": "useUploadMutation",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/special-meals/page.tsx",
+  "line": 50,
+  "var": "review",
+  "hook": "useAction",
+  "sites": 2,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/violations/new/page.tsx",
+  "line": 65,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/violations/new/page.tsx",
+  "line": 66,
+  "var": "uploadEvidence",
+  "hook": "useUploadMutation",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/violations/reports/page.tsx",
+  "line": 50,
+  "var": "sendReport",
+  "hook": "useCreateAt",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/violations/[id]/page.tsx",
+  "line": 72,
+  "var": "doAction",
+  "hook": "useAction",
+  "sites": 2,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/violations/[id]/page.tsx",
+  "line": 73,
+  "var": "uploadSignedRecord",
+  "hook": "useUploadMutation",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "medical-staff/violations/[id]/page.tsx",
+  "line": 74,
+  "var": "deleteSignedRecord",
+  "hook": "useDelete",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "parent/allergies/page.tsx",
+  "line": 76,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "parent/allergies/page.tsx",
+  "line": 77,
+  "var": "uploadDocument",
+  "hook": "useUploadMutation",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "parent/chronic-conditions/page.tsx",
+  "line": 67,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "parent/chronic-conditions/page.tsx",
+  "line": 68,
+  "var": "uploadDocument",
+  "hook": "useUploadMutation",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "parent/feedback/meal/page.tsx",
+  "line": 32,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "parent/feedback/quality/page.tsx",
+  "line": 33,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "parent/feedback/quality/page.tsx",
+  "line": 34,
+  "var": "uploadAttachment",
+  "hook": "useUploadMutation",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "parent/safety-concern/page.tsx",
+  "line": 25,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "parent/safety-concern/page.tsx",
+  "line": 28,
+  "var": "uploadEvidence",
+  "hook": "useUploadMutation",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "parent/special-meal-requests/page.tsx",
+  "line": 38,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/academic-years/page.tsx",
+  "line": 58,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/academic-years/[id]/page.tsx",
+  "line": 52,
+  "var": "action",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/announcements/create/page.tsx",
+  "line": 40,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/announcements/[id]/edit/page.tsx",
+  "line": 46,
+  "var": "update",
+  "hook": "usePatch",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/classrooms/page.tsx",
+  "line": 67,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/classrooms/page.tsx",
+  "line": 68,
+  "var": "assignTeacher",
+  "hook": "usePatchAction",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/classrooms/[id]/page.tsx",
+  "line": 69,
+  "var": "assignTeacher",
+  "hook": "usePatchAction",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/compliance/page.tsx",
+  "line": 69,
+  "var": "createSignoff",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/config/page.tsx",
+  "line": 41,
+  "var": "update",
+  "hook": "usePatchAction",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/corrective-actions/page.tsx",
+  "line": 33,
+  "var": "doAction",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/grades/page.tsx",
+  "line": 33,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/grades/page.tsx",
+  "line": 34,
+  "var": "update",
+  "hook": "useUpdate",
+  "sites": 2,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/grades/page.tsx",
+  "line": 35,
+  "var": "remove",
+  "hook": "useDelete",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/incidents/[id]/close/page.tsx",
+  "line": 38,
+  "var": "closeAction",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/menu-approval/page.tsx",
+  "line": 119,
+  "var": "update",
+  "hook": "useUpdate",
+  "sites": 3,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/menu-approval/[id]/page.tsx",
+  "line": 69,
+  "var": "update",
+  "hook": "useUpdate",
+  "sites": 3,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/partnerships/page.tsx",
+  "line": 32,
+  "var": "action",
+  "hook": "useAction",
+  "sites": 2,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/partnerships/page.tsx",
+  "line": 117,
+  "var": "decide",
+  "hook": "useAction",
+  "sites": 2,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/partnerships/[id]/page.tsx",
+  "line": 40,
+  "var": "action",
+  "hook": "useAction",
+  "sites": 4,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/special-meals/page.tsx",
+  "line": 105,
+  "var": "updateMenu",
+  "hook": "useUpdate",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/staff/page.tsx",
+  "line": 48,
+  "var": "toggle",
+  "hook": "usePatchAction",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/staff/page.tsx",
+  "line": 167,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/staff/upload/page.tsx",
+  "line": 100,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/students/page.tsx",
+  "line": 75,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/violations/page.tsx",
+  "line": 35,
+  "var": "doAction",
+  "hook": "useAction",
+  "sites": 2,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/violations/page.tsx",
+  "line": 89,
+  "var": "doAction",
+  "hook": "useAction",
+  "sites": 2,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "school-admin/violations/[id]/page.tsx",
+  "line": 36,
+  "var": "doAction",
+  "hook": "useAction",
+  "sites": 2,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/class-deliveries/page.tsx",
+  "line": 58,
+  "var": "deliver",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/corrective-actions/page.tsx",
+  "line": 37,
+  "var": "doAction",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/corrective-actions/page.tsx",
+  "line": 42,
+  "var": "uploadEvidence",
+  "hook": "useUploadMutation",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/corrective-actions/page.tsx",
+  "line": 162,
+  "var": "accept",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/dishes/page.tsx",
+  "line": 118,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/dishes/page.tsx",
+  "line": 119,
+  "var": "update",
+  "hook": "useUpdate",
+  "sites": 2,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/dishes/page.tsx",
+  "line": 120,
+  "var": "uploadImage",
+  "hook": "useUploadMutation",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/dishes/page.tsx",
+  "line": 495,
+  "var": "update",
+  "hook": "useUpdate",
+  "sites": 2,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/inspections/page.tsx",
+  "line": 71,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/inspections/[id]/page.tsx",
+  "line": 978,
+  "var": "submitStep",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/inspections/[id]/page.tsx",
+  "line": 988,
+  "var": "uploadEvidence",
+  "hook": "useUploadMutation",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/menu-templates/page.tsx",
+  "line": 125,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/menu-templates/page.tsx",
+  "line": 126,
+  "var": "update",
+  "hook": "useUpdate",
+  "sites": 2,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/menu-templates/page.tsx",
+  "line": 453,
+  "var": "update",
+  "hook": "useUpdate",
+  "sites": 2,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/menus/page.tsx",
+  "line": 417,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/menus/page.tsx",
+  "line": 418,
+  "var": "update",
+  "hook": "useUpdate",
+  "sites": 3,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/menus/[id]/page.tsx",
+  "line": 120,
+  "var": "update",
+  "hook": "useUpdate",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/orders/new/page.tsx",
+  "line": 101,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/orders/[id]/page.tsx",
+  "line": 62,
+  "var": "cancelAction",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/orders/[id]/page.tsx",
+  "line": 133,
+  "var": "acceptPriceAction",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/profile/page.tsx",
+  "line": 61,
+  "var": "upload",
+  "hook": "useUploadMutation",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/receiving/new/page.tsx",
+  "line": 105,
+  "var": "uploadEvidence",
+  "hook": "useUploadMutation",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/samples/page.tsx",
+  "line": 158,
+  "var": "register",
+  "hook": "useUploadMutation",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "service-caterers/samples/[id]/page.tsx",
+  "line": 68,
+  "var": "dispose",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "supplier/batches/[id]/page.tsx",
+  "line": 54,
+  "var": "upload",
+  "hook": "useUploadMutation",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "supplier/certificates/page.tsx",
+  "line": 65,
+  "var": "upload",
+  "hook": "useUploadMutation",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "supplier/certificates/page.tsx",
+  "line": 236,
+  "var": "update",
+  "hook": "useUploadMutation",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "supplier/deliveries/[id]/page.tsx",
+  "line": 55,
+  "var": "patchStatus",
+  "hook": "usePatchAction",
+  "sites": 2,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "supplier/deliveries/[id]/page.tsx",
+  "line": 118,
+  "var": "patchStatus",
+  "hook": "usePatchAction",
+  "sites": 2,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "supplier/deliveries/[id]/page.tsx",
+  "line": 119,
+  "var": "updateBatch",
+  "hook": "useUpdate",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "supplier/delivery-staff/page.tsx",
+  "line": 70,
+  "var": "uploadFace",
+  "hook": "useUploadMutation",
+  "sites": 2,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "supplier/delivery-staff/page.tsx",
+  "line": 228,
+  "var": "uploadFace",
+  "hook": "useUploadMutation",
+  "sites": 2,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "supplier/delivery-staff/page.tsx",
+  "line": 332,
+  "var": "upload",
+  "hook": "useUploadMutation",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "supplier/partnerships/page.tsx",
+  "line": 82,
+  "var": "submitApplication",
+  "hook": "useUploadMutation",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "supplier/partnerships/[id]/catalog/page.tsx",
+  "line": 61,
+  "var": "createRequest",
+  "hook": "useCreateAt",
+  "sites": 2,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "supplier/products/page.tsx",
+  "line": 154,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "supplier/products/page.tsx",
+  "line": 155,
+  "var": "update",
+  "hook": "useUpdate",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "supplier/purchase-requests/[id]/page.tsx",
+  "line": 60,
+  "var": "quoteAction",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "supplier/purchase-requests/[id]/page.tsx",
+  "line": 210,
+  "var": "confirmSchedule",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "supplier/purchase-requests/[id]/page.tsx",
+  "line": 364,
+  "var": "rejectAction",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "system-admin/ai-knowledge/page.tsx",
+  "line": 41,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "system-admin/ai-knowledge/page.tsx",
+  "line": 120,
+  "var": "deleteDoc",
+  "hook": "useDelete",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "system-admin/backup/page.tsx",
+  "line": 50,
+  "var": "runBackup",
+  "hook": "useCreateAt",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "system-admin/ingredients/page.tsx",
+  "line": 47,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "system-admin/ingredients/page.tsx",
+  "line": 48,
+  "var": "update",
+  "hook": "useUpdate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "system-admin/ingredients/page.tsx",
+  "line": 49,
+  "var": "remove",
+  "hook": "useDelete",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "system-admin/integrations/page.tsx",
+  "line": 30,
+  "var": "testConnection",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "system-admin/roles/page.tsx",
+  "line": 43,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "system-admin/roles/page.tsx",
+  "line": 45,
+  "var": "update",
+  "hook": "usePatch",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "system-admin/roles/page.tsx",
+  "line": 183,
+  "var": "del",
+  "hook": "useDelete",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "system-admin/schools/page.tsx",
+  "line": 42,
+  "var": "changeStatus",
+  "hook": "usePatchAction",
+  "sites": 2,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "system-admin/schools/[id]/page.tsx",
+  "line": 66,
+  "var": "update",
+  "hook": "usePatch",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "system-admin/schools/[id]/page.tsx",
+  "line": 67,
+  "var": "unlockCoordinate",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "system-admin/schools/[id]/page.tsx",
+  "line": 287,
+  "var": "uploadDoc",
+  "hook": "useUploadMutation",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "system-admin/security-policies/page.tsx",
+  "line": 30,
+  "var": "update",
+  "hook": "useUpdate",
+  "sites": 1,
+  "verdict": "unhandled",
+  "has_meta": false
+ },
+ {
+  "file": "system-admin/users/page.tsx",
+  "line": 68,
+  "var": "toggle",
+  "hook": "usePatchAction",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "system-admin/users/page.tsx",
+  "line": 169,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "teacher/class-deliveries/page.tsx",
+  "line": 62,
+  "var": "receive",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "teacher/distribution/page.tsx",
+  "line": 73,
+  "var": "confirmBatch",
+  "hook": "useCreateAt",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "teacher/distribution/page.tsx",
+  "line": 74,
+  "var": "revoke",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "teacher/distribution/[id]/page.tsx",
+  "line": 55,
+  "var": "serveAction",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "teacher/distribution/[id]/page.tsx",
+  "line": 56,
+  "var": "errorReport",
+  "hook": "useAction",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "teacher/incidents/page.tsx",
+  "line": 108,
+  "var": "create",
+  "hook": "useCreate",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ },
+ {
+  "file": "teacher/incidents/page.tsx",
+  "line": 112,
+  "var": "uploadEvidence",
+  "hook": "useUploadMutation",
+  "sites": 1,
+  "verdict": "handled",
+  "has_meta": false
+ }
+]

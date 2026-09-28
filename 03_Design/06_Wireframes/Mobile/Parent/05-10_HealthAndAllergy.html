@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>SFMS Wireframe — Parent (Mobile): Health &amp; Allergy</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root{ --ink:#333; --gray:#777; --lightgray:#d7d7d7; --midgray:#aaa; }
+  * { box-sizing: border-box; } html { font-size: 18px; }
+  body { margin:0; font-family:'Patrick Hand', cursive; color:var(--ink); background-color:#f4f4f4; background-image: radial-gradient(#d7d7d7 1px, transparent 1px); background-size: 20px 20px; font-size:18px; display:flex; justify-content:center; padding:24px 0; }
+  .text-xs{font-size:14px;} .text-sm{font-size:18px;} .text-md{font-size:26px;} .text-lg{font-size:32px;}
+  a { color:#3a5a8c; text-decoration:underline; cursor:pointer; }
+  .phone { width:390px; min-width:390px; background:#fff; border:3px solid var(--ink); border-radius:36px; overflow:hidden; position:relative; }
+  .phone-screen { height:780px; display:flex; flex-direction:column; }
+  .appbar { display:flex; align-items:center; gap:10px; padding:16px 16px 12px 16px; border-bottom:3px solid var(--ink); background:#fafafa; }
+  .appbar .back { cursor:pointer; } .appbar-title { font-size:22px; flex:1; }
+  .appbar.danger .appbar-title { font-weight:bold; }
+  .scroll-content { flex:1; overflow-y:auto; padding:16px; }
+  .bottomnav { display:flex; border-top:3px solid var(--ink); background:#fafafa; }
+  .bottomnav-item { flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; padding:10px 4px 8px; font-size:13px; color:var(--gray); cursor:pointer; }
+  .bottomnav-item.active { color:var(--ink); font-weight:bold; }
+  .card { border:2px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; padding:14px; }
+  .card + .card { margin-top:12px; }
+  .btn-primary { width:100%; background:#333; color:white; border:2px solid #333; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:12px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; }
+  .btn-secondary { width:100%; background:white; color:#333; border:2px solid #333; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:10px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; margin-top:8px; }
+  .icon { width:20px; height:20px; flex:none; stroke:var(--ink); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .icon-sm { width:16px; height:16px; }
+  .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .badge { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; font-size:14px; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; }
+  .badge-success { border:2px solid var(--ink); } .badge-warning { border:2px dashed var(--ink); } .badge-danger { border:3px solid var(--ink); }
+  .alert { display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; font-size:16px; }
+  .alert-danger { border:3px solid var(--ink); }
+  .muted { color:var(--gray); }
+  .screen { display:none; } .screen.active { display:flex; }
+  .field-label { font-size:16px; margin-bottom:6px; display:flex; gap:4px; }
+  .req { font-weight:bold; }
+  .field-block { margin-bottom:14px; }
+  wired-input, wired-textarea, wired-select { width:100%; display:block; }
+  .dropzone { border:2px dashed var(--ink); border-radius:16px; padding:14px; text-align:center; font-size:15px; }
+  .mode-toggle { display:flex; gap:8px; margin-bottom:14px; }
+  .mode-toggle button { flex:1; font-size:14px; padding:8px; }
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <div class="phone-screen">
+
+    <!-- SCREEN 07 — STUDENT HEALTH INFORMATION -->
+    <div class="screen active" id="health-info" style="flex-direction:column;">
+      <div class="appbar"><svg class="icon back" viewBox="0 0 24 24" onclick="alert('Về Parent Dashboard')"><path d="M15 5 L7 12 L15 19"/></svg><span class="appbar-title">Health Information</span></div>
+      <div class="scroll-content">
+        <div class="card" style="margin-bottom:12px;"><div class="text-md">Trần Gia Bảo</div><div class="text-xs muted">8 tuổi · Lớp 2A</div></div>
+        <div class="grid-2" style="margin-bottom:12px;">
+          <div class="card"><div class="text-xs muted">Height</div><div class="text-md">124cm</div></div>
+          <div class="card"><div class="text-xs muted">Weight</div><div class="text-md">24kg</div></div>
+          <div class="card"><div class="text-xs muted">Blood Type</div><div class="text-md">O+</div></div>
+          <div class="card"><div class="text-xs muted">BMI</div><div class="text-md">15.6</div></div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <div style="display:flex; justify-content:space-between;"><strong class="text-sm">Allergy Profile</strong><span class="badge badge-warning">Pending</span></div>
+          <div class="text-sm muted">Đậu phộng (Severe), Hải sản có vỏ (Moderate)</div>
+        </div>
+        <button class="btn-primary" onclick="showScreen('submit-health')">Manage Health Details</button>
+        <button class="btn-secondary" onclick="showScreen('submit-allergy')">Manage Allergy List</button>
+      </div>
+      <div class="bottomnav">
+        <div class="bottomnav-item"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 12 L12 4 L20 12"/></svg>Home</div>
+        <div class="bottomnav-item"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M6 3 h9 l3 3 v15 h-12 z"/></svg>Menu</div>
+        <div class="bottomnav-item active"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 21 s-8 -5 -8 -11 a4 4 0 0 1 8 -2 a4 4 0 0 1 8 2 c0 6 -8 11 -8 11 z"/></svg>Sức khỏe</div>
+        <div class="bottomnav-item"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 4 h14 v13 h-9 l-5 4 z"/></svg>Phản hồi</div>
+      </div>
+    </div>
+
+    <!-- SCREEN 05/06 — SUBMIT/UPDATE ALLERGY INFORMATION -->
+    <div class="screen" id="submit-allergy" style="flex-direction:column;">
+      <div class="appbar"><svg class="icon back" viewBox="0 0 24 24" onclick="showScreen('health-info')"><path d="M15 5 L7 12 L15 19"/></svg><span class="appbar-title" id="allergy-title">Allergy Information</span></div>
+      <div class="scroll-content">
+        <div class="mode-toggle"><button class="btn-secondary" onclick="setAllergyMode('create')">Tạo mới (#05)</button><button class="btn-secondary" onclick="setAllergyMode('update')">Chỉnh sửa (#06)</button></div>
+        <div class="field-block"><div class="field-label">Allergen Category <span class="req">*</span></div><wired-select><wired-item value="peanut">Đậu phộng</wired-item><wired-item value="other">Khác</wired-item></wired-select></div>
+        <div class="field-block"><div class="field-label">Specific Allergen Name</div><wired-input id="m-allergy-name" placeholder="Nếu Other"></wired-input></div>
+        <div class="field-block"><div class="field-label">Severity Level <span class="req">*</span></div><wired-radio-group selected="severe"><wired-radio name="sevm" value="mild">Mild</wired-radio><wired-radio name="sevm" value="moderate">Moderate</wired-radio><wired-radio name="sevm" value="severe">Severe</wired-radio></wired-radio-group></div>
+        <div class="field-block"><div class="field-label">Upload Medical Proof <span class="req">*</span></div><div class="dropzone">Chọn ảnh/PDF chứng nhận y tế</div></div>
+      </div>
+      <div style="padding:12px 16px; border-top:2px solid var(--lightgray);"><button class="btn-primary" onclick="showScreen('health-info')">Save Allergy</button></div>
+    </div>
+
+    <!-- SCREEN 08/09 — SUBMIT/UPDATE HEALTH INFORMATION -->
+    <div class="screen" id="submit-health" style="flex-direction:column;">
+      <div class="appbar"><svg class="icon back" viewBox="0 0 24 24" onclick="showScreen('health-info')"><path d="M15 5 L7 12 L15 19"/></svg><span class="appbar-title" id="health-title">Health Information</span></div>
+      <div class="scroll-content">
+        <div class="mode-toggle"><button class="btn-secondary" onclick="setHealthMode('create')">Tạo mới (#08)</button><button class="btn-secondary" onclick="setHealthMode('update')">Chỉnh sửa (#09)</button></div>
+        <div class="field-block"><div class="field-label">Height (cm) <span class="req">*</span></div><wired-input id="m-height" type="number"></wired-input></div>
+        <div class="field-block"><div class="field-label">Weight (kg) <span class="req">*</span></div><wired-input id="m-weight" type="number"></wired-input></div>
+        <div class="field-block"><div class="field-label">Blood Type</div><wired-select><wired-item value="o+">O+</wired-item></wired-select></div>
+        <div class="field-block"><div class="field-label">File Upload (tuỳ chọn)</div><div class="dropzone">Kéo-thả hồ sơ khám sức khỏe</div></div>
+      </div>
+      <div style="padding:12px 16px; border-top:2px solid var(--lightgray);"><button class="btn-primary" onclick="showScreen('health-info')">Save Health Info</button></div>
+    </div>
+
+    <!-- SCREEN 10 — SPECIAL MEAL ARRANGEMENTS -->
+    <div class="screen" id="special-meal" style="flex-direction:column;">
+      <div class="appbar danger"><svg class="icon back" viewBox="0 0 24 24" onclick="alert('Về Parent Dashboard')"><path d="M15 5 L7 12 L15 19"/></svg><span class="appbar-title">Special Meal Arrangements</span></div>
+      <div class="scroll-content">
+        <div class="alert alert-danger" style="margin-bottom:12px;"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg><div>Menu hôm nay chứa đậu phộng — đã thay thế (MSG-051).</div></div>
+        <div class="card" style="margin-bottom:12px;"><strong class="text-sm">Đậu phộng (Severe)</strong><div class="text-sm muted">Món thay thế: Hạt điều rang. Bếp riêng, dụng cụ riêng.</div></div>
+        <div style="display:flex; gap:8px; margin-bottom:14px;"><span class="badge badge-success">Kitchen Released</span><span class="badge badge-success">Teacher Hand-off</span></div>
+        <div class="text-sm" style="font-style:italic; margin-bottom:10px;">Phụ huynh vẫn nên kiểm tra lại cùng giáo viên trước bữa ăn.</div>
+        <a onclick="showScreen('submit-allergy')">Cập nhật/khai báo dị ứng mới &rarr;</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function showScreen(id){
+    document.querySelectorAll('.screen').forEach(function(el){ el.classList.remove('active'); });
+    var target = document.getElementById(id);
+    if(target){ target.classList.add('active'); }
+  }
+  function setAllergyMode(mode){
+    document.getElementById('allergy-title').textContent = mode === 'create' ? 'Submit Allergy Info (#05)' : 'Update Allergy Info (#06)';
+    document.getElementById('m-allergy-name').value = mode === 'create' ? '' : 'Đậu phộng (đã khai báo)';
+  }
+  function setHealthMode(mode){
+    document.getElementById('health-title').textContent = mode === 'create' ? 'Submit Health Info (#08)' : 'Update Health Info (#09)';
+    document.getElementById('m-height').value = mode === 'create' ? '' : '124';
+    document.getElementById('m-weight').value = mode === 'create' ? '' : '24';
+  }
+</script>
+
+</body>
+</html>

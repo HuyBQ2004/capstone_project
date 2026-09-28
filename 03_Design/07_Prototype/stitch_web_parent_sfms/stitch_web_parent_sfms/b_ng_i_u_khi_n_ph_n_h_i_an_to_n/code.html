@@ -1,0 +1,388 @@
+<!DOCTYPE html><html class="light" lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Bảng điều khiển Phản hồi &amp; An toàn - SFMS Parent</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#4c6874",
+                        "on-secondary-fixed-variant": "#2f4b56",
+                        "surface-dim": "#d7dadd",
+                        "outline": "#6f787d",
+                        "background": "#f7fafc",
+                        "surface": "#f7fafc",
+                        "surface-bright": "#f7fafc",
+                        "surface-container-low": "#f1f4f6",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e6e8eb",
+                        "secondary-fixed": "#c9e7f5",
+                        "inverse-on-surface": "#eef1f3",
+                        "tertiary-fixed": "#ffdcbd",
+                        "surface-tint": "#006781",
+                        "inverse-surface": "#2d3133",
+                        "secondary-fixed-dim": "#aecbd9",
+                        "primary-fixed": "#b9eaff",
+                        "primary-container": "#0e7490",
+                        "secondary-container": "#c9e7f5",
+                        "primary": "#005a71",
+                        "on-primary-fixed-variant": "#004d62",
+                        "error-container": "#ffdad6",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "secondary": "#46626e",
+                        "outline-variant": "#bec8cd",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#3f484c",
+                        "surface-container": "#ebeef0",
+                        "inverse-primary": "#81d1f0",
+                        "on-primary-container": "#d3f1ff",
+                        "on-secondary-fixed": "#001f29",
+                        "on-background": "#181c1e",
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#965e1c",
+                        "surface-variant": "#e0e3e5",
+                        "on-tertiary-fixed": "#2c1600",
+                        "on-tertiary-container": "#ffe8d6",
+                        "tertiary-fixed-dim": "#ffb86f",
+                        "tertiary": "#794602",
+                        "primary-fixed-dim": "#81d1f0",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-surface": "#181c1e",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#693c00",
+                        "on-primary-fixed": "#001f29",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Be Vietnam Pro"],
+                        "display": ["Be Vietnam Pro"],
+                        "body": ["Be Vietnam Pro"],
+                        "label": ["Be Vietnam Pro"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-6 z-40 bg-surface-container-low border-r border-outline-variant w-64">
+<div class="px-6 mb-8">
+<h1 class="text-xl font-headline font-black text-primary">SFMS Parent</h1>
+<p class="text-on-surface-variant text-xs mt-1">Hệ thống ATTP Học đường</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="text-on-surface-variant px-4 py-3 mx-2 flex items-center gap-3 hover:bg-surface-container-high rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label text-label-lg">Bảng điều khiển</span>
+</a>
+<a class="text-on-surface-variant px-4 py-3 mx-2 flex items-center gap-3 hover:bg-surface-container-high rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span class="font-label text-label-lg">Thực đơn</span>
+</a>
+<a class="text-on-surface-variant px-4 py-3 mx-2 flex items-center gap-3 hover:bg-surface-container-high rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">monitor_heart</span>
+<span class="font-label text-label-lg">Sức khỏe</span>
+</a>
+<!-- Active State: Phản hồi & An toàn -->
+<a class="bg-secondary-container text-on-secondary-container rounded-xl px-4 py-3 mx-2 flex items-center gap-3 scale-95 transition-transform font-bold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">gpp_maybe</span>
+<span class="font-label text-label-lg">Phản hồi &amp; An toàn</span>
+</a>
+</nav>
+<div class="px-4 mt-auto">
+<button class="w-full bg-primary text-on-primary py-3 px-4 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">add_comment</span>
+                Gửi phản hồi mới
+            </button>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 ml-64 relative">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-6 py-3 w-full sticky top-0 z-50 bg-surface/95 backdrop-blur-sm border-b border-outline-variant">
+<div class="flex items-center gap-4">
+<h2 class="text-headline-sm font-headline font-bold text-primary">Phản hồi &amp; An toàn</h2>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant">
+<div class="text-right">
+<p class="text-sm font-bold text-on-surface">Nguyễn Văn A</p>
+<p class="text-xs text-on-surface-variant">Phụ huynh HS: Nguyễn B</p>
+</div>
+<img class="w-10 h-10 rounded-full border-2 border-primary-container" data-alt="A clean, professional portrait of a Vietnamese father in his 40s, wearing a smart casual polo shirt, smiling warmly against a soft-focus indoor library background with natural daylight. The lighting is soft and airy, matching a premium medical and educational light-mode aesthetic with teal accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAy1zpTPH8aqMWjxA4LpPhXLBkOXlzRbAjFyU2QBM0aUt73kEfhvOAQouRevuAUPFNV6AgePnbnYvXIu1mvdaKklWqUo6C6MVU2RzY6vo7HQwVM4CQmGZsvQojjQ0vyvKb0OR84F7nkdE48nvps0dXpvOChEcQhCZiBQRXK2d0w61dqLXp3OkB-cmT65mPLkqWkhoG8ZohvRxfwuOmKFvVZwiLFUofj9MUI-ceo0H24MxR-EGJBd5A64euUdl4V-xfg-zJGT6FwmQ">
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<div class="p-8 space-y-8">
+<!-- Bento Stats Summary -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-primary-container text-on-primary-container p-6 rounded-3xl relative overflow-hidden flex flex-col justify-between min-h-[160px]">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-4xl opacity-80">pending_actions</span>
+<h3 class="text-lg font-medium mt-2">Phản hồi đang xử lý</h3>
+</div>
+<div class="relative z-10 flex items-end justify-between">
+<span class="text-5xl font-black">03</span>
+<span class="text-sm font-medium bg-on-primary-container/20 px-3 py-1 rounded-full">-12% so với tháng trước</span>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-[120px]">bubble_chart</span>
+</div>
+</div>
+<div class="bg-tertiary-container text-on-tertiary-container p-6 rounded-3xl relative overflow-hidden flex flex-col justify-between min-h-[160px]">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-4xl opacity-80" style="font-variation-settings: 'FILL' 1;">warning</span>
+<h3 class="text-lg font-medium mt-2">Thông báo an toàn mới</h3>
+</div>
+<div class="relative z-10 flex items-end justify-between">
+<span class="text-5xl font-black">02</span>
+<button class="text-sm font-bold underline underline-offset-4">Xem ngay</button>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-[120px]">security</span>
+</div>
+</div>
+<div class="bg-surface-container-highest p-6 rounded-3xl border border-outline-variant/30 flex items-center justify-center text-center">
+<div>
+<p class="text-on-surface-variant font-medium mb-2">Chất lượng dịch vụ tháng này</p>
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined">star_half</span>
+<span class="ml-2 font-black text-2xl">4.8</span>
+</div>
+<p class="text-xs text-on-surface-variant mt-2">Dựa trên 156 đánh giá của phụ huynh</p>
+</div>
+</div>
+</section>
+<!-- Feedback List -->
+<section class="bg-surface-container-lowest rounded-3xl border border-outline-variant/20 overflow-hidden shadow-sm">
+<div class="px-8 py-6 border-b border-outline-variant flex justify-between items-center">
+<div>
+<h3 class="text-xl font-bold text-on-surface">Lịch sử phản hồi</h3>
+<p class="text-sm text-on-surface-variant">Danh sách các sự cố và ý kiến đã gửi</p>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 rounded-xl bg-surface-container border border-outline-variant text-sm font-medium flex items-center gap-2 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                            Bộ lọc
+                        </button>
+<button class="px-4 py-2 rounded-xl bg-surface-container border border-outline-variant text-sm font-medium flex items-center gap-2 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-sm">download</span>
+                            Xuất báo cáo
+                        </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-8 py-4 font-bold text-sm text-on-surface-variant border-b border-outline-variant">Tiêu đề phản hồi</th>
+<th class="px-6 py-4 font-bold text-sm text-on-surface-variant border-b border-outline-variant">Loại sự cố</th>
+<th class="px-6 py-4 font-bold text-sm text-on-surface-variant border-b border-outline-variant text-center">Trạng thái</th>
+<th class="px-6 py-4 font-bold text-sm text-on-surface-variant border-b border-outline-variant">Ngày gửi</th>
+<th class="px-8 py-4 font-bold text-sm text-on-surface-variant border-b border-outline-variant text-right">Thao tác</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<!-- Item 1 -->
+<tr class="hover:bg-surface-container/30 transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-error-container flex items-center justify-center text-on-error-container">
+<span class="material-symbols-outlined">report_problem</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Nghi ngờ dị ứng lạc trong bữa trưa</p>
+<p class="text-xs text-on-surface-variant">ID: #FB-10294</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 rounded-full bg-surface-container text-on-surface-variant text-xs font-bold uppercase tracking-wider">Dị ứng</span>
+</td>
+<td class="px-6 py-5 text-center">
+<span class="px-3 py-1 rounded-full bg-primary-container text-on-primary-container text-xs font-bold flex items-center justify-center gap-1 w-max mx-auto">
+<span class="material-symbols-outlined text-xs animate-spin">sync</span>
+                                        Đang xử lý
+                                    </span>
+</td>
+<td class="px-6 py-5">
+<p class="text-sm text-on-surface font-medium">15/10/2023</p>
+<p class="text-xs text-on-surface-variant">12:30 PM</p>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="p-2 rounded-full hover:bg-primary/10 text-primary transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Item 2 -->
+<tr class="hover:bg-surface-container/30 transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Thức ăn hơi nguội khi đến tay HS</p>
+<p class="text-xs text-on-surface-variant">ID: #FB-10288</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 rounded-full bg-surface-container text-on-surface-variant text-xs font-bold uppercase tracking-wider">Chất lượng món ăn</span>
+</td>
+<td class="px-6 py-5 text-center">
+<span class="px-3 py-1 rounded-full bg-tertiary-container/20 text-tertiary-container text-xs font-bold flex items-center justify-center gap-1 w-max mx-auto">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">mark_email_read</span>
+                                        Đã phản hồi
+                                    </span>
+</td>
+<td class="px-6 py-5">
+<p class="text-sm text-on-surface font-medium">12/10/2023</p>
+<p class="text-xs text-on-surface-variant">09:15 AM</p>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="p-2 rounded-full hover:bg-primary/10 text-primary transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Item 3 -->
+<tr class="hover:bg-surface-container/30 transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">cleaning_services</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Vệ sinh khu vực khay ăn</p>
+<p class="text-xs text-on-surface-variant">ID: #FB-10245</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 rounded-full bg-surface-container text-on-surface-variant text-xs font-bold uppercase tracking-wider">Vệ sinh</span>
+</td>
+<td class="px-6 py-5 text-center">
+<span class="px-3 py-1 rounded-full bg-outline-variant/30 text-on-surface-variant text-xs font-bold flex items-center justify-center gap-1 w-max mx-auto">
+<span class="material-symbols-outlined text-xs">task_alt</span>
+                                        Đã đóng
+                                    </span>
+</td>
+<td class="px-6 py-5">
+<p class="text-sm text-on-surface font-medium">05/10/2023</p>
+<p class="text-xs text-on-surface-variant">03:45 PM</p>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="p-2 rounded-full hover:bg-primary/10 text-primary transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-8 py-4 bg-surface-container-low/30 border-t border-outline-variant flex items-center justify-between">
+<p class="text-xs text-on-surface-variant">Hiển thị 3 trên 24 kết quả</p>
+<div class="flex gap-1">
+<button class="w-8 h-8 rounded-lg border border-outline-variant flex items-center justify-center hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-sm">chevron_left</span></button>
+<button class="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center text-xs font-bold">1</button>
+<button class="w-8 h-8 rounded-lg border border-outline-variant flex items-center justify-center hover:bg-surface-container transition-colors text-xs font-bold">2</button>
+<button class="w-8 h-8 rounded-lg border border-outline-variant flex items-center justify-center hover:bg-surface-container transition-colors text-xs font-bold">3</button>
+<button class="w-8 h-8 rounded-lg border border-outline-variant flex items-center justify-center hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
+</div>
+</div>
+</section>
+<!-- Floating Action Hint (Mobile Context) -->
+<div class="md:hidden fixed bottom-6 right-6 z-50">
+<button class="w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+<!-- Helpful Info Section -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="glass-panel p-8 rounded-3xl border border-primary/10">
+<h4 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined">verified_user</span>
+                        Cam kết an toàn thực phẩm
+                    </h4>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">
+                        Chúng tôi áp dụng quy trình kiểm soát 3 bước chặt chẽ: Kiểm tra đầu vào nguyên liệu, giám sát chế biến thời gian thực, và lưu mẫu thực phẩm 48 giờ. Mọi phản hồi của phụ huynh sẽ được bộ phận ATTP phản hồi trong vòng tối đa 24 giờ làm việc.
+                    </p>
+<div class="flex items-center gap-4">
+<div class="flex -space-x-2">
+<img class="w-8 h-8 rounded-full border-2 border-surface" data-alt="Close up portrait of a professional female nutritionist in a white clinical coat, wearing a stethoscope, in a clean modern clinic setting with soft green plants in the background. Light-mode aesthetic, bright and trustworthy." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTJK_9tZobteqp3mpO3j2Y1iMYp_P16IEVfm3jjMBfBXYj5EVdOZD5MqavCqokgMuR5NBo1LxmU6FI5Si408ZT7FKForS2LQRJr9uAv2mISdbCeQQ2zaVZ7lSvxC62Lso8nq73OTADpKClauKEMp-KHJBeQl_o-2pLtezeb8tS_3wK4L8RT6Seb_0nUQuvxc0DYkE1acXz5NOX05OblJIdrAuDEIUjg_4W6DMjykktgsgVw1_W-RpRbY1aUleygGMyAvJyI-VH5A">
+<img class="w-8 h-8 rounded-full border-2 border-surface" data-alt="Portrait of a male food safety inspector in professional uniform, holding a digital tablet for reporting, standing in a bright industrial school kitchen. The environment is impeccably clean with stainless steel surfaces and soft natural lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJJe9FkJQCRMl0vAkhYJJYpMI2htchFYGv2QnCnnpvaFGMGlGESqPyUdS3cCzON6Cte_Sga5YR7ULFSdxqrl69W2Ec_3zWFi0HITod1IjoHoUNFiJsqy_XX3aky776QiXQItn4Ar7CMn2RUSEHXJKoNHmQhJZ_6O1bj2TsCWwfilthbQNeekAvPxVLp7Qa-qnSIsqY7hcm80_W3nB1ONO8ZUOyqOUiTSvOjBPlrQAD3nqOUvovEWMl8waXBaj9VvY9fWDbuT_7Og">
+<img class="w-8 h-8 rounded-full border-2 border-surface" data-alt="A friendly female cafeteria manager in a modern school dining hall, smiling at the camera. Professional yet approachable, soft daytime lighting, modern interior design with teal and white palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaiGmVY-0Oy-IPGp4CdYEXbEhlIfZAJRPxk0qSNmhbhxMJWrloAYY13_58PYYKZ2f9NQuAiJ7YQvTni86bXM5VyOk_DyKd2MU0puBKaDcvjWe9dFCqqkDYIidGb9WXT9IkgdQIBmmPMG2VS-PP2ILu-L7eEXTHIItNkYgTkN56-wE55fs-ipEGfVfhdSP4Bz3Ntu9Flvx7uYZ07F14dq4U9Ka85S7yRSaXO_TqI0sKUWqdBYJ5Pd8BQ9P5gfm4P5uLgDB-BS31kw">
+</div>
+<span class="text-xs font-medium text-on-surface-variant">Đội ngũ chuyên gia luôn sẵn sàng hỗ trợ</span>
+</div>
+</div>
+<div class="bg-surface-container p-8 rounded-3xl border border-outline-variant/30 flex flex-col justify-center">
+<h4 class="text-lg font-bold text-on-surface mb-2">Bạn cần hỗ trợ khẩn cấp?</h4>
+<p class="text-sm text-on-surface-variant mb-6">Trong trường hợp phát hiện sự cố an toàn nghiêm trọng, vui lòng liên hệ ngay hotline trực tuyến 24/7 của chúng tôi.</p>
+<a class="inline-flex items-center gap-3 text-primary font-black text-2xl hover:underline" href="tel:19001234">
+<span class="material-symbols-outlined">call</span>
+                        1900 1234
+                    </a>
+</div>
+</section>
+</div>
+</main>
+<script>
+        // Simple micro-interactions
+        document.querySelectorAll('tr').forEach(row => {
+            row.addEventListener('click', () => {
+                // In a real app, this would navigate to detail
+                console.log('Navigating to detail view...');
+            });
+        });
+
+        // Search highlight logic or other small UI behaviors
+        const navItems = document.querySelectorAll('aside nav a');
+        navItems.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                if (!item.classList.contains('bg-secondary-container')) {
+                    item.style.transform = 'translateX(4px)';
+                }
+            });
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = 'translateX(0)';
+            });
+        });
+    </script>
+</body></html>

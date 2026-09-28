@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Wireframe — Food Sample Retention (Medical Staff, Mobile)</title>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<style>
+  * { box-sizing:border-box; } html{font-size:18px;}
+  body { margin:0; font-family:'Patrick Hand',cursive; color:#333; background-image: radial-gradient(#d7d7d7 1px, transparent 1px); background-size:20px 20px; display:flex; flex-direction:column; align-items:center; padding:20px 10px 60px; }
+  .demo-nav { display:flex; gap:6px; justify-content:center; margin-bottom:16px; }
+  .demo-nav button { font-size:12px; background:white; border:2px solid #333; border-radius:10px; padding:5px 8px; cursor:pointer; }
+  .demo-nav button.active { background:#333; color:white; }
+  .phone { width:390px; max-width:100%; min-height:760px; background:white; border:3px solid #333; border-radius:32px; overflow:hidden; position:relative; }
+  .screen { display:none; flex-direction:column; min-height:760px; } .screen.visible { display:flex; }
+  .appbar { display:flex; align-items:center; gap:10px; padding:14px; border-bottom:2px solid #333; }
+  .appbar .title { font-size:19px; flex:1; text-align:center; } .appbar .icon-slot { width:22px; }
+  .content { padding:14px 16px 30px; flex:1; overflow:auto; }
+  .filter-bar { display:flex; gap:6px; margin-bottom:10px; flex-wrap:wrap; }
+  .sample-card { border:2px solid #333; border-radius:12px; padding:10px; margin-bottom:8px; font-size:13px; }
+  .badge { display:inline-flex; gap:4px; padding:2px 6px; border-radius:6px; font-size:11px; border:2px solid #333; }
+  .badge.info { border-style:solid; } .badge.warning { border-style:dashed; } .badge.secondary { border-style:dotted; }
+  .sheet-backdrop { display:none; position:absolute; inset:0; background:rgba(0,0,0,.2); z-index:8; }
+  .sheet-backdrop.show { display:block; }
+  .bottom-sheet { display:none; position:absolute; left:0; right:0; bottom:0; background:white; border:2px solid #333; border-radius:20px 20px 0 0; padding:16px; max-height:80%; overflow:auto; z-index:9; }
+  .bottom-sheet.show { display:block; }
+  .field { margin-bottom:10px; } .field label { display:block; margin-bottom:4px; font-size:13px; }
+  wired-input { width:100%; }
+  .sample-pick { border:2px solid #333; border-radius:8px; padding:8px; margin-bottom:6px; background:#333; color:white; font-size:13px; }
+  .btn-primary { background:#333; color:white; border:2px solid #333; border-radius:255px 15px 225px 15px/15px 225px 15px 255px; font-family:'Patrick Hand',cursive; font-size:15px; padding:10px; cursor:pointer; width:100%; margin-top:8px; }
+  .btn-secondary { background:white; color:#333; border:2px solid #333; border-radius:255px 15px 225px 15px/15px 225px 15px 255px; font-family:'Patrick Hand',cursive; font-size:15px; padding:10px; cursor:pointer; width:100%; margin-top:8px; }
+  .icon { width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:2; }
+  .toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#333; color:white; padding:10px 18px; border-radius:10px; display:none; align-items:center; gap:8px; z-index:20; }
+  .toast.show { display:flex; }
+  .note { font-size:12px; color:#666; }
+</style>
+</head>
+<body>
+
+<svg style="display:none">
+  <symbol id="ic-export" viewBox="0 0 24 24"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M4 15v4a2 2 0 002 2h12a2 2 0 002-2v-4"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24"><path d="M4 12l6 6L20 6" stroke-linecap="round"/></symbol>
+</svg>
+
+<div class="demo-nav"><button data-go="screen-records" class="active">1. Sample Records</button></div>
+
+<div class="phone">
+  <!-- 13 Food Sample Records -->
+  <div class="screen visible" id="screen-records">
+    <div class="appbar"><span class="title">Food Sample Register</span><span class="icon-slot" onclick="toast('Đã xuất Excel/PDF.')"><svg class="icon"><use href="#ic-export"/></svg></span></div>
+    <div class="content">
+      <div class="filter-bar"><wired-combo selected="Tất cả trạng thái" style="flex:1"><wired-item>Tất cả trạng thái</wired-item><wired-item>Retained</wired-item><wired-item>Retrieved</wired-item><wired-item>Disposed</wired-item></wired-combo></div>
+      <div class="sample-card" onclick="openRetrieve()"><b>Súp tôm — Trưa 30/06</b><br>Batch B-2260630 · 4°C · <span class="badge info">Retained</span><br><span class="note">Còn lưu: 22 giờ</span></div>
+      <div class="sample-card"><b>Cơm gà xối mỡ</b><br>Batch B-2260629 · 3°C · <span class="badge warning">Retrieved</span></div>
+      <div class="sample-card"><b>Sữa chua</b><br>Batch B-2260628 · 5°C · <span class="badge secondary">Disposed</span></div>
+      <p class="note">Mỗi Card tóm tắt các cột trọng yếu trong 12 cột Mẫu số 5 (không dùng bảng dày đặc trên Mobile, theo Component_Guidelines.md).</p>
+    </div>
+
+    <div class="sheet-backdrop" id="backdrop" onclick="closeRetrieve()"></div>
+    <div class="bottom-sheet" id="modal-retrieve">
+      <h3>Retrieve Food Sample</h3>
+      <div class="field"><label>Tìm mẫu theo ngày/món/batch</label><wired-input placeholder="Súp tôm, 30/06"></wired-input></div>
+      <div class="sample-pick">Súp tôm — Trưa 30/06 (B-2260630) — còn 22 giờ</div>
+      <button class="btn-secondary" onclick="toast('Authorize Retrieval.')">Authorize Retrieval</button>
+      <div class="field"><label>Incident ID (bắt buộc)</label><wired-input placeholder="INC-2026-014"></wired-input></div>
+      <div class="field"><label>Tên người ủy quyền</label><wired-input placeholder="Nguyễn Thị Y Tá"></wired-input></div>
+      <div class="field"><label>Phòng lab đích</label><wired-input placeholder="Trung tâm Kiểm nghiệm ATTP Q1"></wired-input></div>
+      <button class="btn-primary" onclick="toast('Đã khóa mẫu, in biên nhận thu hồi.'); closeRetrieve()">Submit</button>
+      <button class="btn-secondary" onclick="closeRetrieve()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><svg class="icon" style="stroke:white"><use href="#ic-check"/></svg><span id="toast-text"></span></div>
+
+<script>
+function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('visible')); document.getElementById(id).classList.add('visible'); }
+function openRetrieve(){ document.getElementById('modal-retrieve').classList.add('show'); document.getElementById('backdrop').classList.add('show'); }
+function closeRetrieve(){ document.getElementById('modal-retrieve').classList.remove('show'); document.getElementById('backdrop').classList.remove('show'); }
+function toast(msg){ const t=document.getElementById('toast'); document.getElementById('toast-text').textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600); }
+</script>
+</body>
+</html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>SFMS Wireframe — Teacher: Home &amp; Student Records</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root{ --ink:#333; --paper:#fff; --gray:#777; --lightgray:#d7d7d7; --midgray:#aaa; }
+  * { box-sizing: border-box; }
+  html { font-size: 18px; }
+  body {
+    margin:0; font-family:'Patrick Hand', cursive; color:var(--ink);
+    background-color:#f4f4f4;
+    background-image: radial-gradient(#d7d7d7 1px, transparent 1px);
+    background-size: 20px 20px;
+    font-size:18px;
+  }
+  .text-xs   { font-size: 14px; line-height:1.4; }
+  .text-sm   { font-size: 18px; line-height:1.5; }
+  .text-base { font-size: 22px; line-height:1.5; }
+  .text-md   { font-size: 28px; line-height:1.3; }
+  .text-lg   { font-size: 35px; line-height:1.2; }
+  a { color:#3a5a8c; text-decoration:underline; cursor:pointer; }
+  .app { display:flex; min-height:100vh; }
+  .sidebar { width:270px; min-width:270px; background:#eee; border-right:3px solid var(--ink); padding:18px 14px; position:sticky; top:0; height:100vh; overflow-y:auto; }
+  .brand { display:flex; align-items:center; gap:8px; margin-bottom:18px; }
+  .brand .text-md { margin:0; }
+  .side-group { margin-bottom:6px; }
+  .side-group-title { display:flex; align-items:center; gap:8px; font-size:16px; color:var(--gray); text-transform:uppercase; letter-spacing:1px; margin:14px 0 6px 4px; }
+  .side-link { display:flex; align-items:center; gap:10px; padding:8px 10px; margin:2px 0; border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; font-size:18px; color:var(--ink); text-decoration:none; cursor:pointer; }
+  .side-link:hover { background:#fff; border:2px dashed var(--midgray); }
+  .side-link.active { background:var(--ink); color:#fff; border:2px solid var(--ink); }
+  .side-link.active svg { stroke:#fff; }
+  .side-link.disabled { color:var(--midgray); cursor:default; }
+  .side-link.disabled:hover { background:none; border:none; }
+  .side-note { font-size:13px; color:var(--midgray); margin-left:32px; }
+  .icon { width:20px; height:20px; flex:none; stroke:var(--ink); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .main { flex:1; min-width:0; }
+  .topbar { display:flex; align-items:center; justify-content:space-between; padding:14px 26px; border-bottom:3px solid var(--ink); background:#fafafa; }
+  .breadcrumb { font-size:20px; }
+  .breadcrumb .crumb-group { color:var(--gray); }
+  .user-chip { display:flex; align-items:center; gap:8px; font-size:16px; }
+  .content { padding:26px; }
+  .card { border:2px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; padding:18px; }
+  .card + .card { margin-top:18px; }
+  .btn-primary { background:#333; color:white; border:2px solid #333; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:10px 22px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+  .btn-primary svg { stroke:#fff; }
+  .btn-secondary { background:white; color:#333; border:2px solid #333; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:10px 22px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+  button:disabled { opacity:0.45; cursor:not-allowed; }
+  .btn-row { display:flex; gap:12px; flex-wrap:wrap; }
+  .grid-12 { display:grid; grid-template-columns: repeat(12, 1fr); gap:18px; }
+  .col-3 { grid-column: span 3; } .col-4 { grid-column: span 4; } .col-8 { grid-column: span 8; } .col-6 { grid-column: span 6; } .col-12 { grid-column: span 12; }
+  @media (max-width: 980px){ .grid-12 > [class*="col-"] { grid-column: span 12; } }
+  .badge { display:inline-flex; align-items:center; gap:6px; padding:3px 12px; font-size:16px; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; }
+  .badge-success { border:2px solid var(--ink); background:#fff; }
+  .badge-warning { border:2px dashed var(--ink); background:#fff; }
+  .badge-danger  { border:3px solid var(--ink); background:#fff; }
+  .badge-info    { border:2px dotted var(--ink); background:#fff; }
+  .badge svg { width:15px; height:15px; }
+  table.sketchy { width:100%; border-collapse:separate; border-spacing:0; font-size:18px; }
+  table.sketchy th, table.sketchy td { text-align:left; padding:10px 12px; border-bottom:2px solid var(--lightgray); }
+  table.sketchy thead th { border-bottom:3px solid var(--ink); color:var(--gray); font-weight:normal; font-size:16px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.sketchy tbody tr { cursor:pointer; }
+  table.sketchy tbody tr:hover { background:#f2f2f2; }
+  .table-wrap { border:2px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; overflow:hidden; background:#fff; }
+  .table-wrap table.sketchy { margin:0; }
+  .table-wrap thead th:first-child, .table-wrap tbody td:first-child { padding-left:20px; }
+  .filter-bar { display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-bottom:16px; }
+  .filter-bar > * { flex:none; }
+  .filter-bar wired-search-input { width:280px; }
+  .filter-bar wired-select { width:220px; }
+  .screen { display:none; } .screen.active { display:block; }
+  h1.text-lg, h2.text-md { margin:0 0 4px 0; }
+  .page-header { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:20px; flex-wrap:wrap; }
+  .muted { color:var(--gray); }
+  .section-title { display:flex; align-items:center; gap:8px; margin:0 0 12px 0; }
+  .kpi-value { font-size:44px; line-height:1; margin:6px 0; }
+  .kpi-card { display:flex; flex-direction:column; gap:4px; }
+  .kpi-top { display:flex; align-items:center; justify-content:space-between; }
+  .alert { display:flex; gap:12px; align-items:flex-start; padding:14px 16px; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; }
+  .alert-danger { border:3px solid var(--ink); } .alert-warning { border:2px dashed var(--ink); } .alert-info { border:2px dotted var(--ink); }
+  .alert .icon { flex:none; margin-top:2px; }
+  .avatar { width:56px; height:56px; border-radius:50%; border:2px solid var(--ink); display:flex; align-items:center; justify-content:center; background:#fff; flex:none; }
+  .avatar-sm { width:36px; height:36px; }
+  .tab-row { display:flex; gap:10px; border-bottom:2px solid var(--lightgray); margin-bottom:18px; flex-wrap:wrap; }
+  .tab-item { padding:8px 16px; cursor:pointer; border-bottom:3px solid transparent; display:flex; align-items:center; gap:6px; }
+  .tab-item.active { border-bottom:3px solid var(--ink); font-weight:bold; }
+  .field-label { font-size:18px; margin-bottom:6px; display:flex; gap:4px; }
+  .field-block { margin-bottom:16px; }
+  wired-input, wired-textarea, wired-select, wired-search-input, wired-combo, wired-calendar { width:100%; display:block; }
+  ul.plain { list-style:none; margin:0; padding:0; }
+  .skeleton-note { display:flex; align-items:center; gap:10px; color:var(--gray); font-size:16px; margin-bottom:10px; }
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.35); align-items:center; justify-content:center; z-index:50; padding:20px; }
+  .modal-overlay.active { display:flex; }
+  .modal-box { width:100%; max-width:560px; background:#fff; border:3px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; padding:24px; max-height:90vh; overflow-y:auto; }
+  .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  .close-x { cursor:pointer; }
+  .radio-row { display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar">
+    <div class="brand">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 21 L4 9 L12 3 L20 9 L20 21 Z"/><path d="M9 21 L9 14 L15 14 L15 21"/></svg>
+      <span class="text-md">SFMS</span>
+    </div>
+    <div class="side-note" style="margin-left:0; margin-bottom:14px;">Teacher — Cô Nguyễn Thị Lan (CN lớp 2A)</div>
+
+    <div class="side-group">
+      <div class="side-group-title">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 12 L12 4 L20 12"/><path d="M6 10 V20 H18 V10"/></svg>
+        Bảng tin
+      </div>
+      <div class="side-link active" onclick="showScreen('teacher-home')">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/></svg>
+        Teacher Home
+      </div>
+    </div>
+
+    <div class="side-group">
+      <div class="side-group-title">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M6 3 h9 l3 3 v15 h-12 z"/><path d="M15 3 v3 h3"/><path d="M8 12 h8 M8 15 h8 M8 9 h4"/></svg>
+        Phân phát Bữa ăn
+      </div>
+      <div class="side-link" onclick="showScreen('student-list')">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M17 20 v-2 a4 4 0 0 0 -4 -4 h-4 a4 4 0 0 0 -4 4 v2"/><circle cx="11" cy="7" r="3"/></svg>
+        Student List
+      </div>
+      <div class="side-link" onclick="showScreen('special-meal')">
+        <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3 v3 M12 18 v3 M3 12 h3 M18 12 h3"/></svg>
+        Special Meal Requirements
+      </div>
+      <div class="side-link" onclick="showScreen('meal-records')">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M5 4 h14 v13 h-9 l-5 4 z"/><path d="M8 8 h8 M8 11 h5"/></svg>
+        Meal Records
+      </div>
+      <div class="side-link disabled">Meal Distribution</div>
+      <div class="side-note">(xem file wireframe nhóm 08-10)</div>
+    </div>
+
+    <div class="side-group">
+      <div class="side-group-title">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/><circle cx="12" cy="17" r="0.6" fill="var(--ink)"/></svg>
+        Sự cố Sức khỏe
+      </div>
+      <div class="side-link disabled">Health Incident Report</div>
+      <div class="side-note">(xem file wireframe nhóm 11-13)</div>
+    </div>
+
+    <div class="side-group">
+      <div class="side-group-title">
+        <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21 v-1 a8 8 0 0 1 16 0 v1"/></svg>
+        Cá nhân
+      </div>
+      <div class="side-link disabled">Profile / Notification Settings</div>
+      <div class="side-note">(GuestCommon — xem nhóm khác)</div>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <div class="main">
+
+    <!-- ============================================================ -->
+    <!-- SCREEN 01 — TEACHER HOME                                      -->
+    <!-- ============================================================ -->
+    <div class="screen active" id="teacher-home">
+      <div class="topbar">
+        <div class="breadcrumb"><span class="crumb-group">Bảng tin</span> / Teacher Home</div>
+        <div class="user-chip">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 4 a4 4 0 0 1 4 4 c0 3 2 3 2 6 h-12 c0 -3 2 -3 2 -6 a4 4 0 0 1 4 -4 z"/><path d="M10 20 a2 2 0 0 0 4 0"/></svg>
+          <div class="avatar avatar-sm"><svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px;"><circle cx="12" cy="8" r="4"/><path d="M4 21 v-1 a8 8 0 0 1 16 0 v1"/></svg></div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="page-header">
+          <div>
+            <h1 class="text-lg">Dashboard</h1>
+            <div class="muted">Class in charge: 2A · Nguyễn Thị Lan</div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-primary" onclick="showScreen('student-list')"><svg class="icon" viewBox="0 0 24 24" style="stroke:#fff;"><path d="M6 3 h9 l3 3 v15 h-12 z"/><path d="M15 3 v3 h3"/></svg>Distribute Meals Today</button>
+            <button class="btn-secondary" title="Xem file wireframe nhóm 11-13 (Health Incident Reporting)"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/></svg>Report New Health Incident</button>
+          </div>
+        </div>
+
+        <div class="alert alert-info" style="margin-bottom:18px;">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8 v0.1 M12 11 v5"/></svg>
+          <div>Chào cô Lan! Hôm nay là <strong>Thứ Ba, 01/07/2026</strong>. Lớp 2A có 2 suất ăn đặc biệt cần lưu ý trước giờ trưa.</div>
+        </div>
+
+        <div class="grid-12" style="margin-bottom:18px;">
+          <div class="card col-3 kpi-card">
+            <div class="kpi-top"><span class="text-sm muted">Total Students</span><svg class="icon" viewBox="0 0 24 24"><path d="M17 20 v-2 a4 4 0 0 0 -4 -4 h-4 a4 4 0 0 0 -4 4 v2"/><circle cx="11" cy="7" r="3"/></svg></div>
+            <div class="kpi-value">32</div>
+            <div class="text-xs muted">Học sinh lớp 2A</div>
+          </div>
+          <div class="card col-3 kpi-card">
+            <div class="kpi-top"><span class="text-sm muted">Meals Pending</span><svg class="icon" viewBox="0 0 24 24"><path d="M6 3 h9 l3 3 v15 h-12 z"/><path d="M15 3 v3 h3"/></svg></div>
+            <div class="kpi-value">32</div>
+            <div class="text-xs muted">Chưa phân phát (bữa trưa)</div>
+          </div>
+          <div class="card col-3 kpi-card">
+            <div class="kpi-top"><span class="text-sm muted">Dietary Notes</span><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3 v3 M12 18 v3 M3 12 h3 M18 12 h3"/></svg></div>
+            <div class="kpi-value">4</div>
+            <div class="text-xs muted">Học sinh chế độ ăn đặc biệt</div>
+          </div>
+          <div class="card col-3 kpi-card">
+            <div class="kpi-top"><span class="text-sm muted">Health Incidents</span><svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/></svg></div>
+            <div class="kpi-value">1</div>
+            <div class="text-xs muted">Báo cáo đang mở</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title"><svg class="icon" viewBox="0 0 24 24"><path d="M4 4 h14 v13 h-9 l-5 4 z"/></svg><h2 class="text-md" style="margin:0;">Today's Notice Board</h2></div>
+          <ul class="plain" style="display:flex; flex-direction:column; gap:10px;">
+            <li class="alert alert-danger"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8 v5 M12 16 v0.1"/></svg><div><strong>Cảnh báo dị ứng:</strong> Bé Trần Gia Bảo (2A) — dị ứng đậu phộng mức Severe, kiểm tra kỹ suất ăn trưa nay.</div></li>
+            <li class="alert alert-warning"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/></svg><div><strong>Thực đơn đặc biệt:</strong> 2 học sinh ăn chay hôm nay, món thay thế: đậu hũ sốt cà.</div></li>
+            <li class="alert alert-info"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg><div><strong>Sự cố mới nhất:</strong> Báo cáo #INC-0231 (buồn nôn nhẹ) — đang chờ Medical Staff xác minh.</div></li>
+          </ul>
+        </div>
+
+        <div class="skeleton-note" style="margin-top:18px;"><svg class="icon" viewBox="0 0 24 24"><path d="M4 4 h16 v16 h-16 z" stroke-dasharray="4 3"/></svg>Loading: hiển thị Skeleton cho 4 Metric Card khi tải dữ liệu lần đầu.</div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SCREEN 02 — STUDENT LIST                                      -->
+    <!-- ============================================================ -->
+    <div class="screen" id="student-list">
+      <div class="topbar">
+        <div class="breadcrumb"><span class="crumb-group">Phân phát Bữa ăn</span> / Student List</div>
+        <div class="user-chip"><div class="avatar avatar-sm"><svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px;"><circle cx="12" cy="8" r="4"/><path d="M4 21 v-1 a8 8 0 0 1 16 0 v1"/></svg></div></div>
+      </div>
+      <div class="content">
+        <div class="page-header"><div><h1 class="text-lg">Class 2A Student List</h1></div></div>
+
+        <div class="filter-bar">
+          <wired-search-input placeholder="Tìm học sinh..."></wired-search-input>
+        </div>
+        <div class="tab-row">
+          <div class="tab-item active">All (32)</div>
+          <div class="tab-item">Allergy Warning (4)</div>
+          <div class="tab-item">Special Diet (4)</div>
+          <div class="tab-item">Normal (24)</div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="sketchy">
+            <thead><tr><th>Avatar</th><th>Họ tên</th><th>Tình trạng</th><th>Xem hồ sơ</th></tr></thead>
+            <tbody>
+              <tr onclick="showScreen('student-detail')"><td><div class="avatar avatar-sm"></div></td><td>Trần Gia Bảo</td><td><span class="badge badge-danger"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg>Dị ứng Severe</span></td><td><a>Xem hồ sơ</a></td></tr>
+              <tr onclick="showScreen('student-detail')"><td><div class="avatar avatar-sm"></div></td><td>Nguyễn Ngọc Mai</td><td><span class="badge badge-warning"><svg viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/></svg>Chế độ ăn đặc biệt</span></td><td><a>Xem hồ sơ</a></td></tr>
+              <tr onclick="showScreen('student-detail')"><td><div class="avatar avatar-sm"></div></td><td>Lê Hoàng Phúc</td><td><span class="badge badge-success"><svg viewBox="0 0 24 24"><path d="M4 12 l5 5 11 -11"/></svg>Bình thường</span></td><td><a>Xem hồ sơ</a></td></tr>
+              <tr onclick="showScreen('student-detail')"><td><div class="avatar avatar-sm"></div></td><td>Phạm Thảo Vy</td><td><span class="badge badge-success"><svg viewBox="0 0 24 24"><path d="M4 12 l5 5 11 -11"/></svg>Bình thường</span></td><td><a>Xem hồ sơ</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="text-xs muted" style="margin-top:8px;">Trạng thái Empty (giả định): "Lớp chưa có học sinh nào" — không áp dụng ở bản mẫu này vì lớp 2A đã có 32 học sinh.</div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SCREEN 03 — STUDENT DETAIL                                    -->
+    <!-- ============================================================ -->
+    <div class="screen" id="student-detail">
+      <div class="topbar">
+        <div class="breadcrumb"><span class="crumb-group">Student List</span> / Student Detail</div>
+        <div class="user-chip"><div class="avatar avatar-sm"></div></div>
+      </div>
+      <div class="content">
+        <div class="page-header"><div><h1 class="text-lg">Trần Gia Bảo</h1></div></div>
+
+        <div class="grid-12">
+          <div class="card col-4">
+            <div style="display:flex; gap:14px; align-items:center;">
+              <div class="avatar" style="width:72px;height:72px;"></div>
+              <div>
+                <div class="text-md">Trần Gia Bảo</div>
+                <div class="muted text-sm">Lớp 2A · Sinh 14/03/2019</div>
+              </div>
+            </div>
+            <div style="margin-top:14px; display:flex; flex-direction:column; gap:8px;">
+              <span class="badge badge-danger" onclick="showScreen('allergy-info')" style="cursor:pointer;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg>Có dị ứng</span>
+              <span class="badge badge-warning" onclick="showScreen('special-meal')" style="cursor:pointer;"><svg viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/></svg>Chế độ ăn đặc biệt</span>
+            </div>
+            <div class="text-xs muted" style="margin-top:14px;">Parent Contact: Trần Văn Hùng (phụ huynh) — <span title="Giả định — cần team xác nhận mức độ chi tiết được phép hiển thị">[Giả định]</span></div>
+          </div>
+          <div class="card col-8">
+            <div class="tab-row">
+              <div class="tab-item active" onclick="showScreen('health-info')"><svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M12 21 s-8 -5 -8 -11 a4 4 0 0 1 8 -2 a4 4 0 0 1 8 2 c0 6 -8 11 -8 11 z"/></svg>Health Information</div>
+              <div class="tab-item" onclick="showScreen('meal-records')"><svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M5 4 h14 v13 h-9 l-5 4 z"/></svg>Meal Records</div>
+            </div>
+            <div class="muted text-sm">Chọn 1 trong 2 tab, hoặc bấm badge dị ứng/chế độ ăn ở cột trái để xem chi tiết tương ứng.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SCREEN 04 — ALLERGY INFORMATION                               -->
+    <!-- ============================================================ -->
+    <div class="screen" id="allergy-info">
+      <div class="topbar">
+        <div class="breadcrumb"><span class="crumb-group">Student Detail</span> / Allergy Information</div>
+        <div class="user-chip"><div class="avatar avatar-sm"></div></div>
+      </div>
+      <div class="content">
+        <div class="page-header"><div><h1 class="text-lg">Trần Gia Bảo — Lớp 2A</h1></div></div>
+
+        <div class="alert alert-info" style="margin-bottom:18px;">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8 v0.1 M12 11 v5"/></svg>
+          <div>Chỉ Medical Staff/Phụ huynh chỉnh sửa được thông tin này. Teacher chỉ xem.</div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="sketchy">
+            <thead><tr><th>Allergen</th><th>Mức độ nghiêm trọng</th></tr></thead>
+            <tbody>
+              <tr><td>Đậu phộng</td><td><span class="badge badge-danger"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg>Severe</span></td></tr>
+              <tr><td>Hải sản có vỏ</td><td><span class="badge badge-warning"><svg viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/></svg>Moderate</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top:14px;"><span class="badge badge-success"><svg viewBox="0 0 24 24"><path d="M4 12 l5 5 11 -11"/></svg>Đã xác nhận</span></div>
+        <div class="text-xs muted" style="margin-top:10px;">Trạng thái Empty (nếu không có dị ứng): "Học sinh chưa khai báo dị ứng".</div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SCREEN 05 — HEALTH INFORMATION                                -->
+    <!-- ============================================================ -->
+    <div class="screen" id="health-info">
+      <div class="topbar">
+        <div class="breadcrumb"><span class="crumb-group">Student Detail</span> / Health Information</div>
+        <div class="user-chip"><div class="avatar avatar-sm"></div></div>
+      </div>
+      <div class="content">
+        <div class="page-header"><div><h1 class="text-lg">Trần Gia Bảo — Health Information</h1></div></div>
+
+        <div class="grid-12">
+          <div class="card col-4 kpi-card">
+            <div class="kpi-top"><span class="text-sm muted">Blood Type</span><svg class="icon" viewBox="0 0 24 24"><path d="M12 21 s-7 -6 -7 -11 a7 7 0 0 1 14 0 c0 5 -7 11 -7 11 z"/></svg></div>
+            <div class="kpi-value">O+</div>
+            <div class="text-xs muted">[Giả định — chưa có nguồn field chính thức]</div>
+          </div>
+          <div class="card col-8">
+            <div class="section-title"><svg class="icon" viewBox="0 0 24 24"><path d="M9 3 h6 v4 h-6 z"/><path d="M6 7 h12 v14 h-12 z"/></svg><h2 class="text-md" style="margin:0;">Chronic Conditions</h2></div>
+            <div class="table-wrap">
+              <table class="sketchy">
+                <thead><tr><th>Bệnh mãn tính / Lưu ý y tế</th></tr></thead>
+                <tbody><tr><td>Hen suyễn nhẹ — mang theo ống hít cấp cứu, để tại phòng y tế trường</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:18px;">
+          <div class="text-sm"><strong>Emergency Contact Note</strong> <span class="text-xs muted">[Giả định]</span></div>
+          <div class="muted">Liên hệ khẩn: Trần Văn Hùng (bố) — 0912 xxx xxx, ưu tiên gọi trước khi liên hệ Ban giám hiệu.</div>
+        </div>
+
+        <div class="alert alert-info" style="margin-top:18px;">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8 v0.1 M12 11 v5"/></svg>
+          <div>Quyền chỉnh sửa thuộc Medical Staff/Phụ huynh (BR-172). Teacher chỉ xem.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SCREEN 06 — SPECIAL MEAL REQUIREMENTS                         -->
+    <!-- ============================================================ -->
+    <div class="screen" id="special-meal">
+      <div class="topbar">
+        <div class="breadcrumb"><span class="crumb-group">Phân phát Bữa ăn</span> / Special Meal Requirements</div>
+        <div class="user-chip"><div class="avatar avatar-sm"></div></div>
+      </div>
+      <div class="content">
+        <div class="page-header"><div><h1 class="text-lg">Special Meal Requirements — Class 2A</h1></div></div>
+
+        <div class="table-wrap">
+          <table class="sketchy">
+            <thead><tr><th>Họ tên</th><th>Loại chế độ ăn</th><th>Lý do</th><th>Trạng thái duyệt</th></tr></thead>
+            <tbody>
+              <tr><td>Nguyễn Ngọc Mai</td><td>Ăn chay</td><td>Tôn giáo (gia đình yêu cầu)</td><td><span class="badge badge-success"><svg viewBox="0 0 24 24"><path d="M4 12 l5 5 11 -11"/></svg>Đã duyệt</span></td></tr>
+              <tr><td>Trần Gia Bảo</td><td>Kiêng đậu phộng &amp; hải sản</td><td>Dị ứng (BR-123)</td><td><span class="badge badge-success"><svg viewBox="0 0 24 24"><path d="M4 12 l5 5 11 -11"/></svg>Đã duyệt</span></td></tr>
+              <tr><td>Đỗ Minh Khôi</td><td>Ăn kiêng đường</td><td>Tiểu đường type 1</td><td><span class="badge badge-warning"><svg viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/></svg>Chờ duyệt</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card" style="margin-top:18px;">
+          <div class="text-sm"><strong>Preparation Note</strong></div>
+          <div class="muted">Món thay thế ăn chay: đậu hũ sốt cà chua (bếp riêng, không dùng chung dụng cụ với món mặn — BR-082).</div>
+        </div>
+        <div class="text-xs muted" style="margin-top:10px;">Trạng thái Empty: "Lớp không có học sinh cần chế độ ăn đặc biệt".</div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SCREEN 07 — MEAL RECORDS                                      -->
+    <!-- ============================================================ -->
+    <div class="screen" id="meal-records">
+      <div class="topbar">
+        <div class="breadcrumb"><span class="crumb-group">Phân phát Bữa ăn</span> / Meal Records</div>
+        <div class="user-chip"><div class="avatar avatar-sm"></div></div>
+      </div>
+      <div class="content">
+        <div class="page-header">
+          <div><h1 class="text-lg">Meal Records</h1><div class="muted">Học sinh: Trần Gia Bảo (hoặc chọn cả lớp)</div></div>
+        </div>
+
+        <div class="filter-bar">
+          <wired-calendar style="width:260px;"></wired-calendar>
+        </div>
+
+        <div class="table-wrap">
+          <table class="sketchy">
+            <thead><tr><th>Ngày</th><th>Món ăn</th><th>Trạng thái tiêu thụ</th><th>Tuân thủ chế độ ăn</th></tr></thead>
+            <tbody>
+              <tr onclick="document.getElementById('consume-modal').classList.add('active')"><td>01/07/2026</td><td>Cơm gà kho, canh bí đỏ, kiêng đậu phộng</td><td><span class="badge badge-success">Fully Consumed</span></td><td><span class="badge badge-success">Tuân thủ</span></td></tr>
+              <tr onclick="document.getElementById('consume-modal').classList.add('active')"><td>30/06/2026</td><td>Bún chả cá, kiêng hải sản có vỏ</td><td><span class="badge badge-warning">Partially Consumed</span></td><td><span class="badge badge-success">Tuân thủ</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="text-xs muted" style="margin-top:10px;">Trạng thái Empty: "Chưa có dữ liệu bữa ăn trong khoảng thời gian đã chọn". Error MSG-021 khi ghi nhận trùng lặp.</div>
+      </div>
+    </div>
+
+    <!-- Modal: Consumption Record Input (Save Consumption) -->
+    <div class="modal-overlay" id="consume-modal">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h2 class="text-md">Ghi nhận tiêu thụ</h2>
+          <svg class="icon close-x" viewBox="0 0 24 24" onclick="document.getElementById('consume-modal').classList.remove('active')"><path d="M5 5 L19 19 M19 5 L5 19"/></svg>
+        </div>
+        <div class="field-block">
+          <div class="field-label">Consumption Record <span class="req">*</span> <span class="text-xs muted">(chỉ học sinh chế độ ăn đặc biệt)</span></div>
+          <div class="radio-row">
+            <wired-radio-group selected="fully"><wired-radio name="c" value="fully">Fully Consumed</wired-radio><wired-radio name="c" value="partial">Partially Consumed</wired-radio><wired-radio name="c" value="none">Not Consumed</wired-radio></wired-radio-group>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="document.getElementById('consume-modal').classList.remove('active')"><svg class="icon" viewBox="0 0 24 24" style="stroke:#fff;"><path d="M4 12 l5 5 11 -11"/></svg>Save Consumption</button>
+          <button class="btn-secondary" onclick="document.getElementById('consume-modal').classList.remove('active')">Hủy</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function showScreen(id){
+    document.querySelectorAll('.screen').forEach(function(el){ el.classList.remove('active'); });
+    var target = document.getElementById(id);
+    if(target){ target.classList.add('active'); }
+
+    document.querySelectorAll('.side-link').forEach(function(el){ el.classList.remove('active'); });
+    var map = { 'teacher-home':0, 'student-list':1, 'student-detail':1, 'allergy-info':1, 'health-info':1, 'special-meal':2, 'meal-records':3 };
+    var links = document.querySelectorAll('.side-link:not(.disabled)');
+    if(map[id] !== undefined && links[map[id]]){ links[map[id]].classList.add('active'); }
+  }
+</script>
+
+</body>
+</html>

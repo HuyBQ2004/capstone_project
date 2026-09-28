@@ -1,0 +1,10 @@
+target/
+data/
+secrets/
+.env
+.env.*
+!.env.example
+.idea/
+*.iml
+.vscode/
+red-gate-evidence.log

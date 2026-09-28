@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SFMS Health - Lịch sử y tế</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#d3f1ff",
+                        "secondary-container": "#d0e1fb",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#bec8cd",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#e2efec",
+                        "inverse-surface": "#2d3133",
+                        "on-surface-variant": "#3f484c",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#004d62",
+                        "inverse-primary": "#81d1f0",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#54647a",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "outline": "#6f787d",
+                        "on-primary-fixed": "#001f29",
+                        "inverse-on-surface": "#eff1f3",
+                        "secondary": "#505f76",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#81d1f0",
+                        "surface": "#f7f9fb",
+                        "surface-tint": "#006781",
+                        "primary-container": "#0e7490",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#e0e3e5",
+                        "surface-dim": "#d8dadc",
+                        "surface-container": "#eceef0",
+                        "background": "#f7f9fb",
+                        "tertiary-fixed-dim": "#bcc9c6",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-tertiary-fixed-variant": "#3d4947",
+                        "on-surface": "#191c1e",
+                        "primary": "#005a71",
+                        "tertiary": "#495553",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "surface-container-highest": "#e0e3e5",
+                        "tertiary-container": "#616d6b",
+                        "surface-bright": "#f7f9fb",
+                        "surface-container-high": "#e6e8ea",
+                        "on-background": "#191c1e",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-tertiary-fixed": "#121e1c",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "tertiary-fixed": "#d8e5e2",
+                        "primary-fixed": "#b9eaff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "32px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "base": "4px",
+                        "gutter": "16px",
+                        "lg": "24px",
+                        "margin-mobile": "16px",
+                        "margin-tablet": "24px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-lg-mobile": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "label-lg": ["Be Vietnam Pro"],
+                        "title-lg": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600" }],
+                        "title-lg": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .timeline-line {
+            width: 2px;
+            background: linear-gradient(to bottom, theme('colors.primary') 0%, theme('colors.primary') 50%, theme('colors.surface-variant') 50%, theme('colors.surface-variant') 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pt-14 pb-20 md:pb-0">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface shadow-sm flex items-center justify-between px-margin-mobile h-14 w-full">
+<button aria-label="Back" class="text-primary active:scale-95 transition-transform duration-150 p-2 -ml-2 rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-on-surface">Lịch sử y tế</h1>
+<div class="w-10"></div> <!-- Placeholder for balance -->
+</header>
+<main class="max-w-3xl mx-auto px-margin-mobile py-lg pb-xl">
+<!-- Student Info Summary (Context) -->
+<section class="bg-surface-container-lowest rounded-xl p-md shadow-sm mb-lg flex items-center gap-md border border-surface-variant">
+<div class="w-16 h-16 rounded-full overflow-hidden bg-surface-variant shrink-0">
+<img alt="Student Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a young primary school student, smiling slightly, set against a clean, bright, white background typical of a medical or school profile photo. The lighting is soft and even, reflecting a clinical but friendly atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC50GaL3mDkith5SNCVGChCAY9HbVPzh5MaK7d2PYf34PwpIvYFBOQorGJTRQjJBBmFE8f8PFeC0Iz5JhzkthkzrPKlOE9PBVkc9TO9Kv2qd5hpLIo_o0JIhQ8eEZR3BBG7tCHaVnncBeh9QzXYQpqBBlqk_Y25naTxnenLP5iHPkJyukMYti7I_QyTMFy6YCYEy6X9UBNKhOvoq1ooeElikZ1T-t3SaLbCKKgfkD4mUvQvAKJ2gnys0e8oYeR1pvphK-d5y8FXihQ"/>
+</div>
+<div>
+<h2 class="font-title-lg text-title-lg text-on-surface">Nguyễn Văn A</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Lớp 3A • ID: HS-2023-001</p>
+<div class="flex gap-sm mt-xs">
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px] mr-1">warning</span> Hải sản
+                    </span>
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm">
+                        Nhóm máu O+
+                    </span>
+</div>
+</div>
+</section>
+<!-- Vertical Timeline -->
+<h3 class="font-label-lg text-label-lg text-secondary uppercase tracking-wider mb-md ml-2">Tiến trình y tế</h3>
+<div class="relative ml-2 pl-6">
+<!-- Continuous Line -->
+<div class="absolute left-[7px] top-4 bottom-8 w-[2px] bg-surface-variant"></div>
+<!-- Timeline Item 1 -->
+<div class="relative mb-xl group">
+<!-- Node -->
+<div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-primary border-4 border-surface shadow-sm z-10 group-hover:scale-110 transition-transform"></div>
+<div class="bg-surface-container-lowest rounded-xl p-md shadow-[0_4px_12px_rgba(14,116,144,0.04)] border border-surface-variant/50 relative">
+<!-- Date Badge -->
+<div class="absolute -top-3 left-4 bg-primary text-on-primary font-label-sm text-label-sm px-3 py-1 rounded-full shadow-sm">
+                        15 Tháng 05, 2024
+                    </div>
+<div class="pt-2 flex items-start gap-md">
+<div class="p-2 bg-primary-container text-on-primary-container rounded-lg shrink-0 mt-1">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">note_alt</span>
+</div>
+<div>
+<h4 class="font-title-lg text-title-lg text-on-surface mb-xs">Cập nhật ghi chú lâm sàng</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-sm">Học sinh bị sốt nhẹ (37.8°C). Đã cho uống nhiều nước và nghỉ ngơi tại phòng y tế trong 1 giờ. Đã liên hệ phụ huynh.</p>
+<div class="flex items-center gap-2 text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">person</span>
+                                Bác sĩ Huy - Trạm y tế trường
+                            </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Item 2 -->
+<div class="relative mb-xl group">
+<!-- Node -->
+<div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-secondary-container border-4 border-surface shadow-sm z-10 group-hover:scale-110 transition-transform"></div>
+<div class="bg-surface-container-lowest rounded-xl p-md shadow-[0_4px_12px_rgba(14,116,144,0.04)] border border-surface-variant/50 relative">
+<div class="absolute -top-3 left-4 bg-surface-variant text-on-surface-variant font-label-sm text-label-sm px-3 py-1 rounded-full border border-outline-variant">
+                        10 Tháng 04, 2024
+                    </div>
+<div class="pt-2 flex items-start gap-md">
+<div class="p-2 bg-error-container text-on-error-container rounded-lg shrink-0 mt-1">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<div>
+<h4 class="font-title-lg text-title-lg text-on-surface mb-xs">Phê duyệt khai báo dị ứng</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-sm">Hồ sơ y tế được cập nhật với cảnh báo dị ứng mức độ trung bình với các loại Hải sản. Đã đồng bộ với hệ thống bếp ăn.</p>
+<div class="flex items-center gap-2 text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">admin_panel_settings</span>
+                                Hệ thống quản trị
+                            </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Item 3 -->
+<div class="relative group">
+<!-- Node -->
+<div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-surface-variant border-4 border-surface shadow-sm z-10 group-hover:scale-110 transition-transform"></div>
+<div class="bg-surface-container-lowest rounded-xl p-md shadow-[0_4px_12px_rgba(14,116,144,0.04)] border border-surface-variant/50 relative opacity-80">
+<div class="absolute -top-3 left-4 bg-surface-variant text-on-surface-variant font-label-sm text-label-sm px-3 py-1 rounded-full border border-outline-variant">
+                        20 Tháng 08, 2023
+                    </div>
+<div class="pt-2 flex items-start gap-md">
+<div class="p-2 bg-secondary-container text-on-secondary-container rounded-lg shrink-0 mt-1">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">health_and_safety</span>
+</div>
+<div>
+<h4 class="font-title-lg text-title-lg text-on-surface mb-xs">Khám sức khỏe đầu năm</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-sm">Kết quả tổng quát: Bình thường. Chiều cao: 130cm, Cân nặng: 28kg. Thị lực: 10/10.</p>
+<div class="flex items-center gap-2 text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">local_hospital</span>
+                                BV Đa Khoa Quận
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

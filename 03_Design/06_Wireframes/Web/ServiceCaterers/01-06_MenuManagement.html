@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>SFMS Wireframe — Service Caterers (Web): Menu Management</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root{ --ink:#333; --paper:#fff; --gray:#777; --lightgray:#d7d7d7; --midgray:#aaa; }
+  * { box-sizing: border-box; }
+  html { font-size: 18px; }
+  body { margin:0; font-family:'Patrick Hand', cursive; color:var(--ink); background-color:#f4f4f4; background-image: radial-gradient(#d7d7d7 1px, transparent 1px); background-size: 20px 20px; font-size:18px; }
+  .text-xs   { font-size: 14px; line-height:1.4; }
+  .text-sm   { font-size: 18px; line-height:1.5; }
+  .text-base { font-size: 22px; line-height:1.5; }
+  .text-md   { font-size: 28px; line-height:1.3; }
+  .text-lg   { font-size: 35px; line-height:1.2; }
+  a { color:#3a5a8c; text-decoration:underline; cursor:pointer; }
+
+  .app { display:flex; min-height:100vh; }
+  .sidebar { width:280px; min-width:280px; background:#eee; border-right:3px solid var(--ink); padding:18px 14px; position:sticky; top:0; height:100vh; overflow-y:auto; }
+  .brand { display:flex; align-items:center; gap:8px; margin-bottom:18px; }
+  .side-group { margin-bottom:6px; }
+  .side-group-title { display:flex; align-items:center; gap:8px; font-size:16px; color:var(--gray); text-transform:uppercase; letter-spacing:1px; margin:14px 0 6px 4px; }
+  .side-link { display:flex; align-items:center; gap:10px; padding:8px 10px; margin:2px 0; border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; font-size:18px; color:var(--ink); cursor:pointer; }
+  .side-link:hover { background:#fff; border:2px dashed var(--midgray); }
+  .side-link.active { background:var(--ink); color:#fff; border:2px solid var(--ink); }
+  .side-link.active svg { stroke:#fff; }
+  .side-link.disabled { color:var(--midgray); cursor:default; }
+  .side-link.disabled:hover { background:none; border:none; }
+  .side-note { font-size:13px; color:var(--midgray); margin-left:32px; }
+  .icon { width:20px; height:20px; flex:none; stroke:var(--ink); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .icon-sm { width:16px; height:16px; }
+
+  .main { flex:1; min-width:0; }
+  .topbar { display:flex; align-items:center; justify-content:space-between; padding:14px 26px; border-bottom:3px solid var(--ink); background:#fafafa; }
+  .breadcrumb { font-size:20px; }
+  .breadcrumb .crumb-group { color:var(--gray); }
+  .user-chip { display:flex; align-items:center; gap:8px; font-size:16px; }
+  .content { padding:26px; }
+
+  .card { border:2px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; padding:18px; }
+  .card + .card { margin-top:18px; }
+
+  .btn-primary { background:#333; color:white; border:2px solid #333; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:10px 22px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+  .btn-primary svg { stroke:#fff; }
+  .btn-secondary { background:white; color:#333; border:2px solid #333; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:8px 18px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+  .btn-danger { background:white; color:#333; border:3px solid #333; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:8px 18px; cursor:pointer; }
+  button:disabled { opacity:0.45; cursor:not-allowed; }
+
+  .grid-12 { display:grid; grid-template-columns: repeat(12, 1fr); gap:18px; }
+  .col-3 { grid-column: span 3; } .col-4 { grid-column: span 4; } .col-6 { grid-column: span 6; } .col-8 { grid-column: span 8; } .col-12 { grid-column: span 12; }
+  @media (max-width: 980px){ .grid-12 > [class*="col-"] { grid-column: span 12; } }
+
+  .badge { display:inline-flex; align-items:center; gap:6px; padding:3px 12px; font-size:16px; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; }
+  .badge-success { border:2px solid var(--ink); background:#fff; }
+  .badge-warning { border:2px dashed var(--ink); background:#fff; }
+  .badge-danger  { border:3px solid var(--ink); background:#fff; }
+  .badge-info    { border:2px dotted var(--ink); background:#fff; }
+
+  table.sketchy { width:100%; border-collapse:separate; border-spacing:0; font-size:18px; }
+  table.sketchy th, table.sketchy td { text-align:left; padding:10px 12px; border-bottom:2px solid var(--lightgray); }
+  table.sketchy thead th { border-bottom:3px solid var(--ink); color:var(--gray); font-weight:normal; font-size:16px; text-transform:uppercase; letter-spacing:0.5px; }
+  .table-wrap { border:2px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; overflow:hidden; background:#fff; }
+  .table-wrap table.sketchy { margin:0; }
+
+  .filter-bar { display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-bottom:16px; }
+
+  .screen { display:none; }
+  .screen.active { display:block; }
+  h1.text-lg, h2.text-md { margin:0 0 4px 0; }
+  .page-header { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:20px; flex-wrap:wrap; }
+  .muted { color:var(--gray); }
+  .section-title { display:flex; align-items:center; gap:8px; margin:0 0 12px 0; }
+
+  .alert { display:flex; gap:12px; align-items:flex-start; padding:14px 16px; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; }
+  .alert-danger { border:3px solid var(--ink); }
+  .alert-warning { border:2px dashed var(--ink); }
+  .alert + .alert { margin-top:12px; }
+
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.35); align-items:center; justify-content:center; z-index:50; padding:20px; }
+  .modal-overlay.active { display:flex; }
+  .modal-box { width:100%; max-width:560px; background:#fff; border:3px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; padding:24px; max-height:90vh; overflow-y:auto; }
+  .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  .close-x { cursor:pointer; }
+
+  /* Right-slide sheet for AI Panel */
+  .sheet-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.3); z-index:60; }
+  .sheet-overlay.active { display:block; }
+  .sheet-panel { position:absolute; right:0; top:0; height:100%; width:480px; max-width:92vw; background:#fff; border-left:3px solid var(--ink); padding:22px; overflow-y:auto; }
+
+  .field-label { font-size:18px; margin-bottom:6px; display:flex; gap:6px; align-items:center; }
+  .field-block { margin-bottom:16px; }
+  wired-input, wired-textarea, wired-select { width:100%; display:block; }
+
+  .state-legend { margin-top:14px; padding:12px 14px; border:2px dotted var(--midgray); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-size:14px; color:var(--gray); }
+
+  .stepper-bar { display:flex; gap:0; margin-bottom:22px; }
+  .stepper-item { flex:1; text-align:center; padding:10px; border-bottom:4px solid var(--lightgray); cursor:pointer; }
+  .stepper-item.active { border-bottom:4px solid var(--ink); font-weight:bold; }
+  .stepper-page { display:none; }
+  .stepper-page.active { display:block; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><svg class="icon" viewBox="0 0 24 24"><path d="M4 21 L4 9 L12 3 L20 9 L20 21 Z"/><path d="M9 21 L9 14 L15 14 L15 21"/></svg><span class="text-md">SFMS</span></div>
+    <div class="side-note" style="margin-left:0; margin-bottom:14px;">Service Caterers — Bếp trưởng Nguyễn Văn A</div>
+
+    <div class="side-group"><div class="side-group-title"><svg class="icon" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/></svg>Tổng quan</div><div class="side-link active" data-screen="dashboard" onclick="showScreen('dashboard')"><svg class="icon" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/></svg>Dashboard</div></div>
+
+    <div class="side-group">
+      <div class="side-group-title"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6 h16 M4 12 h16 M4 18 h16"/></svg>Thực đơn</div>
+      <div class="side-link" data-screen="menudash" onclick="showScreen('menudash')"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6 h16 M4 12 h16 M4 18 h16"/></svg>Menu Management Dashboard</div>
+    </div>
+
+    <div class="side-group"><div class="side-group-title"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20 V8 l8 -4 8 4 v12"/></svg>Nhận hàng &amp; Kho</div><div class="side-link disabled">Receiving/Inventory <span class="side-note" style="margin-left:0">(nhóm khác)</span></div></div>
+    <div class="side-group"><div class="side-group-title"><svg class="icon" viewBox="0 0 24 24"><path d="M9 12 L11 14 L15 9"/><circle cx="12" cy="12" r="9"/></svg>Kiểm tra 3 Bước</div><div class="side-link disabled">Three-Step Inspection <span class="side-note" style="margin-left:0">(nhóm khác)</span></div></div>
+    <div class="side-group"><div class="side-group-title"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3 v6 M12 15 v6 M3 12 h6 M15 12 h6"/></svg>Lưu mẫu Thực phẩm</div><div class="side-link disabled">Food Sample Retention <span class="side-note" style="margin-left:0">(nhóm khác)</span></div></div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="breadcrumb"><span class="crumb-group">Thực đơn</span> / <span id="crumb-current">Service Caterers Dashboard</span></div>
+      <div class="user-chip"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20 a8 8 0 0 1 16 0"/></svg>Bếp trưởng Nguyễn Văn A</div>
+    </div>
+
+    <div class="content">
+
+      <!-- ============ 01: Service Caterers Dashboard ============ -->
+      <div class="screen active" id="dashboard">
+        <h1 class="text-lg">Xin chào, Bếp trưởng Nguyễn Văn A</h1>
+        <div class="grid-12" style="margin-top:14px">
+          <div class="col-4"><div class="card"><div class="text-sm muted">Phiên nhận hàng hôm nay</div><div class="text-lg">2</div></div></div>
+          <div class="col-4"><div class="card"><div class="text-sm muted">Bước kiểm tra đang chờ</div><div class="text-lg">3</div></div></div>
+          <div class="col-4"><div class="card"><div class="text-sm muted">Cảnh báo dị ứng đang hoạt động</div><div class="text-lg">1</div></div></div>
+        </div>
+
+        <div class="section-title text-base" style="margin-top:24px">Grid Menu Items</div>
+        <div class="grid-12">
+          <div class="col-3"><div class="card" style="cursor:pointer" onclick="showScreen('menudash')"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6 h16 M4 12 h16 M4 18 h16"/></svg><div class="text-sm" style="margin-top:8px">Thực đơn</div></div></div>
+          <div class="col-3"><div class="card" style="opacity:0.5" title="Xem 07-14_ReceivingAndEvidence.html"><svg class="icon" viewBox="0 0 24 24" stroke="var(--midgray)"><path d="M4 20 V8 l8 -4 8 4 v12"/></svg><div class="text-sm" style="margin-top:8px">Nhận hàng &amp; Kho</div></div></div>
+          <div class="col-3"><div class="card" style="opacity:0.5" title="Xem 15-20_34_ThreeStepInspection.html"><svg class="icon" viewBox="0 0 24 24" stroke="var(--midgray)"><path d="M9 12 L11 14 L15 9"/><circle cx="12" cy="12" r="9"/></svg><div class="text-sm" style="margin-top:8px">Kiểm tra 3 Bước</div></div></div>
+          <div class="col-3"><div class="card" style="opacity:0.5" title="Xem 21-23_FoodSampleRetention.html"><svg class="icon" viewBox="0 0 24 24" stroke="var(--midgray)"><circle cx="12" cy="12" r="9"/></svg><div class="text-sm" style="margin-top:8px">Lưu mẫu Thực phẩm</div></div></div>
+          <div class="col-3"><div class="card" style="opacity:0.5" title="Nhóm khác chưa build"><svg class="icon" viewBox="0 0 24 24" stroke="var(--midgray)"><path d="M4 12 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0"/></svg><div class="text-sm" style="margin-top:8px">Phục vụ Bữa ăn</div></div></div>
+          <div class="col-3"><div class="card" style="opacity:0.5" title="Nhóm khác chưa build"><svg class="icon" viewBox="0 0 24 24" stroke="var(--midgray)"><path d="M12 3 L21 20 H3 Z"/></svg><div class="text-sm" style="margin-top:8px">Sự cố &amp; Khắc phục</div></div></div>
+          <div class="col-3"><div class="card" style="opacity:0.5" title="Nhóm khác chưa build"><svg class="icon" viewBox="0 0 24 24" stroke="var(--midgray)"><circle cx="12" cy="12" r="9"/><path d="M9 9 L15 15 M15 9 L9 15"/></svg><div class="text-sm" style="margin-top:8px">Vi phạm</div></div></div>
+        </div>
+        <div class="state-legend">Loading: Skeleton cho grid+widget. Error: Alert destructive nếu tải widget thất bại, không chặn Grid Menu Items.</div>
+      </div>
+
+      <!-- ============ 02: Menu Management Dashboard ============ -->
+      <div class="screen" id="menudash">
+        <div class="page-header"><div><h1 class="text-lg">Quản lý Thực đơn</h1></div><button class="btn-primary" onclick="showScreen('create')">Tạo Thực đơn Mới</button></div>
+        <div class="filter-bar"><wired-input placeholder="Từ ngày"></wired-input><wired-input placeholder="Đến ngày"></wired-input><wired-select><wired-item value="all">Tất cả trạng thái</wired-item></wired-select></div>
+        <div class="table-wrap">
+          <table class="sketchy">
+            <thead><tr><th>Tuần</th><th>Trạng thái</th><th>Ngày cập nhật</th><th>Hành động</th></tr></thead>
+            <tbody>
+              <tr><td>Tuần 28/2026 (06/07-12/07)</td><td><span class="badge badge-info">Draft</span></td><td>05/07 09:20</td><td><button class="btn-secondary" onclick="showScreen('update')">Edit</button> <button class="btn-secondary" onclick="openModal('submit-modal')">Submit</button> <button class="btn-danger">Delete</button></td></tr>
+              <tr><td>Tuần 27/2026 (29/06-05/07)</td><td><span class="badge badge-danger">Rejected</span></td><td>28/06 14:10</td><td><button class="btn-secondary" onclick="showScreen('update')">Edit</button> <button class="btn-danger">Delete</button></td></tr>
+              <tr><td>Tuần 26/2026 (22/06-28/06)</td><td><span class="badge badge-success">Published</span></td><td>20/06 08:00</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="state-legend">Empty: chưa có thực đơn nào → illustration + nút Tạo Thực đơn Mới. Loading: Skeleton. Error: Alert destructive MSG-004/MSG-005. Success: Toast sau Delete.</div>
+      </div>
+
+      <!-- ============ 03: Create Menu Workspace ============ -->
+      <div class="screen" id="create">
+        <div class="page-header"><div><h1 class="text-lg">Tạo Thực đơn Mới</h1></div></div>
+        <div class="stepper-bar">
+          <div class="stepper-item active" onclick="showStepperPage('create',1)">1. Thông tin chung</div>
+          <div class="stepper-item" onclick="showStepperPage('create',2)">2. Chọn món &amp; dinh dưỡng</div>
+          <div class="stepper-item" onclick="showStepperPage('create',3)">3. Xác nhận dị ứng</div>
+        </div>
+
+        <div class="stepper-page active" id="create-p1">
+          <div class="grid-12">
+            <div class="col-6"><div class="field-label">Tuần áp dụng / Ngày phục vụ <span style="color:var(--ink)">*</span></div><wired-input placeholder="Tuần 29/2026 (13/07-19/07)"></wired-input></div>
+            <div class="col-6"><div class="field-label">Bữa ăn trong ngày <span style="color:var(--ink)">*</span></div><wired-select><wired-item value="lunch">Trưa</wired-item></wired-select></div>
+          </div>
+          <div class="text-xs muted" style="margin-top:10px">Phải nộp phê duyệt tối thiểu 3 ngày trước tuần dùng (BR-061).</div>
+        </div>
+
+        <div class="stepper-page" id="create-p2">
+          <div class="grid-12">
+            <div class="col-6">
+              <div class="field-label">Chọn món ăn <span style="color:var(--ink)">*</span></div>
+              <div class="table-wrap"><table class="sketchy"><tbody><tr><td><wired-checkbox checked></wired-checkbox></td><td>Cơm trắng</td></tr><tr><td><wired-checkbox checked></wired-checkbox></td><td>Thịt kho trứng</td></tr><tr><td><wired-checkbox></wired-checkbox></td><td>Canh rau ngót</td></tr></table></div>
+              <button class="btn-secondary" style="margin-top:10px" onclick="openSheet('ai-sheet')">AI Assist (Gemini)</button>
+            </div>
+            <div class="col-6"><div class="field-label">Mục tiêu dinh dưỡng (calo/nhóm chất) <span style="color:var(--ink)">*</span></div><wired-input placeholder="620 kcal, đạt 100% nhóm tuổi 6-10"></wired-input></div>
+          </div>
+        </div>
+
+        <div class="stepper-page" id="create-p3">
+          <div class="field-label">Khai báo nguyên liệu + dị ứng — Thịt kho trứng <span style="color:var(--ink)">*</span></div>
+          <wired-textarea placeholder="Thịt heo, trứng gà, nước mắm (chứa cá — allergen)"></wired-textarea>
+          <div class="alert alert-warning" style="margin-top:12px"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/></svg><div class="text-sm">MSG-051 — "Thịt kho trứng" chứa allergen cá, trùng hồ sơ dị ứng 2 học sinh lớp 2A.</div></div>
+        </div>
+
+        <button class="btn-primary" style="margin-top:18px" onclick="showScreen('menudash')">Lưu nháp</button>
+        <div class="state-legend">Loading: Skeleton khi tải món/kho. Success: Toast MSG-071. Warning: MSG-051 không chặn Lưu nháp, chỉ chặn Submit.</div>
+      </div>
+
+      <!-- ============ 06: Update Menu Screen ============ -->
+      <div class="screen" id="update">
+        <div class="page-header"><div><h1 class="text-lg">Sửa Thực đơn</h1></div></div>
+        <div class="alert alert-danger"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9 L15 15 M15 9 L9 15"/></svg><div class="text-sm">Lý do từ chối gần nhất: "Món canh chua thiếu khai báo dị ứng, bổ sung trước khi nộp lại."</div></div>
+
+        <div class="stepper-bar" style="margin-top:16px">
+          <div class="stepper-item active" onclick="showStepperPage('update',1)">1. Thông tin chung</div>
+          <div class="stepper-item" onclick="showStepperPage('update',2)">2. Chọn món &amp; dinh dưỡng</div>
+          <div class="stepper-item" onclick="showStepperPage('update',3)">3. Xác nhận dị ứng</div>
+        </div>
+
+        <div class="stepper-page active" id="update-p1">
+          <div class="field-label">Ngày phục vụ <span style="color:var(--ink)">*</span></div><wired-input placeholder="Tuần 27/2026 (29/06-05/07)"></wired-input>
+          <div class="field-label" style="margin-top:14px">Chọn món ăn <span style="color:var(--ink)">*</span></div>
+          <div class="table-wrap"><table class="sketchy"><tbody><tr><td><wired-checkbox checked></wired-checkbox></td><td>Cơm trắng</td></tr><tr><td><wired-checkbox checked></wired-checkbox></td><td>Canh chua cá lóc</td></tr></table></div>
+          <div class="alert alert-warning" style="margin-top:12px"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/></svg><div class="text-sm">MSG-075 — "Canh chua cá lóc" đã xếp lịch 3 lần/tuần, vượt giới hạn 2 lần/tuần khuyến nghị.</div></div>
+        </div>
+        <div class="stepper-page" id="update-p2">
+          <div class="field-label">Khai báo nguyên liệu + dị ứng — Canh chua cá lóc <span style="color:var(--ink)">*</span></div>
+          <wired-textarea placeholder="Cá lóc, me, cà chua (chứa cá — allergen)"></wired-textarea>
+          <button class="btn-secondary" style="margin-top:10px" onclick="openSheet('ai-sheet')">AI Assist — thay món xung đột</button>
+        </div>
+        <div class="stepper-page" id="update-p3">
+          <div class="alert alert-warning"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/></svg><div class="text-sm">MSG-051 — vẫn còn xung đột dị ứng cá với 2 học sinh lớp 2A.</div></div>
+        </div>
+
+        <button class="btn-primary" style="margin-top:18px" onclick="showScreen('menudash')">Lưu thay đổi</button>
+        <div class="state-legend">Error: Alert destructive MSG-004/MSG-005; chặn hoàn toàn nếu cố sửa menu đã Approved/Published (BR-067). Success: Toast MSG-074.</div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Sheet: View Menu Recommendations Panel (04) -->
+<div class="sheet-overlay" id="ai-sheet">
+  <div class="sheet-panel">
+    <div class="modal-header"><span class="text-md">AI Menu Recommendations</span><svg class="icon close-x" viewBox="0 0 24 24" onclick="closeSheet('ai-sheet')"><path d="M6 6 L18 18 M18 6 L6 18"/></svg></div>
+    <div class="text-xs muted">Ngữ cảnh gửi AI: tồn kho hiện có, mục tiêu dinh dưỡng 620 kcal/bữa, hồ sơ dị ứng lớp 2A, trần chi phí 18.000đ/suất (BR-080).</div>
+    <div class="card" style="margin-top:12px">
+      <div class="text-base">Canh rau củ thập cẩm</div>
+      <div class="text-xs muted">320 kcal · Rau củ, nước dùng gà — không allergen</div>
+      <button class="btn-secondary" style="margin-top:8px" onclick="closeSheet('ai-sheet')">Áp dụng</button>
+    </div>
+    <div class="card">
+      <div class="page-header" style="margin-bottom:4px"><span class="text-base">Canh bí đỏ tôm khô</span><span class="badge badge-danger">Dị ứng</span></div>
+      <div class="text-xs muted">280 kcal · Bí đỏ, tôm khô (allergen tôm)</div>
+      <button class="btn-secondary" style="margin-top:8px" onclick="closeSheet('ai-sheet')">Áp dụng</button>
+    </div>
+    <div class="text-xs muted" style="margin-top:12px">Cuộc trao đổi này được lưu trữ để phục vụ tuân thủ (BR-157).</div>
+    <div class="state-legend">Error: MSG-073 nếu AI Service không khả dụng, kèm nút Thử lại + lối "Tạo thủ công".</div>
+  </div>
+</div>
+
+<!-- Modal: Submit Menu For Approval Trigger (05) -->
+<div class="modal-overlay" id="submit-modal">
+  <div class="modal-box">
+    <div class="modal-header"><span class="text-md">Nộp Phê duyệt Thực đơn</span><svg class="icon close-x" viewBox="0 0 24 24" onclick="closeModal('submit-modal')"><path d="M6 6 L18 18 M18 6 L6 18"/></svg></div>
+    <div class="card text-sm">Tuần 28/2026 · 15 món · Tổng dinh dưỡng đạt chuẩn nhóm tuổi 6-10</div>
+    <div class="field-block" style="margin-top:12px">
+      <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px"><wired-checkbox checked></wired-checkbox>Đã khai báo đầy đủ nguyên liệu (BR-069)</label>
+      <label style="display:flex;gap:8px;align-items:center"><wired-checkbox checked></wired-checkbox>Nộp tối thiểu 3 ngày trước tuần dùng (BR-061)</label>
+    </div>
+    <div class="alert alert-danger"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9 L15 15 M15 9 L9 15"/></svg><div class="text-sm">MSG-051 — còn xung đột dị ứng nghiêm trọng chưa xử lý. Chặn nộp phê duyệt.</div></div>
+    <button class="btn-primary" style="margin-top:14px" disabled title="Bị khoá do còn xung đột dị ứng nghiêm trọng (BR-063)">Xác nhận Nộp Phê duyệt</button>
+    <div class="state-legend">Success: Toast MSG-039, chuyển "Pending Approval", chuyển giao cross-actor sang School Administration.</div>
+  </div>
+</div>
+
+<script>
+  function showScreen(id){
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.side-link').forEach(l => l.classList.remove('active'));
+    var activeLink = document.querySelector('.side-link[data-screen="' + id + '"]');
+    if (activeLink) activeLink.classList.add('active');
+    var crumbMap = { dashboard:'Service Caterers Dashboard', menudash:'Menu Management Dashboard', create:'Create Menu Workspace', update:'Update Menu Screen' };
+    document.getElementById('crumb-current').textContent = crumbMap[id] || id;
+  }
+  function showStepperPage(prefix, n){
+    for (var i=1;i<=3;i++){
+      document.getElementById(prefix+'-p'+i).classList.toggle('active', i===n);
+    }
+    var items = document.querySelectorAll('#'+prefix+' .stepper-item');
+    items.forEach(function(el, idx){ el.classList.toggle('active', idx === n-1); });
+  }
+  function openModal(id){ document.getElementById(id).classList.add('active'); }
+  function closeModal(id){ document.getElementById(id).classList.remove('active'); }
+  function openSheet(id){ document.getElementById(id).classList.add('active'); }
+  function closeSheet(id){ document.getElementById(id).classList.remove('active'); }
+</script>
+</body>
+</html>

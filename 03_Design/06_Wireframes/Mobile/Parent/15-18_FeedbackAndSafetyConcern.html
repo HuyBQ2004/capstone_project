@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>SFMS Wireframe — Parent (Mobile): Feedback &amp; Safety Concern</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root{ --ink:#333; --gray:#777; --lightgray:#d7d7d7; --midgray:#aaa; }
+  * { box-sizing: border-box; } html { font-size: 18px; }
+  body { margin:0; font-family:'Patrick Hand', cursive; color:var(--ink); background-color:#f4f4f4; background-image: radial-gradient(#d7d7d7 1px, transparent 1px); background-size: 20px 20px; font-size:18px; display:flex; justify-content:center; padding:24px 0; }
+  .text-xs{font-size:14px;} .text-sm{font-size:18px;} .text-md{font-size:26px;} .text-lg{font-size:32px;}
+  a { color:#3a5a8c; text-decoration:underline; cursor:pointer; }
+  .phone { width:390px; min-width:390px; background:#fff; border:3px solid var(--ink); border-radius:36px; overflow:hidden; position:relative; }
+  .phone-screen { height:780px; display:flex; flex-direction:column; }
+  .appbar { display:flex; align-items:center; gap:10px; padding:16px 16px 12px 16px; border-bottom:3px solid var(--ink); background:#fafafa; }
+  .appbar.danger { border-bottom:4px solid var(--ink); }
+  .appbar.danger .appbar-title { font-weight:bold; }
+  .appbar .back { cursor:pointer; } .appbar-title { font-size:22px; flex:1; }
+  .scroll-content { flex:1; overflow-y:auto; padding:16px; }
+  .bottomnav { display:flex; border-top:3px solid var(--ink); background:#fafafa; }
+  .bottomnav-item { flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; padding:10px 4px 8px; font-size:13px; color:var(--gray); cursor:pointer; }
+  .bottomnav-item.active { color:var(--ink); font-weight:bold; }
+  .card { border:2px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; padding:14px; }
+  .card + .card { margin-top:12px; }
+  .card.destructive { border:3px solid var(--ink); }
+  .btn-primary { width:100%; background:#333; color:white; border:2px solid #333; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:12px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; }
+  .btn-destructive { width:100%; background:#333; color:white; border:3px solid #333; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:14px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; }
+  .icon { width:20px; height:20px; flex:none; stroke:var(--ink); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .icon-sm { width:16px; height:16px; }
+  .badge { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; font-size:14px; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; }
+  .badge-success { border:2px solid var(--ink); }
+  .muted { color:var(--gray); }
+  .screen { display:none; } .screen.active { display:flex; }
+  .field-label { font-size:16px; margin-bottom:6px; display:flex; gap:4px; }
+  .req { font-weight:bold; }
+  .field-block { margin-bottom:14px; }
+  wired-input, wired-textarea, wired-select, wired-calendar { width:100%; display:block; }
+  .star-row { font-size:24px; }
+  .checkbox-col { display:flex; flex-direction:column; gap:8px; }
+  .dropzone { border:2px dashed var(--ink); border-radius:16px; padding:14px; text-align:center; font-size:15px; }
+  .dropzone.required { border:3px solid var(--ink); }
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <div class="phone-screen">
+
+    <!-- SCREEN 15 — FEEDBACK CENTER -->
+    <div class="screen active" id="feedback-center" style="flex-direction:column;">
+      <div class="appbar"><svg class="icon back" viewBox="0 0 24 24" onclick="alert('Về Parent Dashboard')"><path d="M15 5 L7 12 L15 19"/></svg><span class="appbar-title">Feedback Center</span></div>
+      <div class="scroll-content">
+        <div class="card" style="margin-bottom:10px;" onclick="showScreen('meal-feedback')"><strong>Recent Meal Feedback</strong><div class="text-xs muted">Đánh giá 1 món cụ thể</div></div>
+        <div class="card" style="margin-bottom:10px;" onclick="showScreen('quality-feedback')"><strong>Food Quality Feedback</strong><div class="text-xs muted">Đánh giá theo phiên ăn</div></div>
+        <div class="card destructive" style="margin-bottom:14px;" onclick="showScreen('safety-concern')"><strong>Report Safety Concern</strong><div class="text-xs muted">Khẩn cấp</div></div>
+        <div class="card" style="margin-bottom:8px;"><div style="display:flex; justify-content:space-between;"><strong class="text-sm">30/06/2026</strong><span class="badge badge-success">Đã ghi nhận</span></div><div class="text-xs muted">Canh chua hơi mặn</div></div>
+        <div class="card"><div style="display:flex; justify-content:space-between;"><strong class="text-sm">25/06/2026</strong><span class="badge badge-success">Đã ghi nhận</span></div><div class="text-xs muted">5 sao — món ngon</div></div>
+      </div>
+      <div class="bottomnav">
+        <div class="bottomnav-item"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 12 L12 4 L20 12"/></svg>Home</div>
+        <div class="bottomnav-item"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M6 3 h9 l3 3 v15 h-12 z"/></svg>Menu</div>
+        <div class="bottomnav-item"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 21 s-8 -5 -8 -11 a4 4 0 0 1 8 -2 a4 4 0 0 1 8 2 c0 6 -8 11 -8 11 z"/></svg>Sức khỏe</div>
+        <div class="bottomnav-item active"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 4 h14 v13 h-9 l-5 4 z"/></svg>Phản hồi</div>
+      </div>
+    </div>
+
+    <!-- SCREEN 16 — SUBMIT MEAL FEEDBACK -->
+    <div class="screen" id="meal-feedback" style="flex-direction:column;">
+      <div class="appbar"><svg class="icon back" viewBox="0 0 24 24" onclick="showScreen('feedback-center')"><path d="M15 5 L7 12 L15 19"/></svg><span class="appbar-title">Submit Meal Feedback</span></div>
+      <div class="scroll-content">
+        <div class="field-block"><div class="field-label">Dish Selection <span class="req">*</span></div><wired-select><wired-item value="1">Canh bí đỏ (hôm nay)</wired-item></wired-select></div>
+        <div class="field-block"><div class="field-label">Rating Score <span class="req">*</span></div><div class="star-row">★★★☆☆</div></div>
+        <div class="field-block"><div class="field-label">Quality Concern (nếu &lt;3 sao)</div><wired-input placeholder="Mô tả vấn đề, VD: quá mặn, nguội..."></wired-input></div>
+        <div class="field-block"><div class="field-label">Review Comments</div><wired-textarea placeholder="Tuỳ chọn"></wired-textarea></div>
+        <div class="field-block"><div class="field-label">Photo Attachment</div><div class="dropzone">Đính kèm ảnh (tuỳ chọn)</div></div>
+      </div>
+      <div style="padding:12px 16px; border-top:2px solid var(--lightgray);"><button class="btn-primary" onclick="showScreen('feedback-center')">Send Feedback</button></div>
+    </div>
+
+    <!-- SCREEN 17 — SUBMIT FOOD QUALITY FEEDBACK -->
+    <div class="screen" id="quality-feedback" style="flex-direction:column;">
+      <div class="appbar"><svg class="icon back" viewBox="0 0 24 24" onclick="showScreen('feedback-center')"><path d="M15 5 L7 12 L15 19"/></svg><span class="appbar-title">Food Quality Feedback</span></div>
+      <div class="scroll-content">
+        <div class="field-block"><div class="field-label">Meal Session Selector <span class="req">*</span></div><wired-select><wired-item value="1">Bữa trưa hôm nay</wired-item></wired-select></div>
+        <div class="field-block"><div class="field-label">Rating Score <span class="req">*</span></div><div class="star-row">★★★★☆</div></div>
+        <div class="field-block"><div class="field-label">Quality Concern Tags</div><div class="checkbox-col"><wired-checkbox>Vệ sinh</wired-checkbox><wired-checkbox>Nhiệt độ</wired-checkbox></div></div>
+        <div class="field-block"><div class="field-label">General Comments</div><wired-textarea placeholder="Tuỳ chọn"></wired-textarea></div>
+        <div class="field-block"><div class="field-label">Photo Attachment</div><div class="dropzone">Đính kèm ảnh (tuỳ chọn)</div></div>
+      </div>
+      <div style="padding:12px 16px; border-top:2px solid var(--lightgray);"><button class="btn-primary" onclick="showScreen('feedback-center')">Send Feedback</button></div>
+    </div>
+
+    <!-- SCREEN 18 — REPORT FOOD SAFETY CONCERN -->
+    <div class="screen" id="safety-concern" style="flex-direction:column;">
+      <div class="appbar danger"><svg class="icon back" viewBox="0 0 24 24" onclick="alert('Về Parent Dashboard')"><path d="M15 5 L7 12 L15 19"/></svg><span class="appbar-title">Report Safety Issue</span></div>
+      <div class="scroll-content">
+        <div class="field-block"><div class="field-label">Concern Category <span class="req">*</span></div><wired-select><wired-item value="illness">Ngộ độc/dị ứng</wired-item></wired-select></div>
+        <div class="field-block"><div class="field-label">Incident Details <span class="req">*</span></div><wired-textarea placeholder="Ghi rõ: ngày/bữa ăn nghi vấn, món ăn nghi vấn (nếu biết), triệu chứng của con, thời điểm xuất hiện, tình trạng hiện tại..."></wired-textarea></div>
+        <div class="field-block"><div class="field-label">Photo Attachment <span class="req">*</span></div><div class="dropzone required">Bắt buộc đính kèm ảnh bằng chứng</div></div>
+      </div>
+      <div style="padding:12px 16px; border-top:2px solid var(--lightgray);">
+        <button class="btn-destructive" onclick="alert('Đã gửi báo cáo khẩn — MSG-048, về Parent Dashboard (không qua duyệt trung gian, BR-138)')"><svg class="icon icon-sm" viewBox="0 0 24 24" style="stroke:#fff;"><path d="M12 3 L21 20 H3 Z"/></svg>Send Urgent Report</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function showScreen(id){
+    document.querySelectorAll('.screen').forEach(function(el){ el.classList.remove('active'); });
+    var target = document.getElementById(id);
+    if(target){ target.classList.add('active'); }
+  }
+</script>
+
+</body>
+</html>

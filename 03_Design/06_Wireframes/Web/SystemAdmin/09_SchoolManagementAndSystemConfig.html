@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<title>SFMS — School Management &amp; System Configuration (System Admin)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<style>
+  * { box-sizing: border-box; }
+  html { font-size: 18px; }
+  body {
+    margin: 0; font-size: 18px; font-family: 'Patrick Hand', cursive; color: #333;
+    background-image: radial-gradient(#d7d7d7 1px, transparent 1px);
+    background-size: 20px 20px;
+    min-height: 100vh;
+  }
+  .text-xs   { font-size: 14px; line-height: 1.4; }
+  .text-sm   { font-size: 18px; line-height: 1.5; }
+  .text-base { font-size: 22px; line-height: 1.5; }
+  .text-md   { font-size: 28px; line-height: 1.3; }
+  .text-lg   { font-size: 35px; line-height: 1.2; }
+
+  a.sketch-link { color: #45607a; text-decoration: underline; cursor: pointer; }
+
+  /* ---------- App shell ---------- */
+  .app { display: flex; min-height: 100vh; }
+
+  .sidebar {
+    width: 290px; flex-shrink: 0; background: white;
+    border-right: 2px solid #333;
+    padding: 18px 14px; position: sticky; top: 0; height: 100vh; overflow-y: auto;
+  }
+  .sidebar .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+  .sidebar .brand svg { width: 30px; height: 30px; flex-shrink: 0; }
+  .sidebar .brand-text { font-size: 22px; line-height: 1.1; }
+  .sidebar .brand-sub { font-size: 14px; color: #666; }
+
+  .nav-group { margin-bottom: 6px; }
+  .nav-group-title {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 18px; color: #555; padding: 8px 8px 4px;
+  }
+  .nav-group-title svg { width: 18px; height: 18px; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 10px; margin: 2px 0; border-radius: 8px;
+    font-size: 18px; color: #999; cursor: default;
+  }
+  .nav-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .nav-item.disabled { color: #b6b6b6; }
+  .nav-item.clickable { color: #333; cursor: pointer; }
+  .nav-item.clickable:hover { background: #f1f1f1; }
+  .nav-item.current {
+    background: #ececec; border-left: 3px solid #333; color: #111; font-weight: bold;
+    padding-left: 7px;
+  }
+  .nav-note {
+    font-size: 12px; color: #999; padding: 2px 10px 8px 34px; font-style: italic;
+  }
+
+  .main { flex: 1; min-width: 0; padding: 24px 32px 60px; }
+
+  .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 18px; flex-wrap: wrap; gap: 10px;
+  }
+  .breadcrumb { font-size: 14px; color: #666; }
+  .breadcrumb b { color: #333; }
+  .back-link { display: flex; align-items: center; gap: 6px; }
+  .back-link svg { width: 18px; height: 18px; }
+
+  /* ---------- Screens ---------- */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .page-title { display: flex; align-items: center; gap: 12px; margin: 4px 0 18px; }
+  .page-title svg { width: 30px; height: 30px; }
+
+  .card {
+    border: 2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    background: white;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+  }
+  .card-tight { padding: 14px 18px; }
+
+  .section-title { display: flex; align-items: center; gap: 8px; margin: 0 0 14px; }
+  .section-title svg { width: 22px; height: 22px; }
+
+  .filter-bar {
+    display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end;
+  }
+  .filter-field { display: flex; flex-direction: column; gap: 4px; min-width: 200px; flex: 1; }
+  .filter-field .field-label { display: flex; align-items: center; gap: 6px; font-size: 14px; color: #555; }
+  .filter-field .field-label svg { width: 16px; height: 16px; }
+
+  .btn-primary {
+    background: #333; color: white; border: 2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family: 'Patrick Hand', cursive; font-size: 18px;
+    padding: 10px 22px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+  .btn-secondary {
+    background: white; color: #333; border: 2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family: 'Patrick Hand', cursive; font-size: 18px;
+    padding: 10px 22px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-destructive {
+    background: #222; color: white; border: 3px solid #000;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family: 'Patrick Hand', cursive; font-size: 18px;
+    padding: 10px 22px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-ghost {
+    background: transparent; color: #333; border: 2px dashed #666;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family: 'Patrick Hand', cursive; font-size: 18px;
+    padding: 10px 22px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+
+  table.sketch-table { width: 100%; border-collapse: collapse; font-size: 18px; }
+  table.sketch-table th, table.sketch-table td {
+    border-bottom: 2px solid #ccc; text-align: left; padding: 8px 10px;
+  }
+  table.sketch-table th { color: #333; border-bottom: 2px solid #333; }
+  table.sketch-table tr:last-child td { border-bottom: none; }
+  table.sketch-table tr.row-clickable { cursor: pointer; }
+  table.sketch-table tr.row-clickable:hover { background: #f7f7f7; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 2px 10px; font-size: 14px; border-radius: 10px;
+    border: 2px solid #333; background: white;
+  }
+  .badge svg { width: 14px; height: 14px; }
+  .badge-dashed { border-style: dashed; color: #666; }
+  .badge-double { border-width: 3px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .kpi-card { text-align: center; }
+  .kpi-value { font-size: 35px; line-height: 1.1; }
+  .kpi-label { font-size: 14px; color: #555; display: flex; gap: 6px; justify-content: center; align-items: center; }
+  .kpi-label svg { width: 16px; height: 16px; }
+
+  .alert {
+    display: flex; gap: 10px; align-items: flex-start;
+    border: 2px dashed #333; border-radius: 10px; padding: 12px 14px; background: #f7f7f7;
+    margin-bottom: 16px;
+  }
+  .alert svg { width: 24px; height: 24px; flex-shrink: 0; }
+  .alert.critical { border: 3px solid #333; background: #eaeaea; }
+  .alert.info { border: 2px solid #666; background: #f2f2f2; }
+
+  .grid-8-4 { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; }
+  @media (max-width: 900px) { .grid-8-4 { grid-template-columns: 1fr; } .kpi-grid { grid-template-columns: 1fr; } }
+
+  .field-row { display: flex; flex-direction: column; gap: 4px; margin-bottom: 16px; }
+  .field-row .field-label { display: flex; align-items: center; gap: 6px; font-size: 14px; color: #555; }
+  .field-row .field-label svg { width: 16px; height: 16px; }
+  .field-row .field-required { color: #900; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+  .display-field { margin-bottom: 14px; }
+  .display-field .field-label { display: flex; align-items: center; gap: 6px; font-size: 14px; color: #555; margin-bottom: 2px; }
+  .display-field .field-label svg { width: 16px; height: 16px; }
+  .display-field .field-value { font-size: 22px; }
+
+  .minimap {
+    border: 2px solid #333; border-radius: 10px; background: repeating-linear-gradient(45deg, #f4f4f4, #f4f4f4 10px, #fff 10px, #fff 20px);
+    height: 130px; display: flex; align-items: center; justify-content: center; color: #666;
+    position: relative;
+  }
+  .minimap svg { width: 34px; height: 34px; }
+
+  .lock-note {
+    display: flex; align-items: center; gap: 8px; font-size: 14px; color: #555; margin-top: 6px;
+  }
+  .lock-note svg { width: 16px; height: 16px; }
+
+  .sheet-panel {
+    max-width: 780px; margin: 0 auto;
+  }
+
+  .dialog-overlay {
+    background: rgba(0,0,0,0.35);
+    border-radius: 0;
+  }
+  .dialog-box {
+    max-width: 620px; margin: 40px auto;
+  }
+
+  .status-line { font-size: 14px; color: #666; margin-top: 8px; display: flex; align-items: center; gap: 6px; }
+  .status-line svg { width: 16px; height: 16px; }
+
+  wired-card[style] { background: white; }
+  wired-input, wired-select, wired-combo, wired-textarea { width: 100%; }
+
+  .assumption-tag { font-size: 12px; color: #900; font-style: italic; }
+
+  .note-banner {
+    position: sticky; top: 0; z-index: 5; text-align: center;
+    font-family: 'Caveat', cursive; font-size: 20px; color: #900;
+    background: #fffceb; border-bottom: 2px dashed #333; padding: 6px 10px;
+  }
+
+  .checkbox-group { display: flex; flex-direction: column; gap: 10px; }
+  .checkbox-row { display: flex; align-items: center; gap: 10px; }
+
+  .tabs-row { display: flex; gap: 10px; border-bottom: 2px solid #333; margin-bottom: 20px; flex-wrap: wrap; }
+  .tab-item {
+    padding: 8px 18px; border: 2px solid #333; border-bottom: none;
+    border-radius: 10px 10px 0 0; background: #f1f1f1; color: #777; cursor: default;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .tab-item svg { width: 16px; height: 16px; }
+  .tab-item.active-tab { background: white; color: #111; font-weight: bold; margin-bottom: -2px; padding-bottom: 10px; }
+
+  .connection-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 10px; border: 2px solid #333; font-size: 16px; }
+  .connection-badge.danger { border-width: 3px; }
+  .connection-badge svg { width: 16px; height: 16px; }
+</style>
+</head>
+<body>
+
+<div class="note-banner">Wireframe SFMS — nhóm "School Management &amp; System Configuration" (System Admin). Nguồn Draft, xem manifest .md đi kèm. Campus Config (13_CampusConfig.md) đã loại bỏ, không có wireframe.</div>
+
+<div class="app">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <div class="sidebar">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2 L21 6 V11 C21 16.5 17 20.5 12 22 C7 20.5 3 16.5 3 11 V6 Z"/>
+        <path d="M9 12 L11 14 L15 9" stroke-width="1.8"/>
+      </svg>
+      <div>
+        <div class="brand-text">SFMS</div>
+        <div class="brand-sub">System Admin</div>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 2.7-5.5 7-5.5s7 2.2 7 5.5"/><circle cx="17" cy="8" r="2.4"/><path d="M16 14.5c2.8.4 4.5 2.2 4.5 5.5"/></svg>
+        Quản lý Người dùng Hệ thống
+      </div>
+      <div class="nav-item disabled">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b6b6b6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>
+        Danh sách tài khoản
+      </div>
+      <div class="nav-item disabled">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b6b6b6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 3-3 3-3-3z"/><path d="M4 12l3 3-3 3-3-3z" transform="translate(3 0)"/><path d="M12 22l3-3-3-3-3 3z"/></svg>
+        Vai trò &amp; Phân quyền
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title" style="color:#333;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-6h6v6"/></svg>
+        Quản lý Trường học
+      </div>
+      <div class="nav-item clickable current" id="nav-school-list" onclick="showScreen('school-list')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg>
+        School List
+      </div>
+      <div class="nav-note">↳ School Detail / Update School / Active-Deactivate mở từ danh sách này</div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title" style="color:#333;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+        Cấu hình Hệ thống
+      </div>
+      <div class="nav-item clickable" id="nav-security-policies" onclick="showScreen('security-policies')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L20 5 V11 C20 16.5 16.5 20.5 12 22 C7.5 20.5 4 16.5 4 11 V5 Z"/><rect x="9" y="11" width="6" height="5" rx="1"/><path d="M10 11V9a2 2 0 0 1 4 0v2"/></svg>
+        Security Policies
+      </div>
+      <div class="nav-item clickable" id="nav-ai-settings" onclick="showScreen('ai-settings')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="10" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r="1.2" fill="currentColor" stroke="none"/><path d="M8 15c1.2 1 2.6 1.5 4 1.5s2.8-.5 4-1.5"/><path d="M12 4V2M4 12H2M22 12h-2"/></svg>
+        External Integrations
+      </div>
+      <div class="nav-note">↳ tab đang mở mặc định: AI Settings (Gemini AI)</div>
+      <div class="nav-item disabled">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b6b6b6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v3"/><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M7 12h4"/></svg>
+        Backup Management
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg>
+        Giám sát &amp; Vận hành
+      </div>
+      <div class="nav-item disabled">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b6b6b6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg>
+        System Activity Monitoring
+      </div>
+      <div class="nav-item disabled">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b6b6b6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        System Status
+      </div>
+      <div class="nav-item disabled">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b6b6b6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 17a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+        Error Logs
+      </div>
+      <div class="nav-item disabled">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b6b6b6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16M4 19V9M10 19V5M16 19v-7"/></svg>
+        Usage Statistics
+      </div>
+      <div class="nav-item disabled">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b6b6b6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 8v4l3 2"/></svg>
+        Audit Logs
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 13v4M12 9v8M16 11v6"/></svg>
+        Báo cáo &amp; Thống kê
+      </div>
+      <div class="nav-item disabled">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b6b6b6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 13v4M12 9v8M16 11v6"/></svg>
+        Analytics Dashboard
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MAIN AREA ===================== -->
+  <div class="main">
+
+    <!-- ============================================================ -->
+    <!-- 1. SCHOOL LIST (UC-140)                                       -->
+    <!-- ============================================================ -->
+    <div class="screen active" id="school-list">
+      <div class="topbar">
+        <div class="breadcrumb">Quản lý Trường học / <b>School List</b></div>
+        <div class="back-link"><a class="sketch-link" href="#">◀ Quay lại Dashboard chính</a></div>
+      </div>
+
+      <div class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-6h6v6"/></svg>
+        <span class="text-lg">School List</span>
+      </div>
+
+      <div class="card">
+        <div class="filter-bar">
+          <div class="filter-field" style="min-width:260px;">
+            <div class="field-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              Search (tên trường)
+            </div>
+            <wired-search-input placeholder="VD: Trường Tiểu học Lê Văn Tám"></wired-search-input>
+          </div>
+          <div class="filter-field">
+            <div class="field-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><path d="M4 6h16l-6 8v5l-4 2v-7z"/></svg>
+              Filter Status
+            </div>
+            <wired-select>
+              <wired-item value="all">Tất cả</wired-item>
+              <wired-item value="active">Active</wired-item>
+              <wired-item value="inactive">Inactive</wired-item>
+              <wired-item value="pending">Pending</wired-item>
+            </wired-select>
+          </div>
+          <button class="btn-secondary" onclick="alert('[Demo] Export Excel/CSV danh sách trường.')">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 19h16"/></svg>
+            Export Excel/CSV
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+          <span class="text-md">Bảng danh sách trường</span>
+        </div>
+        <table class="sketch-table">
+          <thead>
+            <tr><th>Name</th><th>Code</th><th>Tax ID</th><th>Status</th><th>Hành động</th></tr>
+          </thead>
+          <tbody>
+            <tr class="row-clickable" onclick="showScreen('school-detail')">
+              <td>Trường Tiểu học Lê Văn Tám</td>
+              <td>SCH-HCM-014</td>
+              <td>0312456789</td>
+              <td>
+                <span class="badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                  Active
+                </span>
+              </td>
+              <td>
+                <a class="sketch-link" href="#" onclick="event.stopPropagation(); showScreen('school-detail');">Xem chi tiết</a>
+                &nbsp;|&nbsp;
+                <a class="sketch-link" href="#" onclick="event.stopPropagation(); showScreen('active-deactivate-school');">Toggle trạng thái</a>
+              </td>
+            </tr>
+            <tr class="row-clickable" onclick="showScreen('school-detail')">
+              <td>Trường Mầm non Hoa Sen</td>
+              <td>SCH-HCM-027</td>
+              <td>0309981122</td>
+              <td>
+                <span class="badge badge-double">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><path d="M12 9v4M12 17h.01"/></svg>
+                  Inactive
+                </span>
+              </td>
+              <td>
+                <a class="sketch-link" href="#" onclick="event.stopPropagation(); showScreen('school-detail');">Xem chi tiết</a>
+                &nbsp;|&nbsp;
+                <a class="sketch-link" href="#" onclick="event.stopPropagation(); showScreen('active-deactivate-school');">Toggle trạng thái</a>
+              </td>
+            </tr>
+            <tr class="row-clickable" onclick="showScreen('school-detail')">
+              <td>Trường THCS Nguyễn Trãi</td>
+              <td>SCH-HN-005</td>
+              <td>0100223344</td>
+              <td>
+                <span class="badge badge-dashed">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                  Pending
+                </span>
+              </td>
+              <td>
+                <a class="sketch-link" href="#" onclick="event.stopPropagation(); showScreen('school-detail');">Xem chi tiết</a>
+                &nbsp;|&nbsp;
+                <a class="sketch-link" href="#" onclick="event.stopPropagation(); showScreen('active-deactivate-school');">Toggle trạng thái</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="status-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.6"><path d="M5 13l4 4L19 7"/></svg>
+        Trạng thái: Success — bảng hiển thị đầy đủ. (Empty: "Chưa có trường nào khớp bộ lọc" nếu filter rỗng)
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 2. SCHOOL DETAIL (UC-122)                                     -->
+    <!-- ============================================================ -->
+    <div class="screen" id="school-detail">
+      <div class="topbar">
+        <div class="breadcrumb">Quản lý Trường học / School List / <b>School Detail</b></div>
+        <div class="back-link"><a class="sketch-link" href="#" onclick="showScreen('school-list');return false;">◀ Quay lại School List</a></div>
+      </div>
+
+      <div class="page-title" style="justify-content:space-between; flex-wrap:wrap;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-6h6v6"/></svg>
+          <span class="text-lg">Trường Tiểu học Lê Văn Tám</span>
+        </div>
+        <div class="btn-row" style="margin-top:0;">
+          <button class="btn-secondary" onclick="showScreen('update-school')">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8"><path d="M4 20l4-1 10-10-3-3L5 16l-1 4z"/></svg>
+            Edit
+          </button>
+          <button class="btn-secondary" onclick="alert('[Demo] Export PDF hồ sơ trường.')">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 19h16"/></svg>
+            Export PDF
+          </button>
+        </div>
+      </div>
+
+      <div class="grid-8-4">
+        <div>
+          <div class="card">
+            <div class="section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>
+              <span class="text-md">Thông tin cơ bản</span>
+            </div>
+
+            <div class="display-field">
+              <div class="field-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><path d="M4 21V9l8-6 8 6v12"/></svg>
+                Tên trường
+              </div>
+              <div class="field-value">Trường Tiểu học Lê Văn Tám</div>
+            </div>
+
+            <div class="display-field">
+              <div class="field-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><path d="M12 21s-7-4.6-9.3-9C1 8.5 2.6 5 6 5c2 0 3.4 1.2 4 2.2C10.6 6.2 12 5 14 5c3.4 0 5 3.5 3.3 7-2.3 4.4-9.3 9-9.3 9z"/></svg>
+                Địa chỉ
+              </div>
+              <div class="field-value">Số 12 Đường Lê Văn Tám, Phường Bình Thọ, TP. Thủ Đức, TP.HCM</div>
+            </div>
+
+            <div class="two-col">
+              <div class="display-field">
+                <div class="field-label">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h6M7 13h4"/></svg>
+                  Mã số thuế (Tax ID)
+                </div>
+                <div class="field-value">0312456789</div>
+              </div>
+              <div class="display-field">
+                <div class="field-label">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+                  Email liên hệ
+                </div>
+                <div class="field-value">contact@levantam.edu.vn</div>
+              </div>
+            </div>
+
+            <div class="two-col">
+              <div class="display-field">
+                <div class="field-label">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                  Giờ hoạt động
+                </div>
+                <div class="field-value">06:30 – 17:30 (Thứ 2 – Thứ 6)</div>
+              </div>
+              <div class="display-field">
+                <div class="field-label">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8 9.7a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2z"/></svg>
+                  Liên hệ khẩn cấp
+                </div>
+                <div class="field-value">0909 123 456 (Bảo vệ trực)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c4-4 7-7.5 7-11a7 7 0 1 0-14 0c0 3.5 3 7 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+              <span class="text-md">Toạ độ GPS</span>
+              &nbsp;
+              <span class="badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                Đã khoá tọa độ
+              </span>
+            </div>
+            <div class="two-col">
+              <div class="display-field">
+                <div class="field-label">Latitude</div>
+                <div class="field-value">10.850500</div>
+              </div>
+              <div class="display-field">
+                <div class="field-label">Longitude</div>
+                <div class="field-value">106.771800</div>
+              </div>
+            </div>
+            <div class="minimap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.6"><path d="M12 21c4-4 7-7.5 7-11a7 7 0 1 0-14 0c0 3.5 3 7 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+              &nbsp;mini-map preview (tĩnh)
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card kpi-card">
+            <div class="section-title" style="justify-content:center;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 13v4M12 9v8M16 11v6"/></svg>
+              <span class="text-md">Thống kê tổng hợp</span>
+            </div>
+            <div class="kpi-grid" style="grid-template-columns:1fr;">
+              <div>
+                <div class="kpi-value">18</div>
+                <div class="kpi-label">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>
+                  Số lớp
+                </div>
+              </div>
+              <wired-divider></wired-divider>
+              <div>
+                <div class="kpi-value">642</div>
+                <div class="kpi-label">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><circle cx="12" cy="8" r="3.5"/><path d="M4 20c0-4 3.5-6 8-6s8 2 8 6"/></svg>
+                  Số học sinh
+                </div>
+              </div>
+              <wired-divider></wired-divider>
+              <div>
+                <div class="kpi-value">57</div>
+                <div class="kpi-label">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 2.7-5.5 7-5.5s7 2.2 7 5.5"/><circle cx="17" cy="8" r="2.4"/><path d="M16 14.5c2.8.4 4.5 2.2 4.5 5.5"/></svg>
+                  Số nhân viên
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="status-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.6"><path d="M5 13l4 4L19 7"/></svg>
+        Trạng thái: Success — hiển thị đầy đủ hồ sơ trường.
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 3. UPDATE SCHOOL SCREEN/DIALOG (UC-095)                       -->
+    <!-- ============================================================ -->
+    <div class="screen" id="update-school">
+      <div class="topbar">
+        <div class="breadcrumb">Quản lý Trường học / School Detail / <b>Update School Screen/Dialog</b></div>
+        <div class="back-link"><a class="sketch-link" href="#" onclick="showScreen('school-detail');return false;">◀ Huỷ, quay lại School Detail</a></div>
+      </div>
+
+      <div class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 10-10-3-3L5 16l-1 4z"/></svg>
+        <span class="text-lg">Update School Screen/Dialog — Sheet trượt từ phải</span>
+      </div>
+
+      <div class="sheet-panel">
+        <div class="card">
+          <div class="section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>
+            <span class="text-md">Thông tin cơ bản</span>
+          </div>
+
+          <div class="field-row">
+            <div class="field-label"><span class="field-required">*</span> Tên trường</div>
+            <wired-input value="Trường Tiểu học Lê Văn Tám"></wired-input>
+          </div>
+
+          <div class="field-row">
+            <div class="field-label"><span class="field-required">*</span> Địa chỉ</div>
+            <wired-textarea rows="2" value="Số 12 Đường Lê Văn Tám, Phường Bình Thọ, TP. Thủ Đức, TP.HCM"></wired-textarea>
+          </div>
+
+          <div class="two-col">
+            <div class="field-row">
+              <div class="field-label">Mã số thuế</div>
+              <wired-input value="0312456789"></wired-input>
+            </div>
+            <div class="field-row">
+              <div class="field-label">Email chính thức</div>
+              <wired-input value="contact@levantam.edu.vn"></wired-input>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c4-4 7-7.5 7-11a7 7 0 1 0-14 0c0 3.5 3 7 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+            <span class="text-md">Toạ độ GPS</span>
+          </div>
+
+          <div class="alert info">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+            <div>
+              <b>Toạ độ đang bị khoá (coordinateLocked = true)</b><br>
+              <span class="text-sm">Trường đã Active — chỉ System Admin được phép mở khoá, phải nhập lý do bằng văn bản (ghi audit log).</span>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="field-row">
+              <div class="field-label">Latitude (-90 → 90)</div>
+              <wired-input value="10.850500" disabled></wired-input>
+            </div>
+            <div class="field-row">
+              <div class="field-label">Longitude (-180 → 180)</div>
+              <wired-input value="106.771800" disabled></wired-input>
+            </div>
+          </div>
+          <div class="lock-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+            2 field toạ độ đang disable vì coordinateLocked = true.
+          </div>
+
+          <div class="btn-row">
+            <button class="btn-secondary" onclick="document.getElementById('unlock-reason-block').style.display='block'; this.style.display='none';">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V6a4 4 0 0 1 7-2.6"/></svg>
+              Mở khoá toạ độ
+            </button>
+          </div>
+
+          <div id="unlock-reason-block" style="display:none; margin-top:14px;">
+            <div class="field-row">
+              <div class="field-label"><span class="field-required">*</span> Lý do mở khoá toạ độ (bắt buộc, ghi vào audit log)</div>
+              <wired-textarea rows="3" placeholder="VD: Trường chuyển địa điểm hoạt động mới do sự cố mặt bằng, đã xác minh qua văn bản UBND phường..."></wired-textarea>
+            </div>
+            <div class="status-line">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.6"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 17a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+              Ngoại lệ đặc biệt chỉ System Admin — sau khi nhập lý do, field Latitude/Longitude phía trên sẽ được mở khoá để sửa.
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            <span class="text-md">Tham số vận hành</span>
+          </div>
+          <div class="field-row">
+            <div class="field-label">Giờ hoạt động</div>
+            <wired-input value="06:30 - 17:30 (Thứ 2 - Thứ 6)"></wired-input>
+          </div>
+        </div>
+
+        <div class="alert">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 17a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+          <div>
+            <b>Ví dụ lỗi validation (Error state)</b><br>
+            <span class="text-sm">MSG-007 — "Mã số thuế không đúng định dạng". Toạ độ ngoài khoảng [-90,90]/[-180,180] sẽ báo lỗi tại field tương ứng.</span>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-primary" onclick="alert('[Demo] MSG-029 — Cập nhật thành công. Quay về School Detail.'); showScreen('school-detail');">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="white" stroke-width="1.8"><path d="M5 13l4 4L19 7"/></svg>
+            Lưu
+          </button>
+          <button class="btn-secondary" onclick="showScreen('school-detail')">Huỷ</button>
+        </div>
+        <div class="status-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.6"><path d="M5 13l4 4L19 7"/></svg>
+          Trạng thái: Success (MSG-029) khi lưu hợp lệ. Không có field bán kính geofence (đã chuyển về School Administration — 37_SchoolConfiguration.md).
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 4. ACTIVE/DEACTIVATE SCHOOL DIALOG (UC-001)                   -->
+    <!-- ============================================================ -->
+    <div class="screen" id="active-deactivate-school">
+      <div class="topbar">
+        <div class="breadcrumb">Quản lý Trường học / School List / <b>Active/Deactivate School Dialog</b></div>
+        <div class="back-link"><a class="sketch-link" href="#" onclick="showScreen('school-list');return false;">◀ Huỷ, quay lại School List</a></div>
+      </div>
+
+      <div class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 17a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+        <span class="text-lg">Active/Deactivate School Dialog — AlertDialog</span>
+      </div>
+
+      <div class="dialog-box card">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-6h6v6"/></svg>
+          <span class="text-md">Xác nhận thay đổi trạng thái trường</span>
+        </div>
+
+        <div class="display-field">
+          <div class="field-label">Thông tin trường</div>
+          <div class="field-value">Trường Mầm non Hoa Sen — Mã: SCH-HCM-027</div>
+        </div>
+
+        <div class="display-field">
+          <div class="field-label">Trạng thái hiện tại → mới</div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span class="badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+              Active
+            </span>
+            <span>→</span>
+            <span class="badge badge-double">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><path d="M12 9v4M12 17h.01"/></svg>
+              Inactive
+            </span>
+          </div>
+        </div>
+
+        <div class="alert critical">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 17a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+          <div>
+            <b>Cảnh báo hệ quả cascade (BR-021) — rủi ro cao</b><br>
+            <span class="text-sm">
+              Vô hiệu hoá trường này sẽ tự động <b>tạm dừng đồng thời</b>:
+            </span>
+            <ul class="text-sm" style="margin:8px 0 0 18px; padding:0;">
+              <li>Toàn bộ <b>Classroom</b> thuộc trường</li>
+              <li>Toàn bộ <b>Staff</b> (nhân viên) thuộc trường</li>
+              <li>Toàn bộ <b>Student</b> (học sinh) thuộc trường</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="alert">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 17a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+          <div>
+            <b>Ví dụ lỗi (Error state)</b><br>
+            <span class="text-sm">MSG-001 nếu lưu thất bại (lỗi hệ thống lưu dữ liệu trường); MSG-004/MSG-005 nếu có xung đột dữ liệu khác.</span>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-destructive" onclick="alert('[Demo] Đang xử lý cascade Classroom/Staff/Student... (loading vài giây)\\n\\nThành công: Cập nhật trạng thái trường thành công. Ghi audit log.'); showScreen('school-list');">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="white" stroke-width="1.8"><path d="M5 13l4 4L19 7"/></svg>
+            Xác nhận
+          </button>
+          <button class="btn-ghost" onclick="showScreen('school-list')">Huỷ</button>
+        </div>
+        <div class="status-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.6"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 17a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+          Trạng thái: Error (MSG-001/MSG-004/MSG-005 nếu thất bại) / Success (toast "Cập nhật trạng thái trường thành công" + cascade + audit log).
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 5. SECURITY POLICIES (UC-184)                                 -->
+    <!-- ============================================================ -->
+    <div class="screen" id="security-policies">
+      <div class="topbar">
+        <div class="breadcrumb">Cấu hình Hệ thống / <b>Security Policies</b></div>
+        <div class="back-link"><a class="sketch-link" href="#">◀ Quay lại Dashboard chính</a></div>
+      </div>
+
+      <div class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L20 5 V11 C20 16.5 16.5 20.5 12 22 C7.5 20.5 4 16.5 4 11 V5 Z"/><rect x="9" y="11" width="6" height="5" rx="1"/><path d="M10 11V9a2 2 0 0 1 4 0v2"/></svg>
+        <span class="text-lg">Security Policies</span>
+      </div>
+
+      <div class="sheet-panel" style="max-width:700px;">
+        <div class="card">
+          <div class="section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+            <span class="text-md">Đăng nhập / Khoá tài khoản (BR-002)</span>
+          </div>
+
+          <div class="two-col">
+            <div class="field-row">
+              <div class="field-label">Số lần đăng nhập sai tối đa trước khi khoá</div>
+              <wired-input type="number" value="5"></wired-input>
+            </div>
+            <div class="field-row">
+              <div class="field-label">Thời gian khoá tài khoản (phút)</div>
+              <wired-input type="number" value="15"></wired-input>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            <span class="text-md">Session (BR-004)</span>
+          </div>
+          <div class="field-row">
+            <div class="field-label">Thời gian session timeout (phút)</div>
+            <wired-input type="number" value="30"></wired-input>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+            <span class="text-md">Chính sách độ mạnh mật khẩu (BR-006)</span>
+          </div>
+          <div class="checkbox-group">
+            <div class="checkbox-row"><wired-checkbox checked>Độ dài tối thiểu 8 ký tự</wired-checkbox></div>
+            <div class="checkbox-row"><wired-checkbox checked>Bắt buộc ký tự đặc biệt</wired-checkbox></div>
+            <div class="checkbox-row"><wired-checkbox checked>Bắt buộc chữ hoa + chữ số</wired-checkbox></div>
+            <div class="checkbox-row"><wired-checkbox checked>Không trùng 3 mật khẩu gần nhất</wired-checkbox></div>
+          </div>
+        </div>
+
+        <div class="alert">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 17a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+          <div>
+            <b>Ví dụ lỗi validation (Error state)</b><br>
+            <span class="text-sm">Giá trị ngoài khoảng cho phép (VD số lần sai tối đa = 0) → validation error tại field <span class="assumption-tag">[Giả định — chưa có MSG code riêng]</span>.</span>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-primary" onclick="alert('[Demo] MSG-029 — Cập nhật hồ sơ thành công. Ghi audit trail (BR-170).');">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="white" stroke-width="1.8"><path d="M5 13l4 4L19 7"/></svg>
+            Lưu
+          </button>
+        </div>
+        <div class="status-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.6"><path d="M5 13l4 4L19 7"/></svg>
+          Trạng thái: Success (MSG-029) sau khi Lưu. Loading: Skeleton form khi tải.
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 6. AI SETTINGS (tab Gemini AI trong External Integrations)    -->
+    <!-- ============================================================ -->
+    <div class="screen" id="ai-settings">
+      <div class="topbar">
+        <div class="breadcrumb">Cấu hình Hệ thống / External Integrations / <b>AI Settings (Gemini AI)</b></div>
+        <div class="back-link"><a class="sketch-link" href="#">◀ Quay lại Dashboard chính</a></div>
+      </div>
+
+      <div class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="10" r="1.2" fill="#333" stroke="none"/><circle cx="15" cy="10" r="1.2" fill="#333" stroke="none"/><path d="M8 15c1.2 1 2.6 1.5 4 1.5s2.8-.5 4-1.5"/></svg>
+        <span class="text-lg">External Integrations</span>
+      </div>
+
+      <div class="tabs-row">
+        <div class="tab-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21c4-4 7-7.5 7-11a7 7 0 1 0-14 0c0 3.5 3 7 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+          GPS Service
+        </div>
+        <div class="tab-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          Gmail SMTP
+        </div>
+        <div class="tab-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 L20 5 V11 C20 16.5 16.5 20.5 12 22 C7.5 20.5 4 16.5 4 11 V5 Z"/></svg>
+          Firebase Cloud Messaging
+        </div>
+        <div class="tab-item active-tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="10" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r="1.2" fill="currentColor" stroke="none"/><path d="M8 15c1.2 1 2.6 1.5 4 1.5s2.8-.5 4-1.5"/></svg>
+          Gemini AI
+        </div>
+      </div>
+
+      <div class="sheet-panel" style="max-width:640px;">
+        <div class="card">
+          <div class="section-title" style="justify-content:space-between;">
+            <span style="display:flex; align-items:center; gap:8px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="3"/></svg>
+              <span class="text-md">Cấu hình Gemini AI</span>
+            </span>
+            <span class="connection-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+              Đã kết nối
+            </span>
+          </div>
+
+          <div class="field-row">
+            <div class="field-label"><span class="field-required">*</span> API Endpoint</div>
+            <wired-input value="https://generativelanguage.googleapis.com/v1"></wired-input>
+          </div>
+
+          <div class="field-row">
+            <div class="field-label"><span class="field-required">*</span> OAuth2 Client Credentials / API Key</div>
+            <wired-input type="password" value="••••••••••••••••••••"></wired-input>
+            <div class="lock-note">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+              Giá trị được mã hoá khi lưu (BR-164), không hiển thị dạng plain text.
+            </div>
+          </div>
+
+          <div class="alert">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 17a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+            <div>
+              <b>Ví dụ lỗi (Error state — AF1 Test Connection thất bại)</b><br>
+              <span class="text-sm">"Invalid API key" — chặn nút Save cho tới khi Test Connection thành công (BR-163).</span>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn-secondary" onclick="alert('[Demo] Đang Test Connection...\\n\\nKết quả: thành công. Nút Save được mở khoá.');">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8"><path d="M5 13l4 4L19 7"/></svg>
+              Test Connection
+            </button>
+            <button class="btn-primary" onclick="alert('[Demo] Lưu cấu hình thành công (credentials đã mã hoá). Ghi audit log bất biến (BR-162).');">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="white" stroke-width="1.8"><path d="M5 13l4 4L19 7"/></svg>
+              Save
+            </button>
+          </div>
+          <div class="status-line">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.6"><path d="M5 13l4 4L19 7"/></svg>
+            Trạng thái: Success (đã kết nối, badge success) — Empty: "Chưa kết nối Gemini AI" nếu chưa cấu hình. Save disable tới khi Test Connection thành công.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(function (el) {
+      el.classList.remove('active');
+    });
+    var target = document.getElementById(id);
+    if (target) target.classList.add('active');
+
+    document.querySelectorAll('.nav-item.clickable').forEach(function (el) {
+      el.classList.remove('current');
+    });
+    var navMap = {
+      'school-list': 'nav-school-list',
+      'school-detail': 'nav-school-list',
+      'update-school': 'nav-school-list',
+      'active-deactivate-school': 'nav-school-list',
+      'security-policies': 'nav-security-policies',
+      'ai-settings': 'nav-ai-settings'
+    };
+    var navId = navMap[id];
+    if (navId) {
+      var navEl = document.getElementById(navId);
+      if (navEl) navEl.classList.add('current');
+    }
+    window.scrollTo(0, 0);
+  }
+</script>
+
+</body>
+</html>

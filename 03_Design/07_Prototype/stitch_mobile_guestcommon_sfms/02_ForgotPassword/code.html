@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quên mật khẩu - SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Public+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary": "#506076",
+                      "on-secondary-container": "#435368",
+                      "error-container": "#fa746f",
+                      "background": "#f7fafc",
+                      "surface": "#f7fafc",
+                      "on-tertiary-fixed-variant": "#3e5175",
+                      "surface-container-low": "#eff4f8",
+                      "secondary-container": "#d3e4fe",
+                      "on-secondary": "#f7f9ff",
+                      "tertiary-fixed": "#bfd2fd",
+                      "on-primary-fixed": "#003b4c",
+                      "surface-dim": "#d2dbe0",
+                      "outline": "#737c81",
+                      "on-background": "#2b3438",
+                      "secondary-dim": "#44546a",
+                      "inverse-on-surface": "#9a9da0",
+                      "surface-tint": "#006882",
+                      "secondary-fixed": "#d3e4fe",
+                      "surface-bright": "#f7fafc",
+                      "on-error-container": "#6e0a12",
+                      "surface-variant": "#dbe4e9",
+                      "primary-fixed-dim": "#81d1f0",
+                      "primary-dim": "#005b72",
+                      "on-surface": "#2b3438",
+                      "tertiary": "#4d5f84",
+                      "surface-container-high": "#e2e9ed",
+                      "on-secondary-fixed": "#314055",
+                      "error": "#a83836",
+                      "inverse-primary": "#8fdfff",
+                      "tertiary-dim": "#415377",
+                      "primary-container": "#8fdfff",
+                      "primary": "#006882",
+                      "error-dim": "#67040d",
+                      "surface-container-lowest": "#ffffff",
+                      "inverse-surface": "#0b0f11",
+                      "tertiary-container": "#bfd2fd",
+                      "on-secondary-fixed-variant": "#4d5d73",
+                      "on-primary": "#f2faff",
+                      "surface-container-highest": "#dbe4e9",
+                      "primary-fixed": "#8fdfff",
+                      "tertiary-fixed-dim": "#b1c4ee",
+                      "on-primary-container": "#005065",
+                      "on-tertiary-fixed": "#213456",
+                      "outline-variant": "#aab3b8",
+                      "on-surface-variant": "#576065",
+                      "surface-container": "#e8eff3",
+                      "on-error": "#fff7f6",
+                      "secondary-fixed-dim": "#c5d6f0",
+                      "on-tertiary": "#f9f8ff",
+                      "on-primary-fixed-variant": "#005a71",
+                      "on-tertiary-container": "#35476b"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {},
+              "fontFamily": {
+                      "headline": [
+                              "Be Vietnam Pro"
+                      ],
+                      "display": [
+                              "Be Vietnam Pro"
+                      ],
+                      "body": [
+                              "Be Vietnam Pro"
+                      ],
+                      "label": [
+                              "Public Sans"
+                      ]
+              },
+              "fontSize": {}
+      },
+          },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+<!-- TopAppBar from JSON -->
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface flex items-center px-4 h-16 max-w-7xl mx-auto flat no shadows transition-colors">
+<div class="flex-shrink-0 cursor-pointer text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 transition-transform rounded-full p-2" onclick="window.history.back()">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</div>
+<div class="flex-grow text-center">
+<h1 class="font-headline font-bold text-primary dark:text-primary-fixed text-lg">Quên mật khẩu</h1>
+</div>
+<div class="w-10"></div> <!-- Spacer for centering -->
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex items-center justify-center pt-16 px-4 pb-8">
+<div class="w-full max-w-md bg-surface-container-lowest rounded-xl p-8 shadow-sm border border-surface-variant">
+<div class="text-center mb-8">
+<div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-container text-on-primary-container mb-4">
+<span class="material-symbols-outlined text-3xl" data-icon="lock_reset" data-weight="fill" style="font-variation-settings: 'FILL' 1;">lock_reset</span>
+</div>
+<h2 class="font-headline text-2xl font-bold text-on-surface mb-2">Khôi phục mật khẩu</h2>
+<p class="text-on-surface-variant font-body text-sm">Nhập địa chỉ email của bạn để nhận mã xác thực OTP.</p>
+</div>
+<form action="#" class="space-y-6" method="POST">
+<!-- Outlined TextField: Email -->
+<div class="relative">
+<label class="block text-sm font-medium text-on-surface mb-1 font-label" for="email">Địa chỉ Email</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-xl" data-icon="mail">mail</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-3 border border-outline rounded-lg bg-surface-container-lowest text-on-surface placeholder-on-surface-variant focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm transition-colors" id="email" name="email" placeholder="ví dụ: user@sfms.com" required="" type="email"/>
+</div>
+</div>
+<!-- Action Button -->
+<div>
+<button class="w-full flex justify-center py-3 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-on-primary bg-primary hover:bg-primary-dim focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary active:scale-95 transition-all duration-200 ease-in-out font-label cursor-pointer" onclick="alert('Navigating to OTP Validation Screen...')" type="button">
+                        Gửi mã OTP
+                    </button>
+</div>
+</form>
+<div class="mt-6 text-center">
+<a class="font-label text-sm text-primary hover:text-primary-dim font-medium transition-colors" href="#" onclick="window.history.back()">Quay lại Đăng nhập</a>
+</div>
+</div>
+</main>
+<!-- Contextual FAB Suppression: Hide FAB on this linear/transactional screen as per rules -->
+<!-- Navigation Shell Suppression: Hide BottomNavBar and SideNav on transactional/focus screen as per rules -->
+</body></html>

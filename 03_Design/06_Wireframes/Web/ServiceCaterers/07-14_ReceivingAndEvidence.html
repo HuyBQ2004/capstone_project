@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>SFMS Wireframe — Service Caterers (Web): Receiving &amp; Evidence</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root{ --ink:#333; --paper:#fff; --gray:#777; --lightgray:#d7d7d7; --midgray:#aaa; }
+  * { box-sizing: border-box; }
+  html { font-size: 18px; }
+  body {
+    margin:0; font-family:'Patrick Hand', cursive; color:var(--ink);
+    background-color:#f4f4f4;
+    background-image: radial-gradient(#d7d7d7 1px, transparent 1px);
+    background-size: 20px 20px;
+    font-size:18px;
+  }
+  .text-xs   { font-size: 14px; line-height:1.4; }
+  .text-sm   { font-size: 18px; line-height:1.5; }
+  .text-base { font-size: 22px; line-height:1.5; }
+  .text-md   { font-size: 28px; line-height:1.3; }
+  .text-lg   { font-size: 35px; line-height:1.2; }
+  a { color:#3a5a8c; text-decoration:underline; cursor:pointer; }
+
+  .app { display:flex; min-height:100vh; }
+
+  /* ---- Sidebar ---- */
+  .sidebar { width:280px; min-width:280px; background:#eee; border-right:3px solid var(--ink); padding:18px 14px; position:sticky; top:0; height:100vh; overflow-y:auto; }
+  .brand { display:flex; align-items:center; gap:8px; margin-bottom:18px; }
+  .brand .text-md { margin:0; }
+  .side-group { margin-bottom:6px; }
+  .side-group-title { display:flex; align-items:center; gap:8px; font-size:16px; color:var(--gray); text-transform:uppercase; letter-spacing:1px; margin:14px 0 6px 4px; }
+  .side-link { display:flex; align-items:center; gap:10px; padding:8px 10px; margin:2px 0; border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; font-size:18px; color:var(--ink); text-decoration:none; cursor:pointer; }
+  .side-link:hover { background:#fff; border:2px dashed var(--midgray); }
+  .side-link.active { background:var(--ink); color:#fff; border:2px solid var(--ink); }
+  .side-link.active svg { stroke:#fff; }
+  .side-link.disabled { color:var(--midgray); cursor:default; }
+  .side-link.disabled:hover { background:none; border:none; }
+  .side-note { font-size:13px; color:var(--midgray); margin-left:32px; }
+  .icon { width:20px; height:20px; flex:none; stroke:var(--ink); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .icon-sm { width:16px; height:16px; }
+
+  /* ---- Main / Topbar ---- */
+  .main { flex:1; min-width:0; }
+  .topbar { display:flex; align-items:center; justify-content:space-between; padding:14px 26px; border-bottom:3px solid var(--ink); background:#fafafa; }
+  .breadcrumb { font-size:20px; }
+  .breadcrumb .crumb-group { color:var(--gray); }
+  .user-chip { display:flex; align-items:center; gap:8px; font-size:16px; }
+  .content { padding:26px; }
+
+  .card { border:2px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; padding:18px; }
+  .card + .card { margin-top:18px; }
+
+  .btn-primary { background:#333; color:white; border:2px solid #333; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:10px 22px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+  .btn-primary svg { stroke:#fff; }
+  .btn-secondary { background:white; color:#333; border:2px solid #333; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:10px 22px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+  .btn-danger { background:white; color:#333; border:3px solid #333; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:10px 22px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+  button:disabled { opacity:0.45; cursor:not-allowed; }
+  .btn-row { display:flex; gap:12px; flex-wrap:wrap; }
+
+  .grid-12 { display:grid; grid-template-columns: repeat(12, 1fr); gap:18px; }
+  .col-4 { grid-column: span 4; }
+  .col-8 { grid-column: span 8; }
+  .col-6 { grid-column: span 6; }
+  .col-12 { grid-column: span 12; }
+  @media (max-width: 980px){ .grid-12 > [class*="col-"] { grid-column: span 12; } }
+
+  .badge { display:inline-flex; align-items:center; gap:6px; padding:3px 12px; font-size:16px; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; }
+  .badge-success { border:2px solid var(--ink); background:#fff; }
+  .badge-warning { border:2px dashed var(--ink); background:#fff; }
+  .badge-danger  { border:3px solid var(--ink); background:#fff; }
+  .badge-info    { border:2px dotted var(--ink); background:#fff; }
+  .badge svg { width:15px; height:15px; }
+
+  table.sketchy { width:100%; border-collapse:separate; border-spacing:0; font-size:18px; }
+  table.sketchy th, table.sketchy td { text-align:left; padding:10px 12px; border-bottom:2px solid var(--lightgray); }
+  table.sketchy thead th { border-bottom:3px solid var(--ink); color:var(--gray); font-weight:normal; font-size:16px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.sketchy tbody tr:hover { background:#f2f2f2; }
+  .table-wrap { border:2px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; overflow:hidden; background:#fff; }
+  .table-wrap table.sketchy { margin:0; }
+  .table-wrap thead th:first-child, .table-wrap tbody td:first-child { padding-left:20px; }
+
+  .filter-bar { display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-bottom:16px; }
+  .filter-bar wired-search-input { width:280px; }
+  .filter-bar wired-select { width:220px; }
+
+  .screen { display:none; }
+  .screen.active { display:block; }
+
+  h1.text-lg, h2.text-md { margin:0 0 4px 0; }
+  .page-header { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:20px; flex-wrap:wrap; }
+  .muted { color:var(--gray); }
+  .section-title { display:flex; align-items:center; gap:8px; margin:0 0 12px 0; }
+
+  .alert { display:flex; gap:12px; align-items:flex-start; padding:14px 16px; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; }
+  .alert-danger { border:3px solid var(--ink); }
+  .alert-warning { border:2px dashed var(--ink); }
+  .alert-info { border:2px dotted var(--ink); }
+  .alert .icon { flex:none; margin-top:2px; }
+  .alert + .alert { margin-top:12px; }
+
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.35); align-items:center; justify-content:center; z-index:50; padding:20px; }
+  .modal-overlay.active { display:flex; }
+  .modal-box { width:100%; max-width:640px; background:#fff; border:3px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; padding:24px; max-height:90vh; overflow-y:auto; }
+  .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  .close-x { cursor:pointer; }
+
+  .field-label { font-size:18px; margin-bottom:6px; display:flex; gap:6px; align-items:center; }
+  .req { color:var(--ink); font-weight:bold; }
+  .field-block { margin-bottom:16px; }
+  wired-input, wired-textarea, wired-select, wired-search-input, wired-combo { width:100%; display:block; }
+
+  .placeholder-x { display:flex; align-items:center; justify-content:center; height:110px; font-size:35px; color:var(--midgray); border:2px dashed var(--midgray); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background:#fafafa; }
+
+  .skeleton-note { display:flex; align-items:center; gap:10px; color:var(--gray); font-size:16px; margin-bottom:10px; }
+  .state-legend { margin-top:14px; padding:12px 14px; border:2px dotted var(--midgray); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-size:14px; color:var(--gray); }
+
+  ul.plain { list-style:none; margin:0; padding:0; }
+
+  /* ---- Tabs (Workspace wizard) ---- */
+  .tab-bar { display:flex; gap:8px; border-bottom:3px solid var(--ink); margin-bottom:18px; flex-wrap:wrap; }
+  .tab-item { padding:10px 18px; border:2px solid var(--ink); border-bottom:none; border-radius:14px 14px 0 0; background:#eee; cursor:pointer; margin-bottom:-3px; }
+  .tab-item.active { background:#fff; }
+  .tab-item.disabled { color:var(--midgray); cursor:not-allowed; background:#f4f4f4; }
+  .tab-panel { display:none; }
+  .tab-panel.active { display:block; }
+
+  .step-list-row { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; border:2px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; margin-bottom:10px; cursor:pointer; }
+  .step-list-row.disabled { opacity:0.5; cursor:not-allowed; }
+  .step-left { display:flex; align-items:center; gap:10px; }
+
+  .thumb-strip { display:flex; gap:10px; margin-top:10px; flex-wrap:wrap; }
+  .thumb-box { width:90px; height:90px; border:2px dashed var(--midgray); border-radius:10px; display:flex; align-items:center; justify-content:center; color:var(--midgray); font-size:28px; }
+  .gps-box { display:flex; align-items:center; gap:8px; padding:10px 12px; border:2px dotted var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-size:16px; margin-bottom:12px; }
+  .radio-tile { display:flex; align-items:center; gap:10px; padding:10px 12px; border:2px solid var(--lightgray); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; margin-bottom:8px; cursor:pointer; }
+  .radio-tile.selected { border:2px solid var(--ink); background:#f7f7f7; }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar">
+    <div class="brand">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 21 L4 9 L12 3 L20 9 L20 21 Z"/><path d="M9 21 L9 14 L15 14 L15 21"/></svg>
+      <span class="text-md">SFMS</span>
+    </div>
+    <div class="side-note" style="margin-left:0; margin-bottom:14px;">Service Caterers — Bếp trưởng Nguyễn Văn A</div>
+
+    <div class="side-group">
+      <div class="side-group-title"><svg class="icon" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/></svg>Tổng quan</div>
+      <div class="side-link disabled">Dashboard <span class="side-note" style="margin-left:0">(xem file wireframe nhóm khác)</span></div>
+    </div>
+
+    <div class="side-group">
+      <div class="side-group-title"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6 h16 M4 12 h16 M4 18 h16"/></svg>Thực đơn</div>
+      <div class="side-link disabled">Menu Management <span class="side-note" style="margin-left:0">(nhóm khác)</span></div>
+    </div>
+
+    <div class="side-group">
+      <div class="side-group-title"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20 V8 l8 -4 8 4 v12"/><path d="M9 20 v-6 h6 v6"/></svg>Nhận hàng &amp; Kho</div>
+      <div class="side-link active" data-screen="dashboard" onclick="showScreen('dashboard')">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 20 V8 l8 -4 8 4 v12"/><path d="M9 20 v-6 h6 v6"/></svg>
+        Receiving Management Dashboard
+      </div>
+      <div class="side-link" data-screen="history" onclick="showScreen('history')">
+        <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7 v5 l4 2"/></svg>
+        Receiving History &amp; Reports
+      </div>
+      <div class="side-link disabled">Inventory Management <span class="side-note" style="margin-left:0">(nhóm khác)</span></div>
+    </div>
+
+    <div class="side-group">
+      <div class="side-group-title"><svg class="icon" viewBox="0 0 24 24"><path d="M9 12 L11 14 L15 9"/><circle cx="12" cy="12" r="9"/></svg>Kiểm tra 3 Bước</div>
+      <div class="side-link disabled">Three-Step Inspection <span class="side-note" style="margin-left:0">(nhóm khác)</span></div>
+    </div>
+
+    <div class="side-group">
+      <div class="side-group-title"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3 v6 M12 15 v6 M3 12 h6 M15 12 h6"/></svg>Lưu mẫu Thực phẩm</div>
+      <div class="side-link disabled">Food Sample Retention <span class="side-note" style="margin-left:0">(nhóm khác)</span></div>
+    </div>
+
+    <div class="side-group">
+      <div class="side-group-title"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/></svg>Sự cố &amp; Vi phạm</div>
+      <div class="side-link disabled">Corrective Actions <span class="side-note" style="margin-left:0">(nhóm khác)</span></div>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <main class="main">
+    <div class="topbar">
+      <div class="breadcrumb"><span class="crumb-group">Nhận hàng &amp; Kho</span> / <span id="crumb-current">Receiving Management Dashboard</span></div>
+      <div class="user-chip"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20 a8 8 0 0 1 16 0"/></svg>Bếp trưởng Nguyễn Văn A</div>
+    </div>
+
+    <div class="content">
+
+      <!-- ============ 07: Receiving Management Dashboard ============ -->
+      <div class="screen active" id="dashboard">
+        <div class="page-header">
+          <div><h1 class="text-lg">Receiving Management Dashboard</h1><div class="muted text-sm">Lịch giao hàng hôm nay</div></div>
+          <a onclick="showScreen('history')" class="text-sm"><svg class="icon icon-sm" viewBox="0 0 24 24" style="stroke:#3a5a8c"><circle cx="12" cy="12" r="9"/><path d="M12 7 v5 l4 2"/></svg> Xem Lịch sử</a>
+        </div>
+
+        <div class="filter-bar">
+          <wired-select><wired-item value="today">Hôm nay</wired-item><wired-item value="week">7 ngày qua</wired-item></wired-select>
+          <wired-select><wired-item value="all">Tất cả nhà cung cấp</wired-item></wired-select>
+        </div>
+
+        <div class="table-wrap">
+          <table class="sketchy">
+            <thead><tr><th>Nhà cung cấp</th><th>Giờ dự kiến</th><th>Trạng thái</th><th>Hành động</th></tr></thead>
+            <tbody>
+              <tr><td>Cty TNHH Rau Sạch Xanh</td><td>07:30</td><td><span class="badge badge-info">Scheduled</span></td><td>—</td></tr>
+              <tr>
+                <td>Cty CP Thực phẩm An Phát</td><td>08:00</td><td><span class="badge badge-warning">Dispatched</span></td>
+                <td><button class="btn-primary" onclick="showScreen('workspace')"><svg class="icon icon-sm" viewBox="0 0 24 24" stroke="#fff"><path d="M4 20 V8 l8 -4 8 4 v12"/></svg>Bắt đầu Nhận hàng</button></td>
+              </tr>
+              <tr><td>Nông trại Ba Vì</td><td>06:45</td><td><span class="badge badge-success">In Progress</span></td><td>—</td></tr>
+              <tr><td>Cty TNHH Hải sản Miền Trung</td><td>06:00</td><td><span class="badge badge-success">Completed</span></td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="state-legend">Empty: không có lịch giao hàng hôm nay → thông báo + gợi ý xem Lịch sử. Loading: Skeleton cho bảng. Error: Alert destructive MSG-004/MSG-005 nếu tải thất bại.</div>
+      </div>
+
+      <!-- ============ 08: Receive Ingredients Workspace (Tabs = 09/10/13) ============ -->
+      <div class="screen" id="workspace">
+        <div class="page-header">
+          <div><h1 class="text-lg">Receive Ingredients Workspace</h1><div class="muted text-sm">Cty CP Thực phẩm An Phát · Dự kiến 08:00 · Trạng thái phiên: Đang tiến hành</div></div>
+        </div>
+
+        <div class="alert alert-info">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M9 12 L11 14 L15 9"/><circle cx="12" cy="12" r="9"/></svg>
+          <div class="text-sm">Nhà cung cấp: <b>Approved</b> (BR-070) — bắt buộc kết nối mạng để xác minh, không cho qua bằng cache (BR-197).</div>
+        </div>
+        <div class="alert alert-warning">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/></svg>
+          <div class="text-sm">GPS: ngoài bán kính 50m khu vực cổng trường (MSG-015). <a>Nhập/xác nhận tọa độ thủ công</a> — theo hướng dẫn Web (BR-079).</div>
+        </div>
+
+        <div class="section-title text-base" style="margin-top:18px"><svg class="icon" viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="12" rx="2"/><circle cx="12" cy="13" r="3"/></svg>Xác thực khuôn mặt (webcam — thứ yếu, khuyến nghị dùng Mobile tại hiện trường)</div>
+        <div class="card" style="margin-bottom:18px"><div class="placeholder-x" style="height:70px">Webcam preview</div></div>
+
+        <div class="tab-bar">
+          <div class="tab-item active" onclick="showTab('tab-verify')">Xác minh</div>
+          <div class="tab-item disabled" title="Chưa có Screen Spec riêng trong nhóm màn hình này">Kiểm tra chất lượng</div>
+          <div class="tab-item" onclick="showTab('tab-evidence')">Bằng chứng</div>
+          <div class="tab-item" onclick="showTab('tab-confirm')">Xác nhận</div>
+        </div>
+
+        <!-- Tab: Xác minh = 09 Verify Supplier Delivery Panel -->
+        <div class="tab-panel active" id="tab-verify">
+          <div class="grid-12">
+            <div class="col-6">
+              <div class="card">
+                <div class="page-header" style="margin-bottom:8px"><span class="text-base">Cty CP Thực phẩm An Phát</span><span class="badge badge-success"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M5 13 L10 18 L19 6"/></svg>Approved</span></div>
+              </div>
+              <div class="table-wrap" style="margin-top:12px">
+                <table class="sketchy">
+                  <thead><tr><th>Số lô</th><th>SX / HD</th><th>SL</th><th>Chứng chỉ</th></tr></thead>
+                  <tbody><tr><td>AP-0821</td><td>20/06 · 25/06</td><td>120kg</td><td>Còn hiệu lực</td></tr></tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="card">
+                <div class="text-sm">Kết quả xác thực khuôn mặt: <span class="badge badge-danger">Failed</span></div>
+                <div class="alert alert-danger" style="margin-top:10px">
+                  <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9 L15 15 M15 9 L9 15"/></svg>
+                  <div class="text-sm">MSG-014 — thất bại. Chuyển luồng Manual Override.</div>
+                </div>
+                <div class="field-block" style="margin-top:10px"><div class="field-label">Lý do override <span class="req">*</span></div><wired-textarea placeholder="Nhân viên giao hàng thay thế, đã gọi xác nhận"></wired-textarea></div>
+                <div class="field-block"><div class="field-label">Ảnh bằng chứng override</div><div class="placeholder-x" style="height:70px">Upload ảnh</div></div>
+              </div>
+            </div>
+          </div>
+          <button class="btn-primary" style="margin-top:14px" onclick="showTab('tab-evidence')">Xác nhận Hồ sơ Hợp lệ</button>
+          <div class="state-legend">Error khác: MSG-013 nếu chứng nhận ATTP hết hạn → chặn xác nhận.</div>
+        </div>
+
+        <!-- Tab: Bằng chứng = 10 Capture Receiving Evidence Screen -->
+        <div class="tab-panel" id="tab-evidence">
+          <div class="grid-12">
+            <div class="col-8">
+              <div class="card">
+                <div class="field-label"><svg class="icon icon-sm" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13.5" r="4"/></svg>Upload ảnh bằng chứng (nguyên liệu / nhãn / bao bì / tài liệu)</div>
+                <wired-input type="file"></wired-input>
+                <div class="thumb-strip"><div class="thumb-box">X</div><div class="thumb-box">X</div><div class="thumb-box">+</div></div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="gps-box">
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 21 C7 16 4 12.5 4 9 a8 8 0 1 1 16 0 c0 3.5 -3 7 -8 12 Z"/><circle cx="12" cy="9" r="2.4"/></svg>
+                21.0278°N, 105.8342°E · 08:12:45 (đọc lại từ Geolocation API / nhập thủ công)
+              </div>
+              <div class="alert alert-warning"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/></svg><div class="text-sm">MSG-009 — định dạng ảnh không hợp lệ.</div></div>
+            </div>
+          </div>
+          <button class="btn-primary" style="margin-top:14px" onclick="showTab('tab-confirm')">Lưu Bằng chứng</button>
+          <div class="state-legend">Empty: chưa upload ảnh nào. Error khác: MSG-008 (vượt dung lượng), MSG-015 (GPS ngoài khu vực). Offline không áp dụng trên Web (BR-197). Đây là "secondary path", độ tin cậy thấp hơn Mobile.</div>
+        </div>
+
+        <!-- Tab: Xác nhận = 13 Record Ingredient Receiving -->
+        <div class="tab-panel" id="tab-confirm">
+          <div class="grid-12">
+            <div class="col-4"><div class="card"><div class="text-sm muted">Nhà cung cấp</div><div class="text-base">Approved · hợp lệ</div></div></div>
+            <div class="col-4"><div class="card"><div class="text-sm muted">Chứng nhận &amp; Kiểm tra</div><div class="text-base">AP-0821 · 120kg</div></div></div>
+            <div class="col-4"><div class="card"><div class="text-sm muted">Bằng chứng</div><div class="text-base">2 ảnh · GPS 08:12:45</div></div></div>
+          </div>
+          <div class="alert alert-warning" style="margin-top:14px">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 14 h4 v6 h-4 Z M10 9 h4 v11 h-4 Z M16 4 h4 v16 h-4 Z"/></svg>
+            <div class="text-sm">Kiểm tra chuỗi lạnh: <b>6.2°C</b> — vượt ngưỡng 5°C (BR-080).</div>
+          </div>
+          <div class="field-block" style="margin-top:14px"><div class="field-label text-sm">Số lô liên kết truy xuất nguồn gốc</div><div class="card text-sm">LOT-2026-0707-AP01 (chỉ đọc)</div></div>
+          <button class="btn-primary" onclick="openModal('store-modal')">Xác nhận Hoàn tất Phiên Nhận hàng</button>
+          <div class="state-legend">Loading: Skeleton khi tổng hợp dữ liệu. Error: Alert destructive MSG-004/MSG-005. Success: Toast MSG-041.</div>
+        </div>
+
+        <div class="section-title text-base" style="margin-top:22px"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9 L15 15 M15 9 L9 15"/></svg>Log Rejections</div>
+        <div class="step-list-row" onclick="openModal('reject-modal')">
+          <div class="step-left"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20 V8 l8 -4 8 4 v12"/></svg><span>Ghi nhận lô hàng không đạt (Reject Ingredient Batch)</span></div>
+          <span class="muted text-sm">Mở Dialog →</span>
+        </div>
+      </div>
+
+      <!-- ============ 14: Receiving History & Reports ============ -->
+      <div class="screen" id="history">
+        <div class="page-header">
+          <div><h1 class="text-lg">Receiving History &amp; Reports</h1><div class="muted text-sm">Lịch sử nhận hàng của Service Caterers</div></div>
+          <button class="btn-secondary"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 3 v12 M8 11 l4 4 4 -4"/><path d="M4 19 h16"/></svg>Xuất Báo cáo</button>
+        </div>
+        <div class="filter-bar">
+          <wired-input placeholder="Từ ngày"></wired-input>
+          <wired-input placeholder="Đến ngày"></wired-input>
+          <wired-select><wired-item value="all">Tất cả nhà cung cấp</wired-item></wired-select>
+        </div>
+        <div class="table-wrap">
+          <table class="sketchy">
+            <thead><tr><th>Ngày</th><th>Nhà cung cấp</th><th>Số lô</th><th>Trạng thái</th><th></th></tr></thead>
+            <tbody>
+              <tr><td>06/07</td><td>Cty TNHH Hải sản Miền Trung</td><td>SF-0706</td><td><span class="badge badge-success">Received</span></td><td><a>Xem chi tiết</a></td></tr>
+              <tr><td>05/07</td><td>Nông trại Ba Vì</td><td>BV-0705</td><td><span class="badge badge-danger">Rejected</span></td><td><a>Xem chi tiết</a></td></tr>
+              <tr><td>04/07</td><td>Cty CP Thực phẩm An Phát</td><td>AP-0704</td><td><span class="badge badge-success">Received</span></td><td><a>Xem chi tiết</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="state-legend">Empty: chưa có lịch sử nhận hàng trong khoảng lọc. Loading: Skeleton. Xuất báo cáo chỉ giới hạn hoạt động của chính Service Caterers (BR-175/176/178).</div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Modal: Reject Ingredient Batch Form (12) -->
+<div class="modal-overlay" id="reject-modal">
+  <div class="modal-box">
+    <div class="modal-header"><span class="text-md">Reject Ingredient Batch Form</span><svg class="icon close-x" viewBox="0 0 24 24" onclick="closeModal('reject-modal')"><path d="M6 6 L18 18 M18 6 L6 18"/></svg></div>
+    <div class="card"><div class="text-sm">Lô hàng: <b>Rau cải ngọt — Batch #AP-0821</b> · 40kg</div></div>
+    <div class="field-block" style="margin-top:14px">
+      <div class="field-label">Lý do từ chối (chọn ít nhất 1) <span class="req">*</span></div>
+      <wired-listbox>
+        <wired-item value="expired">Hết hạn sử dụng</wired-item>
+        <wired-item value="package">Sai quy cách đóng gói</wired-item>
+        <wired-item value="temp">Nhiệt độ chuỗi lạnh không đạt</wired-item>
+        <wired-item value="qty">Số lượng thiếu so với hoá đơn</wired-item>
+      </wired-listbox>
+    </div>
+    <div class="field-block"><div class="field-label">Ảnh bằng chứng lô hàng bị từ chối</div><div class="placeholder-x" style="height:80px">Upload ảnh</div></div>
+    <div class="field-block" style="display:flex; align-items:center; justify-content:space-between;">
+      <span class="text-sm">Từ chối một phần (Partial Rejection)</span><wired-checkbox></wired-checkbox>
+    </div>
+    <wired-input placeholder="Số lượng từ chối (kg)"></wired-input>
+    <button class="btn-danger" style="margin-top:16px" onclick="closeModal('reject-modal')"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M6 6 L18 18 M18 6 L6 18"/></svg>Xác nhận Từ chối</button>
+    <div class="text-xs muted" style="margin-top:6px">Bấm sẽ hiện AlertDialog xác nhận — không thể hoàn tác.</div>
+  </div>
+</div>
+
+<!-- Modal: Store Ingredients Form (11) -->
+<div class="modal-overlay" id="store-modal">
+  <div class="modal-box" style="max-width:760px">
+    <div class="modal-header"><span class="text-md">Store Ingredients Form (Storage Assignment)</span><svg class="icon close-x" viewBox="0 0 24 24" onclick="closeModal('store-modal')"><path d="M6 6 L18 18 M18 6 L6 18"/></svg></div>
+    <div class="grid-12">
+      <div class="col-6">
+        <div class="field-label">Lô hàng chờ xếp kho</div>
+        <div class="table-wrap"><table class="sketchy"><thead><tr><th>Lô</th><th>SL</th><th>Trạng thái</th></tr></thead><tbody><tr><td>AP-0821</td><td>120kg</td><td><span class="badge badge-warning">Received</span></td></tr></tbody></table></div>
+      </div>
+      <div class="col-6">
+        <div class="field-label">Quét/nhập mã vạch lô hàng <span class="req">*</span></div>
+        <wired-input placeholder="Nhập hoặc quét mã vạch"></wired-input>
+        <div class="field-label" style="margin-top:14px">Chọn khu vực lưu trữ</div>
+        <div class="radio-tile selected"><wired-radio checked></wired-radio> Kho khô (Dry)</div>
+        <div class="radio-tile"><wired-radio></wired-radio> Kho lạnh (Chilled)</div>
+        <div class="radio-tile"><wired-radio></wired-radio> Kho đông (Frozen)</div>
+        <div class="alert alert-danger" style="margin-top:10px"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9 L15 15 M15 9 L9 15"/></svg><div class="text-sm">Rau cải ngọt yêu cầu Kho lạnh (2-8°C) — không khớp (BR-202). Không thể lưu.</div></div>
+      </div>
+    </div>
+    <button class="btn-primary" style="margin-top:16px" onclick="closeModal('store-modal'); showScreen('dashboard')">Xác nhận Vị trí Lưu trữ</button>
+  </div>
+</div>
+
+<script>
+  function showScreen(id){
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.side-link').forEach(l => l.classList.remove('active'));
+    var activeLink = document.querySelector('.side-link[data-screen="' + id + '"]');
+    if (activeLink) activeLink.classList.add('active');
+    var crumbMap = { dashboard:'Receiving Management Dashboard', workspace:'Receive Ingredients Workspace', history:'Receiving History & Reports' };
+    document.getElementById('crumb-current').textContent = crumbMap[id] || id;
+  }
+  function showTab(id){
+    document.querySelectorAll('.tab-panel').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+  }
+  function openModal(id){ document.getElementById(id).classList.add('active'); }
+  function closeModal(id){ document.getElementById(id).classList.remove('active'); }
+</script>
+</body>
+</html>

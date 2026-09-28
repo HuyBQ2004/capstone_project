@@ -1,0 +1,158 @@
+# Chạy toàn bộ hệ thống SFMS theo đúng sơ đồ kiến trúc đã chốt (Nginx → Frontend/Backend,
+# 2 microservice AI riêng, Postgres). Redis CHƯA có trong stack này — chưa module nào trong
+# code dùng (grep không thấy RedisTemplate/spring-boot-starter-data-redis), thêm vào giờ chỉ là
+# hạ tầng chết; thêm khi có cache thật cần dùng.
+#
+# Chạy local test:  docker compose up --build
+# Chạy có domain thật (Cloudflare Tunnel):  docker compose --profile tunnel up --build -d
+#   (cần TUNNEL_TOKEN trong .env — lấy ở Cloudflare Zero Trust → Networks → Tunnels)
+
+services:
+  postgres:
+    # pgvector/pgvector:pg15 = ĐÚNG Postgres 15, chỉ khác ở chỗ đã biên dịch sẵn extension
+    # `vector`. Đổi từ `postgres:15-alpine` ngày 09/08/2026 để làm truy hồi RAG bằng vector thật
+    # (V59). Alpine không có extension này, `CREATE EXTENSION vector` sẽ báo không tìm thấy file.
+    #
+    # ⚠️ Cùng major 15 nên thư mục dữ liệu dùng lại được, KHÔNG cần dump/restore. Nhưng ảnh nền
+    # đổi từ musl (alpine) sang glibc (debian) ⇒ Postgres có thể cảnh báo lệch phiên bản
+    # collation; nếu thấy cảnh báo đó thì chạy `REINDEX DATABASE sfms`. Đã sao lưu
+    # `_db_backup/sfms_before_pgvector.dump` trước khi đổi.
+    image: pgvector/pgvector:pg15
+    environment:
+      POSTGRES_DB: sfms
+      POSTGRES_USER: sfms
+      POSTGRES_PASSWORD: sfms
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sfms"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  # SMTP giả lập (dev/test) — dùng thay Gmail thật khi chưa muốn cấu hình App Password.
+  # Đổi SMTP_HOST/SMTP_USER/SMTP_PASSWORD trong .env sang Gmail thật lúc lên production.
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      # 8026 (không phải 8025) — tránh đụng container dev "sfms-mailpit" cũ (Backend/docker-compose.yml)
+      # nếu cả 2 compose cùng chạy song song trên máy dev.
+      - "8026:8025"
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./04_Development/Backend
+    env_file:
+      - ./04_Development/Backend/.env
+    environment:
+      # Override hostname nội bộ Docker network — .env của bạn để "localhost" cho lúc chạy
+      # tay ngoài container, ở đây phải là tên service. KHÔNG ép SMTP_*/MAIL_FROM ở đây —
+      # environment: luôn thắng env_file:, ép cứng sẽ đè mất Gmail thật đã cấu hình trong .env
+      # (SMTP mailpit chỉ là default hợp lý trong .env.example, không phải thứ compose ép).
+      DB_URL: jdbc:postgresql://postgres:5432/sfms
+      SFMS_FRS_URL: http://frs-service:8000
+      # InsightFaceServiceAdapter (FRS thật, gọi frs-service) chỉ đăng ký bean khi
+      # @Profile("prod") active — không có application-prod.yml nào khác nên bật profile
+      # này AN TOÀN (không ảnh hưởng bean/cấu hình nào khác), chỉ để chọn đúng bean gọi
+      # microservice thật thay vì FaceRecognitionPortStub (luôn PASS, ADR-000 dev).
+      SPRING_PROFILES_ACTIVE: prod
+      SFMS_FRS_ENABLED: "true"
+      # GeminiClient chỉ gọi rag-service thật khi bật cờ này — mặc định application.yml
+      # là false (ADR-000 Stub) nên phải ép ở đây để chatbot AI trả lời thật thay vì stub.
+      SFMS_RAG_ENABLED: "true"
+      SFMS_RAG_URL: http://rag-service:8001
+      # BR-061 — đặt = 0 để test không bị chặn "nộp duyệt trước 3 ngày".
+      # Đổi lại = 3 (hoặc xóa dòng) khi deploy production thật.
+      MENU_LEAD_TIME_DAYS: "0"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      frs-service:
+        condition: service_started
+      rag-service:
+        condition: service_started
+    volumes:
+      - ./04_Development/Backend/secrets:/app/secrets:ro   # FIREBASE_SERVICE_ACCOUNT_FILE fallback
+      - backend-uploads:/app/data/uploads                  # STORAGE_PROVIDER=local (ADR-000)
+      - backend-backups:/app/data/backups                  # BR-160/161 — pg_dump (BackupServiceImpl)
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./04_Development/Frontend
+    env_file:
+      - ./04_Development/Frontend/.env
+    environment:
+      SFMS_BACKEND_URL: http://backend:8080
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  frs-service:
+    build:
+      context: ./04_Development/AiServices/frs_service
+    environment:
+      # 10/08/2026 — persist embedding khuôn mặt vào Postgres thay vì dict RAM (mất sạch mỗi
+      # lần restart container). Bảng `driver_face_embeddings` do CHÍNH service này tự tạo lúc
+      # khởi động (main.py `_ensure_table()`), không qua Flyway của backend Java.
+      DATABASE_URL: postgresql://sfms:sfms@postgres:5432/sfms
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - frs-data:/app/data
+      - frs-cache:/root/.deepface
+    restart: unless-stopped
+
+  rag-service:
+    build:
+      context: ./04_Development/AiServices/rag_service
+    environment:
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    # `NGINX_HOST_PORT` — mặc định 80 (máy dev không cần khai gì, y như trước). Đặt biến này
+    # trong `.env` khi cổng 80 trên host đã bị chiếm (VD VPS có sẵn Traefik/Coolify dùng 80/443
+    # cho việc khác) — KHÔNG đổi ở docker-compose.prod.yml vì Compose GỘP (không ghi đè) danh
+    # sách `ports` giữa các file override, khai 2 nơi sẽ bind CẢ HAI cổng cùng lúc (đã kiểm
+    # bằng `docker compose config`, 11/08/2026) — cổng 80 vẫn bị chiếm lại, sập.
+    ports:
+      - "${NGINX_HOST_PORT:-80}:80"
+    depends_on:
+      - frontend
+      - backend
+    restart: unless-stopped
+
+  # Không expose port ra host — Cloudflare Tunnel tự nối ra ngoài qua outbound connection tới
+  # Cloudflare, domain thật (sfsm.io.vn) trỏ vào tunnel này ở Cloudflare Dashboard.
+  cloudflared:
+    # GHIM CỨNG 2026.7.1 — KHÔNG dùng `:latest` (14/08/2026, Nam).
+    #
+    # Bản 2026.8.1 (ra 13/08/2026) tự MÃ HOÁ dấu ngoặc đơn trong path trước khi chuyển về
+    # origin: `/(app)/` → `/%28app%29/`. Next.js App Router đặt route group trong ngoặc đơn nên
+    # MỌI asset tĩnh đều nằm dưới `_next/static/chunks/app/(app)/...`; riêng trang có route
+    # ĐỘNG (`[id]`) thì path chứa CẢ `%28app%29` lẫn `%5Bid%5D` và Next.js giải mã không khớp
+    # → 404 chunk → trang trắng "Application error: a client-side exception has occurred".
+    #
+    # Đo thật: cùng file, qua cloudflared 2026.8.1 → 404; vào thẳng nginx (không qua tunnel)
+    # hoặc qua 2026.7.1 (máy cũ) → 200. Mọi trang chi tiết theo ID đều chết vì lỗi này.
+    # Chỉ nâng phiên bản khi đã test lại đúng đường dẫn có `(app)` + `[id]`.
+    image: cloudflare/cloudflared:2026.7.1
+    command: tunnel --no-autoupdate run --token ${TUNNEL_TOKEN}
+    depends_on:
+      - nginx
+    restart: unless-stopped
+    profiles: ["tunnel"]
+
+volumes:
+  pgdata:
+  backend-uploads:
+  backend-backups:
+  frs-data:
+  frs-cache:

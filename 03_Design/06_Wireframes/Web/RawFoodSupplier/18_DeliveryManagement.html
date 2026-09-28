@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>SFMS Wireframe — Raw Food Supplier: Delivery Management</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root{ --ink:#333; --gray:#777; --lightgray:#d7d7d7; --midgray:#aaa; }
+  * { box-sizing: border-box; } html { font-size: 18px; }
+  body { margin:0; font-family:'Patrick Hand', cursive; color:var(--ink); background-color:#f4f4f4; background-image: radial-gradient(#d7d7d7 1px, transparent 1px); background-size: 20px 20px; font-size:18px; }
+  .text-xs{font-size:14px;} .text-sm{font-size:18px;} .text-base{font-size:22px;} .text-md{font-size:28px;} .text-lg{font-size:35px;}
+  .app{display:flex;min-height:100vh;}
+  .sidebar{width:270px;min-width:270px;background:#eee;border-right:3px solid var(--ink);padding:18px 14px;position:sticky;top:0;height:100vh;overflow-y:auto;}
+  .brand{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .side-group-title{font-size:16px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin:14px 0 6px 4px;display:flex;align-items:center;gap:8px;}
+  .side-link{display:flex;align-items:center;gap:10px;padding:8px 10px;margin:2px 0;border-radius:255px 15px 225px 15px / 15px 225px 15px 255px;font-size:18px;cursor:pointer;}
+  .side-link:hover{background:#fff;border:2px dashed var(--midgray);}
+  .side-link.active{background:var(--ink);color:#fff;border:2px solid var(--ink);} .side-link.active svg{stroke:#fff;}
+  .side-link.disabled{color:var(--midgray);cursor:default;}
+  .side-note{font-size:13px;color:var(--midgray);margin-left:32px;}
+  .icon{width:20px;height:20px;flex:none;stroke:var(--ink);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  .main{flex:1;min-width:0;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 26px;border-bottom:3px solid var(--ink);background:#fafafa;}
+  .breadcrumb{font-size:20px;} .crumb-group{color:var(--gray);}
+  .content{padding:26px;}
+  .card{border:2px solid var(--ink);border-radius:255px 15px 225px 15px / 15px 225px 15px 255px;background:#fff;padding:18px;}
+  .card+.card{margin-top:18px;}
+  .btn-primary{background:#333;color:white;border:2px solid #333;border-radius:255px 15px 225px 15px / 15px 225px 15px 255px;font-family:'Patrick Hand',cursive;font-size:18px;padding:10px 22px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;}
+  .btn-primary svg{stroke:#fff;}
+  .btn-secondary{background:white;color:#333;border:2px solid #333;border-radius:255px 15px 225px 15px / 15px 225px 15px 255px;font-family:'Patrick Hand',cursive;font-size:18px;padding:10px 22px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;}
+  button:disabled{opacity:0.45;cursor:not-allowed;}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;}
+  .grid-12{display:grid;grid-template-columns:repeat(12,1fr);gap:18px;}
+  .col-4{grid-column:span 4;} .col-5{grid-column:span 5;} .col-6{grid-column:span 6;} .col-7{grid-column:span 7;} .col-8{grid-column:span 8;} .col-12{grid-column:span 12;}
+  @media (max-width:980px){ .grid-12>[class*="col-"]{grid-column:span 12;} }
+  .badge{display:inline-flex;align-items:center;gap:6px;padding:3px 12px;font-size:16px;border-radius:255px 15px 225px 15px / 15px 225px 15px 255px;}
+  .badge-success{border:2px solid var(--ink);background:#fff;} .badge-warning{border:2px dashed var(--ink);background:#fff;} .badge-danger{border:3px solid var(--ink);background:#fff;} .badge-info{border:2px dotted var(--ink);background:#fff;}
+  .badge svg{width:15px;height:15px;}
+  table.sketchy{width:100%;border-collapse:separate;border-spacing:0;font-size:18px;}
+  table.sketchy th,table.sketchy td{text-align:left;padding:10px 12px;border-bottom:2px solid var(--lightgray);}
+  table.sketchy thead th{border-bottom:3px solid var(--ink);color:var(--gray);font-weight:normal;font-size:16px;text-transform:uppercase;}
+  table.sketchy tbody tr{cursor:pointer;} table.sketchy tbody tr:hover{background:#f2f2f2;}
+  .table-wrap{border:2px solid var(--ink);border-radius:255px 15px 225px 15px / 15px 225px 15px 255px;overflow:hidden;background:#fff;}
+  .table-wrap table.sketchy{margin:0;}
+  .filter-bar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:16px;}
+  .filter-bar wired-search-input{width:260px;} .filter-bar wired-select{width:200px;} .filter-bar wired-calendar{width:auto;}
+  .screen{display:none;} .screen.active{display:block;}
+  .muted{color:var(--gray);} .section-title{display:flex;align-items:center;gap:8px;margin:0 0 12px 0;}
+  .counter-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:18px;}
+  .counter-card{flex:1;min-width:140px;text-align:center;}
+  .counter-value{font-size:35px;}
+  .field-label{font-size:18px;margin-bottom:6px;display:flex;gap:4px;} .req{font-weight:bold;}
+  .field-block{margin-bottom:16px;}
+  wired-input,wired-select,wired-calendar{width:100%;display:block;}
+  .alert{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:255px 15px 225px 15px / 15px 225px 15px 255px;background:#fff;}
+  .alert-danger{border:3px solid var(--ink);} .alert-warning{border:2px dashed var(--ink);}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><svg class="icon" viewBox="0 0 24 24"><path d="M4 21 L4 9 L12 3 L20 9 L20 21 Z"/></svg><span class="text-md">SFMS</span></div>
+    <div class="side-note" style="margin-left:0;margin-bottom:14px;">Raw Food Supplier — Cty TNHH Rau Sạch Xanh</div>
+    <div class="side-group"><div class="side-group-title">Tổng quan</div><div class="side-link disabled">Supplier Dashboard</div><div class="side-note">(xem nhóm 01-03,07-08)</div></div>
+    <div class="side-group"><div class="side-group-title">Đơn Mua hàng</div><div class="side-link disabled">Purchase Requests</div><div class="side-note">(xem nhóm 09-11)</div></div>
+    <div class="side-group">
+      <div class="side-group-title"><svg class="icon" viewBox="0 0 24 24"><path d="M3 12 h13 l4 4 v4 h-17 z"/></svg>Giao hàng</div>
+      <div class="side-link active" onclick="showScreen('del-entry')"><svg class="icon" viewBox="0 0 24 24"><path d="M3 12 h13 l4 4 v4 h-17 z"/></svg>Deliveries</div>
+      <div class="side-link" onclick="showScreen('del-list')"><svg class="icon" viewBox="0 0 24 24"><path d="M7 8 h10 M7 12 h10 M7 16 h6"/><rect x="3" y="3" width="18" height="18"/></svg>Delivery List</div>
+    </div>
+    <div class="side-group"><div class="side-group-title">Tuân thủ &amp; Chứng nhận</div><div class="side-link disabled">Compliance Documents</div><div class="side-note">(xem nhóm 04-06,25-26)</div></div>
+    <div class="side-group"><div class="side-group-title">Lô Nguyên liệu</div><div class="side-link disabled">Ingredient Batches</div><div class="side-note">(xem nhóm 12-17)</div></div>
+    <div class="side-group"><div class="side-group-title">Cá nhân</div><div class="side-link disabled">Profile / Notification</div></div>
+  </aside>
+  <div class="main">
+
+    <!-- ============ SCREEN 18: DELIVERIES (entry) ============ -->
+    <section class="screen active" id="del-entry">
+      <div class="topbar"><div class="breadcrumb"><span class="crumb-group">Giao hàng</span> / Delivery Management</div></div>
+      <div class="content">
+        <div class="counter-row">
+          <div class="card counter-card"><div class="counter-value">1</div><div class="muted text-sm">Scheduled</div></div>
+          <div class="card counter-card"><div class="counter-value">1</div><div class="muted text-sm">In Transit</div></div>
+          <div class="card counter-card"><div class="counter-value">0</div><div class="muted text-sm">Delayed</div></div>
+          <div class="card counter-card"><div class="counter-value">6</div><div class="muted text-sm">Delivered</div></div>
+        </div>
+        <button class="btn-primary" onclick="showScreen('del-list')">Xem toàn bộ danh sách giao hàng</button>
+      </div>
+    </section>
+
+    <!-- ============ SCREEN 19: DELIVERY LIST ============ -->
+    <section class="screen" id="del-list">
+      <div class="topbar"><div class="breadcrumb"><span class="crumb-group">Giao hàng</span> / Deliveries</div>
+        <svg class="icon" viewBox="0 0 24 24" onclick="showScreen('submit-delivery')"><path d="M12 5 v14 M5 12 h14"/></svg>
+      </div>
+      <div class="content">
+        <div class="filter-bar"><wired-search-input placeholder="Tìm theo Delivery ID..."></wired-search-input><wired-select><wired-item>Tất cả trạng thái</wired-item></wired-select></div>
+        <div class="table-wrap">
+          <table class="sketchy">
+            <thead><tr><th>Vehicle</th><th>Driver</th><th>Linked Batches</th><th>Schedule Status</th></tr></thead>
+            <tbody>
+              <tr onclick="showScreen('del-detail')"><td>51C-123.45</td><td>Nguyễn Văn A</td><td>LOT-0501, LOT-0498</td><td><span class="badge badge-info"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg>Scheduled</span></td></tr>
+              <tr onclick="showScreen('del-detail')"><td>51C-987.65</td><td>Trần Thị B</td><td>LOT-0490</td><td><span class="badge badge-warning"><svg viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/></svg>In Transit</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SCREEN 20: DELIVERY DETAIL ============ -->
+    <section class="screen" id="del-detail">
+      <div class="topbar"><div class="breadcrumb"><span class="crumb-group">Giao hàng</span> / 51C-123.45</div>
+        <svg class="icon" viewBox="0 0 24 24" onclick="showScreen('del-list')"><path d="M15 6 l-6 6 6 6"/></svg>
+      </div>
+      <div class="content">
+        <div class="grid-12">
+          <div class="col-5">
+            <div class="card">
+              <table class="sketchy">
+                <tr><td class="muted">Vehicle</td><td>51C-123.45</td></tr>
+                <tr><td class="muted">Driver</td><td>Nguyễn Văn A</td></tr>
+                <tr><td class="muted">Schedule Status</td><td><span class="badge badge-info"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg>Scheduled</span></td></tr>
+              </table>
+              <div class="btn-row" style="margin-top:12px;">
+                <button class="btn-secondary" onclick="showScreen('submit-delivery')">Edit</button>
+                <button class="btn-secondary" onclick="alert('Cancel Delivery (chỉ khả dụng khi Pending)')">Cancel Delivery</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-7">
+            <div class="card">
+              <div class="section-title text-base">Linked Batches</div>
+              <table class="sketchy"><tr><td>LOT-0501</td><td>Rau cải xanh</td></tr><tr><td>LOT-0498</td><td>Cà rốt</td></tr></table>
+              <div class="btn-row" style="margin-top:12px;">
+                <button class="btn-secondary" onclick="showScreen('update-status')">Update Status</button>
+                <button class="btn-secondary" onclick="showScreen('del-batch-records')">View Batch Records</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SCREEN 21: SUBMIT DELIVERY INFORMATION ============ -->
+    <section class="screen" id="submit-delivery">
+      <div class="topbar"><div class="breadcrumb"><span class="crumb-group">Giao hàng</span> / Submit Delivery Information</div></div>
+      <div class="content">
+        <div class="grid-12">
+          <div class="col-6">
+            <div class="card">
+              <div class="field-block"><div class="field-label">Purchase Request đích <span class="req">*</span></div><wired-select><wired-item>PR-2026-0113 (Accepted)</wired-item></wired-select></div>
+              <div class="field-block"><div class="field-label">Dispatch Date <span class="req">*</span></div><wired-calendar></wired-calendar></div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="card">
+              <div class="field-block"><div class="field-label">Vehicle License Plate <span class="req">*</span></div><wired-input placeholder="51C-123.45"></wired-input></div>
+              <div class="field-block"><div class="field-label">Driver Details <span class="req">*</span></div><wired-select><wired-item>Nguyễn Văn A (đã đăng ký biometric)</wired-item></wired-select></div>
+              <div class="field-block"><div class="field-label">Liên kết lô nguyên liệu <span class="req">*</span></div><wired-select><wired-item>LOT-0501, LOT-0498</wired-item></wired-select></div>
+            </div>
+          </div>
+        </div>
+        <div class="alert alert-warning" style="margin-top:16px;">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8 v5"/></svg>
+          <div>Chặn Submit nếu Dispatch Date &lt; 24 giờ trước giờ giao dự kiến (BR-071).</div>
+        </div>
+        <div class="btn-row" style="margin-top:16px;">
+          <button class="btn-primary" onclick="showScreen('del-detail')">Submit</button>
+          <button class="btn-secondary" onclick="showScreen('del-list')">Cancel</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SCREEN 22: CONFIRM DELIVERY SCHEDULE ============ -->
+    <section class="screen" id="confirm-schedule">
+      <div class="topbar"><div class="breadcrumb"><span class="crumb-group">Giao hàng</span> / Confirm Delivery Schedule</div></div>
+      <div class="content">
+        <div class="card">
+          <div class="section-title text-base">Purchase Request đã Accept, chờ lên lịch</div>
+          <table class="sketchy"><tr><td>PR-2026-0113</td><td>Springfield Head Chef</td></tr></table>
+        </div>
+        <div class="grid-12" style="margin-top:16px;">
+          <div class="col-6">
+            <div class="card">
+              <div class="field-block"><div class="field-label">Delivery Date <span class="req">*</span></div><wired-calendar></wired-calendar></div>
+              <div class="field-block"><div class="field-label">Estimated Arrival Time Window <span class="req">*</span></div><wired-input placeholder="05:30 - 06:00"></wired-input></div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="card">
+              <div class="field-block"><div class="field-label">Delivery Person <span class="req">*</span></div><wired-select><wired-item>Nguyễn Văn A</wired-item></wired-select></div>
+              <div class="alert alert-warning">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg>
+                <div>Yêu cầu Delivery Person đã có hồ sơ sinh trắc học Face Biometric (BR-050) — nếu chưa, chặn xác nhận.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="btn-row" style="margin-top:16px;">
+          <button class="btn-primary" onclick="showScreen('del-detail')">Confirm Schedule</button>
+          <button class="btn-secondary" onclick="showScreen('del-list')">Cancel</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SCREEN 23: UPDATE DELIVERY STATUS ============ -->
+    <section class="screen" id="update-status">
+      <div class="topbar"><div class="breadcrumb"><span class="crumb-group">Giao hàng</span> / Update Delivery Status</div></div>
+      <div class="content">
+        <div class="card">
+          <div>Trạng thái hiện tại: <span class="badge badge-info"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg>Scheduled</span></div>
+          <div class="field-block" style="margin-top:12px;"><div class="field-label">Cập nhật trạng thái mới <span class="req">*</span></div>
+            <wired-select><wired-item value="dispatched">Dispatched</wired-item><wired-item value="in_transit">In Transit</wired-item><wired-item value="delayed">Delayed</wired-item><wired-item value="delivered">Delivered</wired-item></wired-select>
+          </div>
+        </div>
+        <div class="alert alert-warning" style="margin-top:14px;">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg>
+          <div><b>MSG-065</b> — Delivery delay alert: tự động gửi nếu lệch &gt;30 phút so với lịch (BR-135).</div>
+        </div>
+        <div class="btn-row" style="margin-top:16px;">
+          <button class="btn-primary" onclick="showScreen('del-detail')">Save</button>
+          <button class="btn-secondary" onclick="showScreen('del-detail')">Cancel</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SCREEN 24: VIEW DELIVERY BATCH RECORDS ============ -->
+    <section class="screen" id="del-batch-records">
+      <div class="topbar"><div class="breadcrumb"><span class="crumb-group">Giao hàng</span> / Delivery Batch Records</div>
+        <svg class="icon" viewBox="0 0 24 24" onclick="showScreen('del-detail')"><path d="M15 6 l-6 6 6 6"/></svg>
+      </div>
+      <div class="content">
+        <div class="filter-bar"><wired-calendar></wired-calendar><wired-select><wired-item>Tất cả trạng thái</wired-item></wired-select></div>
+        <div class="table-wrap">
+          <table class="sketchy">
+            <thead><tr><th>Vehicle Plaque</th><th>Driver Name</th><th>Dispatch Timestamp</th><th>Linked Batch Codes</th></tr></thead>
+            <tbody>
+              <tr><td>51C-123.45</td><td>Nguyễn Văn A</td><td>05/07/2026 05:30</td><td>LOT-0501, LOT-0498</td></tr>
+              <tr><td>51C-987.65</td><td>Trần Thị B</td><td>02/07/2026 06:00</td><td>LOT-0490</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+<script>
+  function showScreen(id){
+    document.querySelectorAll('.screen').forEach(function(el){ el.classList.remove('active'); });
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.side-link:not(.disabled)').forEach(function(el){ el.classList.remove('active'); });
+    var links = document.querySelectorAll('.side-link:not(.disabled)');
+    var map = { 'del-entry':0, 'del-list':1, 'del-detail':1, 'submit-delivery':1, 'confirm-schedule':1, 'update-status':1, 'del-batch-records':1 };
+    if(map[id] !== undefined){ links[map[id]].classList.add('active'); }
+    window.scrollTo(0,0);
+  }
+</script>
+</body>
+</html>

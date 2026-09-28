@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Không gian lên lớp học sinh - SFMS</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100..900&display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#0b1c30",
+                        "inverse-surface": "#283044",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "primary-container": "#0e7490",
+                        "surface": "#faf8ff",
+                        "outline": "#6f787d",
+                        "on-primary-container": "#d3f1ff",
+                        "on-tertiary-fixed": "#171c1f",
+                        "secondary": "#505f76",
+                        "on-primary-fixed": "#001f29",
+                        "secondary-container": "#d0e1fb",
+                        "surface-container-highest": "#dae2fd",
+                        "on-surface": "#131b2e",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#81d1f0",
+                        "on-tertiary-container": "#e8edf1",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#eef0ff",
+                        "surface-dim": "#d2d9f4",
+                        "outline-variant": "#bec8cd",
+                        "on-secondary-container": "#54647a",
+                        "background": "#faf8ff",
+                        "on-tertiary-fixed-variant": "#43474b",
+                        "surface-container-high": "#e2e7ff",
+                        "tertiary-fixed": "#dfe3e7",
+                        "surface-bright": "#faf8ff",
+                        "tertiary-container": "#666b6f",
+                        "surface-container": "#eaedff",
+                        "on-error": "#ffffff",
+                        "primary": "#005a71",
+                        "tertiary-fixed-dim": "#c3c7cb",
+                        "surface-variant": "#dae2fd",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#81d1f0",
+                        "error-container": "#ffdad6",
+                        "on-background": "#131b2e",
+                        "on-primary-fixed-variant": "#004d62",
+                        "tertiary": "#4e5356",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "surface-tint": "#006781",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f2f3ff",
+                        "primary-fixed": "#b9eaff",
+                        "on-surface-variant": "#3f484c",
+                        "secondary-fixed": "#d3e4fe"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "1rem",
+                        "stack-xs": "0.25rem",
+                        "stack-lg": "1.5rem",
+                        "margin-mobile": "1rem",
+                        "container-max": "1440px",
+                        "margin-desktop": "2rem",
+                        "stack-md": "1rem",
+                        "stack-sm": "0.5rem"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "mono-sm": ["monospace"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "headline-md": ["Be Vietnam Pro"],
+                        "headline-sm": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "mono-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "headline-lg": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom scrollbar for tables */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #faf8ff; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #bec8cd; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6f787d; 
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex antialiased">
+<!-- Shared Component: SideNavBar -->
+<nav class="fixed left-0 top-0 h-full w-64 border-r border-outline-variant bg-surface flex flex-col h-screen p-4 space-y-2 z-50">
+<div class="mb-8 px-4 flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined font-bold">school</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary tracking-tight">sfms</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant">School Food Management</p>
+</div>
+</div>
+<div class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-md font-label-md">Tổng quan</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">handshake</span>
+<span class="text-label-md font-label-md">Đối tác</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span class="text-label-md font-label-md">Thực đơn</span>
+</a>
+<!-- Active Tab -->
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold scale-[0.98] transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">groups</span>
+<span class="text-label-md font-label-md">Lớp & Học sinh</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">report_problem</span>
+<span class="text-label-md font-label-md">Sự cố & Kiểm tra</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-label-md font-label-md">Báo cáo & Thống kê</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex-1 flex flex-col min-w-0">
+<!-- Shared Component: TopAppBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] z-40 bg-surface-container-lowest border-b border-outline-variant flex items-center justify-between h-16 px-8 ml-64">
+<div class="flex items-center gap-4">
+<h2 class="text-headline-md font-headline-md text-on-surface">Lớp & Học sinh</h2>
+</div>
+<div class="flex items-center gap-6">
+<!-- Search (on_right) -->
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-64 pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-md font-body-md text-on-surface focus:ring-2 focus:ring-primary-container focus:border-primary-container transition-all" placeholder="Tìm kiếm..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-dim border border-outline-variant overflow-hidden cursor-pointer flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">person</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 overflow-auto pt-24 pb-8 pl-[18rem] pr-8">
+<div class="max-w-container-max mx-auto">
+<!-- Page Header -->
+<div class="mb-8 flex justify-between items-end">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface mb-2">Không gian lên lớp học sinh</h1>
+<p class="text-body-md font-body-md text-on-surface-variant">Chuyển dữ liệu học sinh từ năm học hiện tại sang năm học mới.</p>
+</div>
+</div>
+<!-- Controls Workspace (Bento Grid Style) -->
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
+<!-- Source Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
+<div class="flex items-center gap-2 mb-6 pb-4 border-b border-surface-container-highest">
+<div class="w-8 h-8 rounded bg-surface-container-high flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">outbox</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Nguồn <span class="text-body-md font-body-md font-normal text-on-surface-variant ml-2">(Năm học cũ 2024-2025)</span></h3>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-stack-xs">
+<label class="text-label-sm font-label-sm text-on-surface font-bold">Khối</label>
+<select class="w-full bg-surface-bright border border-outline-variant rounded-lg px-4 py-2.5 text-body-md font-body-md text-on-surface focus:ring-2 focus:ring-primary-container focus:border-primary-container transition-all">
+<option value="1">Khối 1</option>
+<option value="2">Khối 2</option>
+</select>
+</div>
+<div class="flex flex-col gap-stack-xs">
+<label class="text-label-sm font-label-sm text-on-surface font-bold">Lớp</label>
+<select class="w-full bg-surface-bright border border-outline-variant rounded-lg px-4 py-2.5 text-body-md font-body-md text-on-surface focus:ring-2 focus:ring-primary-container focus:border-primary-container transition-all">
+<option value="1a">1A</option>
+<option value="1b">1B</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Destination Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm relative overflow-hidden">
+<!-- Decorative bg element -->
+<div class="absolute -right-10 -top-10 w-40 h-40 bg-secondary-container rounded-full opacity-20 pointer-events-none"></div>
+<div class="flex items-center justify-between mb-6 pb-4 border-b border-surface-container-highest relative z-10">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined text-[20px]">move_to_inbox</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Đích <span class="text-body-md font-body-md font-normal text-on-surface-variant ml-2">(Năm học mới 2025-2026)</span></h3>
+</div>
+<!-- Capacity Badge -->
+<div class="bg-surface-container border border-outline-variant px-3 py-1 rounded-full flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="text-label-sm font-label-sm text-on-surface">Sức chứa: <strong class="font-bold">35/50</strong></span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 relative z-10">
+<div class="flex flex-col gap-stack-xs">
+<label class="text-label-sm font-label-sm text-on-surface font-bold">Khối</label>
+<select class="w-full bg-surface-bright border border-outline-variant rounded-lg px-4 py-2.5 text-body-md font-body-md text-on-surface focus:ring-2 focus:ring-primary-container focus:border-primary-container transition-all">
+<option value="2">Khối 2</option>
+<option value="3">Khối 3</option>
+</select>
+</div>
+<div class="flex flex-col gap-stack-xs">
+<label class="text-label-sm font-label-sm text-on-surface font-bold">Lớp</label>
+<select class="w-full bg-surface-bright border border-outline-variant rounded-lg px-4 py-2.5 text-body-md font-body-md text-on-surface focus:ring-2 focus:ring-primary-container focus:border-primary-container transition-all">
+<option value="2a">2A</option>
+<option value="2b">2B</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm flex flex-col mb-8">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="py-3 px-6 w-16 text-center">
+<input checked="" class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary-container cursor-pointer" type="checkbox"/>
+</th>
+<th class="py-3 px-6 text-label-sm font-label-sm text-on-surface-variant font-bold uppercase tracking-wider">Họ tên học sinh</th>
+<th class="py-3 px-6 text-label-sm font-label-sm text-on-surface-variant font-bold uppercase tracking-wider">Mã học sinh</th>
+<th class="py-3 px-6 text-label-sm font-label-sm text-on-surface-variant font-bold uppercase tracking-wider">Kết quả học tập</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-highest">
+<!-- Row 1: Pass -->
+<tr class="hover:bg-surface-bright transition-colors group">
+<td class="py-2.5 px-6 text-center">
+<input checked="" class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary-container cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-2.5 px-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center text-label-sm font-bold">
+                                                NA
+                                            </div>
+<span class="text-body-md font-body-md text-on-surface font-medium">Nguyễn Văn An</span>
+</div>
+</td>
+<td class="py-2.5 px-6">
+<span class="text-mono-sm font-mono-sm text-on-surface-variant">HS24-0012</span>
+</td>
+<td class="py-2.5 px-6">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-container text-primary">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="text-label-sm font-label-sm font-bold">Lên lớp</span>
+</div>
+</td>
+</tr>
+<!-- Row 2: Pass -->
+<tr class="hover:bg-surface-bright transition-colors group">
+<td class="py-2.5 px-6 text-center">
+<input checked="" class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary-container cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-2.5 px-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center text-label-sm font-bold">
+                                                TB
+                                            </div>
+<span class="text-body-md font-body-md text-on-surface font-medium">Trần Thị Bình</span>
+</div>
+</td>
+<td class="py-2.5 px-6">
+<span class="text-mono-sm font-mono-sm text-on-surface-variant">HS24-0015</span>
+</td>
+<td class="py-2.5 px-6">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-container text-primary">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="text-label-sm font-label-sm font-bold">Lên lớp</span>
+</div>
+</td>
+</tr>
+<!-- Row 3: Fail (Unchecked by default) -->
+<tr class="hover:bg-surface-bright transition-colors group bg-error-container/10">
+<td class="py-2.5 px-6 text-center">
+<input class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary-container cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-2.5 px-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center text-label-sm font-bold">
+                                                LC
+                                            </div>
+<span class="text-body-md font-body-md text-on-surface font-medium">Lê Văn Cường</span>
+</div>
+</td>
+<td class="py-2.5 px-6">
+<span class="text-mono-sm font-mono-sm text-on-surface-variant">HS24-0028</span>
+</td>
+<td class="py-2.5 px-6">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-error-container text-error">
+<span class="material-symbols-outlined text-[16px]">cancel</span>
+<span class="text-label-sm font-label-sm font-bold">Lưu ban</span>
+</div>
+</td>
+</tr>
+<!-- Row 4: Pass -->
+<tr class="hover:bg-surface-bright transition-colors group">
+<td class="py-2.5 px-6 text-center">
+<input checked="" class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary-container cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-2.5 px-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center text-label-sm font-bold">
+                                                PD
+                                            </div>
+<span class="text-body-md font-body-md text-on-surface font-medium">Phạm Phương Dung</span>
+</div>
+</td>
+<td class="py-2.5 px-6">
+<span class="text-mono-sm font-mono-sm text-on-surface-variant">HS24-0033</span>
+</td>
+<td class="py-2.5 px-6">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-container text-primary">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="text-label-sm font-label-sm font-bold">Lên lớp</span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Footer Action Area -->
+<div class="flex flex-col sm:flex-row items-center justify-end gap-6 p-6 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm">
+<p class="text-body-md font-body-md text-on-surface-variant">
+                        Tổng cộng <strong class="text-on-surface font-bold">34 học sinh</strong> sẽ được chuyển từ lớp <strong class="text-on-surface font-bold">1A</strong> sang lớp <strong class="text-on-surface font-bold">2A</strong>.
+                    </p>
+<button class="flex items-center gap-2 bg-primary-container hover:bg-[#0c627a] text-on-primary-container px-6 py-3 rounded-lg text-label-md font-label-md font-bold transition-colors shadow-sm">
+<span class="material-symbols-outlined">send</span>
+                        Xác nhận lên lớp (34 học sinh)
+                    </button>
+</div>
+</div>
+</main>
+<!-- Shared Component: Footer -->
+<footer class="relative w-full py-6 mt-auto border-t border-outline-variant bg-surface flex justify-between items-center px-8 ml-64 max-w-[calc(1440px-16rem)]">
+<p class="text-label-sm font-label-sm text-on-surface-variant">
+                © 2024 School Food Management System (SFMS). All rights reserved.
+            </p>
+<div class="flex items-center gap-6">
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:underline decoration-primary transition-all" href="#">Privacy Policy</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:underline decoration-primary transition-all" href="#">Terms of Service</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:underline decoration-primary transition-all" href="#">Support</a>
+</div>
+</footer>
+</div>
+</body></html>

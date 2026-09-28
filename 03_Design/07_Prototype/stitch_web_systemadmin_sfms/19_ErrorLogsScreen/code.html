@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nhật ký lỗi - sfms System Administration</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error": "#ba1a1a",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "tertiary": "#794602",
+                      "error-container": "#ffdad6",
+                      "on-background": "#181c1e",
+                      "on-primary-fixed-variant": "#004d62",
+                      "on-surface-variant": "#3f484c",
+                      "secondary-fixed": "#d3e4fe",
+                      "on-primary": "#ffffff",
+                      "surface-container-low": "#f1f4f6",
+                      "primary-fixed": "#b9eaff",
+                      "surface-tint": "#006781",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-fixed": "#ffdcbd",
+                      "surface-container-high": "#e6e8eb",
+                      "on-tertiary-fixed-variant": "#693c00",
+                      "tertiary-fixed-dim": "#ffb86f",
+                      "surface-variant": "#e0e3e5",
+                      "on-secondary": "#ffffff",
+                      "primary-fixed-dim": "#81d1f0",
+                      "surface-container": "#ebeef0",
+                      "on-error": "#ffffff",
+                      "primary": "#005a71",
+                      "tertiary-container": "#965e1c",
+                      "surface-bright": "#f7fafc",
+                      "inverse-on-surface": "#eef1f3",
+                      "surface-dim": "#d7dadd",
+                      "on-tertiary-container": "#ffe8d6",
+                      "surface-container-lowest": "#ffffff",
+                      "on-surface": "#181c1e",
+                      "on-error-container": "#93000a",
+                      "inverse-primary": "#81d1f0",
+                      "background": "#f7fafc",
+                      "outline-variant": "#bec8cd",
+                      "on-secondary-container": "#54647a",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "inverse-surface": "#2d3133",
+                      "on-secondary-fixed": "#0b1c30",
+                      "surface-container-highest": "#e0e3e5",
+                      "secondary-container": "#d0e1fb",
+                      "on-tertiary-fixed": "#2c1600",
+                      "on-primary-fixed": "#001f29",
+                      "secondary": "#505f76",
+                      "on-primary-container": "#d3f1ff",
+                      "surface": "#f7fafc",
+                      "outline": "#6f787d",
+                      "primary-container": "#0e7490"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base-unit": "4px",
+                      "container-padding": "2rem",
+                      "gutter": "1rem",
+                      "section-gap": "1.5rem",
+                      "sidebar-width": "260px"
+              },
+              "fontFamily": {
+                      "body-base": ["Be Vietnam Pro"],
+                      "h3": ["Be Vietnam Pro"],
+                      "h1": ["Be Vietnam Pro"],
+                      "body-medium": ["Be Vietnam Pro"],
+                      "label-sm": ["Be Vietnam Pro"],
+                      "h2": ["Be Vietnam Pro"],
+                      "code": ["JetBrains Mono"]
+              },
+              "fontSize": {
+                      "body-base": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "h3": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "h1": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-medium": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "code": ["13px", {"lineHeight": "20px", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1;
+        }
+        .slide-in {
+            animation: slideIn 0.3s forwards cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .slide-out {
+            animation: slideOut 0.3s forwards cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        @keyframes slideOut {
+            from { transform: translateX(0); }
+            to { transform: translateX(100%); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-base antialiased min-h-screen flex overflow-hidden">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-[260px] bg-surface-container-lowest dark:bg-inverse-surface border-r border-outline-variant dark:border-on-surface-variant flex flex-col h-full py-6 z-50">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-container text-on-primary-container flex items-center justify-center font-bold">S</div>
+<div>
+<h1 class="font-h2 text-h2 font-bold text-primary dark:text-primary-fixed leading-none">sfms</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">System Administration</p>
+</div>
+</div>
+<nav class="flex-1 px-3 space-y-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out font-body-medium text-body-medium" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                Tổng quan
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out font-body-medium text-body-medium" href="#">
+<span class="material-symbols-outlined" data-icon="manage_accounts">manage_accounts</span>
+                Người dùng &amp; Vai trò
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out font-body-medium text-body-medium" href="#">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+                Trường học
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out font-body-medium text-body-medium" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                Cấu hình hệ thống
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary font-semibold border-r-4 border-primary duration-200 ease-in-out font-body-medium text-body-medium" href="#">
+<span class="material-symbols-outlined" data-icon="monitor_heartbeat">monitor_heart</span>
+                Giám sát &amp; Audit
+            </a>
+</nav>
+<div class="px-3 mt-auto pt-4 border-t border-outline-variant/30 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out font-body-medium text-body-medium" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+                Hỗ trợ
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out font-body-medium text-body-medium text-error" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                Đăng xuất
+            </a>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<div class="ml-[260px] flex-1 flex flex-col h-screen relative">
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-260px)] z-40 bg-surface-bright/80 dark:bg-on-background/80 backdrop-blur-md border-b border-outline-variant dark:border-on-surface-variant flex justify-between items-center h-16 px-8 transition-all duration-300">
+<div class="flex items-center gap-6">
+<!-- Navigation Sub-links (Horizontal) -->
+<nav class="hidden md:flex items-center gap-6 h-full">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-base text-body-base h-full flex items-center" href="#">Nhật ký hệ thống</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-base text-body-base h-full flex items-center" href="#">Giám sát hoạt động</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-base text-body-base h-full flex items-center" href="#">Trạng thái &amp; Sao lưu</a>
+<a class="text-primary font-bold border-b-2 border-primary h-full flex items-center mt-[2px] font-body-base text-body-base" href="#">Nhật ký lỗi</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-base text-body-base h-full flex items-center" href="#">Thống kê sử dụng</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined" data-icon="settings_suggest">settings_suggest</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant ml-2">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate system administrator in a well-lit modern office setting, wearing a smart casual outfit, soft focused background, high quality portrait, bright light mode aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBa6DlD7LDXjwsNJ8ZkZhg7LnIBk8SlSFqOloGj3D2uE8WOzhaVenBskXHlj5zo_oVS1crlZ_0ByGgusIhdRYWGWE5ePh3Xcc6v6mg3RiW0dkL4KZnxOeeyUeYe0PGcHpzx-3fZDXVNmisB7K_0hBaZVAkoVCXnz6zt3ajBeTcTjVX-U_jKLe-KM8jVwxpPXjHpx24KvtWPLww3BPoFLaF_uTKVzIJ481onKz_eG71ieAkQO34VuOKFLiRKaqLI0LghZv8J-kA65M8w"/>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 mt-16 p-8 overflow-y-auto w-full max-w-7xl mx-auto">
+<!-- Page Header & Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+<div>
+<h2 class="font-h1 text-h1 text-on-background mb-2">Nhật ký lỗi</h2>
+<p class="text-on-surface-variant font-body-base text-body-base">Theo dõi và phân tích các ngoại lệ hệ thống và lỗi ứng dụng.</p>
+</div>
+<!-- Filters -->
+<div class="flex flex-wrap items-center gap-3">
+<div class="relative">
+<select class="appearance-none bg-surface-container-lowest border border-outline-variant text-on-surface text-sm rounded-lg pl-3 pr-8 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-body-medium">
+<option value="">Tất cả mức độ</option>
+<option value="critical">Critical</option>
+<option value="high">High</option>
+<option value="medium">Medium</option>
+<option value="low">Low</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none" style="font-size: 18px;">expand_more</span>
+</div>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant" style="font-size: 18px;">calendar_today</span>
+<input class="bg-surface-container-lowest border border-outline-variant text-on-surface text-sm rounded-lg pl-9 pr-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-body-medium w-48" placeholder="Khoảng ngày" type="text" value="Hôm nay"/>
+</div>
+<button class="bg-surface-container border border-outline-variant hover:bg-surface-container-high text-on-surface rounded-lg px-4 py-2 font-body-medium text-body-medium transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-size: 18px;">filter_list</span>
+                        Lọc nâng cao
+                    </button>
+<button class="bg-primary-container text-on-primary-container hover:bg-primary-container/90 rounded-lg px-4 py-2 font-body-medium text-body-medium transition-colors flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined" style="font-size: 18px;">download</span>
+                        Xuất log
+                    </button>
+</div>
+</div>
+<!-- Data Table (Bento style card) -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/50 shadow-sm overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container/50 border-b border-outline-variant/50">
+<th class="py-3 px-4 font-body-medium text-label-sm text-on-surface-variant uppercase tracking-wider w-40">Thời gian</th>
+<th class="py-3 px-4 font-body-medium text-label-sm text-on-surface-variant uppercase tracking-wider">Thông điệp lỗi</th>
+<th class="py-3 px-4 font-body-medium text-label-sm text-on-surface-variant uppercase tracking-wider w-32">Mức độ</th>
+<th class="py-3 px-4 font-body-medium text-label-sm text-on-surface-variant uppercase tracking-wider w-48">Module/Class</th>
+<th class="py-3 px-4 font-body-medium text-label-sm text-on-surface-variant uppercase tracking-wider w-24 text-right">Thao tác</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30 font-code text-code">
+<!-- Row 1: Critical -->
+<tr class="hover:bg-surface-container-lowest/50 cursor-pointer group transition-colors" onclick="openDetailSheet('ERR-20231024-001')">
+<td class="py-3 px-4 text-on-surface-variant whitespace-nowrap">24/10 14:32:01</td>
+<td class="py-3 px-4 text-on-surface font-body-base text-body-base truncate max-w-md">Database connection timeout after 30000ms</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-error-container text-on-error-container border border-error/20">Critical</span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant truncate max-w-[12rem]">DatabaseServiceProvider</td>
+<td class="py-3 px-4 text-right opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-primary hover:text-primary-container p-1 rounded-md hover:bg-primary/10">
+<span class="material-symbols-outlined" style="font-size: 18px;">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: High -->
+<tr class="hover:bg-surface-container-lowest/50 cursor-pointer group transition-colors" onclick="openDetailSheet('ERR-20231024-002')">
+<td class="py-3 px-4 text-on-surface-variant whitespace-nowrap">24/10 14:15:22</td>
+<td class="py-3 px-4 text-on-surface font-body-base text-body-base truncate max-w-md">NullReferenceException: Object reference not set to an instance of an object.</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-tertiary-container/30 text-tertiary border border-tertiary/20">High</span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant truncate max-w-[12rem]">UserAuthMiddleware</td>
+<td class="py-3 px-4 text-right opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-primary hover:text-primary-container p-1 rounded-md hover:bg-primary/10">
+<span class="material-symbols-outlined" style="font-size: 18px;">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Medium -->
+<tr class="hover:bg-surface-container-lowest/50 cursor-pointer group transition-colors" onclick="openDetailSheet('ERR-20231024-003')">
+<td class="py-3 px-4 text-on-surface-variant whitespace-nowrap">24/10 13:45:10</td>
+<td class="py-3 px-4 text-on-surface font-body-base text-body-base truncate max-w-md">Failed to send notification email to user user@example.com</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-secondary-container text-on-secondary-container border border-secondary/20">Medium</span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant truncate max-w-[12rem]">EmailNotificationService</td>
+<td class="py-3 px-4 text-right opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-primary hover:text-primary-container p-1 rounded-md hover:bg-primary/10">
+<span class="material-symbols-outlined" style="font-size: 18px;">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: Low -->
+<tr class="hover:bg-surface-container-lowest/50 cursor-pointer group transition-colors" onclick="openDetailSheet('ERR-20231024-004')">
+<td class="py-3 px-4 text-on-surface-variant whitespace-nowrap">24/10 11:20:05</td>
+<td class="py-3 px-4 text-on-surface font-body-base text-body-base truncate max-w-md">Invalid request payload format for endpoint /api/v1/sync</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-surface-variant text-on-surface-variant border border-outline-variant">Low</span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant truncate max-w-[12rem]">DataSyncController</td>
+<td class="py-3 px-4 text-right opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-primary hover:text-primary-container p-1 rounded-md hover:bg-primary/10">
+<span class="material-symbols-outlined" style="font-size: 18px;">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 5: Medium -->
+<tr class="hover:bg-surface-container-lowest/50 cursor-pointer group transition-colors" onclick="openDetailSheet('ERR-20231024-005')">
+<td class="py-3 px-4 text-on-surface-variant whitespace-nowrap">24/10 10:05:33</td>
+<td class="py-3 px-4 text-on-surface font-body-base text-body-base truncate max-w-md">Cache miss rate exceeded threshold (current: 45%)</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-secondary-container text-on-secondary-container border border-secondary/20">Medium</span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant truncate max-w-[12rem]">RedisCacheManager</td>
+<td class="py-3 px-4 text-right opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-primary hover:text-primary-container p-1 rounded-md hover:bg-primary/10">
+<span class="material-symbols-outlined" style="font-size: 18px;">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-4 py-3 border-t border-outline-variant/50 flex items-center justify-between bg-surface-container-lowest">
+<span class="text-sm text-on-surface-variant font-body-base">Hiển thị 1-5 của 248 lỗi</span>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded text-on-surface-variant hover:bg-surface-container disabled:opacity-50 disabled:cursor-not-allowed">
+<span class="material-symbols-outlined" style="font-size: 20px;">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded bg-primary/10 text-primary font-body-medium text-sm flex items-center justify-center">1</button>
+<button class="w-8 h-8 rounded hover:bg-surface-container text-on-surface-variant font-body-base text-sm flex items-center justify-center">2</button>
+<button class="w-8 h-8 rounded hover:bg-surface-container text-on-surface-variant font-body-base text-sm flex items-center justify-center">3</button>
+<span class="text-on-surface-variant mx-1">...</span>
+<button class="w-8 h-8 rounded hover:bg-surface-container text-on-surface-variant font-body-base text-sm flex items-center justify-center">50</button>
+<button class="p-1 rounded text-on-surface-variant hover:bg-surface-container">
+<span class="material-symbols-outlined" style="font-size: 20px;">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Error Detail Sheet (Overlay) -->
+<div class="fixed inset-0 bg-on-background/20 backdrop-blur-sm z-[60] hidden" id="errorDetailOverlay" onclick="closeDetailSheet()"></div>
+<aside class="fixed top-0 right-0 h-screen w-full sm:w-[480px] lg:w-[600px] bg-surface-container-lowest shadow-2xl border-l border-outline-variant z-[70] transform translate-x-full flex flex-col" id="errorDetailSheet">
+<!-- Sheet Header -->
+<div class="flex items-center justify-between px-6 py-4 border-b border-outline-variant/50 bg-surface-bright">
+<div>
+<h3 class="font-h3 text-h3 text-on-background">Chi tiết lỗi</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant font-code mt-1">ID: ERR-20231024-001</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container transition-colors" title="Sao chép Log">
+<span class="material-symbols-outlined" style="font-size: 20px;">content_copy</span>
+</button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container transition-colors bg-surface-container-low" onclick="closeDetailSheet()">
+<span class="material-symbols-outlined" style="font-size: 20px;">close</span>
+</button>
+</div>
+</div>
+<!-- Sheet Body -->
+<div class="flex-1 overflow-y-auto p-6 space-y-6">
+<!-- Context Summary -->
+<div class="bg-error/5 border border-error/20 rounded-xl p-4">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-error mt-0.5">error</span>
+<div>
+<h4 class="font-body-medium text-body-medium text-on-surface mb-1">Database connection timeout after 30000ms</h4>
+<div class="flex flex-wrap gap-4 mt-2">
+<div class="flex flex-col">
+<span class="text-label-sm text-on-surface-variant">Thời gian</span>
+<span class="font-code text-sm text-on-surface">24/10/2023 14:32:01.445</span>
+</div>
+<div class="flex flex-col">
+<span class="text-label-sm text-on-surface-variant">Module</span>
+<span class="font-code text-sm text-on-surface">DatabaseServiceProvider</span>
+</div>
+<div class="flex flex-col">
+<span class="text-label-sm text-on-surface-variant">Môi trường</span>
+<span class="font-code text-sm text-on-surface">Production</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Session ID & User context -->
+<div class="grid grid-cols-2 gap-4">
+<div class="border border-outline-variant/40 rounded-lg p-3 bg-surface">
+<div class="text-label-sm text-on-surface-variant mb-1 flex items-center gap-1">
+<span class="material-symbols-outlined" style="font-size: 14px;">key</span> ID Phiên (Session ID)
+                    </div>
+<div class="font-code text-sm text-on-surface truncate" title="sess_abc123xyz890def456">sess_abc123xyz890def456</div>
+</div>
+<div class="border border-outline-variant/40 rounded-lg p-3 bg-surface">
+<div class="text-label-sm text-on-surface-variant mb-1 flex items-center gap-1">
+<span class="material-symbols-outlined" style="font-size: 14px;">person</span> ID Người dùng
+                    </div>
+<div class="font-code text-sm text-on-surface truncate">usr_admin_992</div>
+</div>
+</div>
+<!-- Stack Trace -->
+<div>
+<h4 class="font-body-medium text-body-medium text-on-surface mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-size: 18px;">code_blocks</span>
+                    Stack Trace
+                </h4>
+<div class="bg-on-secondary-fixed text-secondary-fixed rounded-lg p-4 overflow-x-auto font-code text-xs leading-relaxed border border-outline-variant shadow-inner">
+<pre><code>SqlException (0x80131904): Connection Timeout Expired.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniError(TdsParserStateObject stateObj, UInt32 error)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniSyncOverAsync()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadNetworkPacket()
+   at System.Data.SqlClient.TdsParserStateObject.TryPrepareBuffer()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadByte(Byte&amp; value)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at sfms.Infrastructure.Data.DatabaseServiceProvider.ExecuteQueryAsync[T](String sql, Object parameters) in /src/Infrastructure/Data/DatabaseServiceProvider.cs:line 145</code></pre>
+</div>
+</div>
+<!-- Request Metadata -->
+<div>
+<h4 class="font-body-medium text-body-medium text-on-surface mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-size: 18px;">data_object</span>
+                    Request Metadata
+                </h4>
+<div class="border border-outline-variant/50 rounded-lg bg-surface-container-lowest p-1 relative overflow-hidden group">
+<!-- Glassmorphism overlay for encrypted state -->
+<div class="absolute inset-0 bg-surface-bright/60 backdrop-blur-[2px] flex items-center justify-center z-10">
+<div class="bg-surface-container-highest px-4 py-2 rounded-full border border-outline-variant/50 flex items-center gap-2 text-sm text-on-surface font-body-medium shadow-sm">
+<span class="material-symbols-outlined text-primary" style="font-size: 18px;">lock</span>
+                            [metadata đã mã hóa - hiển thị sau khi xác thực quyền]
+                            <button class="ml-2 text-primary hover:underline text-xs font-semibold">Xác thực</button>
+</div>
+</div>
+<!-- Blurred content underneath -->
+<pre class="p-3 font-code text-xs text-on-surface-variant opacity-30 select-none pointer-events-none"><code>{
+  "Method": "POST",
+  "Path": "/api/v1/reports/generate",
+  "Headers": {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)...",
+    "X-Forwarded-For": "192.168.1.105"
+  },
+  "PayloadLength": 2048,
+  "ClientIP": "192.168.1.105"
+}</code></pre>
+</div>
+</div>
+</div>
+</aside>
+<script>
+        const sheet = document.getElementById('errorDetailSheet');
+        const overlay = document.getElementById('errorDetailOverlay');
+
+        function openDetailSheet(id) {
+            overlay.classList.remove('hidden');
+            sheet.classList.remove('translate-x-full');
+            sheet.classList.add('slide-in');
+            sheet.classList.remove('slide-out');
+        }
+
+        function closeDetailSheet() {
+            sheet.classList.remove('slide-in');
+            sheet.classList.add('slide-out');
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+            }, 300); // match animation duration
+        }
+    </script>
+</body></html>

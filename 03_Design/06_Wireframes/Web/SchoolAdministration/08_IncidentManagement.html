@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wireframe — Incident Management (School Administration)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<style>
+  :root{
+    --ink:#333; --line:#333; --paper:#fff; --muted:#666; --linkblue:#3a5a8c;
+  }
+  html{ font-size:18px; }
+  body{
+    margin:0; font-family:'Patrick Hand', cursive; color:var(--ink);
+    background-color:#f4f4f4;
+    background-image: radial-gradient(#d7d7d7 1px, transparent 1px);
+    background-size: 20px 20px;
+    font-size:18px;
+  }
+  .text-xs{ font-size:14px; line-height:1.4; }
+  .text-sm{ font-size:18px; line-height:1.5; }
+  .text-base{ font-size:22px; line-height:1.5; }
+  .text-md{ font-size:28px; line-height:1.3; }
+  .text-lg{ font-size:35px; line-height:1.2; }
+  .text-xl{ font-size:44px; line-height:1.1; }
+
+  a{ color:var(--linkblue); text-decoration:underline; cursor:pointer; }
+
+  button.btn-primary, button.btn-secondary{
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family:'Patrick Hand', cursive; font-size:18px; padding:10px 22px; cursor:pointer;
+  }
+  .btn-primary{ background:#333; color:#fff; border:2px solid #333; }
+  .btn-primary:disabled{ background:#aaa; border-color:#aaa; color:#eee; cursor:not-allowed; }
+  .btn-secondary{ background:#fff; color:#333; border:2px solid #333; }
+  .btn-danger{ background:#fff; color:#333; border:3px solid #333; font-family:'Patrick Hand', cursive; font-size:18px; padding:10px 22px; cursor:pointer; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; }
+
+  .sketchy{
+    border:2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    background:#fff;
+  }
+
+  /* ===== App shell ===== */
+  .app{ display:flex; min-height:100vh; }
+  .sidebar{
+    width:280px; flex-shrink:0; background:#fff; border-right:2px solid #333;
+    padding:18px 14px; box-sizing:border-box;
+  }
+  .sidebar .brand{ display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+  .sidebar .brand-title{ font-size:28px; }
+  .sidebar .brand-sub{ font-size:14px; color:var(--muted); margin-bottom:14px; }
+  .nav-group{ margin-bottom:10px; }
+  .nav-group-title{ font-size:16px; color:var(--muted); margin:14px 0 4px 4px; text-transform:uppercase; letter-spacing:1px; }
+  .nav-item{
+    display:flex; align-items:center; gap:8px; padding:7px 10px; border-radius:8px;
+    font-size:18px; color:#333; text-decoration:none;
+  }
+  .nav-item.static{ color:#999; font-size:14px; cursor:default; }
+  .nav-item.clickable{ cursor:pointer; border-left:3px solid transparent; }
+  .nav-item.clickable:hover{ background:#f0f0f0; }
+  .nav-item.active{ background:#eaeaea; border-left:3px solid #333; font-weight:bold; }
+  .nav-item svg{ flex-shrink:0; }
+
+  .main{ flex:1; padding:22px 30px; box-sizing:border-box; max-width:calc(100% - 280px); }
+  .breadcrumb{ font-size:14px; color:var(--muted); margin-bottom:6px; }
+  .page-header{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px; flex-wrap:wrap; gap:10px; }
+  .page-title{ font-size:35px; margin:0; display:flex; align-items:center; gap:10px; }
+  .page-actions{ display:flex; gap:10px; flex-wrap:wrap; }
+
+  .grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap:18px; }
+  .col-4{ grid-column: span 4; }
+  .col-6{ grid-column: span 6; }
+  .col-8{ grid-column: span 8; }
+  .col-12{ grid-column: span 12; }
+
+  .card{ padding:16px; box-sizing:border-box; }
+  .card h3{ margin:0 0 8px 0; font-size:22px; display:flex; align-items:center; gap:8px; }
+  .kpi-value{ font-size:35px; margin:4px 0; }
+  .kpi-label{ font-size:16px; color:var(--muted); }
+
+  table{ width:100%; border-collapse:collapse; font-size:18px; }
+  th{ text-align:left; border-bottom:2px solid #333; padding:8px 6px; font-size:16px; color:var(--muted); }
+  td{ padding:9px 6px; border-bottom:1px solid #ccc; }
+  tr.rowlink{ cursor:pointer; }
+  tr.rowlink:hover{ background:#f3f3f3; }
+
+  /* Badges - grayscale, distinguished by border style + icon, not color */
+  .badge{
+    display:inline-flex; align-items:center; gap:5px; padding:3px 10px; font-size:15px;
+    border-radius:12px; background:#fff;
+  }
+  .badge-success{ border:2px solid #333; }
+  .badge-warning{ border:2px dashed #333; }
+  .badge-danger{ border:3px solid #333; }
+  .badge-info{ border:1px solid #333; }
+
+  .filter-bar{ display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-bottom:16px; padding:14px; }
+  .filter-field{ display:flex; flex-direction:column; gap:3px; }
+  .filter-field label{ font-size:14px; color:var(--muted); }
+
+  .field-block{ margin-bottom:14px; }
+  .field-block label{ display:block; font-size:16px; color:var(--muted); margin-bottom:4px; }
+
+  .checklist-item{ display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid #ddd; }
+  .checklist-item:last-child{ border-bottom:none; }
+
+  .placeholder-x{ display:flex; align-items:center; justify-content:center; height:110px; font-size:28px; color:#888; }
+
+  .section-title{ display:flex; align-items:center; gap:8px; font-size:22px; margin:20px 0 8px 0; }
+
+  .note-banner{ padding:10px 14px; font-size:16px; margin-bottom:14px; border:2px dashed #333; background:#fff; border-radius:10px; }
+
+  .screen{ display:none; }
+  .screen.active{ display:block; }
+
+  .accordion-item{ border-bottom:1px solid #ccc; padding:8px 0; }
+  .accordion-head{ display:flex; justify-content:space-between; cursor:pointer; font-size:20px; }
+  .accordion-body{ font-size:16px; color:var(--muted); padding:8px 4px; display:none; }
+  .accordion-item.open .accordion-body{ display:block; }
+
+  .gallery{ display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
+  .gallery .thumb{ width:90px; height:70px; }
+
+  .disabled-hint{ font-size:14px; color:var(--muted); margin-top:6px; }
+
+  footer.tag{ text-align:center; font-size:14px; color:#999; padding:24px 0 10px; }
+</style>
+</head>
+<body>
+
+<!-- ============ ICONS (inline SVG doodle, line-art) ============ -->
+<svg style="display:none">
+  <symbol id="ic-dashboard" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="14" y="3" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="3" y="14" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="14" y="14" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="ic-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17" cy="9" r="2.4" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M15.5 14c2.8 0 5 2.1 5.3 5" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="ic-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="ic-truck" viewBox="0 0 24 24"><rect x="2" y="7" width="11" height="8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M13 10h4l3 3v2h-7z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="17" r="1.6" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="17" cy="17" r="1.6" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="ic-alert" viewBox="0 0 24 24"><path d="M12 3 2 20h20L12 3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 10v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="17" r="0.9" fill="currentColor"/></symbol>
+  <symbol id="ic-report" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="ic-list" viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="4" cy="6" r="1.2" fill="currentColor"/><circle cx="4" cy="12" r="1.2" fill="currentColor"/><circle cx="4" cy="18" r="1.2" fill="currentColor"/></symbol>
+  <symbol id="ic-file" viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M15 2v5h5" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24"><path d="M4 13l5 5L20 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-cross" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="ic-triangle" viewBox="0 0 24 24"><path d="M12 4 2 20h20L12 4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 10v4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="17" r="0.8" fill="currentColor"/></symbol>
+  <symbol id="ic-export" viewBox="0 0 24 24"><path d="M12 3v11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M7 9l5-6 5 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 15v5h16v-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="ic-map" viewBox="0 0 24 24"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 4v14M15 6v14" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="ic-box" viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4-9-4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 7v10l9 4 9-4V7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 11v10" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="ic-clipboard" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="8" y="2" width="8" height="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="ic-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="8" cy="9" r="1.6" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M4 17l5-5 4 4 3-3 4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-search" viewBox="0 0 24 24"><circle cx="10" cy="10" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="ic-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 10V7a4 4 0 018 0v3" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="ic-back" viewBox="0 0 24 24"><path d="M15 5l-8 7 8 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.5-9.5-9C.8 7.3 3 4 6.5 4c2 0 3.3 1.2 4 2.2C11.2 5.2 12.5 4 14.5 4 18 4 20.2 7.3 21.5 11c-2.5 4.5-9.5 9-9.5 9z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+</svg>
+
+<div class="app">
+  <!-- ============ SIDEBAR ============ -->
+  <div class="sidebar">
+    <div class="brand">
+      <svg width="26" height="26"><use href="#ic-heart"/></svg>
+      <span class="brand-title">SFMS</span>
+    </div>
+    <div class="brand-sub">School Administration</div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Quản lý Lớp/Học sinh</div>
+      <div class="nav-item static"><svg width="18" height="18"><use href="#ic-users"/></svg> Classroom Management (xem file wireframe nhóm khác)</div>
+      <div class="nav-item static"><svg width="18" height="18"><use href="#ic-users"/></svg> Student Profile Management (xem file wireframe nhóm khác)</div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Quản lý Thực đơn</div>
+      <div class="nav-item static"><svg width="18" height="18"><use href="#ic-clipboard"/></svg> Menu Management (xem file wireframe nhóm khác)</div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Quản lý Nhà cung cấp</div>
+      <div class="nav-item static"><svg width="18" height="18"><use href="#ic-truck"/></svg> Supplier Partnership Requests (xem file wireframe nhóm khác)</div>
+      <div class="nav-item static"><svg width="18" height="18"><use href="#ic-truck"/></svg> Catering Partnership Requests (xem file wireframe nhóm khác)</div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Kiểm tra & Sự cố</div>
+      <div class="nav-item clickable active" onclick="showScreen('screen-dashboard')">
+        <svg width="18" height="18"><use href="#ic-dashboard"/></svg> Incident Dashboard
+      </div>
+      <div class="nav-item clickable" onclick="showScreen('screen-list')">
+        <svg width="18" height="18"><use href="#ic-list"/></svg> Incident List
+      </div>
+      <div class="nav-item clickable" onclick="showScreen('screen-export')">
+        <svg width="18" height="18"><use href="#ic-export"/></svg> Export Incident Reports
+      </div>
+      <div class="nav-item static"><svg width="18" height="18"><use href="#ic-report"/></svg> Compliance Dashboard (xem file wireframe nhóm khác)</div>
+      <div class="nav-item static"><svg width="18" height="18"><use href="#ic-report"/></svg> Inspection Reports (xem file wireframe nhóm khác)</div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Báo cáo</div>
+      <div class="nav-item static"><svg width="18" height="18"><use href="#ic-file"/></svg> Analytics Dashboard (xem file wireframe nhóm khác)</div>
+      <div class="nav-item static"><svg width="18" height="18"><use href="#ic-file"/></svg> Partnership / Receiving Reports (xem file wireframe nhóm khác)</div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Khác</div>
+      <div class="nav-item static"><svg width="18" height="18"><use href="#ic-menu"/></svg> School Announcement Management (xem file wireframe nhóm khác)</div>
+      <div class="nav-item static"><svg width="18" height="18"><use href="#ic-users"/></svg> Staff Management (xem file wireframe nhóm khác)</div>
+      <div class="nav-item static"><svg width="18" height="18"><use href="#ic-lock"/></svg> School Configuration (xem file wireframe nhóm khác)</div>
+    </div>
+  </div>
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <div class="main">
+
+    <!-- ======================================================= -->
+    <!-- SCREEN 1: INCIDENT DASHBOARD -->
+    <!-- ======================================================= -->
+    <div class="screen active" id="screen-dashboard">
+      <div class="breadcrumb">Kiểm tra &amp; Sự cố / Incident Dashboard</div>
+      <div class="page-header">
+        <h1 class="page-title"><svg width="30" height="30"><use href="#ic-dashboard"/></svg> Incident Dashboard</h1>
+        <div class="page-actions">
+          <button class="btn-secondary" onclick="showScreen('screen-export')"><svg width="16" height="16"><use href="#ic-export"/></svg> Export Incident Reports</button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="col-4 card sketchy">
+          <h3><svg width="20" height="20"><use href="#ic-alert"/></svg> Sự cố đang mở theo Severity</h3>
+          <div style="display:flex; gap:14px; margin-top:8px; flex-wrap:wrap;">
+            <div>
+              <div class="kpi-value">2</div>
+              <span class="badge badge-danger"><svg width="14" height="14"><use href="#ic-triangle"/></svg> High</span>
+            </div>
+            <div>
+              <div class="kpi-value">3</div>
+              <span class="badge badge-warning"><svg width="14" height="14"><use href="#ic-triangle"/></svg> Medium</span>
+            </div>
+            <div>
+              <div class="kpi-value">1</div>
+              <span class="badge badge-info">Low</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4 card sketchy">
+          <h3><svg width="20" height="20"><use href="#ic-clipboard"/></svg> CAPA đang chờ duyệt</h3>
+          <div class="kpi-value">4</div>
+          <div class="kpi-label">Corrective Action Plan chờ School Administration duyệt (UC-005)</div>
+        </div>
+
+        <div class="col-4 card sketchy">
+          <h3><svg width="20" height="20"><use href="#ic-check"/></svg> Tổng quan</h3>
+          <div class="kpi-label">Không có sự cố nào đang mở quá 24h chưa điều tra.</div>
+          <div class="disabled-hint">(Trạng thái tích cực — dùng khi Empty)</div>
+        </div>
+      </div>
+
+      <div class="section-title"><svg width="22" height="22"><use href="#ic-list"/></svg> Danh sách sự cố gần nhất</div>
+      <div class="card sketchy" style="padding:0;">
+        <table>
+          <thead>
+            <tr><th>Ngày báo cáo</th><th>Mô tả tóm tắt</th><th>Severity</th><th>Status</th><th>Số HS ảnh hưởng</th></tr>
+          </thead>
+          <tbody>
+            <tr class="rowlink" onclick="showScreen('screen-detail')">
+              <td>28/06/2026</td><td>Nghi ngộ độc thực phẩm sau bữa trưa lớp 4A</td>
+              <td><span class="badge badge-danger"><svg width="12" height="12"><use href="#ic-triangle"/></svg> High</span></td>
+              <td><span class="badge badge-info">Investigating</span></td><td>5</td>
+            </tr>
+            <tr class="rowlink" onclick="showScreen('screen-detail')">
+              <td>25/06/2026</td><td>3 học sinh đau bụng sau bữa xế</td>
+              <td><span class="badge badge-warning"><svg width="12" height="12"><use href="#ic-triangle"/></svg> Medium</span></td>
+              <td><span class="badge badge-danger"><svg width="12" height="12"><use href="#ic-cross"/></svg> Active</span></td><td>3</td>
+            </tr>
+            <tr class="rowlink" onclick="showScreen('screen-detail')">
+              <td>20/06/2026</td><td>1 học sinh dị ứng nhẹ với món tôm chiên</td>
+              <td><span class="badge badge-info">Low</span></td>
+              <td><span class="badge badge-success"><svg width="12" height="12"><use href="#ic-check"/></svg> Closed</span></td><td>1</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:14px;">
+        <button class="btn-primary" onclick="showScreen('screen-list')">Xem toàn bộ danh sách sự cố</button>
+      </div>
+    </div>
+
+    <!-- ======================================================= -->
+    <!-- SCREEN 2: INCIDENT LIST -->
+    <!-- ======================================================= -->
+    <div class="screen" id="screen-list">
+      <div class="breadcrumb">Kiểm tra &amp; Sự cố / Incident List</div>
+      <div class="page-header">
+        <h1 class="page-title"><svg width="30" height="30"><use href="#ic-list"/></svg> Incident List</h1>
+        <div class="page-actions">
+          <button class="btn-secondary"><svg width="16" height="16"><use href="#ic-export"/></svg> Export</button>
+        </div>
+      </div>
+
+      <div class="filter-bar sketchy">
+        <div class="filter-field">
+          <label>Severity Level</label>
+          <wired-combo selected="Tất cả" style="width:160px;">
+            <wired-item value="all">Tất cả</wired-item>
+            <wired-item value="high">High</wired-item>
+            <wired-item value="medium">Medium</wired-item>
+            <wired-item value="low">Low</wired-item>
+          </wired-combo>
+        </div>
+        <div class="filter-field">
+          <label>Status</label>
+          <wired-combo selected="Tất cả" style="width:200px;">
+            <wired-item value="all">Tất cả</wired-item>
+            <wired-item value="active">Active</wired-item>
+            <wired-item value="investigating">Under Investigation</wired-item>
+            <wired-item value="closed">Closed</wired-item>
+          </wired-combo>
+        </div>
+        <div class="filter-field" style="flex:1; min-width:220px;">
+          <label>Tìm kiếm</label>
+          <wired-search-input placeholder="Tìm theo mô tả, mã sự cố..." style="width:100%;"></wired-search-input>
+        </div>
+      </div>
+
+      <div class="card sketchy" style="padding:0;">
+        <table>
+          <thead>
+            <tr><th>Ngày báo cáo</th><th>Mô tả tóm tắt</th><th>Severity</th><th>Status</th><th>Số HS ảnh hưởng</th></tr>
+          </thead>
+          <tbody>
+            <tr class="rowlink" onclick="showScreen('screen-detail')">
+              <td>28/06/2026</td><td>Nghi ngộ độc thực phẩm sau bữa trưa lớp 4A</td>
+              <td><span class="badge badge-danger"><svg width="12" height="12"><use href="#ic-triangle"/></svg> High</span></td>
+              <td><span class="badge badge-info">Investigating</span></td><td>5</td>
+            </tr>
+            <tr class="rowlink" onclick="showScreen('screen-detail')">
+              <td>25/06/2026</td><td>3 học sinh đau bụng sau bữa xế</td>
+              <td><span class="badge badge-warning"><svg width="12" height="12"><use href="#ic-triangle"/></svg> Medium</span></td>
+              <td><span class="badge badge-danger"><svg width="12" height="12"><use href="#ic-cross"/></svg> Active</span></td><td>3</td>
+            </tr>
+            <tr class="rowlink" onclick="showScreen('screen-detail')">
+              <td>20/06/2026</td><td>1 học sinh dị ứng nhẹ với món tôm chiên</td>
+              <td><span class="badge badge-info">Low</span></td>
+              <td><span class="badge badge-success"><svg width="12" height="12"><use href="#ic-check"/></svg> Closed</span></td><td>1</td>
+            </tr>
+            <tr class="rowlink" onclick="showScreen('screen-detail')">
+              <td>15/06/2026</td><td>Học sinh nôn ói sau bữa sáng bán trú</td>
+              <td><span class="badge badge-warning"><svg width="12" height="12"><use href="#ic-triangle"/></svg> Medium</span></td>
+              <td><span class="badge badge-success"><svg width="12" height="12"><use href="#ic-check"/></svg> Closed</span></td><td>2</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="disabled-hint" style="margin-top:10px;">Trạng thái Empty (khi không khớp filter): "Không có sự cố nào khớp bộ lọc".</div>
+    </div>
+
+    <!-- ======================================================= -->
+    <!-- SCREEN 3: INCIDENT DETAIL -->
+    <!-- ======================================================= -->
+    <div class="screen" id="screen-detail">
+      <div class="breadcrumb">Kiểm tra &amp; Sự cố / Incident List / Incident Detail</div>
+      <div class="page-header">
+        <div>
+          <a onclick="showScreen('screen-list')" style="font-size:16px;"><svg width="14" height="14"><use href="#ic-back"/></svg> Quay lại Incident List</a>
+          <h1 class="page-title" style="margin-top:4px;">
+            Nghi ngộ độc thực phẩm sau bữa trưa lớp 4A
+            <span class="badge badge-info">Investigating</span>
+          </h1>
+        </div>
+        <div class="page-actions">
+          <button class="btn-secondary"><svg width="16" height="16"><use href="#ic-export"/></svg> Export</button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="col-8">
+          <div class="card sketchy" style="margin-bottom:16px;">
+            <h3><svg width="20" height="20"><use href="#ic-alert"/></svg> Triệu chứng báo cáo</h3>
+            <p class="text-base" style="margin:0;">Đau bụng, buồn nôn, nôn ói khoảng 1 giờ sau bữa trưa. 2 học sinh sốt nhẹ 37.8°C. Ghi nhận bởi Y tế trường lúc 12:40.</p>
+          </div>
+
+          <div class="card sketchy" style="margin-bottom:16px;">
+            <h3><svg width="20" height="20"><use href="#ic-users"/></svg> Học sinh bị ảnh hưởng (5)</h3>
+            <table>
+              <thead><tr><th>Họ tên</th><th>Lớp</th><th>Triệu chứng</th><th>Tình trạng</th></tr></thead>
+              <tbody>
+                <tr><td>Nguyễn Văn An</td><td>4A</td><td>Đau bụng, nôn</td><td>Đang theo dõi</td></tr>
+                <tr><td>Trần Thị Bích</td><td>4A</td><td>Sốt nhẹ, buồn nôn</td><td>Đang theo dõi</td></tr>
+                <tr><td>Lê Minh Châu</td><td>4A</td><td>Đau bụng</td><td>Đã ổn định</td></tr>
+                <tr><td>Phạm Gia Huy</td><td>4A</td><td>Nôn ói</td><td>Đang theo dõi</td></tr>
+                <tr><td>Đỗ Khánh Linh</td><td>4A</td><td>Đau bụng nhẹ</td><td>Đã ổn định</td></tr>
+              </tbody>
+            </table>
+            <div class="disabled-hint">BR-146: ngưỡng ≥3 học sinh/24h đã đạt → tự động kích hoạt điều tra.</div>
+          </div>
+
+          <div class="grid">
+            <div class="col-6 card sketchy">
+              <h3 class="text-base"><svg width="18" height="18"><use href="#ic-clipboard"/></svg> Món ăn nghi vấn</h3>
+              <p class="text-sm" style="margin:0;">Canh chua cá lóc — bữa trưa 12:00, 28/06/2026</p>
+            </div>
+            <div class="col-6 card sketchy">
+              <h3 class="text-base"><svg width="18" height="18"><use href="#ic-heart"/></svg> Sơ cứu đã thực hiện</h3>
+              <p class="text-sm" style="margin:0;">Cho uống Oresol, theo dõi thân nhiệt, cách ly khu vực nghỉ, liên hệ phụ huynh lúc 13:00.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div class="card sketchy" style="margin-bottom:16px;">
+            <h3><svg width="20" height="20"><use href="#ic-map"/></svg> Bản đồ truy xuất nguồn gốc</h3>
+            <wired-card style="width:100%; background:white;">
+              <div class="placeholder-x">[Image Placeholder]</div>
+            </wired-card>
+            <div class="disabled-hint">Biên soạn trong 4 giờ (BR-151)</div>
+          </div>
+
+          <div class="card sketchy" style="margin-bottom:16px;">
+            <h3><svg width="20" height="20"><use href="#ic-box"/></svg> Lô hàng bị Quarantine</h3>
+            <table>
+              <thead><tr><th>Mã lô</th><th>Nguyên liệu</th></tr></thead>
+              <tbody>
+                <tr><td>LOT-0288</td><td>Cá lóc tươi</td></tr>
+                <tr><td>LOT-0291</td><td>Rau ngổ</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <button class="btn-primary" style="width:100%; margin-bottom:10px;" onclick="showScreen('screen-capa')">Xem CAPA / Corrective Action Review</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================= -->
+    <!-- SCREEN 4: CORRECTIVE ACTION REVIEW -->
+    <!-- ======================================================= -->
+    <div class="screen" id="screen-capa">
+      <div class="breadcrumb">Kiểm tra &amp; Sự cố / Incident Detail / Corrective Action Review</div>
+      <div class="page-header">
+        <div>
+          <a onclick="showScreen('screen-detail')" style="font-size:16px;"><svg width="14" height="14"><use href="#ic-back"/></svg> Quay lại Incident Detail</a>
+          <h1 class="page-title" style="margin-top:4px;"><svg width="30" height="30"><use href="#ic-clipboard"/></svg> Corrective Action Review</h1>
+        </div>
+        <div class="page-actions">
+          <button class="btn-primary" onclick="approveCapa()"><svg width="16" height="16"><use href="#ic-check"/></svg> Approve</button>
+          <button class="btn-danger" onclick="toggleRejectReason()"><svg width="16" height="16"><use href="#ic-cross"/></svg> Reject</button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="col-6 card sketchy">
+          <h3><svg width="20" height="20"><use href="#ic-alert"/></svg> Mô tả sự cố liên quan</h3>
+          <p class="text-sm">Nghi ngộ độc thực phẩm sau bữa trưa lớp 4A ngày 28/06/2026 — 5 học sinh có triệu chứng đau bụng, nôn ói sau khi ăn canh chua cá lóc.</p>
+          <h3 style="margin-top:16px;"><svg width="20" height="20"><use href="#ic-list"/></svg> Yêu cầu CAPA đã giao</h3>
+          <p class="text-sm" style="margin:0;">1. Thu hồi toàn bộ lô cá lóc LOT-0288 và rau ngổ LOT-0291.<br>
+          2. Vệ sinh, khử trùng khu chế biến trong 24h.<br>
+          3. Đào tạo lại quy trình bảo quản nguyên liệu tươi sống cho nhân viên bếp.<br>
+          4. Nộp báo cáo khắc phục kèm hình ảnh trong 48h.</p>
+        </div>
+
+        <div class="col-6 card sketchy">
+          <h3><svg width="20" height="20"><use href="#ic-image"/></svg> Báo cáo thực hiện của Service Caterers</h3>
+          <p class="text-sm">Đã thu hồi 100% lô hàng liên quan, hoàn tất vệ sinh khu bếp lúc 20:00 ngày 28/06/2026. Đã tổ chức đào tạo lại cho 6 nhân viên bếp ngày 29/06/2026. Đính kèm checklist và ảnh bằng chứng bên dưới.</p>
+          <div class="gallery">
+            <wired-card class="thumb" style="background:white;"><div class="placeholder-x" style="height:70px; font-size:18px;">X</div></wired-card>
+            <wired-card class="thumb" style="background:white;"><div class="placeholder-x" style="height:70px; font-size:18px;">X</div></wired-card>
+            <wired-card class="thumb" style="background:white;"><div class="placeholder-x" style="height:70px; font-size:18px;">X</div></wired-card>
+          </div>
+        </div>
+      </div>
+
+      <div class="card sketchy" style="margin-top:16px;">
+        <h3><svg width="20" height="20"><use href="#ic-clipboard"/></svg> Ghi chú xác minh</h3>
+        <wired-textarea placeholder="Bắt buộc khi Approve — VD: Đã xác minh hiện trường, khu bếp đạt vệ sinh theo checklist." style="width:100%;" rows="3"></wired-textarea>
+      </div>
+
+      <div id="reject-reason-block" class="card sketchy" style="margin-top:16px; display:none; border-width:3px;">
+        <h3><svg width="20" height="20"><use href="#ic-triangle"/></svg> Lý do Reject (bắt buộc)</h3>
+        <wired-textarea id="reject-reason-input" placeholder="Nhập lý do từ chối CAPA — bắt buộc, nếu để trống sẽ chặn submit (EX1)." style="width:100%;" rows="3"></wired-textarea>
+        <div id="reject-error" class="text-sm" style="display:none; margin-top:6px;">
+          <span class="badge badge-danger"><svg width="14" height="14"><use href="#ic-cross"/></svg> Lỗi</span>
+          Vui lòng nhập lý do từ chối trước khi Reject (EX1 — bắt buộc lý do).
+        </div>
+        <div class="disabled-hint">Deadline resubmit mới sẽ được đặt tự động (VD 6 giờ, AF1) sau khi Reject.</div>
+        <div style="margin-top:10px;">
+          <button class="btn-danger" onclick="submitReject()">Xác nhận Reject</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================= -->
+    <!-- SCREEN 5: RESOLUTION REPORT -->
+    <!-- ======================================================= -->
+    <div class="screen" id="screen-resolution">
+      <div class="breadcrumb">Kiểm tra &amp; Sự cố / Corrective Action Review / Resolution Report</div>
+      <div class="page-header">
+        <div>
+          <a onclick="showScreen('screen-capa')" style="font-size:16px;"><svg width="14" height="14"><use href="#ic-back"/></svg> Quay lại Corrective Action Review</a>
+          <h1 class="page-title" style="margin-top:4px;"><svg width="30" height="30"><use href="#ic-file"/></svg> Resolution Report</h1>
+        </div>
+        <div class="page-actions">
+          <div>
+            <button class="btn-primary" disabled title="Disable tới khi đủ điều kiện đóng (BR-155)">Close Incident</button>
+            <div class="disabled-hint" style="text-align:right;">Disable tới khi CAPA hoàn thành + học sinh hồi phục (BR-155)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="col-6">
+          <div class="card sketchy" style="margin-bottom:16px;">
+            <h3><svg width="20" height="20"><use href="#ic-clipboard"/></svg> Tóm tắt điều tra (Root Cause)</h3>
+            <p class="text-sm" style="margin:0;">Nguyên nhân xác định: cá lóc trong lô LOT-0288 không được bảo quản đúng nhiệt độ trong quá trình vận chuyển, dẫn đến nhiễm khuẩn. Rau ngổ lô LOT-0291 sơ chế chưa đạt chuẩn vệ sinh.</p>
+          </div>
+
+          <div class="card sketchy" style="margin-bottom:16px;">
+            <h3><svg width="20" height="20"><use href="#ic-check"/></svg> Điều kiện đóng sự cố (BR-155)</h3>
+            <div class="checklist-item">
+              <span class="badge badge-warning"><svg width="14" height="14"><use href="#ic-triangle"/></svg> Chưa hoàn thành</span>
+              <span class="text-sm">Trạng thái xác minh CAPA hoàn thành — còn 1 CAPA đang chờ nghiệm thu</span>
+            </div>
+            <div class="checklist-item">
+              <span class="badge badge-warning"><svg width="14" height="14"><use href="#ic-triangle"/></svg> Đang theo dõi</span>
+              <span class="text-sm">Trạng thái hồi phục học sinh — 3/5 học sinh "Fully Recovered"</span>
+            </div>
+            <div class="disabled-hint">AF1 UC-013: còn CAPA chưa hoàn thành → chặn đóng, highlight CAPA còn mở bên dưới.</div>
+          </div>
+
+          <div class="card sketchy">
+            <h3><svg width="20" height="20"><use href="#ic-users"/></svg> Trạng thái hồi phục học sinh</h3>
+            <table>
+              <thead><tr><th>Họ tên</th><th>Tình trạng</th></tr></thead>
+              <tbody>
+                <tr><td>Nguyễn Văn An</td><td><span class="badge badge-success"><svg width="12" height="12"><use href="#ic-check"/></svg> Fully Recovered</span></td></tr>
+                <tr><td>Trần Thị Bích</td><td><span class="badge badge-success"><svg width="12" height="12"><use href="#ic-check"/></svg> Fully Recovered</span></td></tr>
+                <tr><td>Lê Minh Châu</td><td><span class="badge badge-success"><svg width="12" height="12"><use href="#ic-check"/></svg> Fully Recovered</span></td></tr>
+                <tr><td>Phạm Gia Huy</td><td><span class="badge badge-warning"><svg width="12" height="12"><use href="#ic-triangle"/></svg> Đang theo dõi</span></td></tr>
+                <tr><td>Đỗ Khánh Linh</td><td><span class="badge badge-warning"><svg width="12" height="12"><use href="#ic-triangle"/></svg> Đang theo dõi</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <div class="card sketchy">
+            <h3><svg width="20" height="20"><use href="#ic-file"/></svg> Báo cáo sự cố đầy đủ (chỉ xem)</h3>
+            <div class="accordion-item open">
+              <div class="accordion-head" onclick="this.parentElement.classList.toggle('open')">Clinical Notes <span>▾</span></div>
+              <div class="accordion-body">Y tế trường ghi nhận triệu chứng lúc 12:40, đo thân nhiệt định kỳ mỗi 2 giờ, không có trường hợp nhập viện.</div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-head" onclick="this.parentElement.classList.toggle('open')">Lab Results <span>▾</span></div>
+              <div class="accordion-body">Mẫu canh chua cá lóc gửi xét nghiệm 28/06/2026, kết quả dương tính Salmonella spp. tại phòng xét nghiệm hợp tác 30/06/2026.</div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-head" onclick="this.parentElement.classList.toggle('open')">Root Cause <span>▾</span></div>
+              <div class="accordion-body">Bảo quản nguyên liệu sai nhiệt độ trong vận chuyển + sơ chế rau chưa đạt chuẩn vệ sinh (chi tiết ở khối Tóm tắt điều tra).</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card sketchy" style="margin-top:16px;">
+        <h3><svg width="20" height="20"><use href="#ic-clipboard"/></svg> Closing statement</h3>
+        <wired-textarea placeholder="Bắt buộc khi Close Incident — tóm tắt kết luận cuối cùng, biện pháp phòng ngừa tái diễn." style="width:100%;" rows="3"></wired-textarea>
+      </div>
+    </div>
+
+    <!-- ======================================================= -->
+    <!-- SCREEN 6: EXPORT INCIDENT REPORTS -->
+    <!-- ======================================================= -->
+    <div class="screen" id="screen-export">
+      <div class="breadcrumb">Kiểm tra &amp; Sự cố / Export Incident Reports</div>
+      <div class="page-header">
+        <h1 class="page-title"><svg width="30" height="30"><use href="#ic-export"/></svg> Export Incident Reports</h1>
+      </div>
+
+      <div class="filter-bar sketchy">
+        <div class="filter-field">
+          <label>Date Range</label>
+          <div style="display:flex; gap:6px; align-items:center;">
+            <wired-input placeholder="Từ ngày" style="width:130px;"></wired-input>
+            <span>—</span>
+            <wired-input placeholder="Đến ngày" style="width:130px;"></wired-input>
+            <svg width="18" height="18"><use href="#ic-calendar"/></svg>
+          </div>
+        </div>
+        <div class="filter-field">
+          <label>Severity Level</label>
+          <wired-combo selected="Tất cả" style="width:150px;">
+            <wired-item value="all">Tất cả</wired-item>
+            <wired-item value="high">High</wired-item>
+            <wired-item value="medium">Medium</wired-item>
+            <wired-item value="low">Low</wired-item>
+          </wired-combo>
+        </div>
+        <div class="filter-field">
+          <label>Incident Status</label>
+          <wired-combo selected="Tất cả" style="width:180px;">
+            <wired-item value="all">Tất cả</wired-item>
+            <wired-item value="active">Active</wired-item>
+            <wired-item value="investigating">Under Investigation</wired-item>
+            <wired-item value="closed">Closed</wired-item>
+          </wired-combo>
+        </div>
+        <div class="filter-field">
+          <label>Suspected Service Caterers</label>
+          <wired-combo selected="Tất cả" style="width:200px;">
+            <wired-item value="all">Tất cả</wired-item>
+            <wired-item value="cat1">Bếp ăn An Lành</wired-item>
+            <wired-item value="cat2">Bếp ăn Minh Phát</wired-item>
+          </wired-combo>
+        </div>
+        <div class="filter-field">
+          <label>&nbsp;</label>
+          <button class="btn-secondary" onclick="document.getElementById('export-preview').style.display='block'">Generate Preview</button>
+        </div>
+      </div>
+
+      <div id="export-preview" style="display:block;">
+        <div class="section-title"><svg width="22" height="22"><use href="#ic-list"/></svg> Bảng Preview</div>
+        <div class="card sketchy" style="padding:0; margin-bottom:16px;">
+          <table>
+            <thead><tr><th>Ngày báo cáo</th><th>Mô tả tóm tắt</th><th>Severity</th><th>Status</th><th>Số HS ảnh hưởng</th></tr></thead>
+            <tbody>
+              <tr><td>28/06/2026</td><td>Nghi ngộ độc thực phẩm sau bữa trưa lớp 4A</td>
+                <td><span class="badge badge-danger"><svg width="12" height="12"><use href="#ic-triangle"/></svg> High</span></td>
+                <td><span class="badge badge-info">Investigating</span></td><td>5</td></tr>
+              <tr><td>25/06/2026</td><td>3 học sinh đau bụng sau bữa xế</td>
+                <td><span class="badge badge-warning"><svg width="12" height="12"><use href="#ic-triangle"/></svg> Medium</span></td>
+                <td><span class="badge badge-danger"><svg width="12" height="12"><use href="#ic-cross"/></svg> Active</span></td><td>3</td></tr>
+              <tr><td>20/06/2026</td><td>1 học sinh dị ứng nhẹ với món tôm chiên</td>
+                <td><span class="badge badge-info">Low</span></td>
+                <td><span class="badge badge-success"><svg width="12" height="12"><use href="#ic-check"/></svg> Closed</span></td><td>1</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card sketchy">
+          <h3><svg width="20" height="20"><use href="#ic-file"/></svg> Định dạng export</h3>
+          <div style="display:flex; gap:20px; align-items:center; margin:8px 0;">
+            <wired-radio-group selected="pdf">
+              <wired-radio name="format" value="pdf">PDF</wired-radio>
+              <wired-radio name="format" value="excel">Excel</wired-radio>
+            </wired-radio-group>
+          </div>
+          <button class="btn-primary"><svg width="16" height="16"><use href="#ic-export"/></svg> Export</button>
+          <div class="disabled-hint">File sinh kèm Incident ID, symptoms, affected counts, root cause, CAPA status (BR-154).</div>
+        </div>
+      </div>
+      <div class="disabled-hint" style="margin-top:10px;">Trạng thái Empty: "Không có sự cố nào khớp bộ lọc" khi Preview không có kết quả.</div>
+    </div>
+
+  </div>
+</div>
+
+<footer class="tag">Wireframe low-fidelity — SFMS · School Administration · Incident Management (Draft, chưa qua QA)</footer>
+
+<script>
+  function showScreen(id){
+    document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+    document.getElementById(id).classList.add('active');
+
+    document.querySelectorAll('.nav-item.clickable').forEach(function(n){ n.classList.remove('active'); });
+    var map = {
+      'screen-dashboard': 0,
+      'screen-list': 1,
+      'screen-export': 2
+    };
+    var clickables = document.querySelectorAll('.nav-item.clickable');
+    if (id in map) { clickables[map[id]].classList.add('active'); }
+    else if (id === 'screen-detail' || id === 'screen-capa' || id === 'screen-resolution') {
+      clickables[1].classList.add('active'); // still under Incident List branch
+    }
+    window.scrollTo(0,0);
+  }
+
+  function toggleRejectReason(){
+    var block = document.getElementById('reject-reason-block');
+    block.style.display = (block.style.display === 'none') ? 'block' : 'none';
+  }
+
+  function submitReject(){
+    var val = document.getElementById('reject-reason-input').value.trim();
+    var err = document.getElementById('reject-error');
+    if (!val) {
+      err.style.display = 'block';
+      return;
+    }
+    err.style.display = 'none';
+    alert('Reject CAPA thành công (mô phỏng) — CAPA chuyển "Rejected", thông báo kèm deadline resubmit mới.');
+  }
+
+  function approveCapa(){
+    alert('Approve CAPA thành công (mô phỏng) — MSG-043, CAPA chuyển "Approved", thông báo Service Caterers + Medical Staff.');
+    showScreen('screen-resolution');
+  }
+</script>
+
+</body>
+</html>

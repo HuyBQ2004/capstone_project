@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>School Food Management System - Cấu hình trường</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#e0e3e5",
+                        "on-primary-container": "#d3f1ff",
+                        "inverse-primary": "#81d1f0",
+                        "on-error-container": "#93000a",
+                        "primary-fixed-dim": "#81d1f0",
+                        "primary-container": "#0e7490",
+                        "secondary-fixed-dim": "#c4c7c9",
+                        "surface-tint": "#006781",
+                        "inverse-on-surface": "#eef1f3",
+                        "on-secondary-fixed": "#191c1e",
+                        "tertiary-fixed-dim": "#ffb86f",
+                        "on-surface": "#181c1e",
+                        "surface-container-low": "#f1f4f6",
+                        "on-tertiary": "#ffffff",
+                        "on-background": "#181c1e",
+                        "primary-fixed": "#b9eaff",
+                        "secondary": "#5c5f61",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#f7fafc",
+                        "surface-container": "#ebeef0",
+                        "secondary-container": "#e0e3e5",
+                        "surface-variant": "#e0e3e5",
+                        "surface": "#f7fafc",
+                        "inverse-surface": "#2d3133",
+                        "on-tertiary-fixed": "#2c1600",
+                        "on-tertiary-container": "#ffe8d6",
+                        "on-secondary": "#ffffff",
+                        "outline": "#6f787d",
+                        "surface-dim": "#d7dadd",
+                        "tertiary-container": "#965e1c",
+                        "tertiary-fixed": "#ffdcbd",
+                        "on-primary-fixed-variant": "#004d62",
+                        "primary": "#005a71",
+                        "outline-variant": "#bec8cd",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#794602",
+                        "on-surface-variant": "#3f484c",
+                        "surface-container-high": "#e6e8eb",
+                        "background": "#f7fafc",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed": "#e0e3e5",
+                        "on-secondary-container": "#626567",
+                        "on-primary-fixed": "#001f29",
+                        "on-tertiary-fixed-variant": "#693c00",
+                        "on-secondary-fixed-variant": "#444749"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "1rem",
+                        "sidebar-width": "260px",
+                        "section-gap": "1.5rem",
+                        "edge-margin": "2rem",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "table-header": ["Be Vietnam Pro"],
+                        "body-sm": ["Be Vietnam Pro"],
+                        "h1-mobile": ["Be Vietnam Pro"],
+                        "label": ["Be Vietnam Pro"],
+                        "h1": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "h2": ["Be Vietnam Pro"],
+                        "h3": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "table-header": ["13px", { "lineHeight": "18px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "h1-mobile": ["24px", { "lineHeight": "30px", "fontWeight": "700" }],
+                        "label": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "h1": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "h3": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface flex min-h-screen">
+<!-- SideNav -->
+<nav class="fixed left-0 top-0 h-full w-[260px] bg-surface-container-low dark:bg-surface-dim border-r border-outline-variant dark:border-outline flex flex-col py-6 transition-all duration-200 ease-in-out z-20 hidden md:flex">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container rounded-full flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined font-bold text-2xl">school</span>
+</div>
+<div>
+<h1 class="font-h2 text-h2 font-bold text-primary dark:text-primary-fixed leading-tight">SFMS Admin</h1>
+<p class="font-label text-label text-on-surface-variant">District Authority</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto">
+<ul class="space-y-1 font-body-sm text-body-sm">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                        Dashboard
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined">handshake</span>
+                        Partnership
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+                        Menu
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined">groups</span>
+                        Classes &amp; Students
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined">assignment_late</span>
+                        Incidents &amp; Inspections
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+                        Reports &amp; Statistics
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined">campaign</span>
+                        Announcement Management
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined">badge</span>
+                        Staff Management
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container/10 text-primary font-semibold border-l-4 border-primary dark:text-primary-fixed dark:border-primary-fixed transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+                        School Configuration
+                    </a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 md:ml-[260px] flex flex-col min-h-screen relative">
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 w-full md:w-[calc(100%-260px)] h-16 bg-surface-container-lowest dark:bg-surface border-b border-outline-variant dark:border-outline shadow-sm flex justify-between items-center px-6 z-10">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-2">
+<span class="hover:text-primary cursor-pointer transition-colors">Thông báo &amp; Nhân viên</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-primary font-medium">Cấu hình trường</span>
+</div>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<button class="hover:text-primary transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="hover:text-primary transition-colors">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-variant border border-outline-variant overflow-hidden cursor-pointer ml-2">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a school administrator in a modern office setting. Light neutral background, soft professional lighting. The subject is wearing a crisp blue shirt. Minimalist corporate style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5Eye_4HJo4a8UV1GjFVRbG8ndQBvxNqWYpF-lhIfoTRBJI1sKXz1cvkDu5jKHfsxfETmfzYvf8Bn6yy-JDxlwGf34koBOFVoJ-v-vpKLB37NAV6aQNtb-9KI-_oSq3QSXLJir6HHZfp23qOgSMZv3Tfnobd3XO-C8uk__4OIr0pkZvwQyDXPXEDEMsCRU8td-Y6apGLyDBGUwNv5xeu7lwasb3s6uiEd81KoYMK4bMQbwSuO_ZEkNZF5H4yU9MC7QwojRHofDMgE"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 mt-16 p-6 lg:p-8 overflow-y-auto bg-surface relative">
+<div class="max-w-4xl mx-auto">
+<div class="mb-8">
+<h1 class="font-h1 text-h1 text-on-surface mb-2">Cấu hình trường học</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Quản lý các thiết lập chung cho hệ thống nhà trường.</p>
+</div>
+<!-- Form Section -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0_1px_3px_rgba(0,0,0,0.1)] overflow-hidden">
+<form class="divide-y divide-outline-variant">
+<!-- Group 1: Tài chính thực đơn -->
+<div class="p-6 md:p-8">
+<h3 class="font-h3 text-h3 text-on-surface mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">payments</span>
+                                Tài chính thực đơn
+                            </h3>
+<div class="max-w-md">
+<label class="block font-label text-label text-on-surface-variant mb-1" for="mealCostLimit">Trần chi phí suất ăn (VNĐ)</label>
+<div class="relative">
+<input class="w-full pl-4 pr-12 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition-all font-body-sm text-body-sm text-on-surface" id="mealCostLimit" type="text" value="50.000"/>
+<div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-on-surface-variant font-body-sm">
+                                        VNĐ
+                                    </div>
+</div>
+<p class="mt-2 font-label text-label text-on-surface-variant/70">Giới hạn ngân sách tối đa cho một suất ăn tiêu chuẩn.</p>
+</div>
+</div>
+<!-- Group 2: Bán kính GPS địa rào -->
+<div class="p-6 md:p-8 bg-surface/50">
+<h3 class="font-h3 text-h3 text-on-surface mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">my_location</span>
+                                Bán kính GPS địa rào
+                            </h3>
+<div class="max-w-md">
+<label class="block font-label text-label text-on-surface-variant mb-3 flex justify-between" for="geofenceRadius">
+<span>Khoảng cách an toàn</span>
+<span class="font-bold text-primary" id="radiusValue">200m</span>
+</label>
+<input class="w-full h-2 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-primary" id="geofenceRadius" max="500" min="50" oninput="document.getElementById('radiusValue').innerText = this.value + 'm'" type="range" value="200"/>
+<div class="flex justify-between text-xs text-outline mt-2 font-label">
+<span>50m</span>
+<span>500m</span>
+</div>
+<p class="mt-3 font-label text-label text-on-surface-variant/70">Xác định bán kính cho phép nhân viên điểm danh qua ứng dụng.</p>
+</div>
+</div>
+<!-- Group 3: Nhận báo cáo định kỳ -->
+<div class="p-6 md:p-8">
+<h3 class="font-h3 text-h3 text-on-surface mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">mark_email_read</span>
+                                Nhận báo cáo định kỳ
+                            </h3>
+<div class="max-w-2xl">
+<label class="block font-label text-label text-on-surface-variant mb-1" for="reportEmails">Email nhận thông báo</label>
+<div class="p-2 bg-surface border border-outline-variant rounded-lg focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all min-h-[100px] flex flex-wrap gap-2 items-start">
+<div class="flex items-center gap-1 bg-surface-container-high px-3 py-1.5 rounded-full font-body-sm text-body-sm text-on-surface-variant border border-outline-variant/50">
+                                        admin@school.edu
+                                        <button class="text-outline hover:text-error transition-colors flex items-center justify-center rounded-full hover:bg-surface-variant p-0.5" type="button">
+<span class="material-symbols-outlined" style="font-size: 16px;">close</span>
+</button>
+</div>
+<div class="flex items-center gap-1 bg-surface-container-high px-3 py-1.5 rounded-full font-body-sm text-body-sm text-on-surface-variant border border-outline-variant/50">
+                                        manager@school.edu
+                                        <button class="text-outline hover:text-error transition-colors flex items-center justify-center rounded-full hover:bg-surface-variant p-0.5" type="button">
+<span class="material-symbols-outlined" style="font-size: 16px;">close</span>
+</button>
+</div>
+<input class="flex-1 min-w-[150px] bg-transparent border-none focus:ring-0 text-body-sm font-body-sm py-1.5 text-on-surface placeholder-outline-variant" id="reportEmails" placeholder="Thêm email mới..." type="text"/>
+</div>
+<p class="mt-2 font-label text-label text-on-surface-variant/70">Nhấn Enter hoặc dấu phẩy để thêm email. Báo cáo sẽ được gửi hàng tuần.</p>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="p-6 md:p-8 bg-surface-container-lowest flex justify-end gap-4 items-center">
+<button class="px-6 py-2.5 font-body-sm font-medium text-primary hover:bg-surface-container transition-colors rounded-lg" type="button">
+                                Hủy bỏ
+                            </button>
+<button class="px-6 py-2.5 bg-[#0E7490] hover:bg-[#005a71] text-white font-body-sm font-medium rounded-lg shadow-sm transition-colors flex items-center gap-2" onclick="showToast()" type="button">
+<span class="material-symbols-outlined text-sm">save</span>
+                                Lưu cấu hình
+                            </button>
+</div>
+</form>
+</div>
+</div>
+</main>
+<!-- Success Toast -->
+<div class="fixed bottom-6 right-6 md:bottom-8 md:right-8 bg-white border-l-4 border-[#10B981] shadow-lg rounded-r-lg p-4 flex items-start gap-3 transform transition-all duration-300 translate-y-20 opacity-0 z-50 pointer-events-none max-w-sm" id="toast">
+<span class="material-symbols-outlined text-[#10B981] mt-0.5">check_circle</span>
+<div>
+<h4 class="font-body-sm font-semibold text-on-surface">Thành công</h4>
+<p class="font-label text-label text-on-surface-variant mt-0.5">Cấu hình đã được lưu thành công (MSG-029).</p>
+</div>
+<button class="ml-auto text-outline hover:text-on-surface transition-colors pointer-events-auto" onclick="hideToast()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+</div>
+<script>
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            toast.classList.remove('pointer-events-none');
+            
+            setTimeout(() => {
+                hideToast();
+            }, 3000);
+        }
+
+        function hideToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('translate-y-20', 'opacity-0');
+            toast.classList.remove('translate-y-0', 'opacity-100');
+            toast.classList.add('pointer-events-none');
+        }
+    </script>
+</body></html>

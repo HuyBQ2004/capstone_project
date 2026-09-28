@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Đổi mật khẩu - SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;family=Public+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#bfd2fd",
+                        "error": "#a83836",
+                        "on-surface": "#2b3438",
+                        "on-tertiary-fixed": "#213456",
+                        "on-background": "#2b3438",
+                        "secondary": "#506076",
+                        "inverse-on-surface": "#9a9da0",
+                        "on-primary": "#f2faff",
+                        "surface": "#f7fafc",
+                        "primary-dim": "#005b72",
+                        "primary-container": "#8fdfff",
+                        "tertiary-dim": "#415377",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-primary-fixed-variant": "#005a71",
+                        "on-surface-variant": "#576065",
+                        "on-error-container": "#6e0a12",
+                        "error-container": "#fa746f",
+                        "on-secondary-fixed": "#314055",
+                        "surface-dim": "#d2dbe0",
+                        "primary-fixed": "#8fdfff",
+                        "surface-container-highest": "#dbe4e9",
+                        "secondary-container": "#d3e4fe",
+                        "on-tertiary-fixed-variant": "#3e5175",
+                        "error-dim": "#67040d",
+                        "surface-container-high": "#e2e9ed",
+                        "on-secondary": "#f7f9ff",
+                        "inverse-surface": "#0b0f11",
+                        "surface-tint": "#006882",
+                        "secondary-dim": "#44546a",
+                        "primary": "#006882",
+                        "on-tertiary-container": "#35476b",
+                        "tertiary-container": "#bfd2fd",
+                        "secondary-fixed-dim": "#c5d6f0",
+                        "on-tertiary": "#f9f8ff",
+                        "surface-variant": "#dbe4e9",
+                        "outline-variant": "#aab3b8",
+                        "primary-fixed-dim": "#81d1f0",
+                        "inverse-primary": "#8fdfff",
+                        "outline": "#737c81",
+                        "surface-container-low": "#eff4f8",
+                        "surface-container": "#e8eff3",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#fff7f6",
+                        "tertiary-fixed-dim": "#b1c4ee",
+                        "background": "#f7fafc",
+                        "on-primary-container": "#005065",
+                        "tertiary": "#4d5f84",
+                        "on-primary-fixed": "#003b4c",
+                        "on-secondary-fixed-variant": "#4d5d73",
+                        "surface-bright": "#f7fafc",
+                        "on-secondary-container": "#435368"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Be Vietnam Pro"],
+                        "display": ["Be Vietnam Pro"],
+                        "body": ["Be Vietnam Pro"],
+                        "label": ["Public Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .label-font { font-family: 'Public Sans', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen relative flex flex-col pt-16">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface-dim text-primary dark:text-primary-dim font-headline text-headline-sm fixed top-0 w-full bg-surface-container dark:bg-surface-container-highest shadow-sm flex items-center justify-between px-4 h-16 w-full z-50">
+<button aria-label="Go back" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-variant transition-colors active:scale-95 duration-150 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="text-xl font-bold flex-1 text-center pr-10">Đổi mật khẩu</h1>
+</header>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col p-4 w-full max-w-md mx-auto h-full">
+<div class="mt-8 flex flex-col gap-6 w-full">
+<p class="text-sm text-on-surface-variant text-center mb-4">
+                Vui lòng nhập mật khẩu hiện tại và mật khẩu mới để cập nhật thông tin bảo mật của bạn.
+            </p>
+<!-- Current Password -->
+<div class="relative w-full">
+<label class="block text-xs font-medium text-on-surface-variant bg-background absolute -top-2 left-3 px-1 z-10 label-font" for="current_password">
+                    Mật khẩu hiện tại
+                </label>
+<div class="relative flex items-center border border-outline rounded-lg focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-shadow bg-surface">
+<input class="block w-full border-0 bg-transparent py-3.5 pl-4 pr-12 text-on-surface placeholder:text-on-surface-variant/50 focus:ring-0 sm:text-sm sm:leading-6 rounded-lg font-body" id="current_password" name="current_password" placeholder="Nhập mật khẩu hiện tại" type="password" value="hunter2"/>
+<button class="absolute inset-y-0 right-0 flex items-center pr-3 text-on-surface-variant hover:text-on-surface" onclick="togglePassword('current_password', 'icon_current')" type="button">
+<span class="material-symbols-outlined" data-icon="visibility_off" id="icon_current">visibility_off</span>
+</button>
+</div>
+</div>
+<!-- New Password -->
+<div class="relative w-full">
+<label class="block text-xs font-medium text-on-surface-variant bg-background absolute -top-2 left-3 px-1 z-10 label-font" for="new_password">
+                    Mật khẩu mới
+                </label>
+<div class="relative flex items-center border border-outline rounded-lg focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-shadow bg-surface">
+<input class="block w-full border-0 bg-transparent py-3.5 pl-4 pr-12 text-on-surface placeholder:text-on-surface-variant/50 focus:ring-0 sm:text-sm sm:leading-6 rounded-lg font-body" id="new_password" name="new_password" placeholder="Nhập mật khẩu mới" type="password"/>
+<button class="absolute inset-y-0 right-0 flex items-center pr-3 text-on-surface-variant hover:text-on-surface" onclick="togglePassword('new_password', 'icon_new')" type="button">
+<span class="material-symbols-outlined" data-icon="visibility_off" id="icon_new">visibility_off</span>
+</button>
+</div>
+<p class="text-[10px] text-on-surface-variant mt-1 ml-1">Tối thiểu 8 ký tự, bao gồm chữ cái và số.</p>
+</div>
+<!-- Confirm New Password -->
+<div class="relative w-full">
+<label class="block text-xs font-medium text-on-surface-variant bg-background absolute -top-2 left-3 px-1 z-10 label-font" for="confirm_password">
+                    Xác nhận mật khẩu mới
+                </label>
+<div class="relative flex items-center border border-outline rounded-lg focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-shadow bg-surface">
+<input class="block w-full border-0 bg-transparent py-3.5 pl-4 pr-12 text-on-surface placeholder:text-on-surface-variant/50 focus:ring-0 sm:text-sm sm:leading-6 rounded-lg font-body" id="confirm_password" name="confirm_password" placeholder="Nhập lại mật khẩu mới" type="password"/>
+<button class="absolute inset-y-0 right-0 flex items-center pr-3 text-on-surface-variant hover:text-on-surface" onclick="togglePassword('confirm_password', 'icon_confirm')" type="button">
+<span class="material-symbols-outlined" data-icon="visibility_off" id="icon_confirm">visibility_off</span>
+</button>
+</div>
+</div>
+<div class="mt-8">
+<button class="w-full flex items-center justify-center rounded-full bg-primary py-3.5 px-4 text-sm font-semibold text-on-primary shadow-sm hover:bg-primary-dim focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:scale-95 transition-transform label-font shadow-[0_4px_14px_0_rgba(0,104,130,0.39)]" type="button">
+                    Cập nhật mật khẩu
+                </button>
+</div>
+</div>
+</main>
+<!-- Simulated Snackbar -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none w-max">
+<div class="flex items-center gap-3 bg-[#e8f5e9] text-[#1b5e20] px-4 py-3 rounded-lg shadow-lg border border-[#c8e6c9] transform translate-y-0 opacity-100 transition-all duration-300">
+<span class="material-symbols-outlined text-[#2e7d32]" data-icon="check_circle">check_circle</span>
+<span class="text-sm font-medium label-font">Cập nhật mật khẩu thành công</span>
+</div>
+</div>
+<script>
+        function togglePassword(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.textContent = 'visibility';
+                icon.setAttribute('data-icon', 'visibility');
+            } else {
+                input.type = 'password';
+                icon.textContent = 'visibility_off';
+                icon.setAttribute('data-icon', 'visibility_off');
+            }
+        }
+    </script>
+</body></html>

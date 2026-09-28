@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Phê duyệt suất ăn Web</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-surface-variant": "#3f484c",
+                        "primary-fixed-dim": "#81d1f0",
+                        "inverse-primary": "#81d1f0",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-primary-fixed-variant": "#004d62",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#d9e3f6",
+                        "outline-variant": "#bec8cd",
+                        "primary-container": "#0e7490",
+                        "tertiary-container": "#686b6d",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-primary": "#ffffff",
+                        "surface": "#f8f9ff",
+                        "primary": "#005a71",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-tertiary-container": "#eaecee",
+                        "on-surface": "#121c2a",
+                        "on-tertiary-fixed": "#191c1e",
+                        "on-background": "#121c2a",
+                        "secondary": "#505f76",
+                        "tertiary-fixed": "#e0e3e5",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "surface-bright": "#f8f9ff",
+                        "on-secondary-container": "#54647a",
+                        "on-primary-container": "#d3f1ff",
+                        "tertiary": "#505355",
+                        "surface-tint": "#006781",
+                        "on-primary-fixed": "#001f29",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#dee9fc",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#27313f",
+                        "background": "#f8f9ff",
+                        "surface-container": "#e6eeff",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "surface-container-low": "#eff4ff",
+                        "surface-container-highest": "#d9e3f6",
+                        "secondary-container": "#d0e1fb",
+                        "primary-fixed": "#b9eaff",
+                        "surface-dim": "#d0dbed",
+                        "outline": "#6f787d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "topbar-height": "64px",
+                        "sidebar-width": "280px",
+                        "section-gap": "32px",
+                        "container-padding": "24px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Be Vietnam Pro"],
+                        "body-sm": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "h3": ["Be Vietnam Pro"],
+                        "h1": ["Be Vietnam Pro"],
+                        "h2": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "h3": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "h1": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface font-body-sm text-on-surface h-screen flex items-center justify-center">
+<!-- Modal Overlay -->
+<div class="fixed inset-0 bg-on-surface/20 backdrop-blur-sm z-40 flex items-center justify-center p-4">
+<!-- Modal Dialog -->
+<div class="bg-surface-container-lowest rounded-lg shadow-lg w-full max-w-md border border-outline-variant flex flex-col z-50">
+<!-- Header -->
+<div class="px-6 py-4 border-b border-outline-variant flex items-center justify-between">
+<h3 class="font-h3 text-h3 text-on-surface">Xác nhận phê duyệt suất ăn</h3>
+<button class="text-secondary hover:text-on-surface transition-colors p-1 rounded-full hover:bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-primary/20">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">close</span>
+</button>
+</div>
+<!-- Content -->
+<div class="p-6 flex flex-col gap-5">
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                    Bạn đang phê duyệt suất ăn đặc biệt cho học sinh <span class="font-label-md text-label-md text-on-surface">Nguyễn Văn A</span>.
+                </p>
+<!-- Read-only Input -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm text-secondary">Món ăn thay thế đề xuất</label>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded px-3 py-2 text-on-surface font-body-sm text-body-sm cursor-not-allowed focus:outline-none" readonly="" type="text" value="Thực đơn không hải sản"/>
+</div>
+<!-- Date Picker -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm text-secondary">Ngày bắt đầu áp dụng</label>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-2 pl-10 text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors cursor-pointer" readonly="" type="text" value="15/12/2023"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary" style="font-variation-settings: 'FILL' 0;">calendar_today</span>
+</div>
+</div>
+<!-- Info Alert -->
+<div class="bg-surface-container-low border border-surface-dim rounded-md p-3 flex items-start gap-3 mt-2">
+<span class="material-symbols-outlined text-primary mt-0.5" style="font-variation-settings: 'FILL' 1;">info</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Hệ thống bếp sẽ nhận được thông báo thay đổi này ngay lập tức.</p>
+</div>
+</div>
+<!-- Footer -->
+<div class="px-6 py-4 bg-surface-container-lowest border-t border-outline-variant rounded-b-lg flex justify-end gap-3">
+<button class="px-4 py-2 font-label-md text-label-md text-secondary hover:bg-surface-container rounded transition-colors focus:outline-none focus:ring-2 focus:ring-secondary/20">
+                    Hủy
+                </button>
+<button class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-surface-tint transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">check</span>
+                    Xác nhận phê duyệt
+                </button>
+</div>
+</div>
+</div>
+</body></html>

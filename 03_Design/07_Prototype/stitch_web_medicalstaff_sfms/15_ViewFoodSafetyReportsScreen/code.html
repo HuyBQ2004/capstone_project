@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Báo cáo an toàn thực phẩm - SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container": "#e6eeff",
+                      "primary-fixed-dim": "#81d1f0",
+                      "tertiary-container": "#686b6d",
+                      "on-primary-fixed": "#001f29",
+                      "on-tertiary": "#ffffff",
+                      "primary-container": "#0e7490",
+                      "error-container": "#ffdad6",
+                      "on-secondary-fixed": "#0b1c30",
+                      "background": "#f8f9ff",
+                      "on-tertiary-fixed": "#191c1e",
+                      "surface-dim": "#d0dbed",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "on-primary-fixed-variant": "#004d62",
+                      "outline": "#6f787d",
+                      "on-secondary-container": "#54647a",
+                      "tertiary-fixed": "#e0e3e5",
+                      "surface": "#f8f9ff",
+                      "surface-bright": "#f8f9ff",
+                      "on-tertiary-fixed-variant": "#444749",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "on-surface-variant": "#3f484c",
+                      "on-background": "#121c2a",
+                      "surface-container-low": "#eff4ff",
+                      "secondary-fixed": "#d3e4fe",
+                      "inverse-on-surface": "#eaf1ff",
+                      "outline-variant": "#bec8cd",
+                      "secondary": "#505f76",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-high": "#dee9fc",
+                      "secondary-container": "#d0e1fb",
+                      "surface-variant": "#d9e3f6",
+                      "primary-fixed": "#b9eaff",
+                      "tertiary-fixed-dim": "#c4c7c9",
+                      "surface-container-highest": "#d9e3f6",
+                      "on-surface": "#121c2a",
+                      "on-error-container": "#93000a",
+                      "error": "#ba1a1a",
+                      "tertiary": "#505355",
+                      "on-tertiary-container": "#eaecee",
+                      "primary": "#005a71",
+                      "on-secondary": "#ffffff",
+                      "inverse-primary": "#81d1f0",
+                      "on-primary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "surface-tint": "#006781",
+                      "on-primary-container": "#d3f1ff",
+                      "inverse-surface": "#27313f"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "topbar-height": "64px",
+                      "sidebar-width": "280px",
+                      "gutter": "16px",
+                      "section-gap": "32px",
+                      "container-padding": "24px"
+              },
+              "fontFamily": {
+                      "h3": [
+                              "Be Vietnam Pro"
+                      ],
+                      "h2": [
+                              "Be Vietnam Pro"
+                      ],
+                      "h1": [
+                              "Be Vietnam Pro"
+                      ],
+                      "label-sm": [
+                              "Be Vietnam Pro"
+                      ],
+                      "label-md": [
+                              "Be Vietnam Pro"
+                      ],
+                      "body-sm": [
+                              "Be Vietnam Pro"
+                      ],
+                      "body-lg": [
+                              "Be Vietnam Pro"
+                      ]
+              },
+              "fontSize": {
+                      "h3": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "h2": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "h1": [
+                              "30px",
+                              {
+                                      "lineHeight": "36px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: theme('colors.background');
+        }
+    </style>
+</head>
+<body class="text-on-background bg-background antialiased">
+<!-- SideNavBar -->
+<nav class="fixed top-0 left-0 h-full w-sidebar-width flex flex-col p-4 z-50 bg-surface-container-lowest dark:bg-surface-dim border-r border-outline-variant dark:border-outline hidden md:flex">
+<div class="flex items-center gap-3 mb-8 px-2">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-container">school</span>
+</div>
+<div>
+<h2 class="font-h3 text-h3 font-bold text-primary dark:text-primary-fixed-dim">Hệ thống SFMS</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Quản lý y tế học đường</p>
+</div>
+</div>
+<div class="flex-1 space-y-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container dark:hover:bg-surface-container-highest hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all active:scale-95 duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">home</span>
+<span class="font-label-md text-label-md">Trang chủ</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container dark:hover:bg-surface-container-highest hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all active:scale-95 duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">medical_services</span>
+<span class="font-label-md text-label-md">Hồ sơ sức khỏe</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container dark:hover:bg-surface-container-highest hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all active:scale-95 duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">restaurant</span>
+<span class="font-label-md text-label-md">Suất ăn đặc biệt</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-secondary-container dark:bg-primary-container text-on-secondary-container dark:text-on-primary-container font-semibold transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">fact_check</span>
+<span class="font-label-md text-label-md">Kiểm tra vệ sinh</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container dark:hover:bg-surface-container-highest hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all active:scale-95 duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">inventory_2</span>
+<span class="font-label-md text-label-md">Lưu mẫu thực phẩm</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container dark:hover:bg-surface-container-highest hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all active:scale-95 duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">gavel</span>
+<span class="font-label-md text-label-md">Quản lý vi phạm</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container dark:hover:bg-surface-container-highest hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all active:scale-95 duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">report_problem</span>
+<span class="font-label-md text-label-md">Quản lý sự cố</span>
+</a>
+</div>
+<div class="mt-auto pt-4 border-t border-outline-variant/30">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-error hover:bg-error-container/50 transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Đăng xuất</span>
+</a>
+</div>
+</nav>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-0 md:left-[280px] h-topbar-height flex justify-between items-center px-gutter z-40 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md border-b border-outline-variant dark:border-outline shadow-sm">
+<div class="flex items-center gap-4">
+<button class="md:hidden p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="hidden md:flex items-center gap-2 text-on-surface-variant font-label-md text-label-md">
+<span>Trang chủ</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-primary font-semibold">Kiểm tra vệ sinh</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/70 text-[20px]">search</span>
+<input class="w-64 bg-surface-container-lowest border border-outline-variant rounded-full pl-10 pr-4 py-1.5 font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Tìm kiếm..." type="text"/>
+</div>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors rounded-full cursor-pointer active:opacity-80 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full border border-surface-container-lowest"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors rounded-full cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="ml-2 w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant overflow-hidden cursor-pointer active:opacity-80">
+<img alt="Medical Staff Avatar" class="w-full h-full object-cover" data-alt="Professional headshot of a female medical staff member wearing a clean white lab coat, well-lit, neutral corporate background. Medical professional avatar, realistic, confident expression, soft lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJRQtqHqHFyZUTj90LhIHqsJANvSGMfybwKK6_0c0hgizwFMFU464s3oFTER_XqbMF-ezyyhTYh8HfRuk9l-GMj_cHHUJo15Xz8PuVUfaDLupiYurkBW-VEeYiERz4WMzEw_3fTxxTJrsZk4rNbbcYSlCZ-XJawNucHvhONq0HncLbYDYyR6lUI14kaax03DWfohYalWRvV0C1Y7XvLNdZeEUlTQVz_UYCsu24xLvsb-IDdozd9ryan_pekjWgHwu5ZcIb1ZWKqIc"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="pt-[calc(64px+32px)] md:pl-[calc(280px+32px)] pr-section-gap pb-section-gap min-h-screen">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+<div>
+<h1 class="font-h1 text-h1 text-on-background mb-1">Báo cáo an toàn thực phẩm</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Quản lý và theo dõi các báo cáo kiểm định chất lượng định kỳ.</p>
+</div>
+<button class="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors shadow-sm active:scale-95 duration-150">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span class="font-label-md text-label-md">Tạo báo cáo mới</span>
+</button>
+</div>
+<!-- Tabs -->
+<div class="flex overflow-x-auto hide-scrollbar border-b border-outline-variant mb-6 pb-px">
+<button class="px-6 py-3 font-label-md text-label-md text-primary border-b-2 border-primary whitespace-nowrap bg-primary/5 rounded-t-lg transition-colors">
+                    Tất cả báo cáo
+                </button>
+<button class="px-6 py-3 font-label-md text-label-md text-on-surface-variant hover:text-on-background hover:bg-surface-container-low whitespace-nowrap rounded-t-lg transition-colors">
+                    Kiểm định định kỳ
+                </button>
+<button class="px-6 py-3 font-label-md text-label-md text-on-surface-variant hover:text-on-background hover:bg-surface-container-low whitespace-nowrap rounded-t-lg transition-colors">
+                    Kiểm soát côn trùng
+                </button>
+<button class="px-6 py-3 font-label-md text-label-md text-on-surface-variant hover:text-on-background hover:bg-surface-container-low whitespace-nowrap rounded-t-lg transition-colors">
+                    Nhiệt độ &amp; Lưu kho
+                </button>
+</div>
+<!-- Toolbar -->
+<div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+<div class="relative w-full sm:w-80">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/70 text-[20px]">search</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-10 pr-4 py-2 font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Tìm theo tên báo cáo..." type="text"/>
+</div>
+<div class="flex gap-2 w-full sm:w-auto">
+<button class="flex items-center gap-2 px-3 py-2 border border-outline-variant rounded-lg hover:bg-surface-container text-on-surface-variant bg-surface-container-lowest transition-colors flex-1 sm:flex-none justify-center">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+<span class="font-label-md text-label-md">Lọc</span>
+</button>
+<button class="flex items-center gap-2 px-3 py-2 border border-outline-variant rounded-lg hover:bg-surface-container text-on-surface-variant bg-surface-container-lowest transition-colors flex-1 sm:flex-none justify-center">
+<span class="material-symbols-outlined text-[18px]">calendar_month</span>
+<span class="font-label-md text-label-md">Tháng này</span>
+</button>
+</div>
+</div>
+<!-- Grid Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant/60 rounded-xl p-container-padding shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-bl-[100px] -z-0"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div class="flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#E8F5E9] text-[#1B5E20] border border-[#A5D6A7]/50 w-fit">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span class="font-label-sm text-label-sm">Sẵn sàng</span>
+</div>
+<span class="p-1.5 rounded-lg bg-surface-container text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">fact_check</span>
+</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-background mb-2 relative z-10 group-hover:text-primary transition-colors">Monthly Kitchen Audit - Oct 2023</h3>
+<div class="space-y-2 mb-6 relative z-10">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] opacity-70">calendar_today</span>
+<span class="font-body-sm text-body-sm">25/10/2023</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] opacity-70">category</span>
+<span class="font-body-sm text-body-sm">Kiểm định định kỳ</span>
+</div>
+</div>
+<div class="flex items-center gap-3 pt-4 border-t border-outline-variant/30 relative z-10">
+<button class="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors font-label-md text-label-md active:scale-95 duration-150">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+                            Xem trực tiếp
+                        </button>
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container text-on-surface-variant transition-colors tooltip-trigger" title="Tải xuống PDF">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant/60 rounded-xl p-container-padding shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-24 h-24 bg-error/5 rounded-bl-[100px] -z-0"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div class="flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#FFF3E0] text-[#E65100] border border-[#FFCC80]/50 w-fit">
+<span class="material-symbols-outlined text-[14px]">pending</span>
+<span class="font-label-sm text-label-sm">Đang xử lý</span>
+</div>
+<span class="p-1.5 rounded-lg bg-surface-container text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">pest_control</span>
+</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-background mb-2 relative z-10 group-hover:text-primary transition-colors">Báo cáo kiểm soát côn trùng Q3</h3>
+<div class="space-y-2 mb-6 relative z-10">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] opacity-70">calendar_today</span>
+<span class="font-body-sm text-body-sm">15/10/2023</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] opacity-70">category</span>
+<span class="font-body-sm text-body-sm">Kiểm soát côn trùng</span>
+</div>
+</div>
+<div class="flex items-center gap-3 pt-4 border-t border-outline-variant/30 relative z-10">
+<button class="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors font-label-md text-label-md active:scale-95 duration-150 opacity-50 cursor-not-allowed">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+                            Xem trực tiếp
+                        </button>
+<button class="p-2 rounded-lg border border-outline-variant text-on-surface-variant/50 cursor-not-allowed tooltip-trigger" title="Đang tạo file">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant/60 rounded-xl p-container-padding shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-bl-[100px] -z-0"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div class="flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#E8F5E9] text-[#1B5E20] border border-[#A5D6A7]/50 w-fit">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span class="font-label-sm text-label-sm">Sẵn sàng</span>
+</div>
+<span class="p-1.5 rounded-lg bg-surface-container text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">ac_unit</span>
+</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-background mb-2 relative z-10 group-hover:text-primary transition-colors">Nhật ký nhiệt độ kho lạnh Tuần 42</h3>
+<div class="space-y-2 mb-6 relative z-10">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] opacity-70">calendar_today</span>
+<span class="font-body-sm text-body-sm">22/10/2023</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] opacity-70">category</span>
+<span class="font-body-sm text-body-sm">Nhiệt độ &amp; Lưu kho</span>
+</div>
+</div>
+<div class="flex items-center gap-3 pt-4 border-t border-outline-variant/30 relative z-10">
+<button class="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors font-label-md text-label-md active:scale-95 duration-150">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+                            Xem trực tiếp
+                        </button>
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container text-on-surface-variant transition-colors tooltip-trigger" title="Tải xuống PDF">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chỉnh sửa thông tin dị ứng | SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #F8FAFC;
+        }
+        .medical-card {
+            background: white;
+            border: 1px solid #E2E8F0;
+            transition: all 0.2s ease;
+        }
+        .allergy-focus-red {
+            border-color: #EF4444;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-container": "#6cf8bb",
+                      "on-tertiary-container": "#ffe9d4",
+                      "secondary-fixed": "#6ffbbe",
+                      "surface-container-lowest": "#ffffff",
+                      "primary": "#005a71",
+                      "outline": "#6f787d",
+                      "outline-variant": "#bec8cd",
+                      "on-error-container": "#93000a",
+                      "surface-variant": "#d3e4fe",
+                      "error-container": "#ffdad6",
+                      "on-secondary-fixed": "#002113",
+                      "inverse-on-surface": "#eaf1ff",
+                      "on-tertiary-fixed-variant": "#653e00",
+                      "tertiary": "#764900",
+                      "on-secondary": "#ffffff",
+                      "surface-tint": "#006781",
+                      "on-background": "#0b1c30",
+                      "surface": "#f8f9ff",
+                      "on-tertiary": "#ffffff",
+                      "inverse-primary": "#81d1f0",
+                      "tertiary-container": "#965f00",
+                      "surface-dim": "#cbdbf5",
+                      "on-primary-container": "#d3f1ff",
+                      "on-error": "#ffffff",
+                      "inverse-surface": "#213145",
+                      "on-surface": "#0b1c30",
+                      "background": "#f8f9ff",
+                      "on-secondary-container": "#00714d",
+                      "tertiary-fixed": "#ffddb8",
+                      "tertiary-fixed-dim": "#ffb95f",
+                      "surface-container-high": "#dce9ff",
+                      "primary-fixed-dim": "#81d1f0",
+                      "on-tertiary-fixed": "#2a1700",
+                      "error": "#ba1a1a",
+                      "primary-fixed": "#b9eaff",
+                      "on-primary-fixed-variant": "#004d62",
+                      "secondary-fixed-dim": "#4edea3",
+                      "on-secondary-fixed-variant": "#005236",
+                      "on-surface-variant": "#3f484c",
+                      "surface-container-highest": "#d3e4fe",
+                      "secondary": "#006c49",
+                      "primary-container": "#0e7490",
+                      "surface-bright": "#f8f9ff",
+                      "on-primary": "#ffffff",
+                      "surface-container-low": "#eff4ff",
+                      "on-primary-fixed": "#001f29",
+                      "surface-container": "#e5eeff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "element-gap": "12px",
+                      "grid-gutter": "16px",
+                      "section-margin": "24px",
+                      "base": "4px",
+                      "container-padding": "16px"
+              },
+              "fontFamily": {
+                      "body-md": ["Be Vietnam Pro"],
+                      "headline-md": ["Be Vietnam Pro"],
+                      "label-sm": ["Be Vietnam Pro"],
+                      "headline-lg": ["Be Vietnam Pro"],
+                      "headline-lg-mobile": ["Be Vietnam Pro"],
+                      "body-lg": ["Be Vietnam Pro"]
+              },
+              "fontSize": {
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface">
+<!-- Top AppBar - Following JSON structure -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-container-padding h-14 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary active:scale-95 transition-transform">arrow_back</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Chỉnh sửa thông tin dị ứng</h1>
+</div>
+<div class="flex items-center">
+<button class="material-symbols-outlined text-primary active:scale-95 transition-transform">notifications</button>
+</div>
+</header>
+<main class="pt-20 pb-24 px-container-padding max-w-md mx-auto">
+<!-- Allergy Status Alert Banner (High Visibility for Serious Cases) -->
+<div class="mb-section-margin bg-error p-4 rounded-xl flex items-start gap-3 shadow-md">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">warning</span>
+<div>
+<h2 class="text-white font-label-sm uppercase tracking-wider">Cảnh báo dị ứng nghiêm trọng</h2>
+<p class="text-white text-body-md opacity-90">Thông tin này ảnh hưởng trực tiếp đến quy trình chế biến suất ăn của học sinh.</p>
+</div>
+</div>
+<form class="space-y-6">
+<!-- Medical Card: Student Info -->
+<div class="medical-card p-4 rounded-xl">
+<label class="block font-label-sm text-on-surface-variant mb-2">Học sinh</label>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a young Vietnamese student with a friendly smile, wearing a clean school uniform. The lighting is soft and high-key, emphasizing a clean, academic atmosphere. The background is a minimalist, out-of-focus school hallway in soft blue and white tones, matching a professional medical-grade UI aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2cMFUGXMru2osanCUzK0kbO3AaOU24bhRAtOeltCn9Pt9p2_Wjg0COUFH5_XRqPaJAz-DSw3siwQPv2JjvK0HPNT61qsIE9lr38kvBRBi0L8G8SUW-gflsFB2gSOso6oOptr3ArRp4NT1DGXw8uGF86GbabHkOBmYSH168NUEJSgDaY-y82Y8f0a2rbxzF2UZkICO5z44qxolKesDzdqVW2nE9EOHeOpn3tIdaKtCw4v3SuKfhyrsBfJQYlx6M5KJ0y9CRdpVE90"/>
+</div>
+<div>
+<p class="font-headline-md text-on-surface">Nguyễn Minh Anh</p>
+<p class="text-label-sm text-outline">Lớp: 3A2 - Mã HS: HS20230511</p>
+</div>
+</div>
+</div>
+<!-- Allergy Details Card -->
+<div class="medical-card p-4 rounded-xl allergy-focus-red shadow-sm">
+<div class="space-y-4">
+<!-- Allergy Type -->
+<div>
+<label class="block font-label-sm text-on-surface-variant mb-2" for="allergy_type">Loại dị ứng <span class="text-error">*</span></label>
+<div class="relative">
+<input class="w-full px-4 py-3 rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-body-lg font-semibold" id="allergy_type" placeholder="VD: Đậu phộng, Hải sản..." type="text" value="Dị ứng Đậu phộng"/>
+<span class="absolute right-4 top-3.5 material-symbols-outlined text-outline">edit</span>
+</div>
+</div>
+<!-- Severity Level -->
+<div>
+<label class="block font-label-sm text-on-surface-variant mb-2">Mức độ <span class="text-error">*</span></label>
+<div class="grid grid-cols-3 gap-2">
+<button class="flex flex-col items-center justify-center p-3 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors" type="button">
+<span class="material-symbols-outlined text-green-600 mb-1">check_circle</span>
+<span class="text-label-sm">Nhẹ</span>
+</button>
+<button class="flex flex-col items-center justify-center p-3 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors" type="button">
+<span class="material-symbols-outlined text-orange-500 mb-1">warning</span>
+<span class="text-label-sm">Trung bình</span>
+</button>
+<button class="flex flex-col items-center justify-center p-3 rounded-lg border-2 border-error bg-error-container text-on-error-container" type="button">
+<span class="material-symbols-outlined text-error mb-1" style="font-variation-settings: 'FILL' 1;">emergency_home</span>
+<span class="text-label-sm font-bold">Nghiêm trọng</span>
+</button>
+</div>
+</div>
+<!-- Symptoms/Notes -->
+<div>
+<label class="block font-label-sm text-on-surface-variant mb-2" for="symptoms">Triệu chứng &amp; Lưu ý đặc biệt</label>
+<textarea class="w-full px-4 py-3 rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-body-md" id="symptoms" placeholder="Mô tả các dấu hiệu khi phát bệnh..." rows="4">Khó thở, mẩn ngứa toàn thân, cần có thuốc Epinephrine đi kèm. Tuyệt đối không để thức ăn tiếp xúc gần sản phẩm chứa đậu.</textarea>
+</div>
+</div>
+</div>
+<!-- Attached Documents (Medical Grade Evidence) -->
+<div class="medical-card p-4 rounded-xl">
+<label class="block font-label-sm text-on-surface-variant mb-3">Minh chứng y khoa (02 ảnh)</label>
+<div class="grid grid-cols-2 gap-3">
+<div class="relative aspect-square rounded-lg overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A clear, high-resolution close-up photo of a medical diagnosis report on white paper. The document shows professional healthcare stamps and signatures. The setting is clean and well-lit, conveying reliability and medical-grade accuracy for a school food safety system. Soft blue lighting tones to match the corporate UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCprkvY-_u8QVuaOxaVM4WDWukGJszxkJaXbj2UY7bpPH-3qPtCIdVtmapNEcSjNb4mVq8oBVa0G0Uhn3hYqpR1TyEKprv0iNcL54FT7yu9102afq9d3bI9fQVhpFQmBkQIQABjz6_BoAN5k9f33W0zxejgn0cmIzoduzQIomQP3dEvvz1SQ3atCNT_GHWZRc2SxbI5nMDGrh_qs7KYEVdQS6Swyfx5EZ3V4lL6XTKMYZQ6QFiFKYm4qYp8m3Qkhjvuzz9YcfyS0h8"/>
+<button class="absolute top-1 right-1 bg-white/80 rounded-full p-1 text-error"><span class="material-symbols-outlined text-sm">cancel</span></button>
+</div>
+<button class="aspect-square rounded-lg border-2 border-dashed border-outline-variant flex flex-col items-center justify-center text-outline hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-3xl">add_a_photo</span>
+<span class="text-label-sm mt-1">Thêm ảnh</span>
+</button>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="space-y-3 pt-4">
+<button class="w-full bg-primary-container text-on-primary py-4 rounded-xl font-headline-md shadow-md active:scale-95 transition-transform" type="submit">
+                    Cập nhật thông tin
+                </button>
+<div class="flex justify-center">
+<button class="text-error font-label-sm py-2 hover:underline active:scale-95 transition-transform flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-sm">delete</span>
+                        Xóa hồ sơ dị ứng này
+                    </button>
+</div>
+</div>
+</form>
+</main>
+<!-- Bottom Navigation Shell (Filter: Active on top-level but hidden on detailed transactional screens, but here we show it for demo context of being in 'Tài khoản' or 'Sức khỏe') -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-container-padding py-2 bg-surface border-t border-outline-variant">
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">home</span>
+<span class="text-label-sm">Trang chủ</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span class="text-label-sm">Thực đơn</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-label-sm">Dinh dưỡng</span>
+</div>
+<div class="flex flex-col items-center justify-center text-primary font-bold">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="text-label-sm">Cá nhân</span>
+</div>
+</nav>
+<script>
+        // Micro-interactions for form
+        document.querySelectorAll('input, textarea').forEach(el => {
+            el.addEventListener('focus', () => {
+                el.parentElement.classList.add('scale-[1.01]');
+                el.parentElement.style.transition = 'transform 0.2s ease';
+            });
+            el.addEventListener('blur', () => {
+                el.parentElement.classList.remove('scale-[1.01]');
+            });
+        });
+
+        // Toggle severity buttons (Mock logic)
+        const severityButtons = document.querySelectorAll('.grid-cols-3 button');
+        severityButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                severityButtons.forEach(b => {
+                    b.classList.remove('border-2', 'border-error', 'bg-error-container', 'text-on-error-container');
+                    b.querySelector('span:last-child').classList.remove('font-bold');
+                });
+                btn.classList.add('border-2', 'border-error', 'bg-error-container', 'text-on-error-container');
+                btn.querySelector('span:last-child').classList.add('font-bold');
+            });
+        });
+    </script>
+</body></html>

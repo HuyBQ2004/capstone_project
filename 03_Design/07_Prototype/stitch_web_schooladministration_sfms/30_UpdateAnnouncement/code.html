@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cập nhật thông báo - SFMS Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#ffb86f",
+                        "primary": "#005a71",
+                        "on-surface-variant": "#3f484c",
+                        "surface-container-high": "#e6e8eb",
+                        "tertiary": "#794602",
+                        "on-primary-fixed": "#001f29",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#965e1c",
+                        "surface-container": "#ebeef0",
+                        "secondary-container": "#e0e3e5",
+                        "surface-dim": "#d7dadd",
+                        "background": "#f7fafc",
+                        "surface-bright": "#f7fafc",
+                        "on-tertiary-fixed": "#2c1600",
+                        "error": "#ba1a1a",
+                        "outline": "#6f787d",
+                        "on-primary-container": "#d3f1ff",
+                        "on-background": "#181c1e",
+                        "surface-variant": "#e0e3e5",
+                        "on-error": "#ffffff",
+                        "inverse-on-surface": "#eef1f3",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#0e7490",
+                        "outline-variant": "#bec8cd",
+                        "inverse-primary": "#81d1f0",
+                        "on-surface": "#181c1e",
+                        "on-primary-fixed-variant": "#004d62",
+                        "primary-fixed-dim": "#81d1f0",
+                        "surface-tint": "#006781",
+                        "on-tertiary-container": "#ffe8d6",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#c4c7c9",
+                        "secondary": "#5c5f61",
+                        "on-tertiary-fixed-variant": "#693c00",
+                        "on-secondary-fixed-variant": "#444749",
+                        "surface-container-low": "#f1f4f6",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#191c1e",
+                        "on-error-container": "#93000a",
+                        "surface": "#f7fafc",
+                        "primary-fixed": "#b9eaff",
+                        "inverse-surface": "#2d3133",
+                        "tertiary-fixed": "#ffdcbd",
+                        "secondary-fixed": "#e0e3e5",
+                        "on-secondary-container": "#626567"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sidebar-width": "260px",
+                        "gutter": "1rem",
+                        "section-gap": "1.5rem",
+                        "edge-margin": "2rem",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "h1": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "table-header": ["Be Vietnam Pro"],
+                        "label": ["Be Vietnam Pro"],
+                        "h3": ["Be Vietnam Pro"],
+                        "body-sm": ["Be Vietnam Pro"],
+                        "h2": ["Be Vietnam Pro"],
+                        "h1-mobile": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "h1": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "table-header": ["13px", { "lineHeight": "18px", "fontWeight": "600" }],
+                        "label": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "h3": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "h1-mobile": ["24px", { "lineHeight": "30px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-sm min-h-screen flex antialiased">
+<!-- SideNavBar -->
+<nav class="bg-surface-container-low dark:bg-surface-dim font-h3 text-h3 font-label text-label font-body-sm text-body-sm fixed left-0 top-0 h-full w-sidebar-width border-r border-outline-variant dark:border-on-surface-variant flex flex-col h-screen w-[260px] py-6 overflow-y-auto hidden md:flex z-50">
+<div class="px-6 mb-8 flex items-center gap-4">
+<img class="w-10 h-10 object-contain rounded-lg bg-surface" data-alt="A clean, modern minimalist school district logo designed for a corporate and efficient web application. The logo features abstract geometric shapes forming a subtle crest or building silhouette in primary blue, set against a light mode background. The design is crisp, scalable, and conveys institutional dependability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1s28K8EnVeG2Y6bvx9aLES5NQuUiIqgAe21LY1O4GzNAjvjcnEUggVgkD-EdavVVGle8EjP0lHzURGz6GtmdOsNNGD9RDPbNCc5PzEj93_8HCTUBXzENnbBy_QPgRYDHLi1uoTaXeVW0fayiCszVgb8olcniVRQvgcqkO3OsaK0RbMS0MmRWHb4bhczQG2HTny1ixcPtWN-CcAeYKwbloF224hw8YapxkXqfh3y_V_SnV5F9ybwVlBJsFnANDysrbI31xQO6Ic80"/>
+<div>
+<h1 class="font-h2 text-h2 font-bold text-primary dark:text-primary-fixed-dim">SFMS Admin</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">District Portal</p>
+</div>
+</div>
+<div class="px-4 mb-6">
+<button class="w-full flex items-center justify-center gap-2 bg-primary-container text-on-primary font-label text-label py-2.5 rounded-lg hover:bg-primary-fixed-dim transition-colors duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+                New Entry
+            </button>
+</div>
+<ul class="flex flex-col gap-1 flex-1 mt-4 px-2">
+<li><a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors duration-200 rounded-lg" href="#"><span class="material-symbols-outlined">dashboard</span>Dashboard</a></li>
+<li><a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors duration-200 rounded-lg" href="#"><span class="material-symbols-outlined">handshake</span>Partners</a></li>
+<li><a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors duration-200 rounded-lg" href="#"><span class="material-symbols-outlined">restaurant_menu</span>Menu</a></li>
+<li><a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors duration-200 rounded-lg" href="#"><span class="material-symbols-outlined">groups</span>Classes &amp; Students</a></li>
+<li><a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors duration-200 rounded-lg" href="#"><span class="material-symbols-outlined">assignment_late</span>Incidents &amp; Inspections</a></li>
+<li><a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors duration-200 rounded-lg" href="#"><span class="material-symbols-outlined">bar_chart</span>Reports &amp; Statistics</a></li>
+<li><a class="flex items-center gap-3 px-4 py-2 text-primary dark:text-primary-fixed-dim font-semibold border-l-4 border-primary dark:border-primary-fixed-dim bg-secondary-container/50 dark:bg-on-primary-fixed-variant/30 rounded-r-lg hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors duration-200" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">campaign</span>Announcements &amp; Staff</a></li>
+</ul>
+<div class="mt-auto px-2">
+<ul class="flex flex-col gap-1 border-t border-outline-variant pt-4 mt-4">
+<li><a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#"><span class="material-symbols-outlined">settings</span>Settings</a></li>
+<li><a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-error hover:bg-error-container transition-colors duration-200 rounded-lg" href="#"><span class="material-symbols-outlined">logout</span>Logout</a></li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col md:ml-[260px] min-h-screen">
+<!-- TopNavBar -->
+<header class="bg-surface-container-lowest dark:bg-surface-dim font-h2 text-h2 font-label text-label font-body-lg text-body-lg fixed full-width top-0 border-b border-outline-variant dark:border-on-surface-variant shadow-sm dark:shadow-none transition-all duration-200 ease-in-out flex justify-between items-center h-16 px-8 md:ml-[260px] md:w-[calc(100%-260px)] w-full z-40">
+<div class="flex items-center gap-4 w-1/3">
+<div class="relative w-full max-w-md hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface border border-outline-variant rounded-lg font-body-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm" placeholder="Tìm kiếm..." type="text"/>
+</div>
+<!-- Mobile menu toggle -->
+<button class="md:hidden text-on-surface-variant p-2 -ml-2 rounded-lg hover:bg-surface-container">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+<div class="flex items-center justify-center w-1/3">
+<h2 class="font-h3 text-h3 font-semibold text-on-surface dark:text-surface-bright hidden md:block">Announcement Management</h2>
+</div>
+<div class="flex items-center justify-end gap-6 w-1/3">
+<button class="bg-primary-container hover:bg-[#0b5c73] text-on-primary font-label text-label px-4 py-2 rounded-lg transition-colors hidden sm:flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                    Create Announcement
+                </button>
+<div class="flex items-center gap-3">
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer p-1 rounded-full hover:bg-surface-container relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full border border-surface-container-lowest"></span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer p-1 rounded-full hover:bg-surface-container hidden sm:block">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="h-8 w-px bg-outline-variant mx-1 hidden sm:block"></div>
+<img class="w-8 h-8 rounded-full border border-outline-variant object-cover cursor-pointer" data-alt="A professional headshot of a school administrator, middle-aged with glasses, smiling warmly. The photo has a clean white background, soft professional studio lighting, and high resolution. The individual is wearing smart corporate attire, fitting for a modern educational management dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAG7teZ5mbhdZ2ULKAJEkkJgqkTrlRuVF2iFN_FC4B9tQyrQgcbeM4aRywTNUNBmzvhA3dmkLOWmF47Lz0GYnkbbK5lyVZ7TipRG30RZJPtG-r6rQVMfGN5PfZzWdHXaxnEPuBwHSNfTDo1_0-0vgAkkal_7Ql8buzWHnhnyOSC8KX2m5zWwVgeUfVzWiRLlRWScGWLHr8n_OrtlgHH8Esb93vN-DpVkHPfOpcQCdxA5OPP2lvC0CKiwlBsKLOsbKzIB9it3WyttAs"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<main class="flex-1 p-edge-margin mt-16 overflow-y-auto">
+<div class="max-w-4xl mx-auto space-y-section-gap">
+<!-- Header -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<div class="flex items-center gap-2 text-sm text-on-surface-variant mb-1">
+<a class="hover:text-primary transition-colors" href="#">Quản lý thông báo</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-on-surface">Cập nhật thông báo</span>
+</div>
+<h1 class="font-h1 text-h1 text-on-background">Cập nhật thông báo</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Chỉnh sửa nội dung và quản lý các phiên bản của thông báo.</p>
+</div>
+</div>
+<!-- Main Form Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex items-center justify-between">
+<h3 class="font-h3 text-h3 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">edit_document</span>
+                            Nội dung thông báo
+                        </h3>
+<span class="px-2.5 py-1 bg-primary/10 text-primary-container text-xs font-semibold rounded-full border border-primary/20">
+                            ID: ANN-2023-089
+                        </span>
+</div>
+<form class="p-6 space-y-6">
+<!-- Title -->
+<div class="space-y-2">
+<label class="font-label text-label text-on-surface block" for="title">Tiêu đề thông báo <span class="text-error">*</span></label>
+<input class="w-full px-4 py-2.5 bg-surface border border-outline-variant rounded-lg font-body-sm text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" id="title" placeholder="Nhập tiêu đề thông báo" type="text" value="Kế hoạch kiểm tra vệ sinh an toàn thực phẩm quý 4/2023"/>
+</div>
+<!-- Meta Info Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="font-label text-label text-on-surface block" for="category">Danh mục</label>
+<div class="relative">
+<select class="w-full px-4 py-2.5 bg-surface border border-outline-variant rounded-lg font-body-sm text-on-surface appearance-none focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" id="category">
+<option selected="" value="inspection">Kiểm tra &amp; Đánh giá</option>
+<option value="general">Thông báo chung</option>
+<option value="urgent">Khẩn cấp</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="font-label text-label text-on-surface block" for="target">Đối tượng nhận</label>
+<div class="relative">
+<select class="w-full px-4 py-2.5 bg-surface border border-outline-variant rounded-lg font-body-sm text-on-surface appearance-none focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" id="target">
+<option selected="" value="all_staff">Tất cả nhân viên bếp</option>
+<option value="managers">Quản lý cơ sở</option>
+<option value="inspectors">Đoàn kiểm tra</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Content Area (Simulated Rich Text Editor) -->
+<div class="space-y-2">
+<label class="font-label text-label text-on-surface block">Nội dung chi tiết <span class="text-error">*</span></label>
+<div class="border border-outline-variant rounded-lg overflow-hidden flex flex-col focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+<!-- Toolbar -->
+<div class="bg-surface border-b border-outline-variant px-3 py-2 flex flex-wrap items-center gap-1">
+<button class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded transition-colors" title="In đậm" type="button"><span class="material-symbols-outlined text-[18px]">format_bold</span></button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded transition-colors" title="In nghiêng" type="button"><span class="material-symbols-outlined text-[18px]">format_italic</span></button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded transition-colors" title="Gạch chân" type="button"><span class="material-symbols-outlined text-[18px]">format_underlined</span></button>
+<div class="w-px h-5 bg-outline-variant mx-1"></div>
+<button class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded transition-colors" title="Danh sách có chấm" type="button"><span class="material-symbols-outlined text-[18px]">format_list_bulleted</span></button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded transition-colors" title="Danh sách số" type="button"><span class="material-symbols-outlined text-[18px]">format_list_numbered</span></button>
+<div class="w-px h-5 bg-outline-variant mx-1"></div>
+<button class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded transition-colors" title="Chèn liên kết" type="button"><span class="material-symbols-outlined text-[18px]">link</span></button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded transition-colors" title="Chèn ảnh" type="button"><span class="material-symbols-outlined text-[18px]">image</span></button>
+</div>
+<!-- Textarea -->
+<textarea class="w-full px-4 py-3 bg-surface-container-lowest border-none font-body-sm text-on-surface focus:outline-none resize-y" id="content" placeholder="Nhập nội dung..." rows="8">Kính gửi các cơ sở bếp ăn,
+
+Nhằm đảm bảo chất lượng và vệ sinh an toàn thực phẩm trong dịp cuối năm, Ban Quản lý thông báo kế hoạch kiểm tra định kỳ quý 4/2023 như sau:
+
+1. Thời gian kiểm tra: Từ ngày 01/11/2023 đến 15/11/2023. (Cập nhật: Bắt đầu sớm hơn dự kiến 5 ngày)
+2. Nội dung kiểm tra:
+   - Hồ sơ nguồn gốc thực phẩm
+   - Quy trình chế biến và bảo quản
+   - Vệ sinh khu vực bếp và nhà ăn
+3. Yêu cầu: Các cơ sở chuẩn bị đầy đủ hồ sơ và dọn dẹp vệ sinh theo đúng tiêu chuẩn 5S.
+
+Mọi thắc mắc vui lòng liên hệ Ban Quản lý (SĐT: 024.1234.5678).
+
+Trân trọng,
+Ban Quản lý SFMS.</textarea>
+</div>
+</div>
+<!-- Summary of Changes -->
+<div class="space-y-2 pt-2">
+<label class="font-label text-label text-on-surface block" for="change-summary">Tóm tắt thay đổi (cho phiên bản này)</label>
+<input class="w-full px-4 py-2.5 bg-surface border border-outline-variant rounded-lg font-body-sm text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-outline" id="change-summary" placeholder="VD: Sửa lỗi chính tả, Cập nhật thời gian..." type="text" value="Cập nhật thời gian bắt đầu kiểm tra"/>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center justify-end gap-3 pt-6 border-t border-outline-variant mt-8">
+<button class="px-5 py-2.5 bg-surface border border-outline-variant text-on-surface font-label text-label rounded-lg hover:bg-surface-container transition-colors" type="button">
+                                Hủy
+                            </button>
+<button class="px-5 py-2.5 bg-primary-container text-on-primary font-label text-label rounded-lg hover:bg-[#0b5c73] transition-colors shadow-sm flex items-center gap-2" type="submit">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                                Lưu thay đổi
+                            </button>
+</div>
+</form>
+</div>
+<!-- Revision History Section -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden mt-8">
+<div class="p-6 border-b border-outline-variant">
+<h3 class="font-h3 text-h3 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant">history</span>
+                            Lịch sử phiên bản
+                        </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Theo dõi các thay đổi nội dung qua từng phiên bản.</p>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface border-b border-outline-variant font-table-header text-table-header text-on-surface-variant">
+<th class="px-6 py-3 font-semibold w-24">Phiên bản</th>
+<th class="px-6 py-3 font-semibold">Thời gian</th>
+<th class="px-6 py-3 font-semibold">Người chỉnh sửa</th>
+<th class="px-6 py-3 font-semibold">Nội dung thay đổi chính</th>
+<th class="px-6 py-3 font-semibold text-right w-24">Thao tác</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm divide-y divide-outline-variant/50">
+<tr class="hover:bg-surface-container-low transition-colors bg-primary/5">
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-surface text-on-surface border border-outline-variant font-medium">
+                                            v1.2
+                                            <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+</span>
+</td>
+<td class="px-6 py-4 text-on-surface">14:20 25/10/2023</td>
+<td class="px-6 py-4 text-on-surface">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary text-xs font-bold">L</div>
+                                            Lê Thị B (Đang sửa)
+                                        </div>
+</td>
+<td class="px-6 py-4 text-on-surface italic">Bản nháp hiện tại</td>
+<td class="px-6 py-4 text-right">
+<!-- Current draft, no specific actions needed usually, maybe clear -->
+<button class="text-on-surface-variant hover:text-primary p-1 rounded hover:bg-surface-container transition-colors" title="Khôi phục bản này">
+<span class="material-symbols-outlined text-[20px]">refresh</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-surface text-on-surface border border-outline-variant">
+                                            v1.1
+                                        </span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">10:30 24/10/2023</td>
+<td class="px-6 py-4 text-on-surface">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-secondary text-on-secondary flex items-center justify-center text-xs font-bold">N</div>
+                                            Nguyễn Văn A
+                                        </div>
+</td>
+<td class="px-6 py-4 text-on-surface">Cập nhật thời gian bắt đầu kiểm tra sớm hơn</td>
+<td class="px-6 py-4 text-right">
+<button class="text-on-surface-variant hover:text-primary p-1 rounded hover:bg-surface-container transition-colors" title="Xem chi tiết">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-surface text-on-surface border border-outline-variant">
+                                            v1.0
+                                        </span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">08:15 22/10/2023</td>
+<td class="px-6 py-4 text-on-surface">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-secondary text-on-secondary flex items-center justify-center text-xs font-bold">N</div>
+                                            Nguyễn Văn A
+                                        </div>
+</td>
+<td class="px-6 py-4 text-on-surface">Khởi tạo thông báo gốc</td>
+<td class="px-6 py-4 text-right">
+<button class="text-on-surface-variant hover:text-primary p-1 rounded hover:bg-surface-container transition-colors" title="Xem chi tiết">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Footer spacing -->
+<div class="h-12"></div>
+</main>
+</div>
+</body></html>

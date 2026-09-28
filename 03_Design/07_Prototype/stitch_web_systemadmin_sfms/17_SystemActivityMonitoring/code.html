@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Giám sát hoạt động - SFMS</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "tertiary": "#794602",
+                        "error-container": "#ffdad6",
+                        "on-background": "#181c1e",
+                        "on-primary-fixed-variant": "#004d62",
+                        "on-surface-variant": "#3f484c",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f1f4f6",
+                        "primary-fixed": "#b9eaff",
+                        "surface-tint": "#006781",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#ffdcbd",
+                        "surface-container-high": "#e6e8eb",
+                        "on-tertiary-fixed-variant": "#693c00",
+                        "tertiary-fixed-dim": "#ffb86f",
+                        "surface-variant": "#e0e3e5",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#81d1f0",
+                        "surface-container": "#ebeef0",
+                        "on-error": "#ffffff",
+                        "primary": "#005a71",
+                        "tertiary-container": "#965e1c",
+                        "surface-bright": "#f7fafc",
+                        "inverse-on-surface": "#eef1f3",
+                        "surface-dim": "#d7dadd",
+                        "on-tertiary-container": "#ffe8d6",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#181c1e",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#81d1f0",
+                        "background": "#f7fafc",
+                        "outline-variant": "#bec8cd",
+                        "on-secondary-container": "#54647a",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "inverse-surface": "#2d3133",
+                        "on-secondary-fixed": "#0b1c30",
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary-container": "#d0e1fb",
+                        "on-tertiary-fixed": "#2c1600",
+                        "on-primary-fixed": "#001f29",
+                        "secondary": "#505f76",
+                        "on-primary-container": "#d3f1ff",
+                        "surface": "#f7fafc",
+                        "outline": "#6f787d",
+                        "primary-container": "#0e7490"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base-unit": "4px",
+                        "container-padding": "2rem",
+                        "gutter": "1rem",
+                        "section-gap": "1.5rem",
+                        "sidebar-width": "260px"
+                    },
+                    "fontFamily": {
+                        "body-base": ["Be Vietnam Pro"],
+                        "h3": ["Be Vietnam Pro"],
+                        "h1": ["Be Vietnam Pro"],
+                        "body-medium": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "h2": ["Be Vietnam Pro"],
+                        "code": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-base": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "h3": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "h1": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-medium": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "code": ["13px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #f7fafc; color: #181c1e; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background flex min-h-screen font-body-base">
+<!-- SideNavBar -->
+<nav class="bg-surface-container-lowest border-r border-outline-variant fixed left-0 top-0 h-screen w-[260px] flex flex-col py-6 z-50">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined text-lg" data-icon="shield">shield</span>
+</div>
+<div>
+<h1 class="font-h2 text-h2 font-bold text-primary">sfms</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">System Administration</p>
+</div>
+</div>
+<div class="flex-1 px-4 space-y-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out font-body-medium text-body-medium" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+<span>Tổng quan</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out font-body-medium text-body-medium" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="manage_accounts">manage_accounts</span>
+<span>Người dùng &amp; Vai trò</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out font-body-medium text-body-medium" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="school">school</span>
+<span>Trường học</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out font-body-medium text-body-medium" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+<span>Cấu hình hệ thống</span>
+</a>
+<div class="mt-4 mb-1 px-3 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Audit</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out font-body-medium text-body-medium" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="history">history</span>
+<span>Nhật ký hệ thống</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md bg-primary/10 text-primary font-semibold border-r-4 border-primary transition-colors duration-200 ease-in-out font-body-medium text-body-medium" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="monitor_heartbeat">monitor_heart</span>
+<span>Giám sát hoạt động</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out font-body-medium text-body-medium" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="backup">backup</span>
+<span>Trạng thái &amp; Sao lưu</span>
+</a>
+</div>
+<div class="px-4 mt-auto space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out font-body-medium text-body-medium" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="help">help</span>
+<span>Hỗ trợ</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out font-body-medium text-body-medium" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="logout">logout</span>
+<span>Đăng xuất</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="ml-[260px] flex-1 flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-surface-bright/80 backdrop-blur-md border-b border-outline-variant fixed top-0 right-0 w-[calc(100%-260px)] z-40 h-16 px-8 flex justify-between items-center transition-all duration-300">
+<div class="flex items-center gap-6">
+<!-- Navigation links (from JSON, mapped semanticly if needed, but context is active monitoring) -->
+<nav class="hidden md:flex gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-base text-body-base py-5" href="#">Nhật ký hệ thống</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-2 font-body-base text-body-base py-5 relative top-[2px]" href="#">Giám sát hoạt động</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-base text-body-base py-5" href="#">Trạng thái &amp; Sao lưu</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-base text-body-base py-5" href="#">Nhật ký lỗi</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-base text-body-base py-5" href="#">Thống kê sử dụng</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="settings_suggest">settings_suggest</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden border border-outline-variant">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a system administrator in a well-lit modern office setting. Light mode aesthetic with sharp focus, clean background, and subtle corporate blue tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBW_94cC5g01DBoVKjyvGKOXqg7Y4Scypnu9VqRirEaqM6gVYbizDDB0e0i7wZyeiN-uAXrITJNc7QsrQb_bmVX0rK0ohpTHNyQHEZFSk4vD_SbdN9-68xDSDilsoYWVGDr0xFP9n3FJnHxuDNfvYH-GM9hmHhKsfkAtIUlCA3FxrKaFIwI2UXiw7JsXU3rBvCW3fZp4DFiF7CBUk1WWX6aNsNxoStoYftSFaf56piSK0kwD2ZjdvkjgM6n4HDI8H393v_rpNapRTTz"/>
+</div>
+</div>
+</header>
+<!-- Canvas Content -->
+<div class="pt-24 px-8 pb-8 max-w-7xl mx-auto w-full flex-1">
+<!-- Page Header -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+<div>
+<h2 class="font-h1 text-h1 text-on-background mb-1">Giám sát hoạt động</h2>
+<p class="font-body-base text-body-base text-on-surface-variant">Real-time system performance and metric analysis.</p>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg border border-primary text-primary hover:bg-primary/5 transition-colors font-body-medium text-body-medium">
+<span class="material-symbols-outlined text-[18px]" data-icon="download">download</span>
+                    Tải Báo cáo tổng hợp hiệu năng hàng tuần
+                </button>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Card 1: CPU Load -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 flex flex-col justify-between min-h-[160px]">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="memory">memory</span>
+<h3 class="font-body-medium text-body-medium">CPU Load</h3>
+</div>
+<span class="px-2 py-1 rounded bg-secondary-container/50 text-secondary font-label-sm text-label-sm">avg. 5m</span>
+</div>
+<div class="flex items-end justify-between">
+<div class="font-h1 text-[36px] leading-[40px] font-bold text-on-background tracking-tight">
+                            47<span class="text-[20px] text-on-surface-variant font-medium">%</span>
+</div>
+<!-- Decorative sparkline representation -->
+<div class="w-24 h-8 flex items-end gap-1 opacity-70">
+<div class="w-full h-1/3 bg-primary/20 rounded-t-sm"></div>
+<div class="w-full h-1/2 bg-primary/40 rounded-t-sm"></div>
+<div class="w-full h-2/3 bg-primary/60 rounded-t-sm"></div>
+<div class="w-full h-1/2 bg-primary/40 rounded-t-sm"></div>
+<div class="w-full h-3/4 bg-primary/80 rounded-t-sm"></div>
+<div class="w-full h-full bg-primary rounded-t-sm"></div>
+</div>
+</div>
+</div>
+<!-- Card 2: RAM Usage -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 flex flex-col justify-between min-h-[160px]">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="dns">dns</span>
+<h3 class="font-body-medium text-body-medium">RAM Usage</h3>
+</div>
+<span class="px-2 py-1 rounded bg-secondary-container/50 text-secondary font-label-sm text-label-sm">16GB Total</span>
+</div>
+<div class="flex items-end justify-between">
+<div class="font-h1 text-[36px] leading-[40px] font-bold text-on-background tracking-tight">
+                            63<span class="text-[20px] text-on-surface-variant font-medium">%</span>
+</div>
+<!-- Circular progress representation -->
+<div class="w-10 h-10 rounded-full border-4 border-surface-variant flex items-center justify-center relative">
+<svg class="absolute inset-0 w-full h-full -rotate-90" viewbox="0 0 36 36">
+<path class="text-primary-container" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="63, 100" stroke-width="4"></path>
+</svg>
+</div>
+</div>
+</div>
+<!-- Card 3: Disk I/O -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 flex flex-col justify-between min-h-[160px]">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="storage">storage</span>
+<h3 class="font-body-medium text-body-medium">Disk I/O</h3>
+</div>
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[16px]" data-icon="arrow_upward">arrow_upward</span>
+<span class="font-label-sm text-label-sm">Read</span>
+</div>
+</div>
+<div>
+<div class="font-h1 text-[36px] leading-[40px] font-bold text-on-background tracking-tight">
+                            12 <span class="text-[20px] text-on-surface-variant font-medium">MB/s</span>
+</div>
+<p class="font-body-base text-body-base text-on-surface-variant mt-1">Normal operation levels</p>
+</div>
+</div>
+<!-- Card 4: Active Sessions -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 flex flex-col justify-between min-h-[160px] lg:col-span-2">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="group">group</span>
+<h3 class="font-body-medium text-body-medium">Số phiên hoạt động hiện tại</h3>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Live</span>
+</div>
+</div>
+<div class="flex items-end gap-6">
+<div class="font-h1 text-[48px] leading-[56px] font-bold text-on-background tracking-tight">
+                            1,284
+                        </div>
+<div class="flex-1 h-12 bg-surface-container rounded-lg overflow-hidden flex items-end px-2 gap-1 pb-1">
+<!-- Abstract session chart -->
+<div class="flex-1 bg-outline-variant/30 h-1/4 rounded-sm"></div>
+<div class="flex-1 bg-outline-variant/50 h-2/4 rounded-sm"></div>
+<div class="flex-1 bg-outline-variant/40 h-1/3 rounded-sm"></div>
+<div class="flex-1 bg-primary/60 h-3/4 rounded-sm"></div>
+<div class="flex-1 bg-primary/80 h-full rounded-sm"></div>
+<div class="flex-1 bg-primary h-[90%] rounded-sm"></div>
+</div>
+</div>
+</div>
+<!-- Card 5: Database Connection Load -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 flex flex-col justify-between min-h-[160px]">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="lan">lan</span>
+<h3 class="font-body-medium text-body-medium">Tải kết nối CSDL</h3>
+</div>
+<span class="material-symbols-outlined text-outline" data-icon="info">info</span>
+</div>
+<div>
+<div class="font-h1 text-[36px] leading-[40px] font-bold text-on-background tracking-tight mb-3">
+                            68<span class="text-[20px] text-on-surface-variant font-medium">%</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2 overflow-hidden">
+<div class="bg-primary-container h-2 rounded-full" style="width: 68%"></div>
+</div>
+<div class="flex justify-between mt-2 font-code text-code text-on-surface-variant text-[11px]">
+<span>Pool: 680/1000</span>
+<span>Healthy</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Secondary Data Area (Log snippet preview) -->
+<div class="mt-8 bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden">
+<div class="px-6 py-4 border-b border-outline-variant bg-surface-bright flex justify-between items-center">
+<h3 class="font-body-medium text-body-medium text-on-background font-semibold">System Logs - Live Stream</h3>
+<button class="text-primary hover:text-primary-container font-body-medium text-body-medium text-sm">View Full Logs</button>
+</div>
+<div class="p-6 bg-[#1e1e1e] text-[#d4d4d4] font-code text-[13px] leading-relaxed overflow-x-auto">
+<div class="flex gap-4 mb-2"><span class="text-[#569cd6]">10:24:01</span><span class="text-[#4ec9b0]">[INFO]</span><span> DB Connection pool refreshed successfully.</span></div>
+<div class="flex gap-4 mb-2"><span class="text-[#569cd6]">10:24:05</span><span class="text-[#4ec9b0]">[INFO]</span><span> Scheduled task 'Weekly_Backup' completed in 45s.</span></div>
+<div class="flex gap-4 mb-2"><span class="text-[#569cd6]">10:24:12</span><span class="text-[#ce9178]">[WARN]</span><span> High memory usage detected on node-03 (82%).</span></div>
+<div class="flex gap-4 mb-2"><span class="text-[#569cd6]">10:24:20</span><span class="text-[#4ec9b0]">[INFO]</span><span> User authentication request processed. 1284 active sessions.</span></div>
+<div class="flex gap-4"><span class="text-[#569cd6]">10:24:22</span><span class="text-[#4ec9b0]">[INFO]</span><span> Cache cleared for segment 'reporting_metrics_v2'.</span></div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

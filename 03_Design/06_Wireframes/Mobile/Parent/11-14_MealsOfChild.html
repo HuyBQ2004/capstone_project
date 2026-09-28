@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>SFMS Wireframe — Parent (Mobile): Meals of Child</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root{ --ink:#333; --gray:#777; --lightgray:#d7d7d7; --midgray:#aaa; }
+  * { box-sizing: border-box; } html { font-size: 18px; }
+  body { margin:0; font-family:'Patrick Hand', cursive; color:var(--ink); background-color:#f4f4f4; background-image: radial-gradient(#d7d7d7 1px, transparent 1px); background-size: 20px 20px; font-size:18px; display:flex; justify-content:center; padding:24px 0; }
+  .text-xs{font-size:14px;} .text-sm{font-size:18px;} .text-md{font-size:26px;} .text-lg{font-size:32px;}
+  a { color:#3a5a8c; text-decoration:underline; cursor:pointer; }
+  .phone { width:390px; min-width:390px; background:#fff; border:3px solid var(--ink); border-radius:36px; overflow:hidden; position:relative; }
+  .phone-screen { height:780px; display:flex; flex-direction:column; }
+  .appbar { display:flex; align-items:center; gap:10px; padding:16px 16px 12px 16px; border-bottom:3px solid var(--ink); background:#fafafa; }
+  .appbar .back { cursor:pointer; } .appbar-title { font-size:22px; flex:1; }
+  .scroll-content { flex:1; overflow-y:auto; padding:16px; }
+  .card { border:2px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; padding:14px; }
+  .card + .card { margin-top:12px; }
+  .btn-primary { width:100%; background:#333; color:white; border:2px solid #333; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:12px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; }
+  .btn-secondary { width:100%; background:white; color:#333; border:2px solid #333; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:10px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; margin-top:8px; }
+  .icon { width:20px; height:20px; flex:none; stroke:var(--ink); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .icon-sm { width:16px; height:16px; }
+  .badge { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; font-size:14px; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; }
+  .badge-success { border:2px solid var(--ink); } .badge-warning { border:2px dashed var(--ink); } .badge-danger { border:3px solid var(--ink); }
+  .alert { display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; font-size:16px; }
+  .alert-warning { border:2px dashed var(--ink); }
+  .muted { color:var(--gray); }
+  .screen { display:none; } .screen.active { display:flex; }
+  .cal-strip { display:flex; gap:8px; overflow-x:auto; margin-bottom:14px; }
+  .cal-day { border:2px solid var(--ink); border-radius:12px; padding:8px 12px; text-align:center; min-width:52px; cursor:pointer; }
+  .cal-day.active { background:var(--ink); color:#fff; }
+  .bottomsheet-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.35); align-items:flex-end; justify-content:center; z-index:50; }
+  .bottomsheet-overlay.active { display:flex; }
+  .bottomsheet { width:390px; background:#fff; border:3px solid var(--ink); border-radius:24px 24px 0 0; padding:20px; }
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <div class="phone-screen">
+
+    <!-- SCREEN 14 — SCHOOL MEALS DASHBOARD -->
+    <div class="screen active" id="school-meals" style="flex-direction:column;">
+      <div class="appbar"><svg class="icon back" viewBox="0 0 24 24" onclick="alert('Về Parent Dashboard')"><path d="M15 5 L7 12 L15 19"/></svg><span class="appbar-title">School Meals</span></div>
+      <div class="scroll-content">
+        <div class="card" style="margin-bottom:10px;"><div class="text-xs muted">Tuần này (01-05/07)</div><div class="text-sm">Cơm gà kho, canh bí đỏ, bún chả cá...</div></div>
+        <div class="card" style="margin-bottom:14px;"><div class="text-xs muted">Tuần tới (08-12/07)</div><div class="text-sm">Cá kho tộ, canh chua, thịt kho trứng...</div></div>
+        <div class="alert alert-warning" style="margin-bottom:14px;"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/></svg><div>2 món tuần này chứa allergen liên quan.</div></div>
+        <button class="btn-primary" onclick="alert('Điều hướng Weekly Menu')">View Weekly Menu</button>
+        <button class="btn-secondary" onclick="alert('Điều hướng Nutrition Detail/History')">View Nutrition Breakdown</button>
+      </div>
+    </div>
+
+    <!-- SCREEN 12 — MEAL HISTORY -->
+    <div class="screen" id="meal-history" style="flex-direction:column;">
+      <div class="appbar"><svg class="icon back" viewBox="0 0 24 24" onclick="alert('Về Parent Dashboard')"><path d="M15 5 L7 12 L15 19"/></svg><span class="appbar-title">Meal History</span></div>
+      <div class="scroll-content">
+        <div class="text-sm muted" style="margin-bottom:10px;">Chọn 1 ngày để xem chi tiết bữa ăn.</div>
+        <div class="cal-strip">
+          <div class="cal-day" onclick="showScreen('meal-detail')">T2<br>29</div>
+          <div class="cal-day" onclick="showScreen('meal-detail')">T3<br>30</div>
+          <div class="cal-day active" onclick="showScreen('meal-detail')">T4<br>01</div>
+          <div class="cal-day" onclick="showScreen('meal-detail')">T5<br>02</div>
+        </div>
+        <div class="card"><div style="display:flex; justify-content:space-between;"><strong class="text-sm">01/07/2026</strong><span class="badge badge-success">90%</span></div><div class="text-xs muted">Bữa trưa (đặc biệt) — Hài lòng</div></div>
+        <button class="btn-secondary" onclick="showScreen('school-meals')">Weekly Charts</button>
+        <button class="btn-secondary" onclick="showScreen('special-records')">Special Meals History</button>
+      </div>
+    </div>
+
+    <!-- SCREEN 13 — MEAL HISTORY DETAIL -->
+    <div class="screen" id="meal-detail" style="flex-direction:column;">
+      <div class="appbar"><svg class="icon back" viewBox="0 0 24 24" onclick="showScreen('meal-history')"><path d="M15 5 L7 12 L15 19"/></svg><span class="appbar-title">01/07/2026</span></div>
+      <div class="scroll-content">
+        <div class="card" style="margin-bottom:10px;"><strong class="text-sm">Cơm gà kho (thay đậu phộng)</strong><div class="text-xs muted">Gạo, ức gà, hạt điều — 420 kcal</div></div>
+        <div class="card" style="margin-bottom:14px;"><strong class="text-sm">Canh bí đỏ</strong><div class="text-xs muted">Bí đỏ, xương heo — 110 kcal</div></div>
+        <div style="display:flex; gap:8px; margin-bottom:10px;"><span class="badge badge-success">Fully Consumed</span><span class="text-xs muted">11:35</span></div>
+        <div class="text-sm" style="font-style:italic;">Special Meal Applied: thay đậu phộng bằng hạt điều.</div>
+      </div>
+    </div>
+
+    <!-- SCREEN 11 — SPECIAL MEAL RECORDS -->
+    <div class="screen" id="special-records" style="flex-direction:column;">
+      <div class="appbar"><svg class="icon back" viewBox="0 0 24 24" onclick="showScreen('meal-history')"><path d="M15 5 L7 12 L15 19"/></svg><span class="appbar-title">Special Meal Records</span></div>
+      <div class="scroll-content">
+        <div class="card" style="margin-bottom:10px;" onclick="document.getElementById('record-sheet').classList.add('active')">
+          <div style="display:flex; justify-content:space-between;"><strong class="text-sm">01/07/2026</strong><span class="badge badge-success">✓✓</span></div>
+          <div class="text-xs muted">Canh bí đỏ → Hạt điều rang · <span class="badge badge-danger">Peanut</span></div>
+        </div>
+        <div class="card" onclick="document.getElementById('record-sheet').classList.add('active')">
+          <div style="display:flex; justify-content:space-between;"><strong class="text-sm">28/06/2026</strong><span class="badge badge-success">✓✓</span></div>
+          <div class="text-xs muted">Gỏi cuốn tôm → Gỏi cuốn chay · <span class="badge badge-warning">Shellfish</span></div>
+        </div>
+        <div class="text-xs muted" style="margin-top:10px;">Empty: "Chưa có lịch sử bữa ăn đặc biệt".</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Record Detail Bottom Sheet -->
+<div class="bottomsheet-overlay" id="record-sheet">
+  <div class="bottomsheet">
+    <div style="width:40px;height:5px;background:var(--lightgray);border-radius:3px;margin:0 auto 14px;"></div>
+    <div class="text-md" style="margin-bottom:8px;">Chi tiết — 01/07/2026</div>
+    <div class="text-sm muted" style="margin-bottom:6px;">Ghi chú chuẩn bị: Bếp riêng, dụng cụ riêng, dán nhãn đỏ khay ăn.</div>
+    <div class="text-xs muted" style="margin-bottom:10px;">Timestamp: 11:35:20</div>
+    <span class="badge badge-success">Fully Consumed</span>
+    <button class="btn-secondary" style="margin-top:14px;" onclick="document.getElementById('record-sheet').classList.remove('active')">Đóng</button>
+  </div>
+</div>
+
+<script>
+  function showScreen(id){
+    document.querySelectorAll('.screen').forEach(function(el){ el.classList.remove('active'); });
+    var target = document.getElementById(id);
+    if(target){ target.classList.add('active'); }
+  }
+</script>
+
+</body>
+</html>

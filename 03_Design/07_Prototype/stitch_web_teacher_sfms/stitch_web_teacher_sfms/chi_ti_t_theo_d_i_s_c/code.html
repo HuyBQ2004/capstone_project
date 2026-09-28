@@ -1,0 +1,416 @@
+<!DOCTYPE html><html class="light" lang="vi" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Chi tiết Sự cố &amp; Theo dõi | SFMS Clinical</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#141b2b",
+                    "on-primary-fixed": "#001f29",
+                    "inverse-surface": "#293040",
+                    "tertiary-fixed-dim": "#bfc8ce",
+                    "primary-fixed-dim": "#81d1f0",
+                    "on-tertiary-container": "#e5eef4",
+                    "background": "#f9f9ff",
+                    "tertiary-container": "#636c71",
+                    "on-secondary": "#ffffff",
+                    "surface-dim": "#d3daef",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-container": "#a5e3fe",
+                    "outline-variant": "#bec8cd",
+                    "on-secondary-container": "#22667e",
+                    "surface-container-high": "#e1e8fd",
+                    "on-primary-container": "#d3f1ff",
+                    "on-error": "#ffffff",
+                    "surface-container-highest": "#dce2f7",
+                    "on-secondary-fixed": "#001f29",
+                    "inverse-primary": "#81d1f0",
+                    "on-surface-variant": "#3f484c",
+                    "on-primary": "#ffffff",
+                    "on-secondary-fixed-variant": "#004d62",
+                    "error": "#ba1a1a",
+                    "secondary-fixed-dim": "#91cfea",
+                    "secondary": "#21667d",
+                    "tertiary-fixed": "#dbe4ea",
+                    "secondary-fixed": "#baeaff",
+                    "surface-bright": "#f9f9ff",
+                    "on-tertiary-fixed": "#141d21",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed-variant": "#3f484d",
+                    "surface-container-low": "#f1f3ff",
+                    "surface": "#f9f9ff",
+                    "tertiary": "#4b5459",
+                    "primary-container": "#0e7490",
+                    "surface-tint": "#006781",
+                    "primary": "#005a71",
+                    "error-container": "#ffdad6",
+                    "on-background": "#141b2b",
+                    "surface-container": "#e9edff",
+                    "primary-fixed": "#b9eaff",
+                    "on-primary-fixed-variant": "#004d62",
+                    "surface-variant": "#dce2f7",
+                    "outline": "#6f787d",
+                    "on-tertiary": "#ffffff",
+                    "inverse-on-surface": "#edf0ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "margin-mobile": "16px",
+                    "gutter-desktop": "24px",
+                    "touch-target": "44px",
+                    "margin-desktop": "40px",
+                    "gutter-mobile": "16px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "label-md": ["Be Vietnam Pro"],
+                    "headline-lg-mobile": ["Be Vietnam Pro"],
+                    "body-sm": ["Be Vietnam Pro"],
+                    "label-sm": ["Be Vietnam Pro"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "headline-lg": ["Be Vietnam Pro"],
+                    "headline-md": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .step-active { color: var(--tw-primary); }
+        .timeline-line { position: absolute; left: 19px; top: 0; bottom: 0; width: 2px; background: #E5E7EB; z-index: 0; }
+        .clinical-shadow { box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline flex justify-between items-center w-full px-margin-desktop h-16 sticky top-0 z-50">
+<div class="flex items-center gap-base">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary">SFMS Clinical Educator</span>
+</div>
+<nav class="hidden md:flex gap-gutter-desktop items-center">
+<a class="text-on-surface-variant dark:text-surface-variant font-medium hover:bg-surface-container-low transition-colors" href="#">Dashboard</a>
+<a class="text-primary dark:text-inverse-primary border-b-2 border-primary font-bold pb-1 hover:bg-surface-container-low transition-colors" href="#">Incidents</a>
+<a class="text-on-surface-variant dark:text-surface-variant font-medium hover:bg-surface-container-low transition-colors" href="#">Students</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant">help_outline</button>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a clinical educator in a bright, clean school environment. The person is smiling warmly, wearing a professional navy blue scrub vest. The lighting is soft and natural, emphasizing a high-trust and authoritative yet approachable persona. The background is a blurred, modern medical office with teal accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9gw9P4YR4KIY9vBgoq1a7V9R9rw7BRPfW_tp7JtkhtGWOmu-H2J4rcxYaJn7XdgOvnMM9PgcHrzxXYVspQNPUh0OGwwSk04mRRZQ0BZlGoxZ7cndhoBmbgo2bmTn4d0ccigfmwoxHgHXT97v-O_6uhZPAQWY8T9FtfsI4abRH7SEuWTO6cJsh9KnSbicuyaIo6mrewT2A9C9lyQ0KSVjN2iVJbjhZm1l4mfJ6NXZ0DGAyy-uKgn5Uw1b7L-uZ0ZCtqIDWlesnUg">
+</div>
+</div>
+</header>
+<div class="flex max-w-[1440px] mx-auto">
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col h-[calc(100vh-64px)] py-base px-4 overflow-y-auto bg-surface-container-low dark:bg-inverse-surface border-r border-outline-variant dark:border-outline w-64 sticky top-16">
+<div class="mb-8 p-4">
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary">SFMS Clinical</h2>
+<p class="font-label-md text-label-md text-on-surface-variant">Educator Portal</p>
+</div>
+<nav class="flex flex-col gap-2 grow">
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 p-3 bg-secondary-container text-on-secondary-container font-bold rounded-lg scale-95 duration-100" href="#">
+<span class="material-symbols-outlined">emergency_home</span>
+<span class="font-label-md">Active Incidents</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+<span class="font-label-md">Student Logs</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">assignment_add</span>
+<span class="font-label-md">Reporting Hub</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pt-4 border-t border-outline-variant">
+<button class="w-full py-3 bg-error text-on-error rounded-lg font-bold flex justify-center items-center gap-2 mb-4">
+<span class="material-symbols-outlined">emergency_share</span>
+                    Emergency Protocol
+                </button>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 p-2 text-on-surface-variant hover:text-on-surface transition-all" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="font-label-sm">Support</span>
+</a>
+<a class="flex items-center gap-3 p-2 text-on-surface-variant hover:text-on-surface transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-sm">Logout</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 p-margin-mobile md:p-margin-desktop overflow-x-hidden">
+<!-- Student Header & Alert -->
+<section class="mb-gutter-desktop">
+<div class="bg-surface border border-outline-variant rounded-xl p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1.5 h-full bg-error"></div>
+<div class="flex items-center gap-6">
+<div class="w-20 h-20 rounded-xl bg-surface-container border border-outline-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A portrait of a primary school student, a young boy with a gentle expression, wearing a tidy school uniform. The lighting is crisp and academic, using high-key studio lighting with soft shadows. The color palette is dominated by clean whites and deep blues, reflecting an institutional but caring educational environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhBCaDmrs4ZPOU6EYFXM5sVPjEGBVxazF12iXMuRtzZphbC8PqLjGA6veA_eYW7Yo1mxZxQ9NUWpdNwEn5TWqp4gO6TGyBd__QPJWnV0qIyB2vfxOf0YBwKJKWmC3-xgaEvOYtagDtLXvUjON-ZiJxK9FD4UcMjbuCwDLWiojlBQCc-lHAdCY2D7DVBpI7PwsbHcPDI4g-e-mywab-tZ7Gt_5JFZe2d4RB75gcMuW7Ad5FD2Qlpf5XldtmiVwjJZM3D2ZiskBdCA">
+</div>
+<div>
+<div class="flex items-center gap-3 mb-1">
+<h1 class="font-headline-md text-headline-md text-on-surface">Nguyễn Minh Anh</h1>
+<span class="px-3 py-1 bg-error-container text-on-error-container rounded-full text-label-sm uppercase tracking-wider">Khẩn cấp</span>
+</div>
+<div class="flex flex-wrap gap-x-6 gap-y-1 text-on-surface-variant font-body-sm">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-base">badge</span> ID: 2024-ST089</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-base">school</span> Lớp: 4A (Căn tin số 2)</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-base">medical_services</span> Tiền sử: Dị ứng đậu phộng</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<p class="font-label-sm text-on-surface-variant uppercase mb-2">Trạng thái hiện tại</p>
+<div class="flex items-center gap-2 px-4 py-2 bg-secondary-container text-on-secondary-container rounded-lg font-bold">
+<span class="material-symbols-outlined text-xl">notifications_active</span>
+                            Đang xử lý: Thông báo phụ huynh
+                        </div>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-gutter-desktop">
+<!-- Main Section: Timeline -->
+<div class="xl:col-span-8 space-y-gutter-desktop">
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden">
+<div class="bg-surface-container-low px-6 py-4 border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-primary flex items-center gap-2">
+<span class="material-symbols-outlined">timeline</span>
+                                Nhật ký sự cố
+                            </h3>
+<button class="px-4 py-2 border border-primary text-primary rounded-lg font-bold text-label-md hover:bg-surface-container-high transition-colors">
+                                Thêm ghi chú
+                            </button>
+</div>
+<div class="p-8 relative">
+<div class="timeline-line"></div>
+<!-- Timeline Step 1 -->
+<div class="relative pl-12 pb-10">
+<div class="absolute left-0 top-0 w-10 h-10 bg-primary rounded-full flex items-center justify-center z-10 border-4 border-white">
+<span class="material-symbols-outlined text-white text-lg">flag</span>
+</div>
+<div>
+<div class="flex justify-between items-center mb-2">
+<h4 class="font-label-md text-primary">Sự cố được báo cáo</h4>
+<span class="text-on-surface-variant text-label-sm">11:15 AM - 15/10/2023</span>
+</div>
+<p class="text-body-md text-on-surface bg-surface-container-low p-4 rounded-lg">
+                                        Học sinh có dấu hiệu khó thở và nổi mẩn đỏ sau khi ăn bữa trưa tại căn tin. Giáo viên giám sát (Cô Lan) đã kích hoạt chuông báo y tế.
+                                    </p>
+</div>
+</div>
+<!-- Timeline Step 2 -->
+<div class="relative pl-12 pb-10">
+<div class="absolute left-0 top-0 w-10 h-10 bg-primary rounded-full flex items-center justify-center z-10 border-4 border-white">
+<span class="material-symbols-outlined text-white text-lg">medical_information</span>
+</div>
+<div>
+<div class="flex justify-between items-center mb-2">
+<h4 class="font-label-md text-primary">Đã đến phòng y tế</h4>
+<span class="text-on-surface-variant text-label-sm">11:22 AM</span>
+</div>
+<p class="text-body-md text-on-surface bg-surface-container-low p-4 rounded-lg">
+                                        Học sinh được đưa đến phòng y tế bằng cáng. Y tá Trực (Anh Nam) bắt đầu sơ cứu và kiểm tra nồng độ oxy.
+                                    </p>
+</div>
+</div>
+<!-- Timeline Step 3 (Active) -->
+<div class="relative pl-12 pb-10">
+<div class="absolute left-0 top-0 w-10 h-10 bg-secondary-container border-2 border-primary rounded-full flex items-center justify-center z-10 border-4 border-white animate-pulse">
+<span class="material-symbols-outlined text-primary text-lg">call</span>
+</div>
+<div>
+<div class="flex justify-between items-center mb-2">
+<h4 class="font-label-md text-primary font-bold">Thông báo phụ huynh</h4>
+<span class="px-2 py-0.5 bg-secondary-container text-on-secondary-container text-[10px] font-bold rounded uppercase">Đang thực hiện</span>
+</div>
+<div class="bg-surface-container-high p-4 rounded-lg border-2 border-dashed border-primary">
+<p class="text-body-md text-on-surface mb-3 italic">Hệ thống đang cố gắng kết nối với phụ huynh qua điện thoại và ứng dụng SFMS.</p>
+<div class="flex gap-3">
+<button class="bg-primary text-on-primary px-4 py-2 rounded font-bold text-label-md flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">call</span> Gọi ngay
+                                            </button>
+<button class="bg-surface border border-outline px-4 py-2 rounded font-bold text-label-md text-on-surface-variant">
+                                                Xác nhận đã liên lạc
+                                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Step 4 (Pending) -->
+<div class="relative pl-12">
+<div class="absolute left-0 top-0 w-10 h-10 bg-surface-container-highest rounded-full flex items-center justify-center z-10 border-4 border-white">
+<span class="material-symbols-outlined text-outline-variant text-lg">check_circle</span>
+</div>
+<div class="opacity-50">
+<div class="flex justify-between items-center mb-2">
+<h4 class="font-label-md text-on-surface-variant">Hoàn tất xử lý</h4>
+<span class="text-on-surface-variant text-label-sm">--:--</span>
+</div>
+<p class="text-body-md text-on-surface-variant bg-surface-container-lowest p-4 rounded-lg border border-outline-variant">
+                                        Yêu cầu báo cáo chi tiết từ nhân viên y tế và giáo viên chủ nhiệm trước khi đóng hồ sơ sự cố.
+                                    </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar: Contact & Status -->
+<div class="xl:col-span-4 space-y-gutter-desktop">
+<!-- Contact Cards -->
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden clinical-shadow">
+<div class="bg-surface-container-low px-6 py-4 border-b border-outline-variant">
+<h4 class="font-label-md text-on-surface-variant uppercase tracking-wider">Thông tin liên hệ</h4>
+</div>
+<div class="p-6 space-y-6">
+<!-- Parent Contact -->
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">family_restroom</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface">Mẹ: Trần Thị Mai</p>
+<p class="text-body-sm text-on-surface-variant">Phụ huynh học sinh</p>
+</div>
+</div>
+
+</div>
+<hr class="border-outline-variant">
+<!-- Clinic Contact -->
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">local_hospital</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface">Phòng Y tế Trường</p>
+<p class="text-body-sm text-on-surface-variant">BS. Lê Văn Hoà</p>
+</div>
+</div>
+<button class="w-full min-h-touch-target border-2 border-primary text-primary rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-primary-container hover:text-on-primary-container transition-all" style="transform: scale(1);"><span class="material-symbols-outlined">contact_emergency</span> Gọi: 024.3825.1234</button>
+</div>
+</div>
+</div>
+<!-- Status Controls -->
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden clinical-shadow">
+<div class="bg-surface-container-low px-6 py-4 border-b border-outline-variant">
+<h4 class="font-label-md text-on-surface-variant uppercase tracking-wider">Cập nhật trạng thái</h4>
+</div>
+<div class="p-6 space-y-4">
+<div class="space-y-2">
+<label class="font-label-sm text-on-surface-variant">Chọn trạng thái tiếp theo</label>
+<select class="w-full min-h-touch-target rounded-lg border-outline-variant focus:ring-2 focus:ring-primary focus:border-primary text-body-md">
+<option>Đã liên lạc với phụ huynh</option>
+<option>Đang chờ xe cấp cứu</option>
+<option>Chuyển tuyến bệnh viện</option>
+<option>Ổn định - Quay lại lớp</option>
+<option>Ổn định - Phụ huynh đã đón</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="font-label-sm text-on-surface-variant">Ghi chú nhanh</label>
+<textarea class="w-full rounded-lg border-outline-variant focus:ring-2 focus:ring-primary focus:border-primary text-body-sm p-3" placeholder="Nhập tình trạng hiện tại của học sinh..." rows="3"></textarea>
+</div>
+<button class="w-full min-h-touch-target bg-primary text-on-primary rounded-lg font-bold shadow-md hover:opacity-90 transition-opacity">
+                                Lưu &amp; Gửi thông báo
+                            </button>
+</div>
+</div>
+<!-- Location Insight -->
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden p-6">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<p class="font-label-md text-on-surface">Vị trí xảy ra sự cố</p>
+</div>
+<div class="relative h-32 w-full rounded-lg bg-surface-container overflow-hidden group">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A clean, highly architectural floor plan map of a modern school canteen area. The map uses a sophisticated design style with cool blues and whites, clearly marking food preparation zones, seating areas, and emergency exits. A prominent red pin indicates a specific location in a high-traffic zone." data-location="Ho Chi Minh City" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDBF-SIK7YSY67Bb1fzHrWD6aYKGUNGomuog8d9_UXNgobInctCZ8_JPBYTyYZdtyFiTCU5xkIkYbhSaqnJMNex0TL9344Mdw9BgKu-KMFY7S0Attqfwmg_kqwsoOuSvkhhC_reegYUY-krUk-Xm3NOXJ98UGHNADYdsgJvOejSthWWgWdTP5q4_Mj_B-5gRxTpLHuE0p4nwRgUupvj9hkuk0aGqX0fHxtoIU6ytw_Vqox50p6CaIdu10aZmtYZRMYj9pVq8JH4jQ')"></div>
+<div class="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors"></div>
+</div>
+<p class="mt-3 text-body-sm text-on-surface-variant">Khu vực Căn tin 2 - Bàn số 14</p>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Mobile Bottom Navigation Shell -->
+<footer class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-surface border-t border-outline-variant flex justify-around items-center z-50">
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-bold">Trang chủ</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">emergency_home</span>
+<span class="text-[10px] font-bold">Sự cố</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-[10px] font-bold">Học sinh</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold">Tài khoản</span>
+</button>
+</footer>
+<script>
+        // Simple micro-interaction for status update
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => {
+                btn.style.transform = 'scale(0.98)';
+            });
+            btn.addEventListener('mouseup', () => {
+                btn.style.transform = 'scale(1)';
+            });
+        });
+
+        // Sticky header transition logic
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 10) {
+                header.classList.add('clinical-shadow');
+            } else {
+                header.classList.remove('clinical-shadow');
+            }
+        });
+    </script>
+
+
+
+
+</body></html>

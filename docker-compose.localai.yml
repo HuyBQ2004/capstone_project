@@ -1,0 +1,25 @@
+# Lớp phủ CHỈ DÙNG KHI DEV — chuyển trợ lý AI sang mô hình chạy trên máy mình (LM Studio,
+# Ollama, vLLM… bất kỳ máy chủ nào nói giao thức OpenAI `/v1/chat/completions`).
+#
+# Chạy:
+#   docker compose -f docker-compose.yml -f docker-compose.localai.yml up -d --build rag-service
+# Quay lại Gemini (production):
+#   docker compose up -d --build rag-service        # bỏ lớp phủ là xong
+#
+# Vì sao có: quota free tier Gemini cạn rất nhanh khi dev — đo 09/08/2026 `gemini-2.0-flash`
+# trả 429 RESOURCE_EXHAUSTED, phải rơi xuống model dự phòng, mỗi lượt 79–130s. Chạy local thì
+# không tốn quota, không cần mạng. **Mặc định của repo KHÔNG đổi**: production vẫn Gemini.
+#
+# ⚠️ `host.docker.internal` chứ KHÔNG phải `127.0.0.1`: trong container, `127.0.0.1` là chính
+# container đó, không phải máy host đang chạy LM Studio. `extra_hosts` bên dưới cần cho Linux
+# (macOS/Windows Docker Desktop đã có sẵn tên này, khai thừa cũng vô hại).
+services:
+  rag-service:
+    environment:
+      SFMS_AI_PROVIDER: openai
+      SFMS_AI_BASE_URL: ${SFMS_AI_BASE_URL:-http://host.docker.internal:1234/v1}
+      # Đúng tên model như LM Studio liệt kê ở `GET /v1/models` (tab Developer).
+      SFMS_AI_MODEL: ${SFMS_AI_MODEL:-google/gemma-4-e2b}
+      SFMS_AI_TIMEOUT_SECONDS: ${SFMS_AI_TIMEOUT_SECONDS:-180}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

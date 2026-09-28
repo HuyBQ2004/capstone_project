@@ -1,0 +1,275 @@
+<!DOCTYPE html><html lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
+<title>SFMS Teacher Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#d3e4fe",
+                    "on-primary-container": "#d3f1ff",
+                    "secondary-container": "#3fe1fd",
+                    "primary-fixed-dim": "#81d1f0",
+                    "inverse-primary": "#81d1f0",
+                    "primary": "#005a71",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "secondary": "#006877",
+                    "inverse-on-surface": "#eaf1ff",
+                    "primary-container": "#0e7490",
+                    "error-container": "#ffdad6",
+                    "surface-container": "#e5eeff",
+                    "on-tertiary-container": "#e5eef4",
+                    "surface-dim": "#cbdbf5",
+                    "on-tertiary-fixed-variant": "#3f484d",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#006781",
+                    "tertiary-fixed": "#dbe4ea",
+                    "primary-fixed": "#b9eaff",
+                    "outline": "#6f787d",
+                    "on-primary-fixed": "#001f29",
+                    "secondary-fixed": "#a2eeff",
+                    "on-secondary-container": "#00616f",
+                    "surface-bright": "#f8f9ff",
+                    "outline-variant": "#bec8cd",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#dce9ff",
+                    "background": "#f8f9ff",
+                    "surface": "#f8f9ff",
+                    "secondary-fixed-dim": "#2fd9f4",
+                    "tertiary": "#4b5459",
+                    "tertiary-fixed-dim": "#bfc8ce",
+                    "tertiary-container": "#636c71",
+                    "on-tertiary-fixed": "#141d21",
+                    "inverse-surface": "#213145",
+                    "on-primary-fixed-variant": "#004d62",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-surface-variant": "#3f484c",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#001f25",
+                    "on-secondary": "#ffffff",
+                    "surface-container-low": "#eff4ff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#004e5a",
+                    "on-background": "#0b1c30",
+                    "on-surface": "#0b1c30"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "gutter": "12px",
+                    "stack-gap": "12px",
+                    "section-margin": "24px",
+                    "container-padding": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Be Vietnam Pro"],
+                    "headline-lg": ["Be Vietnam Pro"],
+                    "headline-md": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "label-lg": ["Be Vietnam Pro"],
+                    "label-sm": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["22px", {"lineHeight": "30px", "fontWeight": "700"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-effect {
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.85);
+        }
+        .card-shadow {
+            box-shadow: 0 10px 15px -3px rgba(14, 116, 144, 0.04), 0 4px 6px -2px rgba(14, 116, 144, 0.02);
+        }
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-container-padding h-14 bg-surface dark:bg-inverse-surface shadow-sm dark:shadow-none transition-colors duration-200">
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-primary dark:text-primary-fixed-dim p-2 hover:bg-surface-variant/50 transition-colors rounded-full" data-icon="menu">menu</button>
+<h1 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim font-bold">SFMS Teacher</h1>
+</div>
+<div class="flex items-center">
+<div class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border-2 border-surface-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a friendly Vietnamese female teacher in her early 30s, wearing a modern modest professional outfit. She is in a bright, airy school office with soft daylight and a clean minimalist aesthetic. The image uses a soft focus background to emphasize the warm, approachable expression on her face." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJcEryd8lQiCQcJw1P00XEfmQctNEsLfIQ-JWcJWLgYbh-WbR2VjDSYLOAweve2Jy3_7kLI73LBalB2X6UNh16JZobugH_9dsnKieWorHkmRvjniHTK1YWsbSL1Yip8oKz4YNCNBH_jMjrcBQ0km_HDJ3Qob88vb8B-XQqgv17NxWGK51hrWH3IUfVHLQZW8TikDFG6b9_UbUi3KMZG_OgrPj_iezBcTEaycJi30FPBmhaXbIgn6MvVhOAGaYfMSbFGNL5EHSZAqo">
+</div>
+</div>
+</header>
+<main class="mt-14 p-container-padding">
+<!-- Welcome Banner -->
+<section class="relative overflow-hidden rounded-xl mb-6 p-6 bg-primary-container text-on-primary-container">
+<div class="relative z-10">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile mb-1">Chào buổi sáng, Cô Minh!</h2>
+<p class="font-body-md text-body-md opacity-90">Chúc cô có một ngày làm việc hiệu quả và nhiều niềm vui cùng các bé.</p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-20 transform rotate-12">
+<span class="material-symbols-outlined text-[120px]" data-icon="sunny">sunny</span>
+</div>
+</section>
+<!-- Metric Grid (2x2) -->
+<section class="grid grid-cols-2 gap-3 mb-8">
+<!-- Total Students -->
+<div class="bg-surface-container-lowest p-4 rounded-xl card-shadow border border-surface-variant/30 transition-transform active:scale-95">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg" data-icon="group">group</span>
+</div>
+<h3 class="font-label-sm text-label-sm text-outline mb-1">Tổng HS</h3>
+<p class="font-headline-lg text-headline-lg text-on-surface">35</p>
+</div>
+<!-- Pending Meals -->
+<div class="bg-surface-container-lowest p-4 rounded-xl card-shadow border border-surface-variant/30 transition-transform active:scale-95">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-secondary bg-secondary/10 p-2 rounded-lg" data-icon="restaurant">restaurant</span>
+</div>
+<h3 class="font-label-sm text-label-sm text-outline mb-1">Bữa ăn chờ</h3>
+<p class="font-headline-lg text-headline-lg text-on-surface">12</p>
+</div>
+<!-- Diet Notes -->
+<div class="bg-surface-container-lowest p-4 rounded-xl card-shadow border border-surface-variant/30 transition-transform active:scale-95">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-tertiary bg-tertiary/10 p-2 rounded-lg" data-icon="assignment_late">assignment_late</span>
+</div>
+<h3 class="font-label-sm text-label-sm text-outline mb-1">Dị ứng/Ăn kiêng</h3>
+<p class="font-headline-lg text-headline-lg text-on-surface">05</p>
+</div>
+<!-- Health Incidents (Alert State) -->
+<div class="bg-error-container p-4 rounded-xl card-shadow border border-error/10 transition-transform active:scale-95">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-error bg-error/10 p-2 rounded-lg" data-icon="emergency_home">emergency_home</span>
+</div>
+<h3 class="font-label-sm text-label-sm text-on-error-container mb-1">Sự cố sức khỏe</h3>
+<p class="font-headline-lg text-headline-lg text-on-error-container">02</p>
+</div>
+</section>
+<!-- Recent Activities / Notes Section -->
+<section class="space-y-4">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-md text-headline-md text-on-surface">Lưu ý trong ngày</h2>
+<button class="text-primary font-label-lg text-label-lg">Xem tất cả</button>
+</div>
+<div class="space-y-3">
+<!-- Activity Item 1 -->
+<div class="flex gap-4 p-4 bg-surface-container-lowest rounded-xl card-shadow border border-surface-variant/20 items-center">
+<div class="w-12 h-12 rounded-full overflow-hidden shrink-0 border-2 border-primary/20">
+<img class="w-full h-full object-cover" data-alt="A close-up high-quality portrait of a cute 5-year-old boy with dark hair and a joyful smile, suitable for a school profile. The background is a brightly colored classroom with soft bokeh. The lighting is warm and natural, creating a safe and caring atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuACC89FtpcVc9fV5qQ8PaipD54ApYYVJAcXIbzUja5hdC6a-4wViGsNrrXl8tofgZeCRDu8O1iYM4cAtYKktvWPzEIEGCRIbDxo3ptJyuNxiHN63ADfZT4SQ3bXDMtj49AsQvmgooZHHiATUEt-ZzzNp6BeAyReYXoj6Z2dV4ZVaK8EMOhZPy1e2TrBJzL-fw5LCryji7qHgIGoJY6AeJR0Wh6d3VrUwCp-nlFDov4CKzTdBfh8EkKaOostab3WpxhhPLfklT2bDzk">
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="font-label-lg text-label-lg text-on-surface truncate">Gia Bảo - Lớp 2A</h4>
+<span class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-error-container text-error uppercase">Dị ứng lạc</span>
+</div>
+<p class="font-body-md text-body-md text-outline truncate mt-0.5">Không ăn các món có chứa đậu phộng.</p>
+</div>
+</div>
+<!-- Activity Item 2 -->
+<div class="flex gap-4 p-4 bg-surface-container-lowest rounded-xl card-shadow border border-surface-variant/20 items-center">
+<div class="w-12 h-12 rounded-full overflow-hidden shrink-0 border-2 border-primary/20">
+<img class="w-full h-full object-cover" data-alt="A portrait of a primary school girl with her hair in neat braids, wearing a simple blue school shirt. She has a gentle, calm expression. The setting is a clean educational environment with soft, high-key lighting that emphasizes a modern, professional nursery or school feeling." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDK2i8Gqjn8eAB7PwizJIs9BBDAa3tIVQNXX-ieD_gHRgkL2a8bYoBhc7JKcLl-Sy48qntGj9251sSBBe_6MUftlk1xjg6qGOg2WXL8joL9avPHyc3_IRegdrtyV6hFelgYoKKz7CCok120RgVCvmk5006jvE7Qg8S1r7IuqHzaqGLRL3we6p09_Z8ST4ZX7dzpRWJFGyEtxN3nMiw-ue7-fQFyi6Pa-mPhQP2lxp8QAVqSx-ydhhpnNcuB9jqWCkdbdDSb2ICQ9v4">
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="font-label-lg text-label-lg text-on-surface truncate">Minh Anh - Lớp 2A</h4>
+<span class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-surface-container text-primary uppercase">Cần theo dõi</span>
+</div>
+<p class="font-body-md text-body-md text-outline truncate mt-0.5">Vừa hồi phục sau sốt, cần uống nước ấm.</p>
+</div>
+</div>
+<!-- Activity Item 3 -->
+<div class="flex gap-4 p-4 bg-surface-container-lowest rounded-xl card-shadow border border-surface-variant/20 items-center opacity-60">
+<div class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-outline" data-icon="event_note">event_note</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-label-lg text-label-lg text-on-surface truncate">Họp giáo viên khối 2</h4>
+<p class="font-body-md text-body-md text-outline truncate">15:30 - Phòng hội đồng</p>
+</div>
+<span class="material-symbols-outlined text-outline" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-14 px-2 pb-safe backdrop-blur-md bg-surface/90 dark:bg-inverse-surface/90 shadow-[0_-1px_10px_rgba(14,116,144,0.04)]">
+<!-- Home (Active) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-xl px-4 py-1 transition-transform duration-150 scale-95" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-[10px] mt-0.5">Trang chủ</span>
+</a>
+<!-- Students -->
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant px-4 py-1 hover:text-primary dark:hover:text-primary-fixed-dim transition-transform duration-150 active:scale-90" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="group">group</span>
+<span class="font-label-sm text-[10px] mt-0.5">Học sinh</span>
+</a>
+<!-- Meals -->
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant px-4 py-1 hover:text-primary dark:hover:text-primary-fixed-dim transition-transform duration-150 active:scale-90" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="restaurant">restaurant</span>
+<span class="font-label-sm text-[10px] mt-0.5">Bữa ăn</span>
+</a>
+<!-- Notifications -->
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant px-4 py-1 hover:text-primary dark:hover:text-primary-fixed-dim transition-transform duration-150 active:scale-90 relative" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="notifications">notifications</span>
+<span class="font-label-sm text-[10px] mt-0.5">Thông báo</span>
+<span class="absolute top-1 right-3 w-2 h-2 bg-error rounded-full border-2 border-surface"></span>
+</a>
+</nav>
+<!-- Contextual Floating Action Button -->
+<button class="fixed bottom-20 right-6 w-14 h-14 bg-primary text-white rounded-2xl shadow-lg flex items-center justify-center transition-all hover:shadow-xl active:scale-90 z-40">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+<script>
+        // Light micro-interactions
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('touchstart', function() {
+                this.classList.add('opacity-70');
+            });
+            el.addEventListener('touchend', function() {
+                this.classList.remove('opacity-70');
+            });
+        });
+
+        // Simple scroll shadow for TopAppBar
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 10) {
+                header.classList.add('shadow-md');
+            } else {
+                header.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body></html>

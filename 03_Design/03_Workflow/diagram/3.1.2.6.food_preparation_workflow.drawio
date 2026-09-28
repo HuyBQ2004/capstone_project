@@ -1,0 +1,98 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="FoodPreparationWorkflow" name="3.1.2.6. Food Preparation Workflow">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1169" pageHeight="1654" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="lane_container" parent="1" style="swimlane;childLayout=stackLayout;resizeParent=1;resizeParentMax=0;startSize=30;horizontalStack=1;html=1;fontStyle=1;fontSize=14;" value="FOOD PREPARATION WORKFLOW" vertex="1">
+          <mxGeometry height="880" width="700" x="50" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_catering" parent="lane_container" style="swimlane;startSize=30;html=1;fillColor=#d5e8d4;fontStyle=1;" value="&lt;span style=&quot;color: rgb(0, 0, 0); background-color: rgb(236, 236, 236);&quot;&gt;Service Caterers&lt;/span&gt;" vertex="1">
+          <mxGeometry height="850" width="330" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="start_node" parent="lane_catering" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="150" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="step1" parent="lane_catering" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;b&gt;1. Review Approved Menu&lt;/b&gt;&lt;br/&gt;Reviews approved menu &amp;&lt;br/&gt;meal production plan" vertex="1">
+          <mxGeometry height="70" width="180" x="75" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="step2" parent="lane_catering" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;" value="&lt;b&gt;2. Retrieve Ingredients&lt;/b&gt;&lt;br/&gt;Collects approved ingredients&lt;br/&gt;from preparation area" vertex="1">
+          <mxGeometry height="70" width="180" x="75" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="step3" parent="lane_catering" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#99ccff;strokeColor=#0066cc;" value="&lt;b&gt;3. Verify Ingredient Info&lt;/b&gt;&lt;br/&gt;Verifies batches, quantities &amp;&lt;br/&gt;expiration dates before use" vertex="1">
+          <mxGeometry height="70" width="180" x="75" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="step4" parent="lane_catering" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#99ccff;strokeColor=#0066cc;" value="&lt;b&gt;4. Prepare Ingredients&lt;/b&gt;&lt;br/&gt;Washes, cuts &amp; prepares&lt;br/&gt;ingredients for processing" vertex="1">
+          <mxGeometry height="70" width="180" x="75" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="step6" parent="lane_catering" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;" value="&lt;b&gt;6. Start Cooking Process&lt;/b&gt;&lt;br/&gt;Cooks meals according to menu&lt;br/&gt;&amp; recipe guidelines" vertex="1">
+          <mxGeometry height="70" width="180" x="75" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="step8" parent="lane_catering" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;" value="&lt;b&gt;8. Complete Meal Prep&lt;/b&gt;&lt;br/&gt;Completes meal production&lt;br/&gt;&amp; prepares meals for inspection" vertex="1">
+          <mxGeometry height="70" width="180" x="75" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_system" parent="lane_container" style="swimlane;startSize=30;html=1;fillColor=#dae8fc;fontStyle=1;strokeColor=default;" value="System" vertex="1">
+          <mxGeometry height="850" width="370" x="330" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="step5" parent="lane_system" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#99ccff;strokeColor=#0066cc;" value="&lt;b&gt;5. Record Pre-processing&lt;/b&gt;&lt;br/&gt;Records activities, responsible&lt;br/&gt;staff &amp; timestamps in audit logs" vertex="1">
+          <mxGeometry height="70" width="180" x="95" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="step7" parent="lane_system" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#99ccff;strokeColor=#0066cc;" value="&lt;b&gt;7. Record Cooking Info&lt;/b&gt;&lt;br/&gt;Records cooking time, staff&lt;br/&gt;&amp; production session logs" vertex="1">
+          <mxGeometry height="70" width="180" x="95" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="step9" parent="lane_system" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#99ccff;strokeColor=#0066cc;" value="&lt;b&gt;9. Generate Prep Record&lt;/b&gt;&lt;br/&gt;Generates food preparation record&lt;br/&gt;linked to menu &amp; ingredient batches" vertex="1">
+          <mxGeometry height="80" width="180" x="95" y="595" as="geometry" />
+        </mxCell>
+        <mxCell id="step10" parent="lane_system" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#99ccff;strokeColor=#0066cc;" value="&lt;b&gt;10. Ready for Inspection&lt;/b&gt;&lt;br/&gt;Prepared meals are transferred&lt;br/&gt;to Food Inspection Workflow" vertex="1">
+          <mxGeometry height="70" width="180" x="95" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="end_node" parent="lane_system" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="170" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_start" edge="1" parent="1" source="start_node" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="step1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge1_2" edge="1" parent="1" source="step1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="step2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge2_3" edge="1" parent="1" source="step2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="step3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge3_4" edge="1" parent="1" source="step3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="step4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge4_5" edge="1" parent="1" source="step4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="step5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge5_6" edge="1" parent="1" source="step5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="step6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="565" y="560" />
+              <mxPoint x="215" y="560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge6_7" edge="1" parent="1" source="step6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="step7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge7_8" edge="1" parent="1" source="step7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="step8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="565" y="660" />
+              <mxPoint x="215" y="660" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge8_9" edge="1" parent="1" source="step8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="step9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge9_10" edge="1" parent="1" source="step9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="step10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge10_end" edge="1" parent="1" source="step10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="end_node">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

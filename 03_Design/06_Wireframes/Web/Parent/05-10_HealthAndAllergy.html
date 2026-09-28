@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>SFMS Wireframe — Parent: Health &amp; Allergy</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root{ --ink:#333; --gray:#777; --lightgray:#d7d7d7; --midgray:#aaa; }
+  * { box-sizing: border-box; } html { font-size: 18px; }
+  body { margin:0; font-family:'Patrick Hand', cursive; color:var(--ink); background-color:#f4f4f4; background-image: radial-gradient(#d7d7d7 1px, transparent 1px); background-size: 20px 20px; font-size:18px; }
+  .text-xs{font-size:14px;} .text-sm{font-size:18px;} .text-md{font-size:28px;} .text-lg{font-size:35px;}
+  a { color:#3a5a8c; text-decoration:underline; cursor:pointer; }
+  .app { display:flex; min-height:100vh; }
+  .sidebar { width:270px; min-width:270px; background:#eee; border-right:3px solid var(--ink); padding:18px 14px; position:sticky; top:0; height:100vh; overflow-y:auto; }
+  .brand { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+  .side-group { margin-bottom:6px; }
+  .side-group-title { display:flex; align-items:center; gap:8px; font-size:16px; color:var(--gray); text-transform:uppercase; letter-spacing:1px; margin:14px 0 6px 4px; }
+  .side-link { display:flex; align-items:center; gap:10px; padding:8px 10px; margin:2px 0; border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; font-size:18px; cursor:pointer; }
+  .side-link:hover { background:#fff; border:2px dashed var(--midgray); }
+  .side-link.active { background:var(--ink); color:#fff; border:2px solid var(--ink); }
+  .side-link.active svg { stroke:#fff; }
+  .side-link.disabled { color:var(--midgray); cursor:default; }
+  .side-note { font-size:13px; color:var(--midgray); margin-left:32px; }
+  .icon { width:20px; height:20px; flex:none; stroke:var(--ink); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .main { flex:1; min-width:0; }
+  .topbar { display:flex; align-items:center; justify-content:space-between; padding:14px 26px; border-bottom:3px solid var(--ink); background:#fafafa; }
+  .breadcrumb { font-size:20px; } .crumb-group { color:var(--gray); }
+  .content { padding:26px; }
+  .card { border:2px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; padding:18px; }
+  .card + .card { margin-top:18px; }
+  .btn-primary { background:#333; color:white; border:2px solid #333; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:10px 22px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+  .btn-primary svg { stroke:#fff; }
+  .btn-secondary { background:white; color:#333; border:2px solid #333; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:10px 22px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+  .btn-row { display:flex; gap:12px; flex-wrap:wrap; }
+  .grid-12 { display:grid; grid-template-columns: repeat(12, 1fr); gap:18px; }
+  .col-3 { grid-column: span 3; } .col-4 { grid-column: span 4; } .col-6 { grid-column: span 6; } .col-8 { grid-column: span 8; } .col-12 { grid-column: span 12; }
+  @media (max-width:980px){ .grid-12 > [class*="col-"]{ grid-column:span 12; } }
+  .badge { display:inline-flex; align-items:center; gap:6px; padding:3px 12px; font-size:16px; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; }
+  .badge-success { border:2px solid var(--ink); } .badge-warning { border:2px dashed var(--ink); } .badge-danger { border:3px solid var(--ink); } .badge-info { border:2px dotted var(--ink); }
+  table.sketchy { width:100%; border-collapse:separate; border-spacing:0; font-size:18px; }
+  table.sketchy th, table.sketchy td { text-align:left; padding:10px 12px; border-bottom:2px solid var(--lightgray); }
+  table.sketchy thead th { border-bottom:3px solid var(--ink); color:var(--gray); font-weight:normal; font-size:16px; text-transform:uppercase; }
+  .table-wrap { border:2px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; overflow:hidden; background:#fff; }
+  .table-wrap table.sketchy { margin:0; }
+  .kpi-value { font-size:32px; line-height:1; margin:4px 0; }
+  .kpi-card { display:flex; flex-direction:column; gap:2px; }
+  .screen { display:none; } .screen.active { display:block; }
+  .page-header { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:20px; flex-wrap:wrap; }
+  .muted { color:var(--gray); }
+  .alert { display:flex; gap:12px; align-items:flex-start; padding:14px 16px; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; }
+  .alert-danger { border:3px solid var(--ink); } .alert-info { border:2px dotted var(--ink); }
+  .field-label { font-size:18px; margin-bottom:6px; display:flex; gap:4px; }
+  .req { font-weight:bold; }
+  .field-block { margin-bottom:16px; }
+  wired-input, wired-textarea, wired-select, wired-combo { width:100%; display:block; }
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.35); align-items:center; justify-content:center; z-index:50; padding:20px; }
+  .modal-overlay.active { display:flex; }
+  .modal-box { width:100%; max-width:520px; background:#fff; border:3px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; padding:24px; max-height:90vh; overflow-y:auto; }
+  .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  .mode-toggle { display:flex; gap:8px; margin-bottom:16px; }
+  .mode-toggle button { flex:1; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><svg class="icon" viewBox="0 0 24 24"><path d="M4 21 L4 9 L12 3 L20 9 L20 21 Z"/><path d="M9 21 L9 14 L15 14 L15 21"/></svg><span class="text-md">SFMS</span></div>
+    <div class="side-note" style="margin-left:0; margin-bottom:14px;">Parent — Chị Nguyễn Thị Hạnh</div>
+    <div class="side-group"><div class="side-group-title">Tổng quan</div><div class="side-link disabled">Parent Dashboard</div><div class="side-note">(xem nhóm 01-04)</div></div>
+    <div class="side-group"><div class="side-group-title">Thực đơn &amp; Dinh dưỡng</div><div class="side-link disabled">Weekly Menu / Nutrition</div><div class="side-note">(xem nhóm 01-04)</div></div>
+    <div class="side-group">
+      <div class="side-group-title"><svg class="icon" viewBox="0 0 24 24"><path d="M12 21 s-8 -5 -8 -11 a4 4 0 0 1 8 -2 a4 4 0 0 1 8 2 c0 6 -8 11 -8 11 z"/></svg>Sức khỏe &amp; Dị ứng</div>
+      <div class="side-link active" onclick="showScreen('health-info')">Student Health Information</div>
+      <div class="side-link" onclick="showScreen('special-meal')">Special Meal Arrangements</div>
+    </div>
+    <div class="side-group"><div class="side-group-title">Bữa ăn của con</div><div class="side-link disabled">Meal History/Records</div><div class="side-note">(xem nhóm 11-14)</div></div>
+    <div class="side-group"><div class="side-group-title">Phản hồi &amp; Sự cố</div><div class="side-link disabled">Feedback Center</div><div class="side-note">(xem nhóm 15-18)</div></div>
+  </aside>
+
+  <div class="main">
+
+    <!-- SCREEN 07 — STUDENT HEALTH INFORMATION (hub) -->
+    <div class="screen active" id="health-info">
+      <div class="topbar"><div class="breadcrumb"><span class="crumb-group">Sức khỏe &amp; Dị ứng</span> / Student Health Information</div></div>
+      <div class="content">
+        <div class="page-header">
+          <div class="card" style="flex:1;">
+            <div class="text-md">Trần Gia Bảo</div>
+            <div class="muted text-sm">8 tuổi · Lớp 2A</div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-primary" onclick="document.getElementById('health-modal').classList.add('active')"><svg class="icon" viewBox="0 0 24 24" style="stroke:#fff;"><path d="M12 21 s-8 -5 -8 -11 a4 4 0 0 1 8 -2 a4 4 0 0 1 8 2 c0 6 -8 11 -8 11 z"/></svg>Manage Health Details</button>
+            <button class="btn-primary" onclick="document.getElementById('allergy-modal').classList.add('active')"><svg class="icon" viewBox="0 0 24 24" style="stroke:#fff;"><circle cx="12" cy="12" r="9"/></svg>Manage Allergy List</button>
+          </div>
+        </div>
+
+        <div class="grid-12" style="margin-bottom:18px;">
+          <div class="card col-3 kpi-card"><span class="text-sm muted">Height</span><div class="kpi-value">124cm</div></div>
+          <div class="card col-3 kpi-card"><span class="text-sm muted">Weight</span><div class="kpi-value">24kg</div></div>
+          <div class="card col-3 kpi-card"><span class="text-sm muted">Blood Type</span><div class="kpi-value">O+</div></div>
+          <div class="card col-3 kpi-card"><span class="text-sm muted">BMI</span><div class="kpi-value">15.6</div></div>
+        </div>
+
+        <div class="card">
+          <div class="text-md" style="margin-bottom:10px;">Allergy Profile Summary <span class="badge badge-warning" style="margin-left:8px;">Pending Verification</span></div>
+          <div class="table-wrap">
+            <table class="sketchy">
+              <thead><tr><th>Allergen</th><th>Mức độ</th></tr></thead>
+              <tbody>
+                <tr><td>Đậu phộng</td><td><span class="badge badge-danger">Severe</span></td></tr>
+                <tr><td>Hải sản có vỏ</td><td><span class="badge badge-warning">Moderate</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="text-xs muted" style="margin-top:10px;">Empty: "Chưa khai báo thông tin sức khỏe" + nút "Khai báo ngay".</div>
+      </div>
+    </div>
+
+    <!-- SCREEN 10 — SPECIAL MEAL ARRANGEMENTS -->
+    <div class="screen" id="special-meal">
+      <div class="topbar"><div class="breadcrumb"><span class="crumb-group">Sức khỏe &amp; Dị ứng</span> / Special Meal Arrangements</div></div>
+      <div class="content">
+        <div class="page-header"><h1 class="text-lg">Special Meal Arrangements</h1></div>
+        <div class="alert alert-danger" style="margin-bottom:18px;">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8 v5 M12 16 v0.1"/></svg>
+          <div><strong>Xung đột dị ứng phát hiện:</strong> Menu hôm nay có món chứa đậu phộng — đã tự động thay thế (MSG-051).</div>
+        </div>
+        <div class="table-wrap" style="margin-bottom:18px;">
+          <table class="sketchy">
+            <thead><tr><th>Allergen</th><th>Mức độ</th><th>Món thay thế</th><th>Ghi chú</th></tr></thead>
+            <tbody>
+              <tr><td>Đậu phộng</td><td><span class="badge badge-danger">Severe</span></td><td>Hạt điều rang thay thế</td><td>Bếp riêng, dụng cụ riêng</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="btn-row" style="margin-bottom:18px;">
+          <span class="badge badge-success"><svg viewBox="0 0 24 24"><path d="M4 12 l5 5 11 -11"/></svg>Kitchen Released</span>
+          <span class="badge badge-success"><svg viewBox="0 0 24 24"><path d="M4 12 l5 5 11 -11"/></svg>Teacher Hand-off</span>
+        </div>
+        <div class="text-sm" style="font-style:italic; margin-bottom:10px;">Lưu ý: phụ huynh vẫn nên kiểm tra lại thông tin cùng giáo viên trước khi con dùng bữa.</div>
+        <a onclick="document.getElementById('allergy-modal').classList.add('active')">Cập nhật/khai báo dị ứng mới &rarr;</a>
+        <div class="text-xs muted" style="margin-top:10px;">Empty: "Học sinh chưa có kế hoạch bữa ăn đặc biệt nào" + link khai báo.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL — SUBMIT/UPDATE ALLERGY INFORMATION (#05 / #06) -->
+<div class="modal-overlay" id="allergy-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2 class="text-md" id="allergy-modal-title">Submit Allergy Information</h2>
+      <svg class="icon" viewBox="0 0 24 24" onclick="document.getElementById('allergy-modal').classList.remove('active')"><path d="M5 5 L19 19 M19 5 L5 19"/></svg>
+    </div>
+    <div class="mode-toggle">
+      <button class="btn-secondary" onclick="setAllergyMode('create')">Chế độ tạo mới (#05)</button>
+      <button class="btn-secondary" onclick="setAllergyMode('update')">Chế độ chỉnh sửa (#06)</button>
+    </div>
+    <div class="field-block"><div class="field-label">Allergen Category <span class="req">*</span></div><wired-select id="allergy-cat"><wired-item value="peanut">Đậu phộng</wired-item><wired-item value="shellfish">Hải sản có vỏ</wired-item><wired-item value="other">Khác</wired-item></wired-select></div>
+    <div class="field-block"><div class="field-label">Specific Allergen Name (nếu Other)</div><wired-input id="allergy-name" placeholder="VD: Sữa bò"></wired-input></div>
+    <div class="field-block">
+      <div class="field-label">Severity Level <span class="req">*</span></div>
+      <wired-radio-group selected="severe" id="allergy-severity"><wired-radio name="sev2" value="mild">Mild</wired-radio><wired-radio name="sev2" value="moderate">Moderate</wired-radio><wired-radio name="sev2" value="severe">Severe</wired-radio></wired-radio-group>
+    </div>
+    <div class="field-block"><div class="field-label">Upload Medical Proof <span class="req">*</span> (bắt buộc nếu Severe)</div><div style="border:2px dashed var(--ink); border-radius:16px; padding:16px; text-align:center;" id="allergy-file-area">Kéo-thả hoặc chọn file chứng nhận y tế</div></div>
+    <button class="btn-primary" onclick="document.getElementById('allergy-modal').classList.remove('active')"><svg class="icon" viewBox="0 0 24 24" style="stroke:#fff;"><path d="M4 12 l5 5 11 -11"/></svg>Save Allergy</button>
+    <div class="text-xs muted" style="margin-top:10px;">Error: MSG-036 nếu thiếu chứng nhận Severe [Giả định — chưa có MSG riêng]. Success: Toast MSG-036.</div>
+  </div>
+</div>
+
+<!-- MODAL — SUBMIT/UPDATE HEALTH INFORMATION (#08 / #09) -->
+<div class="modal-overlay" id="health-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2 class="text-md" id="health-modal-title">Submit Health Information</h2>
+      <svg class="icon" viewBox="0 0 24 24" onclick="document.getElementById('health-modal').classList.remove('active')"><path d="M5 5 L19 19 M19 5 L5 19"/></svg>
+    </div>
+    <div class="mode-toggle">
+      <button class="btn-secondary" onclick="setHealthMode('create')">Chế độ tạo mới (#08)</button>
+      <button class="btn-secondary" onclick="setHealthMode('update')">Chế độ chỉnh sửa (#09)</button>
+    </div>
+    <div class="field-block"><div class="field-label">Height (cm) <span class="req">*</span></div><wired-input id="health-height" type="number"></wired-input></div>
+    <div class="field-block"><div class="field-label">Weight (kg) <span class="req">*</span></div><wired-input id="health-weight" type="number"></wired-input></div>
+    <div class="field-block"><div class="field-label">Blood Type</div><wired-select id="health-blood"><wired-item value="o+">O+</wired-item><wired-item value="a+">A+</wired-item></wired-select></div>
+    <div class="field-block"><div class="field-label">File Upload (tuỳ chọn)</div><div style="border:2px dashed var(--ink); border-radius:16px; padding:16px; text-align:center;" id="health-file-area">Kéo-thả hồ sơ khám sức khỏe (nếu có)</div></div>
+    <button class="btn-primary" onclick="document.getElementById('health-modal').classList.remove('active')"><svg class="icon" viewBox="0 0 24 24" style="stroke:#fff;"><path d="M4 12 l5 5 11 -11"/></svg>Save Health Info</button>
+    <div class="text-xs muted" style="margin-top:10px;">Error: MSG-004/005/008/009. Success: Toast MSG-036.</div>
+  </div>
+</div>
+
+<script>
+  function showScreen(id){
+    document.querySelectorAll('.screen').forEach(function(el){ el.classList.remove('active'); });
+    var target = document.getElementById(id);
+    if(target){ target.classList.add('active'); }
+    document.querySelectorAll('.side-link').forEach(function(el){ el.classList.remove('active'); });
+    var map = { 'health-info':0, 'special-meal':1 };
+    var links = document.querySelectorAll('.side-link:not(.disabled)');
+    if(map[id] !== undefined && links[map[id]]){ links[map[id]].classList.add('active'); }
+  }
+  function setAllergyMode(mode){
+    var title = document.getElementById('allergy-modal-title');
+    var cat = document.getElementById('allergy-cat');
+    var name = document.getElementById('allergy-name');
+    if(mode === 'create'){
+      title.textContent = 'Submit Allergy Information (#05 — tạo mới)';
+      cat.removeAttribute('selected'); name.value = '';
+    } else {
+      title.textContent = 'Update Allergy Information (#06 — pre-filled)';
+      name.value = 'Đậu phộng (đã khai báo trước)';
+    }
+  }
+  function setHealthMode(mode){
+    var title = document.getElementById('health-modal-title');
+    var h = document.getElementById('health-height');
+    var w = document.getElementById('health-weight');
+    if(mode === 'create'){
+      title.textContent = 'Submit Health Information (#08 — tạo mới)';
+      h.value = ''; w.value = '';
+    } else {
+      title.textContent = 'Update Health Information (#09 — pre-filled)';
+      h.value = '124'; w.value = '24';
+    }
+  }
+</script>
+
+</body>
+</html>

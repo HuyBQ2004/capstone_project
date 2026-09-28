@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Wireframe — Incident Handling (Medical Staff, Mobile)</title>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<style>
+  * { box-sizing:border-box; } html{font-size:18px;}
+  body { margin:0; font-family:'Patrick Hand',cursive; color:#333; background-image: radial-gradient(#d7d7d7 1px, transparent 1px); background-size:20px 20px; display:flex; flex-direction:column; align-items:center; padding:20px 10px 60px; }
+  .demo-nav { display:flex; gap:6px; flex-wrap:wrap; justify-content:center; margin-bottom:16px; max-width:430px; }
+  .demo-nav button { font-size:11px; background:white; border:2px solid #333; border-radius:10px; padding:5px 8px; cursor:pointer; }
+  .demo-nav button.active { background:#333; color:white; }
+  .phone { width:390px; max-width:100%; min-height:800px; background:white; border:3px solid #333; border-radius:32px; overflow:hidden; position:relative; }
+  .screen { display:none; flex-direction:column; min-height:800px; } .screen.visible { display:flex; }
+  .appbar { display:flex; align-items:center; gap:10px; padding:14px; border-bottom:2px solid #333; }
+  .appbar .title { font-size:17px; flex:1; text-align:center; } .appbar .icon-slot { width:22px; }
+  .content { padding:14px 16px 30px; flex:1; overflow:auto; }
+  .tabs { display:flex; gap:6px; margin-bottom:10px; }
+  .tab-btn { flex:1; text-align:center; border:2px solid #333; border-radius:8px; padding:6px; font-size:13px; }
+  .tab-btn.active { background:#333; color:white; }
+  .list-card { border:2px solid #333; border-radius:12px; padding:10px; margin-bottom:8px; font-size:13px; }
+  .badge { display:inline-flex; gap:4px; padding:2px 6px; border-radius:6px; font-size:11px; border:2px solid #333; }
+  .badge.warning { border-style:dashed; }
+  .field-row { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px dashed #ccc; font-size:13px; }
+  .step-card { border:2px solid #333; border-radius:12px; padding:12px; margin-bottom:10px; cursor:pointer; font-size:14px; }
+  .field { margin-bottom:10px; } .field label { display:block; margin-bottom:4px; font-size:12px; }
+  textarea, wired-input, wired-combo { width:100%; font-family:'Patrick Hand',cursive; }
+  textarea { border:2px solid #333; border-radius:8px; padding:6px; font-size:14px; }
+  .upload-box { border:2px dashed #333; border-radius:10px; padding:12px; text-align:center; color:#666; font-size:12px; }
+  .btn-primary { background:#333; color:white; border:2px solid #333; border-radius:255px 15px 225px 15px/15px 225px 15px 255px; font-family:'Patrick Hand',cursive; font-size:15px; padding:10px; cursor:pointer; width:100%; margin-top:8px; }
+  .btn-secondary { background:white; color:#333; border:2px solid #333; border-radius:255px 15px 225px 15px/15px 225px 15px 255px; font-family:'Patrick Hand',cursive; font-size:15px; padding:10px; cursor:pointer; width:100%; margin-top:8px; }
+  .sheet-backdrop { display:none; position:absolute; inset:0; background:rgba(0,0,0,.2); z-index:8; }
+  .sheet-backdrop.show { display:block; }
+  .bottom-sheet { display:none; position:absolute; left:0; right:0; bottom:0; background:white; border:2px solid #333; border-radius:20px 20px 0 0; padding:16px; max-height:85%; overflow:auto; z-index:9; }
+  .bottom-sheet.show { display:block; }
+  .checklist-row { display:flex; align-items:center; gap:6px; padding:6px 0; border-bottom:1px dashed #ccc; font-size:13px; }
+  .critical-banner { border:4px double #333; border-radius:10px; padding:8px; margin-top:8px; font-size:12px; }
+  .icon { width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:2; }
+  .toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#333; color:white; padding:10px 18px; border-radius:10px; display:none; align-items:center; gap:8px; z-index:20; }
+  .toast.show { display:flex; }
+  .note { font-size:12px; color:#666; }
+</style>
+</head>
+<body>
+
+<svg style="display:none">
+  <symbol id="ic-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-linecap="round"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24"><path d="M4 12l6 6L20 6" stroke-linecap="round"/></symbol>
+  <symbol id="ic-warn" viewBox="0 0 24 24"><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v4M12 17h.01"/></symbol>
+</svg>
+
+<div class="demo-nav">
+  <button data-go="screen-list" class="active">1. List</button>
+  <button data-go="screen-detail">2. Detail</button>
+  <button data-go="screen-investigation">3. Investigation Space</button>
+</div>
+
+<div class="phone">
+  <!-- 25 Incident List -->
+  <div class="screen visible" id="screen-list">
+    <div class="appbar"><span class="title">City Safety Incident</span></div>
+    <div class="content">
+      <div class="tabs"><div class="tab-btn active">Processing (1)</div><div class="tab-btn">Resolved</div></div>
+      <div class="list-card" onclick="showScreen('screen-detail')">
+        <b>INC-2026-014 — Vomiting</b> <span class="badge warning">Under investigation</span>
+        <div class="note">Nôn, đau bụng · 3 học sinh · GV báo 30/06 11:20</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 26 Incident Detail -->
+  <div class="screen" id="screen-detail">
+    <div class="appbar"><span data-go="screen-list" class="icon-slot"><svg class="icon"><use href="#ic-back"/></svg></span><span class="title">Medical Incident Details</span><span class="icon-slot" onclick="toast('Đã xuất báo cáo.')">⇩</span></div>
+    <div class="content">
+      <div class="field-row"><span>Case code</span><span>INC-2026-014</span></div>
+      <div class="field-row"><span>Clinical symptoms</span><span>Nôn, đau bụng nhẹ</span></div>
+      <div class="field-row"><span>Affected students</span><span>3 HS — 3A, 3B</span></div>
+      <div class="field-row"><span>Suspected food + meal time</span><span>Súp tôm — Trưa 30/06</span></div>
+      <div class="field-row"><span>First aid administered</span><span>Đã theo dõi tại phòng y tế</span></div>
+      <div class="field-row"><span>Bản đồ truy xuất</span><span>[Image Placeholder]</span></div>
+      <div class="field-row"><span>Lô Quarantine</span><span>B-2260630</span></div>
+      <button class="btn-secondary" onclick="openSheet('modal-severity')">Step 1: Assess the severity</button>
+      <button class="btn-secondary" data-go="screen-investigation">Step 2: Incident Investigation Space</button>
+      <button class="btn-secondary" onclick="openSheet('modal-report')">Step 3: Submit the incident report...</button>
+      <button class="btn-secondary" onclick="openSheet('modal-capa')">Validate CAPA đã Approved</button>
+    </div>
+  </div>
+
+  <!-- 17 Investigation Workspace: 4 card dẫn tới 4 khối con -->
+  <div class="screen" id="screen-investigation">
+    <div class="appbar"><span data-go="screen-detail" class="icon-slot"><svg class="icon"><use href="#ic-back"/></svg></span><span class="title">Investigation Space</span><span class="icon-slot"></span></div>
+    <div class="content">
+      <div class="step-card" onclick="toast('Mở Retrieve Food Sample Records Dialog — xem wireframe 13_FoodSampleRetention.')">1. Extracting Stored Food Samples</div>
+      <div class="step-card" onclick="openSheet('modal-evidence')">2. Gathering Evidence</div>
+      <div class="step-card" onclick="openSheet('modal-rootcause')">3. Identify the Root Cause</div>
+      <div class="step-card" onclick="openSheet('modal-treatment')">4. Proposed Remedial Measures</div>
+    </div>
+  </div>
+</div>
+
+<div class="sheet-backdrop" id="backdrop" onclick="closeSheet()"></div>
+
+<!-- 18 Assign Incident Severity -->
+<div class="bottom-sheet" id="modal-severity">
+  <h3>Assess the Severity</h3>
+  <div class="field-row"><span>Reported symptoms</span><span>Nôn, đau bụng</span></div>
+  <div class="field-row"><span>Affected count</span><span>3</span></div>
+  <div class="field"><label>Severity level</label>
+    <div><label><input type="radio" name="sev" checked> Low</label> <label><input type="radio" name="sev"> Medium</label> <label><input type="radio" name="sev" id="sev-high"> High</label></div>
+  </div>
+  <div class="field"><label>Clinical Risk Assessment</label><textarea rows="2" placeholder="Bắt buộc khi Medium/High"></textarea></div>
+  <button class="btn-primary" onclick="saveSeverity()">Save review & Activate process</button>
+  <div class="critical-banner" id="critical-banner" style="display:none;">High — cảnh báo khẩn cấp gửi ngay (BR-148), lô hàng Quarantine (BR-149).</div>
+</div>
+
+<!-- Gathering Evidence sub-block -->
+<div class="bottom-sheet" id="modal-evidence">
+  <h3>Gathering Evidence</h3>
+  <div class="field"><label>Type of evidence</label><wired-combo selected="Student Statement Record"><wired-item>Student Statement Record</wired-item><wired-item>Teacher Statement Record</wired-item></wired-combo></div>
+  <div class="field"><label>Brief description</label><textarea rows="2">3 HS cùng lớp có triệu chứng sau bữa trưa.</textarea></div>
+  <div class="upload-box">Take a photo / Upload a file</div>
+  <button class="btn-primary" onclick="toast('Đã lưu bằng chứng.'); closeSheet()">Save Evidence</button>
+</div>
+
+<!-- Root Cause sub-block -->
+<div class="bottom-sheet" id="modal-rootcause">
+  <h3>Identify the Root Cause</h3>
+  <div class="field"><label>Kết quả xét nghiệm lab</label><textarea rows="2">Đang chờ kết quả.</textarea></div>
+  <div class="field"><label>Kết luận nguyên nhân gốc rễ</label><textarea rows="3">Nghi ngờ nhiễm khuẩn từ tôm bảo quản sai nhiệt độ.</textarea></div>
+  <button class="btn-primary" onclick="toast('Đã lưu.'); closeSheet()">Come back</button>
+</div>
+
+<!-- Treatment Measures sub-block -->
+<div class="bottom-sheet" id="modal-treatment">
+  <h3>Treatment Measures</h3>
+  <div class="field"><label>Medical treatment/correction measures</label><textarea rows="2">Ngừng dùng lô tôm B-2260630, vệ sinh lại tủ bảo quản.</textarea></div>
+  <div class="field"><label>Unit/Person in charge</label><wired-input value="Kitchen Manager & Nhà cung cấp Tôm"></wired-input></div>
+  <button class="btn-primary" onclick="toast('Đã giao CAPA — hạn 12 giờ.'); closeSheet(); showScreen('screen-detail')">Establish Measures</button>
+</div>
+
+<!-- 19 Record Corrective Actions Report (Validate CAPA) -->
+<div class="bottom-sheet" id="modal-capa">
+  <h3>Validate CAPA</h3>
+  <div class="field"><label>Ghi chú kiểm tra bếp (bắt buộc)</label><textarea rows="2">Đã kiểm tra lại, đạt yêu cầu.</textarea></div>
+  <label class="note">Xác nhận học sinh hồi phục 100%</label>
+  <div class="checklist-row"><wired-checkbox checked></wired-checkbox> Học sinh A</div>
+  <div class="checklist-row"><wired-checkbox checked></wired-checkbox> Học sinh B</div>
+  <div class="checklist-row"><wired-checkbox></wired-checkbox> Học sinh C (còn theo dõi)</div>
+  <button class="btn-primary" onclick="toast('EX1: còn HS chưa hồi phục — chặn Submit (MSG-004).')">Submit Validation</button>
+</div>
+
+<!-- 20 Generate Incident Report -->
+<div class="bottom-sheet" id="modal-report">
+  <h3>Generate Incident Report</h3>
+  <div class="field-row"><span>Incident code</span><span>INC-2026-014</span></div>
+  <div class="field-row"><span>Severity</span><span class="badge warning">Medium</span></div>
+  <div class="field"><label>Clinical notes (bắt buộc)</label><textarea rows="2">3 HS nôn nhẹ, đã ổn định.</textarea></div>
+  <div class="field"><label>Root cause determination (bắt buộc)</label><textarea rows="2">Nghi nhiễm khuẩn từ tôm bảo quản sai nhiệt độ.</textarea></div>
+  <button class="btn-primary" onclick="toast('MSG-046: Đã Export & Submit.'); closeSheet()">Export & Submit Incident Reports</button>
+</div>
+
+<div class="toast" id="toast"><svg class="icon" style="stroke:white"><use href="#ic-check"/></svg><span id="toast-text"></span></div>
+
+<script>
+function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('visible')); document.getElementById(id).classList.add('visible'); document.querySelectorAll('.demo-nav button').forEach(b=>b.classList.toggle('active', b.dataset.go===id)); }
+document.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>showScreen(el.dataset.go)));
+function openSheet(id){ document.querySelectorAll('.bottom-sheet').forEach(s=>s.classList.remove('show')); document.getElementById(id).classList.add('show'); document.getElementById('backdrop').classList.add('show'); }
+function closeSheet(){ document.querySelectorAll('.bottom-sheet').forEach(s=>s.classList.remove('show')); document.getElementById('backdrop').classList.remove('show'); }
+function toast(msg){ const t=document.getElementById('toast'); document.getElementById('toast-text').textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600); }
+function saveSeverity(){
+  const high = document.getElementById('sev-high').checked;
+  document.getElementById('critical-banner').style.display = high ? 'block' : 'none';
+  if(!high){ toast('Đã lưu severity.'); closeSheet(); }
+}
+</script>
+</body>
+</html>

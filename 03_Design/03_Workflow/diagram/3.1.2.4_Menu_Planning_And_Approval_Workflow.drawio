@@ -1,0 +1,220 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="BecCnTiqZxTlKxLkmIQg">
+    <mxGraphModel grid="0" page="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-1" parent="1" style="swimlane;childLayout=stackLayout;resizeParent=1;resizeParentMax=0;startSize=20;html=1;" value="Menu Planning And Approval" vertex="1">
+          <mxGeometry height="1451" width="1025" x="220" y="266" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-2" parent="CTZP1xzB-6uOJO2IA2RT-1" style="swimlane;startSize=20;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Service Caterers&amp;nbsp;" vertex="1">
+          <mxGeometry height="1431" width="259" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-3" parent="CTZP1xzB-6uOJO2IA2RT-2" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="101.49999999999955" y="31" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-4" edge="1" parent="CTZP1xzB-6uOJO2IA2RT-2" source="CTZP1xzB-6uOJO2IA2RT-3" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;rounded=0;fontSize=12;curved=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="CTZP1xzB-6uOJO2IA2RT-5" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="118.99999999999955" y="123" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-5" parent="CTZP1xzB-6uOJO2IA2RT-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#99ccff;strokeColor=#0066cc;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;1. Review Requirements&lt;/b&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;Review food safety rules,&lt;/span&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;policies &amp;amp; ingredients&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="125" x="54" y="103" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-6" parent="CTZP1xzB-6uOJO2IA2RT-2" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;3. Generate Menu Draft&lt;/b&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;Create menu manually&lt;/span&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;or request AI assistance&lt;/span&gt;" vertex="1">
+          <mxGeometry height="79" width="152" x="27" y="234" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-8" parent="CTZP1xzB-6uOJO2IA2RT-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#99ccff;strokeColor=#0066cc;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;9. Review Alternatives&lt;/b&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;Review and adjust AI-suggested&lt;/span&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;alternative meals&lt;/span&gt;" vertex="1">
+          <mxGeometry height="79" width="122" x="46" y="651" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-9" parent="CTZP1xzB-6uOJO2IA2RT-2" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;10. Submit Menu&lt;/b&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;Submit standard &amp;amp; special&lt;/span&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;menus for approval&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="45.999999999999545" y="796" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-10" edge="1" parent="CTZP1xzB-6uOJO2IA2RT-2" source="CTZP1xzB-6uOJO2IA2RT-8" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="CTZP1xzB-6uOJO2IA2RT-9" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="162.99999999999955" y="718" as="sourcePoint" />
+            <mxPoint x="212.99999999999955" y="668" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-11" parent="CTZP1xzB-6uOJO2IA2RT-2" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;b&gt;17. Revise Menu&lt;/b&gt;&lt;/div&gt;&lt;div&gt;Revise the menu content&lt;/div&gt;&lt;div&gt;and resubmit to Step 3&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="164" x="15" y="1309" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-12" edge="1" parent="CTZP1xzB-6uOJO2IA2RT-2" source="CTZP1xzB-6uOJO2IA2RT-11" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=0.067;entryY=1.024;entryDx=0;entryDy=0;exitX=0.119;exitY=0.007;exitDx=0;exitDy=0;exitPerimeter=0;entryPerimeter=0;" target="CTZP1xzB-6uOJO2IA2RT-6" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="102" y="1314" as="sourcePoint" />
+            <mxPoint x="151.99999999999955" y="1279" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-13" parent="CTZP1xzB-6uOJO2IA2RT-1" style="swimlane;startSize=20;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="System" vertex="1">
+          <mxGeometry height="1431" width="285" x="259" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-14" parent="CTZP1xzB-6uOJO2IA2RT-13" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#99ccff;strokeColor=#0066cc;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;2. Review Allergy Stats&lt;/b&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;Summarizes allergy data&lt;/span&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;&amp;amp; special dietary needs&lt;/span&gt;" vertex="1">
+          <mxGeometry height="92" width="123" x="56" y="91" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-15" parent="CTZP1xzB-6uOJO2IA2RT-13" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#99ccff;strokeColor=#0066cc;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;6. Detect Allergy Conflicts&lt;/b&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;Checks if menu items contain&lt;/span&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;allergens of registered students&lt;/span&gt;" vertex="1">
+          <mxGeometry height="91" width="125" x="48.5" y="329" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-16" parent="CTZP1xzB-6uOJO2IA2RT-13" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;7. Allergy Conflict Detected?&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#0066cc&quot; style=&quot;font-size:9px&quot;&gt;&lt;b&gt;BR-063, BR-065, BR-069&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="110" width="175" x="24" y="453" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-17" edge="1" parent="CTZP1xzB-6uOJO2IA2RT-13" source="CTZP1xzB-6uOJO2IA2RT-15" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="CTZP1xzB-6uOJO2IA2RT-16" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="233.99999999999955" y="476" as="sourcePoint" />
+            <mxPoint x="283.99999999999955" y="426" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-19" edge="1" parent="CTZP1xzB-6uOJO2IA2RT-13" source="CTZP1xzB-6uOJO2IA2RT-16" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;fontSize=12;startSize=8;endSize=8;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.4;entryY=0.044;entryDx=0;entryDy=0;entryPerimeter=0;" target="CTZP1xzB-6uOJO2IA2RT-45" value="Yes">
+          <mxGeometry relative="1" width="80" x="-0.1111" y="-17" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="53.999999999999545" y="551" as="sourcePoint" />
+            <mxPoint x="118.99999999999955" y="602" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-21" parent="CTZP1xzB-6uOJO2IA2RT-13" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;13. Publish Menu&lt;/b&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;Publishes approved menu&lt;/span&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;&amp;amp; special meal options&lt;/span&gt;" vertex="1">
+          <mxGeometry height="78" width="120" x="45" y="912" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-22" parent="CTZP1xzB-6uOJO2IA2RT-13" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;14. Notify Stakeholders&lt;/b&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;Sends menu alerts to parents,&lt;/span&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;teachers &amp;amp; medical staff&lt;/span&gt;" vertex="1">
+          <mxGeometry height="86" width="116" x="49" y="1010" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-23" parent="CTZP1xzB-6uOJO2IA2RT-13" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;b&gt;14. Notify Stakeholders&lt;/b&gt;&lt;/div&gt;&lt;div&gt;Sends menu alerts to parents,&lt;/div&gt;&lt;div&gt;teachers &amp;amp; medical staff&lt;/div&gt;" vertex="1">
+          <mxGeometry height="89" width="117" x="48" y="1115" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-24" edge="1" parent="CTZP1xzB-6uOJO2IA2RT-13" source="CTZP1xzB-6uOJO2IA2RT-21" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="CTZP1xzB-6uOJO2IA2RT-22" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="171.99999999999955" y="1039" as="sourcePoint" />
+            <mxPoint x="221.99999999999955" y="989" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-25" edge="1" parent="CTZP1xzB-6uOJO2IA2RT-13" source="CTZP1xzB-6uOJO2IA2RT-22" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="CTZP1xzB-6uOJO2IA2RT-23" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="183.99999999999955" y="1137" as="sourcePoint" />
+            <mxPoint x="233.99999999999955" y="1087" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-26" parent="CTZP1xzB-6uOJO2IA2RT-13" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="89.99999999999955" y="1246" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-27" edge="1" parent="CTZP1xzB-6uOJO2IA2RT-13" source="CTZP1xzB-6uOJO2IA2RT-23" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="CTZP1xzB-6uOJO2IA2RT-26" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="175.99999999999955" y="1250" as="sourcePoint" />
+            <mxPoint x="225.99999999999955" y="1200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-45" parent="CTZP1xzB-6uOJO2IA2RT-13" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#99ccff;strokeColor=#0066cc;" value="&lt;b&gt;9.Show Notification&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="62" y="584" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-46" parent="CTZP1xzB-6uOJO2IA2RT-13" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="96" y="665" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-47" edge="1" parent="CTZP1xzB-6uOJO2IA2RT-13" source="CTZP1xzB-6uOJO2IA2RT-45" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.4;exitY=0.967;exitDx=0;exitDy=0;exitPerimeter=0;" target="CTZP1xzB-6uOJO2IA2RT-46" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="245" y="648" as="sourcePoint" />
+            <mxPoint x="295" y="598" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-28" parent="CTZP1xzB-6uOJO2IA2RT-1" style="swimlane;startSize=20;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Gemini AI" vertex="1">
+          <mxGeometry height="1431" width="229" x="544" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-29" parent="CTZP1xzB-6uOJO2IA2RT-28" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;4. Generate Recommendation&lt;/b&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;Analyzes nutritional rules&lt;/span&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;&amp;amp; suggests menu options&lt;/span&gt;" vertex="1">
+          <mxGeometry height="83" width="141" x="49" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-30" parent="CTZP1xzB-6uOJO2IA2RT-28" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;5. Analyze Nutrition&lt;/b&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;Evaluates calorie balance,&lt;/span&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;nutrients &amp;amp; diversity&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="67.99999999999955" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-31" parent="CTZP1xzB-6uOJO2IA2RT-28" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#99ccff;strokeColor=#0066cc;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;8. Alternative Suggestions&lt;/b&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;Suggests alternative dishes for&lt;/span&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;allergy categories (milk/eggs/etc)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="88" width="147" x="51" y="449" as="geometry" />
+        </mxCell>
+        <mxCell id="PnwvOVidIgesK-kg1xWd-1" edge="1" parent="CTZP1xzB-6uOJO2IA2RT-28" source="CTZP1xzB-6uOJO2IA2RT-29" style="endArrow=classic;html=1;rounded=0;entryX=0.408;entryY=-0.033;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="CTZP1xzB-6uOJO2IA2RT-30" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="299" y="358" as="sourcePoint" />
+            <mxPoint x="349" y="308" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-32" parent="CTZP1xzB-6uOJO2IA2RT-1" style="swimlane;startSize=20;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="School Administration" vertex="1">
+          <mxGeometry height="1431" width="252" x="773" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-33" parent="CTZP1xzB-6uOJO2IA2RT-32" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#99ccff;strokeColor=#0066cc;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;11. Review Menu&lt;/b&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;Review menu content, nutrition&lt;/span&gt;&lt;br style=&quot;color: rgb(38, 50, 56);&quot;&gt;&lt;span style=&quot;color: rgb(38, 50, 56);&quot;&gt;&amp;amp; allergy accommodations&lt;/span&gt;" vertex="1">
+          <mxGeometry height="78" width="132" x="51" y="765" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-34" parent="CTZP1xzB-6uOJO2IA2RT-32" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" value="&lt;b style=&quot;color: rgb(38, 50, 56);&quot;&gt;12. Menu Approved?&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#0066cc&quot; style=&quot;font-size:9px&quot;&gt;&lt;b&gt;BR-068, BR-061, BR-062, BR-063, BR-080&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="110" width="180" x="25" y="905" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-35" parent="CTZP1xzB-6uOJO2IA2RT-32" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;b&gt;16. Reject Menu&lt;/b&gt;&lt;/div&gt;&lt;div&gt;Reject menu and provide&lt;/div&gt;&lt;div&gt;rejection comments&lt;/div&gt;" vertex="1">
+          <mxGeometry height="57" width="127" x="51.5" y="1329" as="geometry" />
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-36" edge="1" parent="CTZP1xzB-6uOJO2IA2RT-32" source="CTZP1xzB-6uOJO2IA2RT-34" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;fontSize=12;startSize=8;endSize=8;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="CTZP1xzB-6uOJO2IA2RT-35" value="No">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="-102.00000000000045" y="944" as="sourcePoint" />
+            <mxPoint x="-22.000000000000455" y="944" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-37" edge="1" parent="CTZP1xzB-6uOJO2IA2RT-32" source="CTZP1xzB-6uOJO2IA2RT-33" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="CTZP1xzB-6uOJO2IA2RT-34" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="391.99999999999955" y="853" as="sourcePoint" />
+            <mxPoint x="441.99999999999955" y="803" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-38" edge="1" parent="CTZP1xzB-6uOJO2IA2RT-1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;fontSize=12;startSize=8;endSize=8;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="CTZP1xzB-6uOJO2IA2RT-6" value="">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <Array as="points">
+              <mxPoint x="344" y="274" />
+            </Array>
+            <mxPoint x="343.99999999999955" y="205" as="sourcePoint" />
+            <mxPoint x="374.99999999999955" y="248" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-39" edge="1" parent="CTZP1xzB-6uOJO2IA2RT-1" source="CTZP1xzB-6uOJO2IA2RT-6" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;" target="CTZP1xzB-6uOJO2IA2RT-29" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="276.99999999999955" y="343" as="sourcePoint" />
+            <mxPoint x="326.99999999999955" y="293" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-40" edge="1" parent="CTZP1xzB-6uOJO2IA2RT-1" source="CTZP1xzB-6uOJO2IA2RT-30" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="CTZP1xzB-6uOJO2IA2RT-15" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="339.99999999999955" y="296" as="sourcePoint" />
+            <mxPoint x="389.99999999999955" y="246" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-41" edge="1" parent="CTZP1xzB-6uOJO2IA2RT-1" source="CTZP1xzB-6uOJO2IA2RT-31" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;fontSize=12;startSize=8;endSize=8;entryX=1;entryY=0.75;entryDx=0;entryDy=0;exitX=0.431;exitY=0.994;exitDx=0;exitDy=0;exitPerimeter=0;" target="CTZP1xzB-6uOJO2IA2RT-8" value="">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <Array as="points">
+              <mxPoint x="658" y="730" />
+            </Array>
+            <mxPoint x="574.9999999999995" y="586" as="sourcePoint" />
+            <mxPoint x="654.9999999999995" y="586" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-42" edge="1" parent="CTZP1xzB-6uOJO2IA2RT-1" source="CTZP1xzB-6uOJO2IA2RT-9" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="CTZP1xzB-6uOJO2IA2RT-33" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="164.99999999999955" y="770" as="sourcePoint" />
+            <mxPoint x="773.6667480468745" y="762" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-43" edge="1" parent="CTZP1xzB-6uOJO2IA2RT-1" source="CTZP1xzB-6uOJO2IA2RT-34" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;fontSize=12;startSize=8;endSize=8;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" value="Yes">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="660.9999999999995" y="1091" as="sourcePoint" />
+            <mxPoint x="421" y="980" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-44" edge="1" parent="CTZP1xzB-6uOJO2IA2RT-1" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="CTZP1xzB-6uOJO2IA2RT-11" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="821" y="1373" as="sourcePoint" />
+            <mxPoint x="706.9999999999995" y="1341" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-7" edge="1" parent="CTZP1xzB-6uOJO2IA2RT-1" source="CTZP1xzB-6uOJO2IA2RT-5" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.975;exitY=0.393;exitDx=0;exitDy=0;exitPerimeter=0;" target="CTZP1xzB-6uOJO2IA2RT-14" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="177.99999999999955" y="174" as="sourcePoint" />
+            <mxPoint x="227.99999999999955" y="124" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CTZP1xzB-6uOJO2IA2RT-18" edge="1" parent="CTZP1xzB-6uOJO2IA2RT-1" source="CTZP1xzB-6uOJO2IA2RT-16" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;fontSize=12;startSize=8;endSize=8;entryX=0.008;entryY=0.638;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryPerimeter=0;" target="CTZP1xzB-6uOJO2IA2RT-31" value="No">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="396" y="528" as="sourcePoint" />
+            <mxPoint x="475.99999999999955" y="538" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

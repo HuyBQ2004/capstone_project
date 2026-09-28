@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thực hiện kiểm tra vệ sinh</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#004d62",
+                        "tertiary": "#495553",
+                        "on-secondary-container": "#54647a",
+                        "primary": "#005a71",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#616d6b",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#d0e1fb",
+                        "on-background": "#191c1e",
+                        "surface-container": "#eceef0",
+                        "on-tertiary": "#ffffff",
+                        "inverse-surface": "#2d3133",
+                        "surface-dim": "#d8dadc",
+                        "tertiary-fixed-dim": "#bcc9c6",
+                        "surface-variant": "#e0e3e5",
+                        "secondary": "#505f76",
+                        "on-surface-variant": "#3f484c",
+                        "tertiary-fixed": "#d8e5e2",
+                        "surface-container-high": "#e6e8ea",
+                        "on-primary-container": "#d3f1ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#0b1c30",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-tertiary-fixed": "#121e1c",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "on-surface": "#191c1e",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-error-container": "#93000a",
+                        "primary-fixed-dim": "#81d1f0",
+                        "error": "#ba1a1a",
+                        "surface": "#f7f9fb",
+                        "outline": "#6f787d",
+                        "on-tertiary-container": "#e2efec",
+                        "on-primary-fixed": "#001f29",
+                        "primary-fixed": "#b9eaff",
+                        "on-error": "#ffffff",
+                        "background": "#f7f9fb",
+                        "inverse-primary": "#81d1f0",
+                        "inverse-on-surface": "#eff1f3",
+                        "outline-variant": "#bec8cd",
+                        "primary-container": "#0e7490",
+                        "on-tertiary-fixed-variant": "#3d4947",
+                        "surface-bright": "#f7f9fb",
+                        "surface-tint": "#006781",
+                        "surface-container-highest": "#e0e3e5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "32px",
+                        "sm": "8px",
+                        "margin-mobile": "16px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "gutter": "16px",
+                        "base": "4px",
+                        "md": "16px",
+                        "margin-tablet": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "headline-md": ["Be Vietnam Pro"],
+                        "label-lg": ["Be Vietnam Pro"],
+                        "title-lg": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600" }],
+                        "title-lg": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-margin-mobile h-14 bg-surface dark:bg-on-background border-b border-outline-variant dark:border-outline sticky top-0 z-10 transition-colors">
+<button class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container dark:hover:bg-surface-container-highest transition-colors rounded-full p-2 flex items-center justify-center opacity-80 duration-150">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">Đánh giá vệ sinh bếp</h1>
+<button class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container dark:hover:bg-surface-container-highest transition-colors rounded-full p-2 flex items-center justify-center opacity-80 duration-150">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="flex-grow p-margin-mobile md:p-margin-tablet max-w-3xl mx-auto w-full space-y-lg">
+<!-- Checklist Section -->
+<section class="bg-surface-container-lowest rounded-lg shadow-sm border border-surface-variant p-md">
+<h2 class="font-title-lg text-title-lg text-on-surface mb-md">Danh sách kiểm tra</h2>
+<div class="space-y-sm">
+<label class="flex items-start space-x-sm cursor-pointer p-sm hover:bg-surface-container-low rounded-md transition-colors">
+<input class="mt-1 w-5 h-5 rounded border-outline text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-body-lg text-body-lg text-on-surface">Đồng phục nhân viên sạch sẽ, đúng quy định</span>
+</label>
+<label class="flex items-start space-x-sm cursor-pointer p-sm hover:bg-surface-container-low rounded-md transition-colors">
+<input class="mt-1 w-5 h-5 rounded border-outline text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-body-lg text-body-lg text-on-surface">Khu vực chế biến được vệ sinh khử khuẩn</span>
+</label>
+<label class="flex items-start space-x-sm cursor-pointer p-sm hover:bg-surface-container-low rounded-md transition-colors">
+<input class="mt-1 w-5 h-5 rounded border-outline text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-body-lg text-body-lg text-on-surface">Có chứng nhận kiểm soát côn trùng định kỳ</span>
+</label>
+<label class="flex items-start space-x-sm cursor-pointer p-sm hover:bg-surface-container-low rounded-md transition-colors">
+<input class="mt-1 w-5 h-5 rounded border-outline text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-body-lg text-body-lg text-on-surface">Nhân viên bếp có giấy khám sức khỏe hợp lệ</span>
+</label>
+</div>
+</section>
+<!-- Image Upload Section -->
+<section class="bg-surface-container-lowest rounded-lg shadow-sm border border-surface-variant p-md">
+<h2 class="font-title-lg text-title-lg text-on-surface mb-sm">Bằng chứng hình ảnh</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">Tải lên hình ảnh xác minh tình trạng thực tế.</p>
+<div class="grid grid-cols-2 gap-sm sm:grid-cols-3">
+<button class="flex flex-col items-center justify-center w-full aspect-square border-2 border-dashed border-primary text-primary rounded-lg hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined mb-xs text-3xl" data-icon="add_a_photo">add_a_photo</span>
+<span class="font-label-sm text-label-sm">Thêm ảnh</span>
+</button>
+<div class="relative w-full aspect-square rounded-lg overflow-hidden border border-surface-variant">
+<img class="object-cover w-full h-full" data-alt="A brightly lit, pristine commercial school kitchen featuring gleaming stainless steel countertops and immaculate tile floors. A medical professional in teal scrubs is meticulously inspecting a gleaming food preparation area. Soft, diffused natural light pours through large windows, creating a clean, modern, and trustworthy atmosphere indicative of high hygiene standards." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEhufz7muhvw0io4c3fjQoPhGmdS67_ds2YLmji8ZrusLD-U_LQujX7rynH6Dtiq8deYjAeguaysd8OyaMdeXcy3wDDqv_PQYLIdT-_8r7Fam8gxu3qymMwXiFRWsIjGmXRkhbfhBCSUMHtlHchpZpAJd5mK24-h3PnypBvOr-Td09TxIudNra3wAKDcc3VxdYYPefC-GBHzbn14QCTa3bCWPV7PVLC88cTXNkSDc4jZJabGPz1soRKX7olss3sUNyRF6AUBbHXX8"/>
+<button class="absolute top-1 right-1 bg-surface/80 rounded-full p-1 text-error hover:bg-error-container hover:text-on-error-container transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="close">close</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Notes Section -->
+<section class="bg-surface-container-lowest rounded-lg shadow-sm border border-surface-variant p-md">
+<h2 class="font-title-lg text-title-lg text-on-surface mb-sm">Ghi chú bổ sung</h2>
+<textarea class="w-full rounded-lg border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary p-sm font-body-lg text-body-lg text-on-surface min-h-[120px] resize-y" placeholder="Nhập chi tiết các vấn đề cần lưu ý..."></textarea>
+</section>
+<!-- Submit Button -->
+<div class="pt-sm pb-lg">
+<button class="w-full bg-primary-container text-on-primary rounded-lg py-3 font-label-lg text-label-lg shadow-sm hover:opacity-90 transition-opacity flex items-center justify-center space-x-sm min-h-[48px]">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+<span>Nộp báo cáo kiểm tra</span>
+</button>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html><html class="light" lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Chi tiết phản hồi - SFMS Parent</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#4c6874",
+                        "on-secondary-fixed-variant": "#2f4b56",
+                        "surface-dim": "#d7dadd",
+                        "outline": "#6f787d",
+                        "background": "#f7fafc",
+                        "surface": "#f7fafc",
+                        "surface-bright": "#f7fafc",
+                        "surface-container-low": "#f1f4f6",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e6e8eb",
+                        "secondary-fixed": "#c9e7f5",
+                        "inverse-on-surface": "#eef1f3",
+                        "tertiary-fixed": "#ffdcbd",
+                        "surface-tint": "#006781",
+                        "inverse-surface": "#2d3133",
+                        "secondary-fixed-dim": "#aecbd9",
+                        "primary-fixed": "#b9eaff",
+                        "primary-container": "#0e7490",
+                        "secondary-container": "#c9e7f5",
+                        "primary": "#005a71",
+                        "on-primary-fixed-variant": "#004d62",
+                        "error-container": "#ffdad6",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "secondary": "#46626e",
+                        "outline-variant": "#bec8cd",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#3f484c",
+                        "surface-container": "#ebeef0",
+                        "inverse-primary": "#81d1f0",
+                        "on-primary-container": "#d3f1ff",
+                        "on-secondary-fixed": "#001f29",
+                        "on-background": "#181c1e",
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#965e1c",
+                        "surface-variant": "#e0e3e5",
+                        "on-tertiary-fixed": "#2c1600",
+                        "on-tertiary-container": "#ffe8d6",
+                        "tertiary-fixed-dim": "#ffb86f",
+                        "tertiary": "#794602",
+                        "primary-fixed-dim": "#81d1f0",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-surface": "#181c1e",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#693c00",
+                        "on-primary-fixed": "#001f29",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Be Vietnam Pro"],
+                        "display": ["Be Vietnam Pro"],
+                        "body": ["Be Vietnam Pro"],
+                        "label": ["Be Vietnam Pro"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .step-active .step-line { background-color: #005a71; }
+        .step-active .step-icon { background-color: #005a71; color: white; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-6 py-3 w-full sticky top-0 z-50 bg-surface/95 backdrop-blur-sm border-b border-outline-variant dark:border-outline">
+<div class="flex items-center gap-4">
+<button class="md:hidden p-2 hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="text-headline-sm font-headline font-bold text-primary dark:text-primary-fixed-dim">SFMS Parent</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center gap-6 mr-6">
+<a class="text-on-surface-variant dark:text-surface-variant font-medium hover:text-primary transition-colors" href="#">Trang chủ</a>
+<a class="text-primary dark:text-primary-fixed-dim font-bold border-b-2 border-primary" href="#">Phản hồi</a>
+<a class="text-on-surface-variant dark:text-surface-variant font-medium hover:text-primary transition-colors" href="#">Thông báo</a>
+</div>
+<button class="p-2 hover:bg-surface-container dark:hover:bg-on-surface-variant/10 rounded-full transition-colors duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 hover:bg-surface-container dark:hover:bg-on-surface-variant/10 rounded-full transition-colors duration-200">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<div class="flex min-h-screen">
+<!-- SideNavBar (Visible on Desktop) -->
+<aside class="hidden md:flex fixed left-0 top-0 h-full flex-col py-6 z-40 bg-surface-container-low dark:bg-inverse-surface border-r border-outline-variant dark:border-outline w-64 pt-20">
+<div class="px-6 mb-8">
+<h2 class="text-xl font-headline font-black text-primary">Phụ huynh học sinh</h2>
+<p class="text-label-sm text-on-surface-variant opacity-70">Hệ thống ATTP Học đường</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="text-on-surface-variant dark:text-surface-variant px-4 py-3 mx-2 flex items-center gap-3 hover:bg-surface-container-high rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label text-label-lg">Bảng điều khiển</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant px-4 py-3 mx-2 flex items-center gap-3 hover:bg-surface-container-high rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span class="font-label text-label-lg">Thực đơn</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant px-4 py-3 mx-2 flex items-center gap-3 hover:bg-surface-container-high rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">monitor_heart</span>
+<span class="font-label text-label-lg">Sức khỏe</span>
+</a>
+<a class="bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed rounded-xl px-4 py-3 mx-2 flex items-center gap-3 scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">gpp_maybe</span>
+<span class="font-label text-label-lg">Phản hồi &amp; An toàn</span>
+</a>
+</nav>
+<div class="px-4 mt-auto">
+<button class="w-full bg-primary text-on-primary py-3 px-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">add_comment</span>
+                    Gửi phản hồi mới
+                </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 p-4 md:p-8">
+<!-- Breadcrumb & Header -->
+<div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<nav class="flex items-center gap-2 text-sm text-on-surface-variant mb-2">
+<a class="hover:text-primary" href="#">Phản hồi</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-primary font-medium">Chi tiết sự cố #FB-20231024</span>
+</nav>
+<h1 class="text-3xl font-headline font-bold text-on-background">Phát hiện vật thể lạ trong suất ăn</h1>
+</div>
+<div class="flex items-center gap-3">
+<span class="px-4 py-1.5 rounded-full bg-error-container text-on-error-container text-sm font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">priority_high</span>
+                        Mức độ: Cao
+                    </span>
+<span class="px-4 py-1.5 rounded-full bg-secondary-container text-on-secondary-container text-sm font-bold"> Đang xử lý </span>
+</div>
+</div>
+<!-- Bento Layout Content -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Left Column: Problem Details (Sticky on scroll) -->
+<div class="lg:col-span-4 space-y-6">
+<div class="bg-surface-container-lowest p-6 rounded-3xl shadow-sm border border-outline-variant/30 sticky top-24">
+<h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">info</span>
+                            Thông tin gốc
+                        </h3>
+<div class="space-y-4">
+<div>
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Mô tả sự cố</label>
+<p class="mt-1 text-on-surface">Trong suất ăn trưa ngày 24/10 của cháu Nguyễn Gia Bảo (Lớp 2A), phụ huynh phát hiện có một mẩu nhựa nhỏ màu trắng lẫn trong món rau xào.</p>
+</div>
+<div>
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Ảnh minh họa</label>
+<div class="mt-2 grid grid-cols-2 gap-2">
+<div class="aspect-square rounded-2xl overflow-hidden cursor-zoom-in group relative">
+<img class="w-full h-full object-cover transition-transform group-hover:scale-110" data-alt="A macro photograph of a small white plastic fragment found inside a portion of sautéed green vegetables on a white school lunch plate. The lighting is bright and clear, highlighting the contrast between the green leaves and the foreign object. The shot is captured in a clean, modern aesthetic with a focus on food safety awareness." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnw0WnHMeqFuYo1i3prDaLPXh9uDIABcfTQIZVp3SKGzLbWJ4v_zhhg4BJnn9iRfMLmvZf5OtpJWNvZam2llifXExnWOgsg1kqQddDztwDI8oWJU8-DiZbp3Gn0D-qxxtAHhN9hZIqnjcnlJWgTG6vtKZUAnAcDFL44iOxkqRMrcum0C3ax6CpB5JVC3ASXtMqfF03UbUqH3R4zdtIqmnzeH1YpylIlY6Mklhnp2Tf3CR3myjWR57l9FzeNBFBI5yV4tvWRiIC1w">
+<div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-white">zoom_in</span>
+</div>
+</div>
+<div class="aspect-square rounded-2xl overflow-hidden cursor-zoom-in group relative">
+<img class="w-full h-full object-cover transition-transform group-hover:scale-110" data-alt="A close-up shot of a school cafeteria meal tray featuring rice, soup, and the vegetable dish where a foreign object was reported. The overall environment is a brightly lit, modern school cafeteria with a clean and hygienic feel. The photograph is taken from a slightly high angle to show the context of the meal, using a natural and authentic visual style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn3d7fh-YE8MxP2jqedQnJGgEsVUQVXt68oO0vkiOav1GxXTQQn_LSQJ31aRhrAALAzK4J7ApoimtDW7srUVHl7zcYbbKU-2jUgoO5fKgVxardId1jRpTlWUp6hiLwG6N58CDm8fTZc3sheXjQKr1vyQTf77d2UNM1NLEfowtSbTZh9fMjoZ9oHrpil1HfMOS1nsNcEvVlBqAxOztb8u4u83Vg3dZybmIH2b-XKNSV6lqZX0t-1-53V0KUen8k4a1DiQQCRfzoLg">
+<div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-white">zoom_in</span>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-4 border-t border-outline-variant">
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">Ngày gửi:</span>
+<span class="font-medium">24/10/2023 - 12:45</span>
+</div>
+<div class="flex justify-between items-center text-sm mt-2">
+<span class="text-on-surface-variant">Loại:</span>
+<span class="font-medium">An toàn thực phẩm</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Resolution Timeline / Chat -->
+<div class="lg:col-span-8 space-y-6">
+<div class="bg-surface-container-lowest p-6 rounded-3xl shadow-sm border border-outline-variant/30">
+<h3 class="text-lg font-bold mb-8 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">history</span>
+                            Lịch sử xử lý &amp; Trao đổi
+                        </h3>
+<!-- Timeline -->
+<div class="relative space-y-8 before:absolute before:inset-0 before:ml-5 before:h-full before:w-0.5 before:bg-outline-variant/30">
+<!-- Step 1: Kitchen Confirmation -->
+<div class="relative flex items-start gap-4">
+<div class="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-secondary-container text-on-secondary-container ring-4 ring-surface">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+<div class="flex-1 bg-surface-container-low p-4 rounded-2xl border border-outline-variant/20">
+<div class="flex justify-between items-center mb-2">
+<h4 class="font-bold text-primary">Bộ phận Bếp (Nhà cung cấp)</h4>
+<span class="text-xs text-on-surface-variant">13:15, 24/10/2023</span>
+</div>
+<p class="text-sm">Đã nhận được thông tin phản ánh từ văn phòng nhà trường. Chúng tôi đang cho rà soát lại quy trình sơ chế và kiểm tra lô nguyên vật liệu cùng ca trực. Sẽ có báo cáo chi tiết trong 30 phút tới.</p>
+<div class="mt-2 flex items-center gap-2 text-xs text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-sm">person</span>
+                                        Ông Nguyễn Văn Nam - Quản lý Bếp
+                                    </div>
+</div>
+</div>
+<!-- Step 2: Management Response -->
+<div class="relative flex items-start gap-4">
+<div class="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-on-primary ring-4 ring-surface shadow-md">
+<span class="material-symbols-outlined">verified_user</span>
+</div>
+<div class="flex-1 bg-surface-container-low p-4 rounded-2xl border border-outline-variant/20">
+<div class="flex justify-between items-center mb-2">
+<h4 class="font-bold text-primary">Ban Quản lý Bán trú</h4>
+<span class="text-xs text-on-surface-variant">14:00, 24/10/2023</span>
+</div>
+<p class="text-sm">Nhà trường đã trực tiếp làm việc với đơn vị cung cấp suất ăn. Xác định vật thể lạ là một mẩu nhựa từ nắp hộp đựng rau trong quá trình vận chuyển bị nứt vỡ. Nhà trường đã yêu cầu đơn vị thay thế toàn bộ hộp đựng sang chất liệu inox để đảm bảo an toàn tuyệt đối.</p>
+<div class="mt-3 p-3 bg-white/50 rounded-xl border border-dashed border-primary/30 text-xs">
+<span class="font-bold block mb-1">Quyết định xử lý:</span>
+                                        - Đình chỉ nhân viên ca trực để tái đào tạo quy trình kiểm tra cuối. <br>
+                                        - Thay thế hệ thống khay/hộp nhựa sang Inox 304 từ ngày 26/10.
+                                    </div>
+<div class="mt-3 flex items-center gap-2 text-xs text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-sm">person</span>
+                                        Bà Lê Thị Hồng - Trưởng Ban Bán trú
+                                    </div>
+</div>
+</div>
+<!-- Parent Feedback (The Chat bubble style) -->
+<div class="relative flex items-start gap-4">
+<div class="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-tertiary-container text-on-tertiary-container ring-4 ring-surface">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div class="flex-1 bg-tertiary-container/10 p-4 rounded-2xl border border-tertiary-container/20">
+<div class="flex justify-between items-center mb-2">
+<h4 class="font-bold text-tertiary">Phụ huynh (Bạn)</h4>
+<span class="text-xs text-on-surface-variant">14:20, 24/10/2023</span>
+</div>
+<p class="text-sm">Cảm ơn nhà trường đã xử lý nhanh chóng. Tôi rất hoan nghênh việc thay đổi sang khay inox để đảm bảo vệ sinh hơn.</p>
+</div>
+</div>
+</div>
+<!-- Feedback Input Area -->
+<div class="mt-12 pt-8 border-t border-outline-variant">
+<h4 class="font-bold mb-4">Phản hồi thêm hoặc Đánh giá</h4>
+<div class="space-y-4">
+<div class="flex flex-wrap items-center gap-4 mb-4">
+<span class="text-sm font-medium">Mức độ hài lòng:</span>
+<div class="flex gap-1" id="star-rating">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors cursor-pointer" onclick="setRating(1)">star</button>
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors cursor-pointer" onclick="setRating(2)">star</button>
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors cursor-pointer" onclick="setRating(3)">star</button>
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors cursor-pointer" onclick="setRating(4)">star</button>
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors cursor-pointer" onclick="setRating(5)">star</button>
+</div>
+</div>
+<div class="relative">
+<textarea class="w-full bg-surface-container-low border-outline-variant rounded-2xl p-4 text-sm focus:ring-primary focus:border-primary min-h-[100px]" placeholder="Nhập ý kiến của bạn về cách giải quyết của nhà trường..."></textarea>
+</div>
+<div class="flex justify-end gap-3">
+<button class="px-6 py-2 rounded-full border border-outline text-on-surface font-medium hover:bg-surface-container transition-colors">Để sau</button>
+<button class="px-6 py-2 rounded-full bg-primary text-on-primary font-bold shadow-md hover:opacity-90 transition-opacity">Gửi phản hồi</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface/95 backdrop-blur-sm border-t border-outline-variant z-50 flex justify-around items-center py-2">
+<button class="flex flex-col items-center gap-1 text-on-surface-variant px-4 py-1">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-medium">Trang chủ</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant px-4 py-1">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span class="text-[10px] font-medium">Thực đơn</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary px-4 py-1">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">gpp_maybe</span>
+<span class="text-[10px] font-bold">Phản hồi</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant px-4 py-1">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="text-[10px] font-medium">Cá nhân</span>
+</button>
+</nav>
+<script>
+        function setRating(rating) {
+            const stars = document.querySelectorAll('#star-rating .material-symbols-outlined');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.style.fontVariationSettings = "'FILL' 1";
+                    star.classList.add('text-primary');
+                    star.classList.remove('text-outline');
+                } else {
+                    star.style.fontVariationSettings = "'FILL' 0";
+                    star.classList.remove('text-primary');
+                    star.classList.add('text-outline');
+                }
+            });
+        }
+    </script>
+</body></html>

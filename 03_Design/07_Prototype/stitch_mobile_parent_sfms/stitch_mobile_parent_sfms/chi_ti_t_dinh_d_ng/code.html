@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chi tiết Dinh dưỡng - SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #F8FAFC;
+            color: #0b1c30;
+        }
+        .medical-card {
+            background: white;
+            border: 1px solid #E2E8F0;
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+        }
+        .allergy-border {
+            border: 2px solid #ba1a1a;
+        }
+        .glass-header {
+            backdrop-filter: blur(8px);
+            background: rgba(248, 249, 255, 0.8);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "outline": "#6f787d",
+                      "outline-variant": "#bec8cd",
+                      "on-error-container": "#93000a",
+                      "surface-variant": "#d3e4fe",
+                      "on-tertiary-container": "#ffe9d4",
+                      "secondary-container": "#6cf8bb",
+                      "secondary-fixed": "#6ffbbe",
+                      "primary": "#005a71",
+                      "surface-container-lowest": "#ffffff",
+                      "on-background": "#0b1c30",
+                      "surface": "#f8f9ff",
+                      "on-tertiary": "#ffffff",
+                      "inverse-primary": "#81d1f0",
+                      "surface-dim": "#cbdbf5",
+                      "tertiary-container": "#965f00",
+                      "on-secondary-fixed": "#002113",
+                      "error-container": "#ffdad6",
+                      "inverse-on-surface": "#eaf1ff",
+                      "on-tertiary-fixed-variant": "#653e00",
+                      "surface-tint": "#006781",
+                      "tertiary": "#764900",
+                      "on-secondary": "#ffffff",
+                      "tertiary-fixed": "#ffddb8",
+                      "tertiary-fixed-dim": "#ffb95f",
+                      "surface-container-high": "#dce9ff",
+                      "error": "#ba1a1a",
+                      "primary-fixed-dim": "#81d1f0",
+                      "on-tertiary-fixed": "#2a1700",
+                      "on-error": "#ffffff",
+                      "on-primary-container": "#d3f1ff",
+                      "on-surface": "#0b1c30",
+                      "inverse-surface": "#213145",
+                      "on-secondary-container": "#00714d",
+                      "background": "#f8f9ff",
+                      "secondary": "#006c49",
+                      "primary-container": "#0e7490",
+                      "surface-container-low": "#eff4ff",
+                      "on-primary-fixed": "#001f29",
+                      "on-primary": "#ffffff",
+                      "surface-bright": "#f8f9ff",
+                      "surface-container": "#e5eeff",
+                      "primary-fixed": "#b9eaff",
+                      "on-primary-fixed-variant": "#004d62",
+                      "secondary-fixed-dim": "#4edea3",
+                      "on-surface-variant": "#3f484c",
+                      "on-secondary-fixed-variant": "#005236",
+                      "surface-container-highest": "#d3e4fe"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "4px",
+                      "section-margin": "24px",
+                      "container-padding": "16px",
+                      "element-gap": "12px",
+                      "grid-gutter": "16px"
+              },
+              "fontFamily": {
+                      "body-md": ["Be Vietnam Pro"],
+                      "headline-md": ["Be Vietnam Pro"],
+                      "label-sm": ["Be Vietnam Pro"],
+                      "headline-lg": ["Be Vietnam Pro"],
+                      "body-lg": ["Be Vietnam Pro"],
+                      "headline-lg-mobile": ["Be Vietnam Pro"]
+              },
+              "fontSize": {
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface pb-32">
+<!-- Top AppBar (from JSON) -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-container-padding h-14 bg-surface dark:bg-on-background border-b border-outline-variant dark:border-outline flat no shadows">
+<button class="flex items-center justify-center p-2 rounded-full hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">Chi tiết Món ăn</h1>
+<button class="flex items-center justify-center p-2 rounded-full hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed">notifications</span>
+</button>
+</header>
+<main class="pt-14 container mx-auto max-w-md">
+<!-- Food Image Section -->
+<div class="relative w-full h-72">
+<img class="w-full h-full object-cover" data-alt="A high-resolution, professional culinary photograph of a steaming bowl of traditional Vietnamese Pho Bo (Beef Noodle Soup). The dish is captured in a bright, medical-grade clean aesthetic with soft natural light. Thin slices of pinkish-brown beef are layered over white rice noodles in a clear, savory broth. Vibrant green scallions and fresh herbs garnish the top. The background is a clean, minimal slate-50 surface, emphasizing health, cleanliness, and nutritional clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOzlFRLBXfzNniDIv4hvfHQxIljTGsZLaHIixmftvMyhKZPfc3Tgg5kjpG8HxC5bhyhIvrS1SGFqFSt8w-fiiNW_unfmZOI8CXnBNTOvisvfDQb2bwzC1OUcbuSR-sUrkiUelfHs8z_BOh4lgATaq2Ov3TrDZ_g9bSD0bbh2YEdI_sC_I6lgmL4-tRHso54IKYtxxjNIgV1WTW9SbuvjlmUG03AbNEQdOqpkmeqAFlFYyI-INICuo0zwSNYhtzx89yTBSRJQ6e90M"/>
+<div class="absolute bottom-0 left-0 right-0 p-container-padding bg-gradient-to-t from-black/60 to-transparent">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-white">Phở Bò</h2>
+<p class="font-body-md text-body-md text-white/90">Ẩm thực truyền thống Việt Nam</p>
+</div>
+</div>
+<!-- Content Area -->
+<div class="px-container-padding -mt-6 relative z-10">
+<!-- Nutrition Summary (Bento Style) -->
+<div class="grid grid-cols-2 gap-grid-gutter mb-section-margin">
+<div class="medical-card p-4 flex flex-col justify-between h-32 bg-primary-container/10 border-primary-container/20">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase">Năng lượng</p>
+<p class="font-headline-md text-headline-md text-primary">350 kcal</p>
+</div>
+</div>
+<div class="medical-card p-4 flex flex-col justify-between h-32">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">fitness_center</span>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase">Chất đạm</p>
+<p class="font-headline-md text-headline-md text-on-surface">25g</p>
+</div>
+</div>
+<div class="medical-card p-4 flex flex-col justify-between h-32">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">opacity</span>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase">Chất béo</p>
+<p class="font-headline-md text-headline-md text-on-surface">12g</p>
+</div>
+</div>
+<div class="medical-card p-4 flex flex-col justify-between h-32">
+<span class="material-symbols-outlined text-outline" style="font-variation-settings: 'FILL' 1;">grain</span>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase">Tinh bột</p>
+<p class="font-headline-md text-headline-md text-on-surface">45g</p>
+</div>
+</div>
+</div>
+<!-- Allergy Alert Section (Critical) -->
+<div class="mb-section-margin p-4 bg-error-container border-2 border-error rounded-xl flex items-start gap-3">
+<span class="material-symbols-outlined text-error mt-0.5">warning</span>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-error-container text-[16px] leading-tight">Cảnh báo dị ứng</h3>
+<p class="font-body-md text-body-md text-on-error-container mt-1">Lưu ý: Chứa thành phần có thể gây dị ứng (Thịt bò). Vui lòng kiểm tra kỹ nếu con bạn có tiền sử mẫn cảm.</p>
+</div>
+</div>
+<!-- Ingredient Diary -->
+<div class="medical-card mb-section-margin overflow-hidden">
+<div class="bg-surface-container-low px-4 py-3 border-b border-outline-variant">
+<h3 class="font-headline-md text-headline-md text-on-surface text-[18px]">Nhật ký nguyên liệu</h3>
+</div>
+<div class="p-4 space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-body-lg text-body-lg">Thịt bò tươi</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Đạm chính</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-body-lg text-body-lg">Bánh phở</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Tinh bột</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-body-lg text-body-lg">Hành lá &amp; Rau thơm</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Vitamin</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-body-lg text-body-lg">Quế, Hồi, Gừng</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Gia vị</span>
+</div>
+</div>
+</div>
+<!-- Detailed Analysis Chart Placeholder -->
+<div class="medical-card p-6 mb-section-margin text-center">
+<h3 class="font-headline-md text-headline-md mb-4 text-[16px]">Cân bằng dinh dưỡng</h3>
+<div class="relative w-40 h-40 mx-auto mb-4">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-outline-variant" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-primary" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-dasharray="440" stroke-dashoffset="110" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-headline-lg text-headline-lg text-primary">75%</span>
+<span class="font-label-sm text-label-sm text-outline">Đạt chuẩn</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Món ăn này cung cấp đầy đủ các nhóm chất thiết yếu cho hoạt động buổi sáng của học sinh.</p>
+</div>
+</div>
+</main>
+<!-- Footer Action -->
+<div class="fixed bottom-16 left-0 right-0 p-container-padding bg-surface/80 backdrop-blur-md">
+<button class="w-full h-12 bg-primary text-white font-headline-md text-[16px] rounded-xl shadow-lg hover:bg-primary-container transition-all active:scale-[0.98]">
+            Gửi phản hồi về món ăn
+        </button>
+</div>
+<!-- Bottom NavBar (from JSON) -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-container-padding py-2 bg-surface dark:bg-on-background border-t border-outline-variant dark:border-outline flat no shadows">
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors active:scale-95 transition-transform">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Trang chủ</span>
+</div>
+<div class="flex flex-col items-center justify-center text-primary dark:text-secondary-fixed-dim font-bold hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors active:scale-95 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">restaurant_menu</span>
+<span class="font-label-sm text-label-sm">Thực đơn</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors active:scale-95 transition-transform">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-sm text-label-sm">Dinh dưỡng</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors active:scale-95 transition-transform">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Cá nhân</span>
+</div>
+</nav>
+<script>
+        // Micro-interaction for the feedback button
+        const feedbackBtn = document.querySelector('button.bg-primary');
+        feedbackBtn.addEventListener('click', () => {
+            feedbackBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Đang xử lý...';
+            setTimeout(() => {
+                feedbackBtn.innerHTML = 'Cảm ơn ý kiến của bạn!';
+                feedbackBtn.classList.replace('bg-primary', 'bg-secondary');
+                setTimeout(() => {
+                    feedbackBtn.innerHTML = 'Gửi phản hồi về món ăn';
+                    feedbackBtn.classList.replace('bg-secondary', 'bg-primary');
+                }, 3000);
+            }, 1000);
+        });
+
+        // Animation for the nutrition cards on scroll
+        const cards = document.querySelectorAll('.medical-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-4');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        cards.forEach(card => {
+            card.classList.add('transition-all', 'duration-500', 'opacity-0', 'translate-y-4');
+            observer.observe(card);
+        });
+    </script>
+</body></html>

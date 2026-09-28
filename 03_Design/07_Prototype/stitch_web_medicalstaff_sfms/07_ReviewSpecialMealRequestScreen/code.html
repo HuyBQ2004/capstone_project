@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Duyệt suất ăn đặc biệt</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-surface-variant": "#3f484c",
+                        "primary-fixed-dim": "#81d1f0",
+                        "inverse-primary": "#81d1f0",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-primary-fixed-variant": "#004d62",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#d9e3f6",
+                        "outline-variant": "#bec8cd",
+                        "primary-container": "#0e7490",
+                        "tertiary-container": "#686b6d",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-primary": "#ffffff",
+                        "surface": "#f8f9ff",
+                        "primary": "#005a71",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-tertiary-container": "#eaecee",
+                        "on-surface": "#121c2a",
+                        "on-tertiary-fixed": "#191c1e",
+                        "on-background": "#121c2a",
+                        "secondary": "#505f76",
+                        "tertiary-fixed": "#e0e3e5",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "surface-bright": "#f8f9ff",
+                        "on-secondary-container": "#54647a",
+                        "on-primary-container": "#d3f1ff",
+                        "tertiary": "#505355",
+                        "surface-tint": "#006781",
+                        "on-primary-fixed": "#001f29",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#dee9fc",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#27313f",
+                        "background": "#f8f9ff",
+                        "surface-container": "#e6eeff",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "surface-container-low": "#eff4ff",
+                        "surface-container-highest": "#d9e3f6",
+                        "secondary-container": "#d0e1fb",
+                        "primary-fixed": "#b9eaff",
+                        "surface-dim": "#d0dbed",
+                        "outline": "#6f787d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "topbar-height": "64px",
+                        "sidebar-width": "280px",
+                        "section-gap": "32px",
+                        "container-padding": "24px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Be Vietnam Pro"],
+                        "body-sm": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "h3": ["Be Vietnam Pro"],
+                        "h1": ["Be Vietnam Pro"],
+                        "h2": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "h3": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "h1": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased flex">
+<!-- Sidebar -->
+<nav class="w-[280px] h-screen fixed left-0 top-0 bg-surface-container-lowest dark:bg-inverse-surface border-r border-outline-variant dark:border-outline flex flex-col gap-2 p-4 z-40">
+<div class="flex items-center gap-3 mb-6 px-4 py-2">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">medical_information</span>
+<div>
+<h1 class="font-h2 text-h2 font-bold text-primary dark:text-primary-fixed-dim">sfms</h1>
+<p class="font-label-sm text-label-sm text-secondary">Hệ thống Y tế</p>
+</div>
+</div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-on-surface-variant/10 transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Trang chủ</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-on-surface-variant/10 transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">medical_services</span>
+<span class="font-label-md text-label-md">Hồ sơ sức khỏe</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed font-semibold transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">restaurant</span>
+<span class="font-label-md text-label-md">Suất ăn đặc biệt</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-on-surface-variant/10 transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">fact_check</span>
+<span class="font-label-md text-label-md">Kiểm tra vệ sinh</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-on-surface-variant/10 transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Lưu mẫu thực phẩm</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-on-surface-variant/10 transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">report_problem</span>
+<span class="font-label-md text-label-md">Quản lý vi phạm</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-on-surface-variant/10 transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">emergency</span>
+<span class="font-label-md text-label-md">Quản lý sự cố</span>
+</a>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="ml-sidebar-width flex-1 flex flex-col min-h-screen relative">
+<!-- Topbar -->
+<header class="h-16 fixed top-0 right-0 left-[280px] z-30 bg-surface/80 dark:bg-surface-container-lowest/80 backdrop-blur-md border-b border-outline-variant dark:border-outline shadow-sm flex items-center justify-between px-6">
+<div class="flex-1">
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-lg font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Tìm kiếm..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant cursor-pointer">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="A small, professional profile picture of a medical staff member in a clean, modern clinical setting with soft, high-key lighting. Focus on a subtle, trusting smile. Cool, neutral tones with a subtle cyan tint." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDA5MK2PjwrBejc_x43JNxW_SKUBMqFYeTWfvvJSg8uoMTwc5fepFCaBhDkfRdCLREGO0g-6A5Vl_bgINrHpyR1ROEm0zji5B93FnXmvionJlwvBvBwmbXodjBrGMiUqSjpSeR4KHHRFtSxhK0Eb0sANTjKBzYxJeAiTLDqA5cK7onG2eqj4fu5TT5bxvzbQKbQ0gV-EZU91QMek6GWdRrp5RHQh6v9eH31C5P1x-0owrMoJPKaxzLsNzaDmK6JiUfk15xbgjDAG5Y"/>
+</div>
+</div>
+</header>
+<!-- Page Content (Blurred Background for Overlay) -->
+<main class="mt-topbar-height p-container-padding flex-1 opacity-40 blur-[2px] pointer-events-none transition-all duration-300">
+<div class="flex justify-between items-end mb-section-gap">
+<div>
+<h2 class="font-h1 text-h1 text-on-background mb-2">Danh sách yêu cầu suất ăn đặc biệt</h2>
+<p class="font-body-sm text-body-sm text-secondary">Quản lý và phê duyệt các yêu cầu thay đổi khẩu phần ăn vì lý do y tế.</p>
+</div>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-md flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-sm">filter_list</span> Lọc danh sách
+                </button>
+</div>
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low border-b border-outline-variant">
+<tr>
+<th class="p-4 font-label-md text-label-md text-on-surface-variant">Học sinh</th>
+<th class="p-4 font-label-md text-label-md text-on-surface-variant">Lớp</th>
+<th class="p-4 font-label-md text-label-md text-on-surface-variant">Yêu cầu</th>
+<th class="p-4 font-label-md text-label-md text-on-surface-variant">Mức độ</th>
+<th class="p-4 font-label-md text-label-md text-on-surface-variant">Trạng thái</th>
+<th class="p-4 font-label-md text-label-md text-on-surface-variant text-right">Thao tác</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm">
+<tr class="border-b border-outline-variant/50 bg-slate-50">
+<td class="p-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold">N</div>
+<div>
+<div class="font-medium text-on-background">Nguyễn Văn A</div>
+<div class="text-secondary text-xs">HS-2023-0142</div>
+</div>
+</td>
+<td class="p-4 text-on-surface-variant">10A1</td>
+<td class="p-4 text-on-surface-variant">Không hải sản</td>
+<td class="p-4">
+<span class="px-2.5 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-[11px] border border-error-container/50">Cao</span>
+</td>
+<td class="p-4">
+<span class="px-2.5 py-0.5 rounded-full bg-[#fef08a] text-[#713f12] font-label-sm text-[11px] border border-[#fef08a]/50">Đang chờ duyệt</span>
+</td>
+<td class="p-4 text-right">
+<button class="text-primary hover:text-primary-container font-label-md">Xem chi tiết</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</main>
+</div>
+<!-- Backdrop -->
+<div class="fixed inset-0 bg-black/20 z-50 transition-opacity"></div>
+<!-- Side Sheet (Right Panel) -->
+<aside class="fixed top-0 right-0 h-screen w-[480px] bg-surface-container-lowest shadow-lg z-50 flex flex-col animate-[slideInRight_0.3s_ease-out] rounded-l-lg border-l border-outline-variant">
+<!-- Header -->
+<div class="flex items-center justify-between p-6 border-b border-outline-variant/50 bg-surface/50">
+<h2 class="font-h3 text-h3 text-on-background">Chi tiết yêu cầu suất ăn</h2>
+<button class="text-secondary hover:text-on-background transition-colors p-1 rounded-full hover:bg-surface-container">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-6 space-y-8">
+<!-- Student Info Card -->
+<div class="flex items-start gap-4">
+<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-surface-container shadow-sm">
+<img alt="Avatar Nguyễn Văn A" class="w-full h-full object-cover" data-alt="A portrait photograph of an Asian high school student boy in a standard white uniform shirt, looking forward with a neutral, calm expression. Bright, airy, and clinical lighting setting suitable for a school medical record profile picture. Clean background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaMuotj-64o6E6fN5ahj_ObCSvM1Hci32Gt8VOOfdb-lpBlI1tia7pIegNkkujbl3XOtiJb5QudsU9baZSQhUtnh_OinNUIxx4FeizOST_2dk234aDlMe8dc9L8eSL3hh4XPLua89MzDQOJBvDouft-g1piQmLL5gRQz6Rb1y-xpQ1b33qqEeoJ75TgccF4bPjZI78hmdHn4fZRZJAzF4qwpiYrtWDUBg2G8kpCFZGz6AYSblajDgRliPPoqa329G_lCqd243mynk"/>
+</div>
+<div>
+<h3 class="font-h2 text-[22px] text-on-background mb-1">Nguyễn Văn A</h3>
+<div class="flex flex-wrap gap-x-4 gap-y-2 font-body-sm text-secondary">
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[18px]">badge</span> Mã HS: HS-2023-0142</span>
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[18px]">class</span> Lớp: 10A1</span>
+</div>
+</div>
+</div>
+<!-- Medical Info -->
+<div class="bg-surface-container-low p-5 rounded-xl border border-outline-variant/30">
+<div class="flex items-center gap-2 mb-4 text-on-surface">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+<h4 class="font-label-md text-[15px] font-semibold">Cảnh báo Y tế</h4>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-start border-b border-outline-variant/20 pb-3">
+<span class="font-body-sm text-secondary">Dị ứng ghi nhận:</span>
+<div class="text-right">
+<span class="font-label-md text-on-background">Hải sản (Tôm, Cua)</span>
+</div>
+</div>
+<div class="flex justify-between items-center border-b border-outline-variant/20 pb-3">
+<span class="font-body-sm text-secondary">Mức độ nghiêm trọng:</span>
+<span class="px-3 py-1 rounded-full bg-error-container text-on-error-container font-label-sm text-[12px] flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">priority_high</span> Cao
+                        </span>
+</div>
+<div class="flex justify-between items-center pb-1">
+<span class="font-body-sm text-secondary">Đề xuất suất ăn:</span>
+<span class="font-label-md text-primary bg-primary-container/20 px-3 py-1 rounded-md">Suất ăn không hải sản</span>
+</div>
+</div>
+</div>
+<!-- Medical Reason -->
+<div>
+<h4 class="font-label-md text-on-surface-variant mb-2">Lý do y tế (Ghi chú từ bác sĩ/phụ huynh)</h4>
+<div class="bg-surface p-4 rounded-lg border border-outline-variant/50 font-body-sm text-on-background leading-relaxed shadow-inner">
+                    "Học sinh có tiền sử sốc phản vệ với protein trong tôm và cua biển. Cần loại bỏ hoàn toàn các món liên quan trong thực đơn bán trú. Đề nghị bếp ăn chú ý vấn đề lây nhiễm chéo dụng cụ."
+                </div>
+</div>
+<!-- History or Additional context could go here -->
+<div class="border-t border-outline-variant/30 pt-6">
+<h4 class="font-label-md text-on-surface-variant mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">history</span> Lịch sử yêu cầu
+                </h4>
+<div class="flex gap-4">
+<div class="w-1 bg-outline-variant/30 rounded-full my-2"></div>
+<div class="space-y-3 flex-1">
+<div class="font-body-sm">
+<div class="text-secondary text-xs mb-0.5">12/09/2023 - 08:30</div>
+<div class="text-on-background">Phụ huynh gửi yêu cầu qua cổng thông tin.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="p-6 border-t border-outline-variant bg-surface flex justify-end gap-3">
+<button class="px-5 py-2.5 rounded-lg border border-error text-error font-label-md hover:bg-error-container/20 transition-colors">
+                Từ chối
+            </button>
+<button class="px-5 py-2.5 rounded-lg bg-primary text-on-primary font-label-md shadow-sm hover:bg-primary/90 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">check_circle</span> Phê duyệt
+            </button>
+</div>
+</aside>
+<style>
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</body></html>

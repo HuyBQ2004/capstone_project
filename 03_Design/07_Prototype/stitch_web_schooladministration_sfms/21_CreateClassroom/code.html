@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tạo lớp học - SFMS</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container": "#eaedff",
+                      "tertiary-fixed": "#e0e3e5",
+                      "on-primary-fixed": "#001f29",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "error": "#ba1a1a",
+                      "surface-container-high": "#e2e7ff",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "on-primary-container": "#d3f1ff",
+                      "on-tertiary-fixed-variant": "#444749",
+                      "surface-bright": "#faf8ff",
+                      "surface-container-highest": "#dae2fd",
+                      "on-surface": "#131b2e",
+                      "on-secondary": "#ffffff",
+                      "tertiary": "#505355",
+                      "on-secondary-fixed": "#0b1c30",
+                      "secondary": "#505f76",
+                      "surface-tint": "#006781",
+                      "inverse-surface": "#283044",
+                      "on-background": "#131b2e",
+                      "on-secondary-container": "#54647a",
+                      "on-tertiary": "#ffffff",
+                      "outline": "#6f787d",
+                      "secondary-fixed": "#d3e4fe",
+                      "secondary-container": "#d0e1fb",
+                      "surface-dim": "#d2d9f4",
+                      "error-container": "#ffdad6",
+                      "outline-variant": "#bec8cd",
+                      "tertiary-fixed-dim": "#c4c7c9",
+                      "inverse-on-surface": "#eef0ff",
+                      "tertiary-container": "#686b6d",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary-fixed-variant": "#004d62",
+                      "background": "#faf8ff",
+                      "surface-variant": "#dae2fd",
+                      "primary": "#005a71",
+                      "on-tertiary-container": "#eaecee",
+                      "surface": "#faf8ff",
+                      "on-surface-variant": "#3f484c",
+                      "on-error-container": "#93000a",
+                      "primary-fixed-dim": "#81d1f0",
+                      "on-tertiary-fixed": "#191c1e",
+                      "on-error": "#ffffff",
+                      "surface-container-low": "#f2f3ff",
+                      "primary-container": "#0e7490",
+                      "on-primary": "#ffffff",
+                      "inverse-primary": "#81d1f0",
+                      "primary-fixed": "#b9eaff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "1rem",
+                      "container-max": "1400px",
+                      "gutter": "1rem",
+                      "margin-desktop": "2rem",
+                      "element-gap": "0.5rem",
+                      "stack-gap": "1.5rem"
+              },
+              "fontFamily": {
+                      "h3": [
+                              "Be Vietnam Pro"
+                      ],
+                      "label-md": [
+                              "Be Vietnam Pro"
+                      ],
+                      "caption": [
+                              "Be Vietnam Pro"
+                      ],
+                      "body-base": [
+                              "Be Vietnam Pro"
+                      ],
+                      "h1": [
+                              "Be Vietnam Pro"
+                      ],
+                      "h2": [
+                              "Be Vietnam Pro"
+                      ],
+                      "body-sm": [
+                              "Be Vietnam Pro"
+                      ],
+                      "label-sm": [
+                              "Be Vietnam Pro"
+                      ]
+              },
+              "fontSize": {
+                      "h3": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "caption": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-base": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "h1": [
+                              "30px",
+                              {
+                                      "lineHeight": "36px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "h2": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body-base min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-[280px] bg-surface-container-low dark:bg-surface-container-low border-r border-outline-variant dark:border-outline flex flex-col py-6 px-4 z-20 hidden md:flex">
+<div class="mb-8 px-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-on-primary font-bold text-lg">
+                    S
+                </div>
+<div>
+<h2 class="font-h3 text-h3 font-bold text-primary dark:text-primary-fixed leading-tight">SFMS</h2>
+<p class="font-caption text-caption text-on-surface-variant">Quản lý Suất ăn</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                    Tổng quan
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="handshake">handshake</span>
+                    Đối tác
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="restaurant_menu">restaurant_menu</span>
+                    Thực đơn
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary dark:text-primary-fixed-dim font-bold border-r-4 border-primary dark:border-primary-fixed-dim bg-secondary-container/30 opacity-90 transition-all duration-200 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="group" style="font-variation-settings: 'FILL' 1;">group</span>
+                    Lớp &amp; Học sinh
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="assignment_late">assignment_late</span>
+                    Sự cố &amp; Kiểm tra
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+                    Báo cáo &amp; Thống kê
+                </a>
+</nav>
+<div class="mt-auto px-4 pt-4 border-t border-outline-variant">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-medium">B</div>
+<div class="flex-1 overflow-hidden">
+<p class="font-label-sm text-label-sm text-on-surface truncate">Ban Giám Hiệu</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col md:ml-[280px] w-full min-h-screen bg-surface">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center h-16 px-margin-desktop bg-surface dark:bg-surface border-b border-outline-variant dark:border-outline z-10 w-full">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-on-surface-variant hover:bg-surface-container-low rounded-full p-2 transition-transform active:scale-95">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-h3 text-h3 font-bold text-primary dark:text-primary-fixed hidden md:block">SFMS - Classroom Management</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-on-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full p-2 transition-transform active:scale-95">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full p-2 transition-transform active:scale-95 relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full p-2 transition-transform active:scale-95">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full p-2 transition-transform active:scale-95">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Page Canvas -->
+<div class="flex-1 overflow-auto p-margin-mobile md:p-margin-desktop">
+<div class="max-w-2xl mx-auto w-full">
+<div class="mb-stack-gap flex items-center gap-3">
+<a class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center w-8 h-8 rounded-full hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined">arrow_back</span>
+</a>
+<h2 class="font-h1 text-h1 text-on-surface">Tạo lớp học mới</h2>
+</div>
+<!-- Critical Error Alert -->
+<div class="bg-error-container/20 border-l-4 border-error p-4 rounded-r-lg mb-stack-gap flex items-start gap-3">
+<span class="material-symbols-outlined text-error mt-0.5" data-icon="error" style="font-variation-settings: 'FILL' 1;">error</span>
+<div class="flex-1">
+<h4 class="font-label-md text-label-md text-error font-semibold mb-1">LỖI CHẶN</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-2">Hệ thống không có năm học nào đang hoạt động. Vui lòng tạo và kích hoạt năm học trước khi tạo lớp (MSG-081)</p>
+<a class="font-label-sm text-label-sm text-primary hover:underline flex items-center gap-1 w-max" href="#">
+                                Quản lý năm học
+                                <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Form Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
+<form class="flex flex-col gap-stack-gap">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-gap">
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-on-surface flex items-center gap-1">
+                                        Tên lớp <span class="text-error">*</span>
+</label>
+<input class="w-full h-10 px-3 rounded-lg border border-outline-variant bg-surface text-on-surface font-body-base focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-shadow" disabled="" placeholder="VD: 10A1" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-on-surface">Cấp lớp</label>
+<div class="relative">
+<select class="w-full h-10 px-3 rounded-lg border border-outline-variant bg-surface text-on-surface font-body-base focus:border-primary focus:ring-1 focus:ring-primary outline-none appearance-none transition-shadow disabled:bg-surface-container-low disabled:text-on-surface-variant" disabled="">
+<option disabled="" selected="" value="">Chọn cấp lớp</option>
+<option value="1">Lớp 1</option>
+<option value="2">Lớp 2</option>
+<option value="10">Lớp 10</option>
+<option value="11">Lớp 11</option>
+<option value="12">Lớp 12</option>
+</select>
+<div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-gap">
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-on-surface">Sức chứa tối đa</label>
+<input class="w-full h-10 px-3 rounded-lg border border-outline-variant bg-surface text-on-surface font-body-base focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-shadow disabled:bg-surface-container-low disabled:text-on-surface-variant" disabled="" type="number" value="40"/>
+<p class="font-caption text-caption text-on-surface-variant">Số lượng học sinh tối đa cho lớp này.</p>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-on-surface flex items-center gap-1">
+                                        Năm học <span class="text-error">*</span>
+</label>
+<div class="relative">
+<select class="w-full h-10 px-3 rounded-lg border border-error bg-error-container/10 text-on-surface font-body-base focus:border-error focus:ring-1 focus:ring-error outline-none appearance-none transition-shadow disabled:bg-surface-container-low disabled:text-on-surface-variant disabled:border-outline-variant" disabled="">
+<option disabled="" selected="" value="">Không có dữ liệu</option>
+</select>
+<div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+<p class="font-caption text-caption text-error">Vui lòng tạo năm học trước.</p>
+</div>
+</div>
+<div class="pt-6 border-t border-outline-variant flex justify-end gap-3">
+<button class="h-10 px-6 rounded-lg font-label-md text-label-md text-on-surface-variant border border-outline-variant hover:bg-surface-container-low transition-colors" type="button">
+                                    Hủy
+                                </button>
+<button class="h-10 px-6 rounded-lg font-label-md text-label-md text-on-primary bg-primary-container opacity-50 cursor-not-allowed transition-colors flex items-center gap-2" disabled="" type="button">
+                                    Tạo lớp
+                                </button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

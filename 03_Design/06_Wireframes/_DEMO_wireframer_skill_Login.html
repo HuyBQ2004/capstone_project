@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<title>DEMO wireframer-skill — Login (Guest & Common)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<style>
+  html { font-size: 18px; }
+  body {
+    margin: 0; font-size: 18px; font-family: 'Patrick Hand', cursive; color: #333;
+    background-image: radial-gradient(#d7d7d7 1px, transparent 1px);
+    background-size: 20px 20px;
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  }
+  .text-xs { font-size: 14px; line-height: 1.4; }
+  .text-sm { font-size: 18px; line-height: 1.5; }
+  .text-base { font-size: 22px; line-height: 1.5; }
+  .text-lg { font-size: 35px; line-height: 1.2; }
+
+  .card {
+    border: 2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    background: white;
+    width: 380px; padding: 32px 28px;
+  }
+  .brand { text-align: center; margin-bottom: 4px; }
+  .brand svg { width: 40px; height: 40px; }
+  h1.text-lg { text-align: center; margin: 8px 0 24px; }
+
+  .field { margin-bottom: 18px; }
+  .field-label { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+  .field-label svg { width: 18px; height: 18px; flex-shrink: 0; }
+  wired-input, wired-input * { width: 100%; box-sizing: border-box; }
+
+  .btn-primary {
+    background: #333; color: white; border: 2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family: 'Patrick Hand', cursive; font-size: 18px;
+    padding: 12px 28px; cursor: pointer; width: 100%; margin-top: 6px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn-secondary {
+    background: white; color: #333; border: 2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family: 'Patrick Hand', cursive; font-size: 18px;
+    padding: 12px 28px; cursor: pointer; width: 100%; margin-top: 10px;
+  }
+  .link-row { text-align: center; margin-top: 14px; }
+  a.sketch-link { color: #45607a; text-decoration: underline; cursor: pointer; }
+  .divider-row { display: flex; align-items: center; gap: 10px; margin: 18px 0 10px; color: #777; }
+  .divider-row wired-divider { flex: 1; }
+  .register-row { text-align: center; }
+  .register-row .text-xs { color: #555; }
+
+  .note {
+    position: fixed; top: 14px; left: 14px; right: 14px; text-align: center;
+    font-family: 'Caveat', cursive; font-size: 20px; color: #900;
+  }
+</style>
+</head>
+<body>
+
+<div class="note">⚠ DEMO minh hoạ wireframer-skill (agilek/wireframer-skill) — KHÔNG phải Screen Spec chính thức, chỉ để chứng minh khả năng dùng trong dự án SFMS. Nguồn field: 13_Guest_Common_Screen_Flow.md #5 Login.</div>
+
+<div class="card">
+  <div class="brand">
+    <!-- doodle-style padlock/shield mark thay logo thật -->
+    <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2 L21 6 V11 C21 16.5 17 20.5 12 22 C7 20.5 3 16.5 3 11 V6 Z"/>
+      <path d="M9 12 L11 14 L15 9" stroke-width="1.8"/>
+    </svg>
+  </div>
+  <h1 class="text-lg">SFMS — Đăng nhập</h1>
+
+  <div class="field">
+    <div class="field-label text-sm">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7 L12 13 L21 7"/>
+      </svg>
+      <span>Username / Email</span>
+    </div>
+    <wired-input placeholder="ten.nguoidung@truong.edu.vn"></wired-input>
+  </div>
+
+  <div class="field">
+    <div class="field-label text-sm">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11 V7 a4 4 0 0 1 8 0 v4"/>
+      </svg>
+      <span>Password</span>
+    </div>
+    <wired-input type="password" placeholder="••••••••"></wired-input>
+  </div>
+
+  <button class="btn-primary">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13 5 L20 12 L13 19"/><path d="M20 12 H4"/>
+    </svg>
+    Login
+  </button>
+
+  <div class="link-row text-sm">
+    <a class="sketch-link" href="#">Forgot Password?</a>
+  </div>
+
+  <div class="divider-row text-xs">
+    <wired-divider></wired-divider> hoặc <wired-divider></wired-divider>
+  </div>
+
+  <div class="register-row text-xs">
+    Chưa có tài khoản?
+    <a class="sketch-link" href="#">Register School</a> ·
+    <a class="sketch-link" href="#">Register Supplier</a> ·
+    <a class="sketch-link" href="#">Register Caterer</a>
+  </div>
+</div>
+
+</body>
+</html>

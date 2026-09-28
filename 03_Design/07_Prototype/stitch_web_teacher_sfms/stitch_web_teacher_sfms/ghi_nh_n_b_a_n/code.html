@@ -1,0 +1,411 @@
+<!DOCTYPE html><html class="light" lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>SFMS - Ghi nhận bữa ăn</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-pill-green { @apply bg-green-100 text-green-800 border-green-200 ring-2 ring-green-500; }
+        .active-pill-yellow { @apply bg-amber-100 text-amber-800 border-amber-200 ring-2 ring-amber-500; }
+        .active-pill-red { @apply bg-red-100 text-red-800 border-red-200 ring-2 ring-red-500; }
+        
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#191c1e",
+                        "primary": "#005a71",
+                        "inverse-primary": "#81d1f0",
+                        "on-surface": "#0b1c30",
+                        "outline-variant": "#bec8cd",
+                        "on-primary": "#ffffff",
+                        "background": "#f8f9ff",
+                        "on-primary-container": "#d3f1ff",
+                        "on-surface-variant": "#3f484c",
+                        "error-container": "#ffdad6",
+                        "inverse-surface": "#213145",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "on-background": "#0b1c30",
+                        "surface-bright": "#f8f9ff",
+                        "outline": "#6f787d",
+                        "primary-fixed": "#b9eaff",
+                        "on-primary-fixed": "#001f29",
+                        "tertiary-container": "#686b6d",
+                        "tertiary": "#505355",
+                        "surface": "#f8f9ff",
+                        "secondary-fixed": "#d8e3fb",
+                        "surface-container-low": "#eff4ff",
+                        "secondary": "#545f73",
+                        "surface-variant": "#d3e4fe",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#586377",
+                        "surface-tint": "#006781",
+                        "surface-container-highest": "#d3e4fe",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#eaecee",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "secondary-container": "#d5e0f8",
+                        "primary-fixed-dim": "#81d1f0",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "surface-container": "#e5eeff",
+                        "surface-dim": "#cbdbf5",
+                        "inverse-on-surface": "#eaf1ff",
+                        "primary-container": "#0e7490",
+                        "on-primary-fixed-variant": "#004d62",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "surface-container-high": "#dce9ff",
+                        "on-error-container": "#93000a",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed": "#111c2d",
+                        "tertiary-fixed": "#e0e3e5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "unit": "4px",
+                        "container-padding": "24px",
+                        "max-width-desktop": "1440px",
+                        "stack-lg": "32px",
+                        "stack-sm": "8px",
+                        "stack-md": "16px"
+                    },
+                    "fontSize": {
+                        "display-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "data-tabular": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 right-0 left-0 z-50 flex justify-between items-center px-container-padding h-16 bg-surface-bright dark:bg-inverse-surface shadow-sm">
+<div class="flex items-center gap-stack-md">
+<span class="text-title-sm font-title-sm text-primary dark:text-inverse-primary font-bold">SFMS</span>
+<div class="h-6 w-px bg-outline-variant hidden md:block"></div>
+<h1 class="text-body-md font-body-md text-on-surface-variant hidden md:block">Ghi nhận bữa ăn</h1>
+</div>
+<div class="flex items-center gap-stack-md">
+<div class="material-symbols-outlined text-on-surface-variant cursor-pointer p-2 hover:bg-surface-container-low rounded-full transition-colors">notifications</div>
+<div class="flex items-center gap-2 cursor-pointer p-1 pr-3 hover:bg-surface-container-low rounded-full transition-colors">
+<div class="material-symbols-outlined text-primary" data-weight="fill">account_circle</div>
+<span class="text-body-sm font-body-md font-medium">GV. Nguyễn Văn A</span>
+</div>
+</div>
+</header>
+<!-- Side Navigation Bar -->
+<nav class="fixed left-0 top-0 h-screen w-72 flex flex-col p-stack-md bg-surface-container-lowest dark:bg-inverse-surface border-r border-outline-variant dark:border-on-tertiary-fixed-variant hidden md:flex pt-20">
+<div class="flex flex-col gap-1 mb-8">
+<div class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container dark:hover:bg-on-tertiary-fixed-variant rounded-lg cursor-pointer transition-all active:scale-95 duration-150">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-body-md font-body-md">Bảng điều khiển</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container dark:hover:bg-on-tertiary-fixed-variant rounded-lg cursor-pointer transition-all active:scale-95 duration-150">
+<span class="material-symbols-outlined">group</span>
+<span class="text-body-md font-body-md">Danh sách học sinh</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container dark:hover:bg-on-tertiary-fixed-variant rounded-lg cursor-pointer transition-all active:scale-95 duration-150">
+<span class="material-symbols-outlined">restaurant</span>
+<span class="text-body-md font-body-md">Bữa ăn đặc biệt</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-primary dark:text-inverse-primary font-bold bg-secondary-container dark:bg-on-secondary-fixed-variant rounded-lg cursor-pointer transition-all active:scale-95 duration-150">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="text-body-md font-body-md">Ghi chép bữa ăn</span>
+</div>
+</div>
+<div class="mt-auto flex flex-col gap-1 border-t border-outline-variant pt-4">
+<div class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container dark:hover:bg-on-tertiary-fixed-variant rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-body-md font-body-md">Cài đặt</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container dark:hover:bg-on-tertiary-fixed-variant rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-body-md font-body-md">Đăng xuất</span>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="md:ml-72 pt-20 pb-32 px-container-padding">
+<!-- Header Section -->
+<div class="max-w-4xl mx-auto">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-label-caps font-label-caps">HÔM NAY</span>
+<span class="text-outline text-body-sm font-body-md">Thứ Sáu, 24/05/2024</span>
+</div>
+<h2 class="text-headline-md font-headline-md text-on-surface">Ghi nhận bữa ăn - Ngày 24/05/2024</h2>
+<p class="text-on-surface-variant text-body-md font-body-md mt-1">Lớp 1A • Thực đơn: Phở bò, Sữa hạt sen, Chuối</p>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 bg-surface-container-high text-on-surface px-4 py-2 rounded-lg text-body-sm font-medium hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_alt</span>
+                        Lọc học sinh
+                    </button>
+<button class="flex items-center gap-2 bg-surface-container-high text-on-surface px-4 py-2 rounded-lg text-body-sm font-medium hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-[18px]">history</span>
+                        Lịch sử
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Stats Section -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+<div class="bg-surface-container-lowest border border-outline-variant p-4 rounded-xl flex items-center gap-4 shadow-sm">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div>
+<p class="text-label-caps font-label-caps text-outline">SĨ SỐ</p>
+<p class="text-title-sm font-title-sm font-bold">32</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-4 rounded-xl flex items-center gap-4 shadow-sm border-l-4 border-l-green-500">
+<div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center text-green-600">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+<div>
+<p class="text-label-caps font-label-caps text-outline">ĐÃ ĂN HẾT</p>
+<p class="text-title-sm font-title-sm font-bold" id="total-finished">0</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-4 rounded-xl flex items-center gap-4 shadow-sm border-l-4 border-l-amber-500">
+<div class="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center text-amber-600">
+<span class="material-symbols-outlined">donut_large</span>
+</div>
+<div>
+<p class="text-label-caps font-label-caps text-outline">MỘT PHẦN</p>
+<p class="text-title-sm font-title-sm font-bold" id="total-partial">0</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-4 rounded-xl flex items-center gap-4 shadow-sm border-l-4 border-l-red-500">
+<div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-red-600">
+<span class="material-symbols-outlined">cancel</span>
+</div>
+<div>
+<p class="text-label-caps font-label-caps text-outline">KHÔNG ĂN</p>
+<p class="text-title-sm font-title-sm font-bold" id="total-skipped">0</p>
+</div>
+</div>
+</div>
+<!-- Student List - Table Container -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low border-b border-outline-variant sticky top-0 z-10">
+<tr>
+<th class="py-4 px-6 text-label-caps font-label-caps text-outline">HỌ VÀ TÊN</th>
+<th class="py-4 px-6 text-label-caps font-label-caps text-outline hidden md:table-cell">LƯU Ý SỨC KHỎE</th>
+<th class="py-4 px-6 text-label-caps font-label-caps text-outline text-right">MỨC ĐỘ TIÊU THỤ</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Student Row 1 -->
+<tr class="group hover:bg-surface-container transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-dim flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A clean, professional headshot of a young elementary student with a friendly expression, captured with soft lighting in a school setting, high-end commercial style for a digital healthcare portal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQo3oMXzQMwESSa7bNONMl_Ny36FI7D1t_B1VuprdFDZPOk-uA5P7cPTHDoR7si_hesahEeTZNhyIEC2v3R_HAe5oCmPsC6NVv5URP4cYv5EjBGAbm02ePvhAO5CXpwFEfSkVruGFbuH2YYTbi6ANkHjOcW9Z5mT-I2Mc901VwnkcBnJcR4TsnGHuoTDFVkpgMqHJa12Oq7aFEGlQ7VUP_7fH0ydpjFZ2MDTBJkzHYRr32V4CLZ-MnZkeyPq57Up34gQgeHm9ZTw">
+</div>
+<div>
+<p class="text-body-md font-semibold text-on-surface">Lê Minh Anh</p>
+<p class="text-body-sm text-on-surface-variant">ID: 10234</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 hidden md:table-cell">
+<span class="bg-red-50 text-red-700 px-2 py-1 rounded text-body-sm font-medium border border-red-100 inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+                                    Dị ứng hải sản
+                                </span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="inline-flex bg-surface-container-high p-1 rounded-lg gap-1">
+<button class="px-3 py-1.5 rounded-md text-body-sm font-medium border border-transparent transition-all hover:bg-white active:scale-95" onclick="updateStatus(this, 'green')">Ăn hết</button>
+<button class="px-3 py-1.5 rounded-md text-body-sm font-medium border border-transparent transition-all hover:bg-white active:scale-95" onclick="updateStatus(this, 'yellow')">Một phần</button>
+<button class="px-3 py-1.5 rounded-md text-body-sm font-medium border border-transparent transition-all hover:bg-white active:scale-95" onclick="updateStatus(this, 'red')">Không ăn</button>
+</div>
+</td>
+</tr>
+<!-- Student Row 2 -->
+<tr class="group hover:bg-surface-container transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-dim flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A high-quality professional portrait of a young girl in school uniform, bright and clear lighting, minimalist white background, soft depth of field for a modern administrative dashboard interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMRuHu5VDHfkeqYH9aRrXD0H_R2lisKtUYoqQAv_YWJWd0TchRrFD9xuoaDrA5lst3Bjy32Xxw5w5sOFkKICUNnYlErrGEq4prtBQMlaMY_QyQvBnhJfNcxmZslTbMYtUkDAxxZ1BpoFA0NWgoyX7U2Hdw9e-s1RKiBYz7CD9bZassBK1NAE0zSKm-XyMoulTL5mX6-oRdXB9pgNBeTjfjSZZAV1668fgV4Qx31MMrHBUZAXhhFZvIFGA_5GE1Gd6sKNS9zUvIAA">
+</div>
+<div>
+<p class="text-body-md font-semibold text-on-surface">Nguyễn Thu Hà</p>
+<p class="text-body-sm text-on-surface-variant">ID: 10235</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 hidden md:table-cell">
+<span class="bg-amber-50 text-amber-700 px-2 py-1 rounded text-body-sm font-medium border border-amber-100 inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">restaurant</span>
+                                    Ăn chay
+                                </span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="inline-flex bg-surface-container-high p-1 rounded-lg gap-1">
+<button class="px-3 py-1.5 rounded-md text-body-sm font-medium border border-transparent transition-all hover:bg-white active:scale-95" onclick="updateStatus(this, 'green')">Ăn hết</button>
+<button class="px-3 py-1.5 rounded-md text-body-sm font-medium border border-transparent transition-all hover:bg-white active:scale-95" onclick="updateStatus(this, 'yellow')">Một phần</button>
+<button class="px-3 py-1.5 rounded-md text-body-sm font-medium border border-transparent transition-all hover:bg-white active:scale-95" onclick="updateStatus(this, 'red')">Không ăn</button>
+</div>
+</td>
+</tr>
+<!-- Student Row 3 -->
+<tr class="group hover:bg-surface-container transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-dim flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close up portrait of a young boy smiling, clean studio lighting with soft shadows, modern aesthetic, professional school photography style for teacher administrative application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJlnMT8D6o6gKyySWwHJlgX6icEJ-xcjCCSE-oZ9RdOIeOWjq5Fw_K2e8-iO2BUPcly-BSePW2HYSBKRosbVgWqn9tQsk9o973ZT8GaqpPniBJiVEuHTtI7tpWvaINgVY5WUGNx0lXWttt1T0VRiKBtuBota8qtsk6YQKkRE_6E2CyTgMqcNO9cTLCyFtyDggFsqk0Q1ukPtcwDY4CDsVNp1fLW45WI0nWdkUIbWZWldoTw37-tirOfBBeRfR7sgnPWSguXMPhpA">
+</div>
+<div>
+<p class="text-body-md font-semibold text-on-surface">Trần Gia Bảo</p>
+<p class="text-body-sm text-on-surface-variant">ID: 10236</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 hidden md:table-cell">
+<span class="text-outline text-body-sm font-medium italic">Không có lưu ý</span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="inline-flex bg-surface-container-high p-1 rounded-lg gap-1">
+<button class="px-3 py-1.5 rounded-md text-body-sm font-medium border border-transparent transition-all hover:bg-white active:scale-95" onclick="updateStatus(this, 'green')">Ăn hết</button>
+<button class="px-3 py-1.5 rounded-md text-body-sm font-medium border border-transparent transition-all hover:bg-white active:scale-95" onclick="updateStatus(this, 'yellow')">Một phần</button>
+<button class="px-3 py-1.5 rounded-md text-body-sm font-medium border border-transparent transition-all hover:bg-white active:scale-95" onclick="updateStatus(this, 'red')">Không ăn</button>
+</div>
+</td>
+</tr>
+<!-- Student Row 4 -->
+<tr class="group hover:bg-surface-container transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-dim flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of an elementary student girl, soft natural light, clean white background, contemporary corporate medical style photography for school management platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2wS4B0bAXxbJG-qk8dD1JBNS_WkbYp6dRXrtzMKdLiApsxZGzU86rONiIl80S33bZsC6AEKMh5mxGtyzT1_mgz3q9Z3NisJbBz8wh8B0umIZg2lNIeC02KIugu9ABl-mTXHK68hdLO8eyu-u2VXb5KfoF0LVbbfnhNwn5zaP3Rql3Mb71eY7b278IHmrqI9ScL4rN2ZVOE8pCKelcUS5y5u2swBTh8svfNannSzrDPM1K6JjJenoQSRmlVesjjiUoGtmsA6ybTg">
+</div>
+<div>
+<p class="text-body-md font-semibold text-on-surface">Phạm Ngọc Ánh</p>
+<p class="text-body-sm text-on-surface-variant">ID: 10237</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 hidden md:table-cell">
+<span class="bg-red-50 text-red-700 px-2 py-1 rounded text-body-sm font-medium border border-red-100 inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+                                    Dị ứng đậu nành
+                                </span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="inline-flex bg-surface-container-high p-1 rounded-lg gap-1">
+<button class="px-3 py-1.5 rounded-md text-body-sm font-medium border border-transparent transition-all hover:bg-white active:scale-95" onclick="updateStatus(this, 'green')">Ăn hết</button>
+<button class="px-3 py-1.5 rounded-md text-body-sm font-medium border border-transparent transition-all hover:bg-white active:scale-95" onclick="updateStatus(this, 'yellow')">Một phần</button>
+<button class="px-3 py-1.5 rounded-md text-body-sm font-medium border border-transparent transition-all hover:bg-white active:scale-95" onclick="updateStatus(this, 'red')">Không ăn</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="p-6 bg-surface-container-low text-center">
+<button class="text-primary font-medium hover:underline text-body-md">Xem thêm 28 học sinh khác...</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Sticky Summary Button -->
+<div class="fixed bottom-0 left-0 right-0 md:left-72 p-stack-md bg-white/80 backdrop-blur-md border-t border-outline-variant z-40">
+<div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-green-500"></span>
+<span class="text-body-sm font-medium" id="bottom-summary-green">0 Ăn hết</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-amber-500"></span>
+<span class="text-body-sm font-medium" id="bottom-summary-yellow">0 Một phần</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-red-500"></span>
+<span class="text-body-sm font-medium" id="bottom-summary-red">0 Không ăn</span>
+</div>
+</div>
+<button class="w-full md:w-auto bg-primary text-on-primary px-8 py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:bg-primary-container transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined">send</span>
+                Hoàn tất &amp; Gửi báo cáo
+            </button>
+</div>
+</div>
+<!-- Micro-interactions Script -->
+<script>
+        const stats = {
+            green: 0,
+            yellow: 0,
+            red: 0
+        };
+
+        function updateStatus(button, color) {
+            const row = button.closest('tr');
+            const parent = button.parentElement;
+            const buttons = parent.querySelectorAll('button');
+            
+            // Revert previous status if any
+            buttons.forEach(btn => {
+                if (btn.classList.contains('active-pill-green')) stats.green--;
+                if (btn.classList.contains('active-pill-yellow')) stats.yellow--;
+                if (btn.classList.contains('active-pill-red')) stats.red--;
+                
+                btn.className = "px-3 py-1.5 rounded-md text-body-sm font-medium border border-transparent transition-all hover:bg-white active:scale-95";
+            });
+
+            // Apply new status
+            if (color === 'green') {
+                button.classList.add('active-pill-green');
+                stats.green++;
+            } else if (color === 'yellow') {
+                button.classList.add('active-pill-yellow');
+                stats.yellow++;
+            } else if (color === 'red') {
+                button.classList.add('active-pill-red');
+                stats.red++;
+            }
+
+            // Update UI Counters
+            document.getElementById('total-finished').innerText = stats.green;
+            document.getElementById('total-partial').innerText = stats.yellow;
+            document.getElementById('total-skipped').innerText = stats.red;
+            
+            document.getElementById('bottom-summary-green').innerText = `${stats.green} Ăn hết`;
+            document.getElementById('bottom-summary-yellow').innerText = `${stats.yellow} Một phần`;
+            document.getElementById('bottom-summary-red').innerText = `${stats.red} Không ăn`;
+
+            // Success feedback
+            const toast = document.createElement('div');
+            toast.className = "fixed bottom-32 left-1/2 -translate-x-1/2 bg-on-surface text-on-primary px-4 py-2 rounded-full text-body-sm z-[60] shadow-xl animate-bounce";
+            toast.innerText = "Đã lưu thay đổi";
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
+        }
+    </script>
+</body></html>

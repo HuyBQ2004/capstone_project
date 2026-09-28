@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tạo thông báo mới - SFMS Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#ffb86f",
+                        "primary": "#005a71",
+                        "on-surface-variant": "#3f484c",
+                        "surface-container-high": "#e6e8eb",
+                        "tertiary": "#794602",
+                        "on-primary-fixed": "#001f29",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#965e1c",
+                        "surface-container": "#ebeef0",
+                        "secondary-container": "#e0e3e5",
+                        "surface-dim": "#d7dadd",
+                        "background": "#f7fafc",
+                        "surface-bright": "#f7fafc",
+                        "on-tertiary-fixed": "#2c1600",
+                        "error": "#ba1a1a",
+                        "outline": "#6f787d",
+                        "on-primary-container": "#d3f1ff",
+                        "on-background": "#181c1e",
+                        "surface-variant": "#e0e3e5",
+                        "on-error": "#ffffff",
+                        "inverse-on-surface": "#eef1f3",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#0e7490",
+                        "outline-variant": "#bec8cd",
+                        "inverse-primary": "#81d1f0",
+                        "on-surface": "#181c1e",
+                        "on-primary-fixed-variant": "#004d62",
+                        "primary-fixed-dim": "#81d1f0",
+                        "surface-tint": "#006781",
+                        "on-tertiary-container": "#ffe8d6",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#c4c7c9",
+                        "secondary": "#5c5f61",
+                        "on-tertiary-fixed-variant": "#693c00",
+                        "on-secondary-fixed-variant": "#444749",
+                        "surface-container-low": "#f1f4f6",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#191c1e",
+                        "on-error-container": "#93000a",
+                        "surface": "#f7fafc",
+                        "primary-fixed": "#b9eaff",
+                        "inverse-surface": "#2d3133",
+                        "tertiary-fixed": "#ffdcbd",
+                        "secondary-fixed": "#e0e3e5",
+                        "on-secondary-container": "#626567"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sidebar-width": "260px",
+                        "gutter": "1rem",
+                        "section-gap": "1.5rem",
+                        "edge-margin": "2rem",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "h1": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "table-header": ["Be Vietnam Pro"],
+                        "label": ["Be Vietnam Pro"],
+                        "h3": ["Be Vietnam Pro"],
+                        "body-sm": ["Be Vietnam Pro"],
+                        "h2": ["Be Vietnam Pro"],
+                        "h1-mobile": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "h1": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "table-header": ["13px", { "lineHeight": "18px", "fontWeight": "600" }],
+                        "label": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "h3": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "h1-mobile": ["24px", { "lineHeight": "30px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-sm min-h-screen flex">
+<!-- SideNavBar (Shared Component) -->
+<nav class="bg-surface-container-low dark:bg-surface-dim font-h3 text-h3 font-label text-label font-body-sm text-body-sm docked fixed left-0 top-0 h-full w-sidebar-width border-r border-outline-variant dark:border-on-surface-variant flat no shadows flex flex-col h-screen w-[260px] py-6 overflow-y-auto hidden md:flex z-40">
+<div class="px-6 mb-8 flex items-center gap-3">
+<img alt="School Logo" class="w-10 h-10 object-contain rounded" data-alt="A clean, minimalist logo for a school management system. High-key lighting, corporate and modern aesthetic, deep blacks, crisp whites, and a touch of professional teal (#0E7490). The mood is efficient and reliable." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvys7fv_tAARXescuxEt64hVrR1zl_ZzBVETAbqwWmB-gje8yYIn9pYDuJDyDZGi8-H6b1mN-wUmfPKPP1U7Lk_XYEOVqRikje5bdje-VN59QSclKwlNIhc--ZvOo81jpGvnwY1UYz5WBNiEJJhOY42FyJWfkyydinf0kd8X-8VFvhBTz-sekg6hdFdQSyY4V9hVA0VNT2mB4KOI5-gUZDh-xfcAs5LhucvPufSSVb6n0DfzcZWKQm52LlZNp__gNHXyz6ku2z9HU"/>
+<div>
+<h1 class="font-h2 text-h2 font-bold text-primary dark:text-primary-fixed-dim">SFMS Admin</h1>
+<p class="font-label text-label text-on-surface-variant">District Portal</p>
+</div>
+</div>
+<div class="px-4 mb-6">
+<button class="w-full bg-primary-container text-on-primary rounded-lg py-2.5 font-label text-label font-semibold flex items-center justify-center gap-2 hover:bg-surface-tint transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                New Entry
+            </button>
+</div>
+<div class="flex-1 flex flex-col gap-1 px-2">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label text-label">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="handshake">handshake</span>
+<span class="font-label text-label">Partners</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="restaurant_menu">restaurant_menu</span>
+<span class="font-label text-label">Menu</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-label text-label">Classes &amp; Students</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="assignment_late">assignment_late</span>
+<span class="font-label text-label">Incidents &amp; Inspections</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span>
+<span class="font-label text-label">Reports &amp; Statistics</span>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-4 py-2 text-primary dark:text-primary-fixed-dim font-semibold border-l-4 border-primary dark:border-primary-fixed-dim bg-secondary-container/50 dark:bg-on-primary-fixed-variant/30 rounded-r-lg" href="#">
+<span class="material-symbols-outlined" data-icon="campaign" data-weight="fill" style="font-variation-settings: 'FILL' 1;">campaign</span>
+<span class="font-label text-label">Announcements &amp; Staff</span>
+</a>
+</div>
+<div class="mt-auto px-2 flex flex-col gap-1 border-t border-outline-variant/30 pt-4">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label text-label">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline-variant hover:text-error dark:hover:text-error-container hover:bg-error-container/20 transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label text-label">Logout</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<div class="flex-1 md:ml-[260px] flex flex-col min-h-screen">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-surface-container-lowest dark:bg-surface-dim text-primary dark:text-primary-fixed-dim font-h2 text-h2 font-label text-label font-body-lg text-body-lg border-b border-outline-variant dark:border-on-surface-variant shadow-sm dark:shadow-none flex justify-between items-center h-16 px-8 sticky top-0 z-30 transition-all duration-200 ease-in-out">
+<div class="flex items-center gap-6">
+<h2 class="font-h3 text-h3 font-semibold text-on-surface dark:text-surface-bright hidden sm:block">Announcement Management</h2>
+<div class="relative hidden lg:block w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="w-full pl-9 pr-4 py-1.5 bg-surface-container-low border border-outline-variant rounded-full font-body-sm text-body-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary-container text-on-primary px-4 py-1.5 rounded-lg font-label text-label font-medium hover:bg-surface-tint transition-colors shadow-sm hidden sm:block">
+                    Create Announcement
+                </button>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<button class="p-2 hover:text-primary hover:bg-surface-container-high rounded-full transition-colors cursor-pointer flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 hover:text-primary hover:bg-surface-container-high rounded-full transition-colors cursor-pointer flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant overflow-hidden cursor-pointer">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a school administrator. High-key lighting, bright and modern office background out of focus. Corporate aesthetic, realistic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmbRbeeQAIMpZnCQ9r9-kvMJU-auu20msb0iqf6NBcOn7gqkVFtLqxmcCNjXdKcNY3gXNEaWKRi5TQ9ljSRV9KGydTh4j82TyQ_fhmgvGeyF82qbCoqLgp8Lf66r9Dp-Zf0QcxIm2Lnf3MVDyQWMB69hydcBJWzuJFe9376UtaFqimUdatdDhp-1sSbj9uG1osnRJfOkDxerxARbKuBTeMr0ZyyuvNoXmxF4v53tMgXqb2T3onvlSJjr4dscxqWkbOtWN06iNvBkE"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<main class="flex-1 p-gutter md:p-edge-margin lg:p-8 max-w-container-max mx-auto w-full">
+<!-- Breadcrumb & Title -->
+<div class="mb-section-gap">
+<nav aria-label="Breadcrumb" class="flex text-on-surface-variant font-label text-label mb-2">
+<ol class="inline-flex items-center space-x-1 md:space-x-2">
+<li class="inline-flex items-center">
+<a class="hover:text-primary transition-colors" href="#">Announcements</a>
+</li>
+<li>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-[16px] mx-1">chevron_right</span>
+<span class="text-on-surface">Tạo thông báo mới</span>
+</div>
+</li>
+</ol>
+</nav>
+<div class="flex items-center justify-between">
+<h1 class="font-h1 text-h1 text-on-surface">Tạo thông báo mới</h1>
+</div>
+</div>
+<!-- Bento-style Form Layout -->
+<form class="grid grid-cols-1 xl:grid-cols-12 gap-section-gap items-start">
+<!-- Main Form Area (Left / Main) -->
+<div class="xl:col-span-8 flex flex-col gap-section-gap">
+<!-- Content Card -->
+<div class="bg-surface-container-lowest border border-surface-variant rounded-xl shadow-sm p-6 overflow-hidden relative">
+<!-- Decorative top accent -->
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-container to-inverse-primary"></div>
+<div class="mb-6 border-b border-surface-variant pb-4">
+<h3 class="font-h3 text-h3 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">edit_document</span>
+                                Nội dung thông báo
+                            </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Điền đầy đủ thông tin để truyền đạt rõ ràng đến người nhận.</p>
+</div>
+<div class="space-y-6">
+<!-- Title Input -->
+<div>
+<label class="block font-label text-label text-on-surface mb-2" for="title">
+                                    Tiêu đề <span class="text-error">*</span>
+</label>
+<input class="w-full px-4 py-2.5 bg-surface border border-outline-variant rounded-lg font-body-lg text-body-lg text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" id="title" name="title" placeholder="Nhập tiêu đề thông báo..." required="" type="text"/>
+</div>
+<!-- Rich Text Editor (Mock) -->
+<div>
+<label class="block font-label text-label text-on-surface mb-2" for="content">
+                                    Nội dung chi tiết <span class="text-error">*</span>
+</label>
+<div class="border border-outline-variant rounded-lg overflow-hidden flex flex-col focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all bg-surface">
+<!-- Toolbar -->
+<div class="bg-surface-container-low border-b border-outline-variant p-2 flex flex-wrap gap-1 items-center">
+<button class="p-1.5 hover:bg-surface-container-high rounded text-on-surface-variant transition-colors" title="Bold" type="button">
+<span class="material-symbols-outlined text-[18px]">format_bold</span>
+</button>
+<button class="p-1.5 hover:bg-surface-container-high rounded text-on-surface-variant transition-colors" title="Italic" type="button">
+<span class="material-symbols-outlined text-[18px]">format_italic</span>
+</button>
+<button class="p-1.5 hover:bg-surface-container-high rounded text-on-surface-variant transition-colors" title="Underline" type="button">
+<span class="material-symbols-outlined text-[18px]">format_underlined</span>
+</button>
+<div class="w-px h-5 bg-outline-variant mx-1"></div>
+<button class="p-1.5 hover:bg-surface-container-high rounded text-on-surface-variant transition-colors" title="Bullet List" type="button">
+<span class="material-symbols-outlined text-[18px]">format_list_bulleted</span>
+</button>
+<button class="p-1.5 hover:bg-surface-container-high rounded text-on-surface-variant transition-colors" title="Numbered List" type="button">
+<span class="material-symbols-outlined text-[18px]">format_list_numbered</span>
+</button>
+<div class="w-px h-5 bg-outline-variant mx-1"></div>
+<button class="p-1.5 hover:bg-surface-container-high rounded text-on-surface-variant transition-colors" title="Link" type="button">
+<span class="material-symbols-outlined text-[18px]">link</span>
+</button>
+<button class="p-1.5 hover:bg-surface-container-high rounded text-on-surface-variant transition-colors" title="Image" type="button">
+<span class="material-symbols-outlined text-[18px]">image</span>
+</button>
+</div>
+<!-- Editor Area -->
+<textarea class="w-full p-4 bg-transparent border-none resize-y font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:ring-0" id="content" name="content" placeholder="Nhập nội dung chi tiết tại đây..." required="" rows="10"></textarea>
+</div>
+</div>
+<!-- Attachments (Optional, subtle UI addition for completeness) -->
+<div>
+<label class="block font-label text-label text-on-surface mb-2">Đính kèm tệp</label>
+<div class="border-2 border-dashed border-outline-variant rounded-lg p-6 flex flex-col items-center justify-center bg-surface-container-lowest hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center mb-3 group-hover:bg-primary-container/10 transition-colors">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">cloud_upload</span>
+</div>
+<p class="font-label text-label text-on-surface">Kéo thả tệp vào đây hoặc <span class="text-primary font-semibold">tải lên</span></p>
+<p class="font-body-sm text-[11px] text-on-surface-variant mt-1">Hỗ trợ PDF, DOCX, JPG, PNG (Tối đa 10MB)</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Settings & Publish Area (Right / Sidebar) -->
+<div class="xl:col-span-4 flex flex-col gap-section-gap">
+<!-- Recipients Card -->
+<div class="bg-surface-container-lowest border border-surface-variant rounded-xl shadow-sm p-6">
+<div class="mb-4 border-b border-surface-variant pb-4">
+<h3 class="font-h3 text-h3 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">group</span>
+                                Đối tượng nhận
+                            </h3>
+</div>
+<div class="space-y-3">
+<label class="flex items-center gap-3 p-3 rounded-lg border border-surface-variant hover:border-primary/50 hover:bg-surface-container-low cursor-pointer transition-all">
+<input class="w-4 h-4 text-primary bg-surface border-outline-variant rounded focus:ring-primary focus:ring-2 focus:ring-offset-0" name="recipients" type="checkbox" value="parents"/>
+<div class="flex-1">
+<span class="block font-label text-label text-on-surface">Phụ huynh</span>
+<span class="block font-body-sm text-[11px] text-on-surface-variant">Tất cả phụ huynh học sinh</span>
+</div>
+</label>
+<label class="flex items-center gap-3 p-3 rounded-lg border border-surface-variant hover:border-primary/50 hover:bg-surface-container-low cursor-pointer transition-all">
+<input class="w-4 h-4 text-primary bg-surface border-outline-variant rounded focus:ring-primary focus:ring-2 focus:ring-offset-0" name="recipients" type="checkbox" value="teachers"/>
+<div class="flex-1">
+<span class="block font-label text-label text-on-surface">Giáo viên</span>
+<span class="block font-body-sm text-[11px] text-on-surface-variant">Giáo viên chủ nhiệm &amp; bộ môn</span>
+</div>
+</label>
+<label class="flex items-center gap-3 p-3 rounded-lg border border-surface-variant hover:border-primary/50 hover:bg-surface-container-low cursor-pointer transition-all">
+<input class="w-4 h-4 text-primary bg-surface border-outline-variant rounded focus:ring-primary focus:ring-2 focus:ring-offset-0" name="recipients" type="checkbox" value="kitchen"/>
+<div class="flex-1">
+<span class="block font-label text-label text-on-surface">Đối tác bếp ăn</span>
+<span class="block font-body-sm text-[11px] text-on-surface-variant">Nhà cung cấp suất ăn</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Publish Status Card -->
+<div class="bg-surface-container-lowest border border-surface-variant rounded-xl shadow-sm p-6">
+<div class="mb-4 border-b border-surface-variant pb-4">
+<h3 class="font-h3 text-h3 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">publish</span>
+                                Trạng thái xuất bản
+                            </h3>
+</div>
+<div class="space-y-4">
+<div class="flex flex-col gap-3">
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="pt-0.5">
+<input checked="" class="w-4 h-4 text-primary bg-surface border-outline-variant focus:ring-primary focus:ring-2 focus:ring-offset-0" name="status" type="radio" value="draft"/>
+</div>
+<div>
+<span class="block font-label text-label text-on-surface group-hover:text-primary transition-colors">Bản nháp (Draft)</span>
+<span class="block font-body-sm text-[12px] text-on-surface-variant mt-0.5">Lưu để chỉnh sửa sau, không gửi đi.</span>
+</div>
+</label>
+<label class="flex items-start gap-3 cursor-pointer group bg-primary-fixed/30 dark:bg-primary-fixed-dim/10 p-3 rounded-lg border border-primary/20">
+<div class="pt-0.5">
+<input class="w-4 h-4 text-primary bg-surface border-outline-variant focus:ring-primary focus:ring-2 focus:ring-offset-0" name="status" type="radio" value="publish"/>
+</div>
+<div>
+<span class="block font-label text-label text-on-surface font-semibold group-hover:text-primary transition-colors">Xuất bản ngay</span>
+<span class="block font-body-sm text-[12px] text-on-surface-variant mt-1 flex items-start gap-1">
+<span class="material-symbols-outlined text-[14px] text-tertiary-container mt-0.5">info</span>
+<span class="text-tertiary-container dark:text-tertiary-fixed-dim leading-tight">Khi xuất bản ngay, thông báo sẽ được gửi real-time tức thì đến điện thoại của người dùng.</span>
+</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-3 mt-2 justify-end xl:justify-start">
+<button class="px-5 py-2.5 rounded-lg border border-outline-variant text-on-surface font-label text-label font-semibold hover:bg-surface-container-high transition-colors focus:ring-2 focus:ring-outline-variant/50" type="button">
+                            Hủy
+                        </button>
+<button class="flex-1 px-5 py-2.5 rounded-lg bg-primary-container text-on-primary font-label text-label font-semibold hover:bg-surface-tint shadow-sm transition-all focus:ring-2 focus:ring-primary/50 flex items-center justify-center gap-2 active:scale-[0.98]" type="submit">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                            Lưu thông báo
+                        </button>
+</div>
+</div>
+</form>
+</main>
+</div>
+</body></html>

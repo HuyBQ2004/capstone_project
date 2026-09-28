@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SFMS - Chi tiết vi phạm</title>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#004d62",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#81d1f0",
+                        "surface-container-high": "#e2e7ff",
+                        "surface": "#faf8ff",
+                        "on-secondary-container": "#54647a",
+                        "surface-tint": "#006781",
+                        "secondary-container": "#d0e1fb",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-background": "#131b2e",
+                        "primary": "#005a71",
+                        "tertiary-fixed": "#dfe3e7",
+                        "tertiary": "#4e5356",
+                        "surface-container-highest": "#dae2fd",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#131b2e",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#283044",
+                        "surface-container-low": "#f2f3ff",
+                        "secondary-fixed": "#d3e4fe",
+                        "error-container": "#ffdad6",
+                        "inverse-on-surface": "#eef0ff",
+                        "on-surface-variant": "#3f484c",
+                        "primary-container": "#0e7490",
+                        "primary-fixed-dim": "#81d1f0",
+                        "on-primary-container": "#d3f1ff",
+                        "primary-fixed": "#b9eaff",
+                        "surface-variant": "#dae2fd",
+                        "surface-dim": "#d2d9f4",
+                        "tertiary-container": "#666b6f",
+                        "outline-variant": "#bec8cd",
+                        "outline": "#6f787d",
+                        "tertiary-fixed-dim": "#c3c7cb",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "secondary": "#505f76",
+                        "surface-container": "#eaedff",
+                        "surface-bright": "#faf8ff",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#171c1f",
+                        "on-primary-fixed": "#001f29",
+                        "on-tertiary-fixed-variant": "#43474b",
+                        "on-tertiary": "#ffffff",
+                        "background": "#faf8ff",
+                        "on-tertiary-container": "#e8edf1",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "element-gap": "0.5rem",
+                        "container-padding": "2rem",
+                        "gutter": "1rem",
+                        "section-gap": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "h2": ["Be Vietnam Pro"],
+                        "body-base": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "h1-mobile": ["Be Vietnam Pro"],
+                        "h3": ["Be Vietnam Pro"],
+                        "h1": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-base": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "h1-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "h3": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "h1": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #bec8cd; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #6f787d; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface h-screen w-screen overflow-hidden flex">
+<!-- App Shell: SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-[280px] bg-surface border-r border-outline-variant flex flex-col p-4 gap-2 z-40">
+<!-- Brand / Header -->
+<div class="flex items-center gap-3 px-4 py-6 mb-4">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined font-bold">school</span>
+</div>
+<div>
+<h1 class="font-h2 text-h2 font-bold text-primary">SFMS</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">School Food Management</p>
+</div>
+</div>
+<!-- Navigation Tabs -->
+<nav class="flex flex-col gap-1 flex-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Tổng quan</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">handshake</span>
+<span class="font-label-md text-label-md">Đối tác</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span class="font-label-md text-label-md">Thực đơn</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-label-md text-label-md">Lớp &amp; Học sinh</span>
+</a>
+<!-- Active Tab -->
+<a class="flex items-center gap-3 px-4 py-3 text-primary font-bold bg-secondary-container rounded-lg transition-transform active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">report_problem</span>
+<span class="font-label-md text-label-md">Quản lý vi phạm</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Báo cáo &amp; Thống kê</span>
+</a>
+</nav>
+</aside>
+<!-- App Shell: TopAppBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-280px)] h-16 bg-surface border-b border-outline-variant shadow-sm flex justify-between items-center px-6 z-30">
+<!-- Search Bar -->
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full h-10 pl-10 pr-4 bg-surface-container-low border border-outline-variant rounded-lg font-body-base text-body-base text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Tìm kiếm vi phạm, đối tác..." type="text"/>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-4 text-on-surface-variant">
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="flex items-center gap-2 p-1 rounded-full hover:bg-surface-container-low transition-colors">
+<img alt="Avatar" class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="A small circular profile picture of an administrative user, professional corporate style, headshot." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNiwIGPeAdghbrSVtjQ_PrAw2uYdyAQ9ATyPPVxvucrTAOKNifNWl2EtkVRgYzYONMcXNLPvQY0-XKPF4ykHwyAM9bA7G2dRXnXjqbMvQwS29ZixCApLHrXMSVGP0tEuNVC0mGv2mTX8Jc3PwafVEVny_QkV1sC8EghgG_f3ikyXMyOF-qswR6Lt-uLnacEaC7-tg0zppIXRpGHO6PR1UmmiCYPT7PYiqVAnwGfgQJVYh68vAxP8OFIWBSxjPBBquT3u6dmOBDh9w"/>
+<span class="material-symbols-outlined">arrow_drop_down</span>
+</button>
+</div>
+</header>
+<!-- Main Background Content Canvas -->
+<main class="ml-[280px] pt-16 w-[calc(100%-280px)] h-full overflow-y-auto bg-background p-container-padding">
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-section-gap">
+<div>
+<h2 class="font-h2 text-h2 text-on-surface mb-1">Quản lý vi phạm</h2>
+<p class="font-body-base text-body-base text-secondary">Theo dõi và xử lý các sự cố an toàn thực phẩm.</p>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-surface-tint transition-colors shadow-sm">
+<span class="material-symbols-outlined">add</span>
+                Tạo báo cáo mới
+            </button>
+</div>
+<!-- Dummy Data Table (Background Context) -->
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden shadow-[0_1px_2px_0_rgb(0,0,0,0.05)]">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-lowest border-b border-outline-variant">
+<th class="py-3 px-4 font-label-md text-label-md text-secondary">Mã Lỗi</th>
+<th class="py-3 px-4 font-label-md text-label-md text-secondary">Tên Lỗi</th>
+<th class="py-3 px-4 font-label-md text-label-md text-secondary">Mức Độ</th>
+<th class="py-3 px-4 font-label-md text-label-md text-secondary">Trạng Thái</th>
+<th class="py-3 px-4 font-label-md text-label-md text-secondary">Ngày Ghi Nhận</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors cursor-pointer bg-surface-container-low">
+<td class="py-3 px-4 font-label-md text-label-md text-on-surface">#VIO-2023-089</td>
+<td class="py-3 px-4 font-body-base text-body-base text-on-surface">Nhiệt độ tủ bảo quản thực phẩm quá cao</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-1 rounded-md bg-error-container text-on-error-container font-label-sm text-label-sm">Nghiêm trọng</span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-1 rounded-md border border-outline-variant text-secondary font-label-sm text-label-sm">Chờ xử lý</span>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm text-secondary">15/10/2023 09:30</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors cursor-pointer">
+<td class="py-3 px-4 font-label-md text-label-md text-on-surface">#VIO-2023-088</td>
+<td class="py-3 px-4 font-body-base text-body-base text-on-surface">Nhân viên không đeo găng tay khi chia suất</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-1 rounded-md bg-[#FEF3C7] text-[#92400E] font-label-sm text-label-sm">Trung bình</span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-1 rounded-md bg-primary-container/20 text-primary font-label-sm text-label-sm">Đang khắc phục</span>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm text-secondary">14/10/2023 11:15</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer">
+<td class="py-3 px-4 font-label-md text-label-md text-on-surface">#VIO-2023-087</td>
+<td class="py-3 px-4 font-body-base text-body-base text-on-surface">Sàn khu vực sơ chế đọng nước</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-1 rounded-md bg-surface-container text-secondary font-label-sm text-label-sm">Thấp</span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-1 rounded-md bg-[#D1FAE5] text-[#065F46] font-label-sm text-label-sm">Đã giải quyết</span>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm text-secondary">13/10/2023 14:00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</main>
+<!-- RIGHT SHEET OVERLAY (The core focus of UC-139) -->
+<!-- Container covering whole screen, z-index higher than top bar -->
+<div aria-modal="true" class="fixed inset-0 z-50 overflow-hidden flex justify-end" role="dialog">
+<!-- Backdrop (Dimmed background) -->
+<div class="absolute inset-0 bg-on-background/30 backdrop-blur-[2px] transition-opacity"></div>
+<!-- Sheet Panel -->
+<div class="relative w-full max-w-[480px] h-full bg-surface shadow-2xl border-l border-outline-variant flex flex-col transform transition-transform translate-x-0">
+<!-- Sheet Header -->
+<div class="px-6 py-5 border-b border-outline-variant flex justify-between items-center bg-surface-container-lowest">
+<div>
+<h3 class="font-h3 text-h3 text-on-surface">Chi tiết lỗi vi phạm</h3>
+<p class="font-label-sm text-label-sm text-secondary mt-1 tracking-wider uppercase">#VIO-2023-089</p>
+</div>
+<button aria-label="Close panel" class="p-2 rounded-full hover:bg-surface-container-low text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Sheet Body (Scrollable Content) -->
+<div class="flex-1 overflow-y-auto p-6 flex flex-col gap-section-gap">
+<!-- Severity & Status -->
+<div class="flex gap-2">
+<span class="inline-flex items-center px-2.5 py-1 rounded-md bg-error-container text-on-error-container font-label-sm text-label-sm border border-error/20 shadow-sm">
+<span class="material-symbols-outlined text-[14px] mr-1">warning</span>
+                        Nghiêm trọng
+                    </span>
+<span class="inline-flex items-center px-2.5 py-1 rounded-md border border-outline-variant text-secondary font-label-sm text-label-sm bg-surface">
+<span class="material-symbols-outlined text-[14px] mr-1">pending_actions</span>
+                        Chờ xử lý
+                    </span>
+</div>
+<!-- Violation Name & Description -->
+<div>
+<h4 class="font-h3 text-h3 text-on-surface mb-2 leading-snug">Nhiệt độ tủ bảo quản thực phẩm quá cao</h4>
+<p class="font-body-base text-body-base text-secondary bg-surface-container-low p-4 rounded-lg border border-outline-variant/50">
+                        Tủ lạnh số 03 tại bếp phụ hiển thị 9°C (vượt mức 4°C cho phép). Nguy cơ làm hỏng lô thịt tươi nhập sáng nay.
+                    </p>
+</div>
+<!-- Metadata List (Bento-style property grid) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="grid grid-cols-3 border-b border-outline-variant/50 p-4">
+<span class="col-span-1 font-label-sm text-label-sm text-secondary self-center">Ngày ghi nhận</span>
+<span class="col-span-2 font-body-base text-body-base text-on-surface font-medium">15/10/2023 09:30</span>
+</div>
+<div class="grid grid-cols-3 border-b border-outline-variant/50 p-4">
+<span class="col-span-1 font-label-sm text-label-sm text-secondary self-center">Người phát hiện</span>
+<div class="col-span-2 flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-sm text-label-sm">BS</div>
+<div>
+<p class="font-body-base text-body-base text-on-surface font-medium">BS. Nguyễn Văn Tám</p>
+<p class="font-label-sm text-label-sm text-secondary">Nhân viên y tế</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-3 p-4">
+<span class="col-span-1 font-label-sm text-label-sm text-secondary self-center">Khu vực</span>
+<span class="col-span-2 font-body-base text-body-base text-on-surface">Bếp phụ - Khu bảo quản lạnh</span>
+</div>
+</div>
+<!-- Evidence Section (Images) -->
+<div>
+<h5 class="font-label-md text-label-md text-on-surface mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">photo_camera</span>
+                        Bằng chứng vi phạm
+                    </h5>
+<!-- Image Grid / Carousel Simulation -->
+<div class="flex flex-col gap-2">
+<!-- Main large evidence photo -->
+<div class="relative w-full h-48 rounded-lg overflow-hidden border border-outline-variant group cursor-zoom-in">
+<img alt="Nhiệt kế điện tử 9 độ C" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="A close-up photograph of a commercial refrigerator's digital control panel in a kitchen setting. The LED screen displays '9°C' brightly in red font, indicating a temperature fault. The surrounding stainless steel surface is slightly reflective under sterile white fluorescent kitchen lighting. The mood is urgent and clinical." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBODWRMmWGCis_AQDgtWGz-H39oFUskVRbwilVHvZpfZUSVNbIiVTauMPTv_fLgNpfAtH_ldjiU8kKjNb6xJB4IqCzxO6eQVho8HNJUjc-DJ_zRYCAbCKy2mzcz0aDmD7VlGcgHfru2r0borh_KKKtwma6jG8zBEb4LpCNQ42tMvLPhtrmEA92U3joDRWFXNRSu2ypkPTyxKkgPaWt0lg6RchTMoTWyOZESqyDs1xffpw6Ze6I3Z_rMgRjbcSRBUHfdW9EV13vsbmI"/>
+<div class="absolute inset-0 bg-on-background/0 group-hover:bg-on-background/10 transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-white opacity-0 group-hover:opacity-100 transition-opacity">zoom_in</span>
+</div>
+</div>
+<!-- Thumbnail track -->
+<div class="flex gap-2">
+<div class="w-20 h-20 rounded-md overflow-hidden border-2 border-primary cursor-pointer relative">
+<img alt="Thumb 1" class="w-full h-full object-cover" data-alt="A close-up photograph of a commercial refrigerator's digital control panel showing '9°C' in glowing red text. Cold white lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4Zdw1q1fX85QeU7kZjE_e09oMSej8ZTe9xjhzpXvTuUbNoqmL7_04p0_Ga7DFBPW_t1AXLJpgX1GfMd6FimJmd8KQvYbJuR-YBnLdMJL6OaQW7_YUDaPjfxhFLlG50oABAr7ZRHQGplX3s9whoRwDpU8NI4M9x2RTYGpu7b1cMCLqOaXI62-AKmBXTC1ddHREg41_1HCRRyN1XqEkCFN6XzcC7RNlxnAkzmvNPERpnSHC3MRg7CJ7zArkKzB91saQx35hvETyWQc"/>
+</div>
+<div class="w-20 h-20 rounded-md overflow-hidden border border-outline-variant cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
+<img alt="Thumb 2" class="w-full h-full object-cover" data-alt="A wider shot of a stainless steel commercial double-door refrigerator in a professional kitchen. The ambient lighting is bright and even. The doors are slightly ajar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoRbYJCPUPDD-E5n9l7FqLXttV6_BXIt_wCmIH1yjfQ2aD3bTlnyTaLS5AC8pTbdmNBQfsXZlJ0mLqPVbnQJ8ZJHeeCF2DONyiuF3djGpqVW7Ysukl_dGier1PNSRVfNxCFoERcuLT1YUr3w8OcvUAVnVH_epdH8Nzzwvxn83YXVrJWdznHzy5Z21fkqoYWXXpaYXH7ct6lJLOxm-hOQHSYKF4_XPDV1Fy52tA9-Gr3qJKYbbrjSZgve0vVY2BshohlTOgQrLRXkA"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sheet Footer (Actions) -->
+<div class="p-6 border-t border-outline-variant bg-surface-container-lowest flex flex-col gap-3 shadow-[0_-4px_6px_-1px_rgb(0,0,0,0.05)]">
+<!-- Primary Action -->
+<button class="w-full py-3 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-surface-tint transition-all shadow-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">assignment_turned_in</span>
+                    Yêu cầu Hành động Khắc phục (CAPA)
+                </button>
+<!-- Secondary/Disabled Action -->
+<button class="w-full py-3 border border-outline text-outline bg-surface rounded-lg font-label-md text-label-md opacity-50 cursor-not-allowed flex items-center justify-center gap-2" title="Chưa có báo cáo khắc phục để đóng">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+                    Đóng vi phạm
+                </button>
+<p class="text-center font-label-sm text-label-sm text-secondary">
+                    *Cần hoàn thành CAPA trước khi đóng vi phạm.
+                </p>
+</div>
+</div>
+</div>
+</body></html>

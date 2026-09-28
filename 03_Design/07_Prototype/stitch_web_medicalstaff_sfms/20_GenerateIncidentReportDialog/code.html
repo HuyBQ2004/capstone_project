@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Xuất Báo Cáo Sự Cố</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-tint": "#006781",
+                      "tertiary-fixed-dim": "#c4c7c9",
+                      "on-error-container": "#93000a",
+                      "surface-variant": "#dae2fd",
+                      "surface": "#faf8ff",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "surface-container": "#eaedff",
+                      "secondary-container": "#d0e1fb",
+                      "on-primary": "#ffffff",
+                      "on-surface": "#131b2e",
+                      "primary-container": "#0e7490",
+                      "tertiary-fixed": "#e0e3e5",
+                      "surface-bright": "#faf8ff",
+                      "surface-dim": "#d2d9f4",
+                      "on-secondary-fixed": "#0b1c30",
+                      "on-error": "#ffffff",
+                      "background": "#faf8ff",
+                      "error": "#ba1a1a",
+                      "surface-container-highest": "#dae2fd",
+                      "surface-container-lowest": "#ffffff",
+                      "outline-variant": "#bec8cd",
+                      "secondary": "#505f76",
+                      "primary-fixed": "#b9eaff",
+                      "on-tertiary-container": "#eaecee",
+                      "inverse-surface": "#283044",
+                      "tertiary-container": "#686b6d",
+                      "surface-container-high": "#e2e7ff",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "primary": "#005a71",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-container": "#54647a",
+                      "secondary-fixed": "#d3e4fe",
+                      "on-primary-fixed": "#001f29",
+                      "tertiary": "#505355",
+                      "on-primary-container": "#d3f1ff",
+                      "outline": "#6f787d",
+                      "on-tertiary-fixed": "#191c1e",
+                      "on-background": "#131b2e",
+                      "on-tertiary-fixed-variant": "#444749",
+                      "error-container": "#ffdad6",
+                      "on-secondary": "#ffffff",
+                      "on-primary-fixed-variant": "#004d62",
+                      "inverse-on-surface": "#eef0ff",
+                      "inverse-primary": "#81d1f0",
+                      "primary-fixed-dim": "#81d1f0",
+                      "surface-container-low": "#f2f3ff",
+                      "on-surface-variant": "#3f484c"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "4px",
+                      "xl": "32px",
+                      "column-gutter": "16px",
+                      "md": "16px",
+                      "sm": "8px",
+                      "xs": "4px",
+                      "lg": "24px",
+                      "container-padding": "24px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Be Vietnam Pro"
+                      ],
+                      "title-sm": [
+                              "Be Vietnam Pro"
+                      ],
+                      "display-lg": [
+                              "Be Vietnam Pro"
+                      ],
+                      "label-caps": [
+                              "Be Vietnam Pro"
+                      ],
+                      "display-lg-mobile": [
+                              "Be Vietnam Pro"
+                      ],
+                      "body-sm": [
+                              "Be Vietnam Pro"
+                      ],
+                      "data-tabular": [
+                              "Be Vietnam Pro"
+                      ],
+                      "headline-md": [
+                              "Be Vietnam Pro"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "title-sm": [
+                              "18px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "36px",
+                              {
+                                      "lineHeight": "44px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "34px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "data-tabular": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background min-h-screen relative overflow-hidden flex items-center justify-center">
+<!-- Mock Background for Context -->
+<div class="absolute inset-0 z-0 bg-surface-container opacity-50 pointer-events-none p-container-padding flex flex-col gap-lg">
+<div class="w-full h-32 bg-surface-lowest rounded-lg border border-outline-variant shadow-sm flex items-center justify-center text-on-surface-variant font-body-md text-body-md">Dashboard Background (Blurred)</div>
+<div class="w-full h-64 bg-surface-lowest rounded-lg border border-outline-variant shadow-sm flex items-center justify-center text-on-surface-variant font-body-md text-body-md">Data Table (Blurred)</div>
+</div>
+<!-- Modal Backdrop -->
+<div aria-hidden="true" class="fixed inset-0 z-40 bg-[#000000]/40 backdrop-blur-sm transition-opacity"></div>
+<!-- Modal Container -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-md sm:p-lg">
+<!-- Modal Dialog -->
+<div class="bg-surface-lowest w-full max-w-2xl rounded-xl shadow-lg border border-outline-variant flex flex-col overflow-hidden animate-[fadeIn_0.2s_ease-out]">
+<!-- Header -->
+<div class="px-lg py-md border-b border-outline-variant flex items-center justify-between bg-surface-bright">
+<div class="flex flex-col gap-xs">
+<h2 class="font-headline-md text-headline-md text-on-surface">Xuất báo cáo sự cố</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Xem lại tóm tắt thông tin trước khi xuất PDF và gửi báo cáo cho Ban Giám Hiệu.</p>
+</div>
+<button aria-label="Đóng" class="text-on-surface-variant hover:text-on-surface transition-colors p-xs rounded-full hover:bg-surface-container-highest">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<!-- Content Body (Scrollable if needed) -->
+<div class="p-lg flex flex-col gap-lg overflow-y-auto max-h-[614px]">
+<!-- Summary Section -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Clinical Info -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md flex flex-col gap-sm">
+<div class="flex items-center gap-sm text-primary">
+<span class="material-symbols-outlined" data-icon="sick" data-weight="fill" style="font-variation-settings: 'FILL' 1;">sick</span>
+<h3 class="font-title-sm text-title-sm text-on-surface">Thông tin lâm sàng</h3>
+</div>
+<div class="flex items-center justify-between border-b border-outline-variant/50 pb-sm">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Trường hợp bị ảnh hưởng</span>
+<span class="font-data-tabular text-data-tabular text-on-surface font-semibold">15 học sinh</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Triệu chứng chính</span>
+<span class="font-data-tabular text-data-tabular text-on-surface">Đau bụng, buồn nôn</span>
+</div>
+</div>
+<!-- Food Sample -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md flex flex-col gap-sm">
+<div class="flex items-center gap-sm text-primary">
+<span class="material-symbols-outlined" data-icon="science" data-weight="fill" style="font-variation-settings: 'FILL' 1;">science</span>
+<h3 class="font-title-sm text-title-sm text-on-surface">Mẫu thực phẩm</h3>
+</div>
+<div class="flex items-center justify-between border-b border-outline-variant/50 pb-sm">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Sản phẩm liên quan</span>
+<span class="font-data-tabular text-data-tabular text-on-surface font-semibold">Sữa chua hộp 100g</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Số lô/Batch</span>
+<span class="font-data-tabular text-data-tabular text-on-surface bg-surface-container px-2 py-1 rounded font-mono text-xs">L-231012-Y</span>
+</div>
+</div>
+</div>
+<!-- Investigation Findings -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md flex flex-col gap-sm relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-error"></div>
+<div class="flex items-center gap-sm text-error ml-2">
+<span class="material-symbols-outlined" data-icon="search_insights" data-weight="fill" style="font-variation-settings: 'FILL' 1;">search_insights</span>
+<h3 class="font-title-sm text-title-sm text-on-surface">Kết quả điều tra</h3>
+</div>
+<div class="ml-8 mt-xs flex flex-col gap-md">
+<div class="flex flex-col gap-xs">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant uppercase">Nguyên nhân gốc rễ (Root Cause)</h4>
+<p class="font-body-md text-body-md text-on-surface bg-error-container/20 p-sm rounded border border-error-container/50">
+                                Lỗi bảo quản nhiệt độ. Tủ đông tại kho lưu trữ số 2 bị hỏng cảm biến nhiệt, dẫn đến việc duy trì nhiệt độ không đạt chuẩn trong thời gian dài (trên 8 tiếng).
+                            </p>
+</div>
+<div class="flex flex-col gap-xs">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant uppercase">Hành động khắc phục/phòng ngừa (CAPA)</h4>
+<ul class="font-body-md text-body-md text-on-surface list-disc list-inside flex flex-col gap-xs pl-sm">
+<li>Cách ly và tiêu hủy toàn bộ lô Sữa chua L-231012-Y.</li>
+<li>Tiến hành thay thế ngay lập tức tủ đông mới tại kho lưu trữ số 2.</li>
+<li>Cập nhật quy trình kiểm tra nhiệt độ định kỳ (từ 4 tiếng/lần xuống 2 tiếng/lần).</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Report Options -->
+<div class="bg-surface-container-low border border-outline-variant border-dashed rounded-lg p-md flex items-center justify-between">
+<div class="flex flex-col gap-xs">
+<span class="font-title-sm text-title-sm text-on-surface">Định dạng xuất</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Báo cáo sẽ được lưu dưới dạng PDF mã hóa.</span>
+</div>
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="picture_as_pdf">picture_as_pdf</span>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="px-lg py-md border-t border-outline-variant bg-surface-bright flex items-center justify-end gap-md">
+<button class="h-10 px-md rounded border border-outline-variant bg-surface-lowest text-on-surface font-body-md text-body-md font-medium hover:bg-surface-container-lowest transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/50">
+                    Hủy
+                </button>
+<button class="h-10 px-md rounded bg-primary-container text-on-primary font-body-md text-body-md font-medium hover:bg-primary transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/50 flex items-center gap-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="send">send</span>
+                    Xuất PDF &amp; Báo cáo School Admin
+                </button>
+</div>
+</div>
+</div>
+<style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</body></html>

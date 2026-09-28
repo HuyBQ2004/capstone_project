@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Phê duyệt suất ăn đặc biệt</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#3d4947",
+                        "primary-fixed": "#b9eaff",
+                        "primary": "#005a71",
+                        "on-tertiary-container": "#e2efec",
+                        "on-surface": "#191c1e",
+                        "secondary-container": "#d0e1fb",
+                        "on-secondary-container": "#54647a",
+                        "inverse-surface": "#2d3133",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#495553",
+                        "tertiary-fixed-dim": "#bcc9c6",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f7f9fb",
+                        "error": "#ba1a1a",
+                        "background": "#f7f9fb",
+                        "outline-variant": "#bec8cd",
+                        "on-primary-fixed-variant": "#004d62",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#0e7490",
+                        "outline": "#6f787d",
+                        "on-tertiary-fixed": "#121e1c",
+                        "surface-container-high": "#e6e8ea",
+                        "tertiary-fixed": "#d8e5e2",
+                        "tertiary-container": "#616d6b",
+                        "surface-tint": "#006781",
+                        "secondary": "#505f76",
+                        "surface": "#f7f9fb",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-primary-fixed": "#001f29",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-secondary": "#ffffff",
+                        "surface-container": "#eceef0",
+                        "on-background": "#191c1e",
+                        "surface-container-low": "#f2f4f6",
+                        "on-surface-variant": "#3f484c",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-primary-container": "#d3f1ff",
+                        "primary-fixed-dim": "#81d1f0",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#d8dadc",
+                        "secondary-fixed": "#d3e4fe",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#81d1f0",
+                        "surface-variant": "#e0e3e5",
+                        "on-secondary-fixed": "#0b1c30"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "xl": "32px",
+                        "margin-mobile": "16px",
+                        "md": "16px",
+                        "margin-tablet": "24px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "title-lg": ["Be Vietnam Pro"],
+                        "label-lg": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "headline-md": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-lg-mobile": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "title-lg": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-dim h-screen w-screen flex items-center justify-center relative overflow-hidden">
+<!-- Mock Background Content (Blurred) -->
+<div class="absolute inset-0 z-0 p-margin-mobile md:p-margin-tablet flex flex-col gap-4 opacity-50 filter blur-sm">
+<header class="w-full flex justify-between items-center bg-surface-container-lowest p-4 rounded-lg shadow-sm">
+<div class="font-headline-md text-headline-md text-primary font-bold">sfms</div>
+<div class="w-10 h-10 rounded-full bg-secondary-container"></div>
+</header>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="bg-surface-container-lowest h-32 rounded-xl"></div>
+<div class="bg-surface-container-lowest h-32 rounded-xl"></div>
+<div class="bg-surface-container-lowest h-32 rounded-xl"></div>
+<div class="bg-surface-container-lowest h-32 rounded-xl"></div>
+<div class="bg-surface-container-lowest h-32 rounded-xl"></div>
+</div>
+</div>
+<!-- Scrim / Backdrop -->
+<div class="absolute inset-0 z-40 bg-on-surface/30 backdrop-blur-sm flex items-center justify-center p-margin-mobile">
+<!-- Dialog Container -->
+<div class="bg-surface-container-lowest rounded-[28px] shadow-[0px_4px_12px_rgba(14,116,144,0.08)] w-full max-w-md overflow-hidden flex flex-col relative z-50 transform transition-all">
+<!-- Dialog Header -->
+<div class="pt-6 px-6 pb-4 flex flex-col gap-sm">
+<div class="flex items-center justify-center w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container mb-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+</div>
+<h2 class="font-title-lg text-title-lg text-on-surface">Phê duyệt suất ăn đặc biệt</h2>
+</div>
+<!-- Dialog Content -->
+<div class="px-6 pb-6 flex flex-col gap-4">
+<p class="font-body-md text-body-md text-on-surface-variant">
+                    Phê duyệt suất ăn đặc biệt cho học sinh <span class="font-bold text-on-surface">Trần Minh Khôi</span>?
+                </p>
+<!-- Details Card -->
+<div class="bg-surface-container rounded-xl p-4 flex flex-col gap-3 border border-outline-variant/30">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary mt-0.5 text-[20px]">school</span>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block uppercase tracking-wider">Lớp</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">3A2</span>
+</div>
+</div>
+<div class="h-px bg-outline-variant/30 w-full"></div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary mt-0.5 text-[20px]">menu_book</span>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block uppercase tracking-wider">Thực đơn thay thế</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Cháo thịt bằm</span>
+<span class="font-label-sm text-label-sm text-error bg-error-container px-2 py-0.5 rounded-full inline-block mt-1">Không hải sản</span>
+</div>
+</div>
+<div class="h-px bg-outline-variant/30 w-full"></div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary mt-0.5 text-[20px]">calendar_today</span>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block uppercase tracking-wider">Ngày áp dụng</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">25/05/2024</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Dialog Actions -->
+<div class="p-6 pt-0 flex justify-end gap-2 mt-auto">
+<button class="px-4 py-2.5 rounded-full font-label-lg text-label-lg text-primary hover:bg-surface-container-high transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20">
+                    Hủy
+                </button>
+<button class="px-6 py-2.5 rounded-full font-label-lg text-label-lg bg-primary text-on-primary hover:bg-primary/90 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/40 focus:ring-offset-2 focus:ring-offset-surface-container-lowest">
+                    Xác nhận duyệt
+                </button>
+</div>
+</div>
+</div>
+</body></html>

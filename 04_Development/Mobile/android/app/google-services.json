@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "208623889846",
+    "project_id": "sfms-production",
+    "storage_bucket": "sfms-production.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208623889846:android:f803c1f35f1b9106572517",
+        "android_client_info": {
+          "package_name": "com.sfms.sfms_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "208623889846-vnpmvrh4q2v7gbkbqobdg6gqu96ssvdd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsvuRCshSBlu1QBeC7wHjlD9ZwVPb5HEI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "208623889846-vnpmvrh4q2v7gbkbqobdg6gqu96ssvdd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

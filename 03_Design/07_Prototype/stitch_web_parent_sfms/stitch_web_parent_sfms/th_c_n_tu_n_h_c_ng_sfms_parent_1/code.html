@@ -1,0 +1,422 @@
+<!DOCTYPE html><html class="light" lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>SFMS - Thực đơn hàng tuần</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#005a71",
+                    "on-primary": "#ffffff",
+                    "primary-container": "#0e7490",
+                    "on-primary-container": "#d3f1ff",
+                    "secondary": "#55615f",
+                    "on-secondary": "#ffffff",
+                    "secondary-container": "#d8e5e2",
+                    "on-secondary-container": "#5b6765",
+                    "tertiary": "#045e45",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-container": "#2b775c",
+                    "on-tertiary-container": "#affcda",
+                    "error": "#ba1a1a",
+                    "on-error": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a",
+                    "background": "#f8f9ff",
+                    "on-background": "#0b1c30",
+                    "surface": "#f8f9ff",
+                    "on-surface": "#0b1c30",
+                    "surface-variant": "#d3e4fe",
+                    "on-surface-variant": "#3f484c",
+                    "outline": "#6f787d",
+                    "outline-variant": "#bec8cd",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#eff4ff",
+                    "surface-container": "#e5eeff",
+                    "surface-container-high": "#dce9ff",
+                    "surface-container-highest": "#d3e4fe"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "xs": "8px",
+                    "sm": "16px",
+                    "md": "24px",
+                    "lg": "32px",
+                    "xl": "48px",
+                    "sidebar-width": "280px"
+            },
+            "fontFamily": {
+                    "sans": ["Be Vietnam Pro", "sans-serif"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #f8f9ff;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #bec8cd;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+<!-- Side Navigation -->
+<aside class="w-[280px] bg-surface-container-lowest border-r border-outline-variant flex flex-col h-full">
+<div class="p-lg flex items-center gap-sm">
+<div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+<span class="text-headline-sm font-bold text-primary">SFMS Parent</span>
+</div>
+<nav class="flex-1 px-sm py-md space-y-xs overflow-y-auto">
+<a class="flex items-center gap-md px-md py-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-medium text-body-md">Tổng quan</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-xl bg-primary-container text-on-primary shadow-sm" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-medium text-body-md">Thực đơn tuần</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">nutrition</span>
+<span class="font-medium text-body-md">Chỉ số dinh dưỡng</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">health_and_safety</span>
+<span class="font-medium text-body-md">Hồ sơ sức khỏe</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-medium text-body-md">Hóa đơn</span>
+</a>
+</nav>
+<div class="p-md border-t border-outline-variant">
+<div class="flex items-center gap-sm p-sm rounded-xl hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container">person</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-label-md text-on-surface font-semibold truncate">Lê Văn Nam</p>
+<p class="text-label-sm text-on-surface-variant">Phụ huynh</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">logout</span>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col overflow-hidden">
+<!-- Top Navigation -->
+<header class="h-20 bg-surface-container-lowest border-b border-outline-variant px-lg flex items-center justify-between">
+<div>
+<h1 class="text-headline-md font-bold text-on-surface">Thực đơn hàng tuần</h1>
+<p class="text-body-sm text-on-surface-variant">Theo dõi chế độ dinh dưỡng hàng ngày của con</p>
+</div>
+<div class="flex items-center gap-lg">
+<div class="flex items-center gap-sm bg-surface-container-low px-md py-xs rounded-full border border-outline-variant">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary text-[14px] font-bold">MA</div>
+<div>
+<p class="text-label-md text-on-surface">Nguyễn Minh Anh</p>
+<p class="text-label-sm text-primary font-semibold">Lớp 4A</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant ml-xs">keyboard_arrow_down</span>
+</div>
+<div class="flex items-center gap-xs">
+<button class="p-sm rounded-full hover:bg-surface-container-low text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-sm rounded-full hover:bg-surface-container-low text-on-surface-variant">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</div>
+</header>
+<!-- View Controls -->
+<div class="p-lg flex items-center justify-between">
+<div class="flex items-center gap-md">
+<div class="relative">
+<select class="appearance-none bg-surface-container-lowest border border-outline-variant text-on-surface text-label-md rounded-xl pl-md pr-10 py-sm focus:ring-primary focus:border-primary cursor-pointer min-w-[220px]">
+<option>Tuần này: 12/08 - 16/08</option>
+<option>Tuần trước: 05/08 - 09/08</option>
+<option>Tuần sau: 19/08 - 23/08</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">calendar_month</span>
+</div>
+<div class="flex items-center p-1 bg-surface-container-low rounded-xl border border-outline-variant">
+<button class="px-md py-sm rounded-lg bg-surface-container-lowest text-primary font-semibold shadow-sm">
+                        Chế độ tuần
+                    </button>
+<button class="px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high font-medium">
+                        Chế độ ngày
+                    </button>
+</div>
+</div>
+<button class="flex items-center gap-xs bg-primary text-on-primary px-lg py-sm rounded-xl hover:bg-primary-container transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[20px]">print</span>
+<span class="font-semibold text-label-md">In thực đơn</span>
+</button>
+</div>
+<!-- Menu Grid -->
+<div class="flex-1 overflow-auto px-lg pb-lg custom-scrollbar">
+<div class="grid grid-cols-5 gap-md min-w-[1000px]">
+<!-- Thứ 2 -->
+<div class="flex flex-col gap-md">
+<div class="bg-primary px-md py-sm rounded-t-xl text-on-primary text-center">
+<p class="text-label-sm uppercase tracking-wider opacity-90">Thứ 2</p>
+<p class="text-headline-sm font-bold">12/08</p>
+</div>
+<div class="space-y-md">
+<!-- Breakfast -->
+<div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm">
+<div class="flex items-center gap-xs mb-sm text-primary">
+<span class="material-symbols-outlined text-[20px]">wb_twilight</span>
+<span class="text-label-md font-bold uppercase">Bữa sáng</span>
+</div>
+<p class="text-body-md font-semibold text-on-surface mb-xs">Bún mọc sườn non</p>
+<p class="text-body-sm text-on-surface-variant">Sữa tươi TH True Milk</p>
+</div>
+<!-- Lunch -->
+<div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm">
+<div class="flex items-center gap-xs mb-sm text-primary">
+<span class="material-symbols-outlined text-[20px]">sunny</span>
+<span class="text-label-md font-bold uppercase">Bữa trưa</span>
+</div>
+<div class="space-y-sm">
+<div>
+<p class="text-body-md font-semibold text-on-surface">Cơm trắng Gạo tám</p>
+<p class="text-body-sm text-on-surface-variant">Canh bí đỏ thịt bằm</p>
+</div>
+<div class="p-sm bg-error-container border-2 border-error rounded-lg">
+<div class="flex items-center gap-xs text-on-error-container mb-1">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+<span class="text-label-sm font-bold uppercase">Cảnh báo dị ứng</span>
+</div>
+<p class="text-body-md font-bold text-on-error-container">Tôm rim ba chỉ</p>
+<p class="text-label-sm text-on-error-container mt-1 italic">Chứa: Hải sản (Tôm)</p>
+</div>
+<p class="text-body-sm text-on-surface-variant">Tráng miệng: Chuối tiêu</p>
+</div>
+</div>
+<!-- Snack -->
+<div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm">
+<div class="flex items-center gap-xs mb-sm text-primary">
+<span class="material-symbols-outlined text-[20px]">bakery_dining</span>
+<span class="text-label-md font-bold uppercase">Xế chiều</span>
+</div>
+<p class="text-body-md font-semibold text-on-surface">Bánh bông lan trứng muối</p>
+</div>
+</div>
+</div>
+<!-- Thứ 3 -->
+<div class="flex flex-col gap-md">
+<div class="bg-surface-container-high px-md py-sm rounded-t-xl text-on-surface text-center border border-outline-variant">
+<p class="text-label-sm uppercase tracking-wider text-on-surface-variant">Thứ 3</p>
+<p class="text-headline-sm font-bold">13/08</p>
+</div>
+<div class="space-y-md">
+<div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm">
+<div class="flex items-center gap-xs mb-sm text-primary">
+<span class="material-symbols-outlined text-[20px]">wb_twilight</span>
+<span class="text-label-md font-bold uppercase">Bữa sáng</span>
+</div>
+<p class="text-body-md font-semibold text-on-surface">Xôi gấc chả lụa</p>
+<p class="text-body-sm text-on-surface-variant">Sữa đậu nành</p>
+</div>
+<div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm">
+<div class="flex items-center gap-xs mb-sm text-primary">
+<span class="material-symbols-outlined text-[20px]">sunny</span>
+<span class="text-label-md font-bold uppercase">Bữa trưa</span>
+</div>
+<div class="space-y-sm">
+<div>
+<p class="text-body-md font-semibold text-on-surface">Cơm trắng</p>
+<p class="text-body-sm text-on-surface-variant">Canh rau ngót nấu mọc</p>
+</div>
+<p class="text-body-md font-semibold text-on-surface">Thịt kho trứng cút</p>
+<p class="text-body-sm text-on-surface-variant">Su su xào tỏi</p>
+<p class="text-body-sm text-on-surface-variant">Tráng miệng: Dưa hấu</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm">
+<div class="flex items-center gap-xs mb-sm text-primary">
+<span class="material-symbols-outlined text-[20px]">bakery_dining</span>
+<span class="text-label-md font-bold uppercase">Xế chiều</span>
+</div>
+<p class="text-body-md font-semibold text-on-surface">Sữa chua nếp cẩm</p>
+</div>
+</div>
+</div>
+<!-- Thứ 4 -->
+<div class="flex flex-col gap-md">
+<div class="bg-surface-container-high px-md py-sm rounded-t-xl text-on-surface text-center border border-outline-variant">
+<p class="text-label-sm uppercase tracking-wider text-on-surface-variant">Thứ 4</p>
+<p class="text-headline-sm font-bold">14/08</p>
+</div>
+<div class="space-y-md">
+<div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm">
+<div class="flex items-center gap-xs mb-sm text-primary">
+<span class="material-symbols-outlined text-[20px]">wb_twilight</span>
+<span class="text-label-md font-bold uppercase">Bữa sáng</span>
+</div>
+<div class="p-sm bg-error-container border-2 border-error rounded-lg">
+<div class="flex items-center gap-xs text-on-error-container mb-1">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+<span class="text-label-sm font-bold uppercase">Cảnh báo dị ứng</span>
+</div>
+<p class="text-body-md font-bold text-on-error-container">Bánh mì bơ đậu phộng</p>
+<p class="text-label-sm text-on-error-container mt-1 italic">Chứa: Đậu phộng</p>
+</div>
+<p class="text-body-sm text-on-surface-variant mt-sm">Nước ép cam tươi</p>
+</div>
+<div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm">
+<div class="flex items-center gap-xs mb-sm text-primary">
+<span class="material-symbols-outlined text-[20px]">sunny</span>
+<span class="text-label-md font-bold uppercase">Bữa trưa</span>
+</div>
+<div class="space-y-sm">
+<div>
+<p class="text-body-md font-semibold text-on-surface">Cơm ngũ cốc</p>
+<p class="text-body-sm text-on-surface-variant">Canh chua cá lóc</p>
+</div>
+<p class="text-body-md font-semibold text-on-surface">Gà chiên mắm</p>
+<p class="text-body-sm text-on-surface-variant">Bông cải xanh luộc</p>
+<p class="text-body-sm text-on-surface-variant">Tráng miệng: Nhãn xuồng</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm">
+<div class="flex items-center gap-xs mb-sm text-primary">
+<span class="material-symbols-outlined text-[20px]">bakery_dining</span>
+<span class="text-label-md font-bold uppercase">Xế chiều</span>
+</div>
+<p class="text-body-md font-semibold text-on-surface">Chè đậu xanh nước cốt dừa</p>
+</div>
+</div>
+</div>
+<!-- Thứ 5 -->
+<div class="flex flex-col gap-md">
+<div class="bg-surface-container-high px-md py-sm rounded-t-xl text-on-surface text-center border border-outline-variant">
+<p class="text-label-sm uppercase tracking-wider text-on-surface-variant">Thứ 5</p>
+<p class="text-headline-sm font-bold">15/08</p>
+</div>
+<div class="space-y-md">
+<div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm">
+<div class="flex items-center gap-xs mb-sm text-primary">
+<span class="material-symbols-outlined text-[20px]">wb_twilight</span>
+<span class="text-label-md font-bold uppercase">Bữa sáng</span>
+</div>
+<p class="text-body-md font-semibold text-on-surface">Phở bò Hà Nội</p>
+<p class="text-body-sm text-on-surface-variant">Sữa hạt sen</p>
+</div>
+<div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm">
+<div class="flex items-center gap-xs mb-sm text-primary">
+<span class="material-symbols-outlined text-[20px]">sunny</span>
+<span class="text-label-md font-bold uppercase">Bữa trưa</span>
+</div>
+<div class="space-y-sm">
+<div>
+<p class="text-body-md font-semibold text-on-surface">Cơm trắng</p>
+<p class="text-body-sm text-on-surface-variant">Canh khoai mỡ nấu tôm</p>
+</div>
+<p class="text-body-md font-semibold text-on-surface">Bò xào thiên lý</p>
+<p class="text-body-sm text-on-surface-variant">Đậu hũ dồn thịt sốt cà</p>
+<p class="text-body-sm text-on-surface-variant">Tráng miệng: Táo Mỹ</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm">
+<div class="flex items-center gap-xs mb-sm text-primary">
+<span class="material-symbols-outlined text-[20px]">bakery_dining</span>
+<span class="text-label-md font-bold uppercase">Xế chiều</span>
+</div>
+<p class="text-body-md font-semibold text-on-surface">Bánh flan cốt dừa</p>
+</div>
+</div>
+</div>
+<!-- Thứ 6 -->
+<div class="flex flex-col gap-md">
+<div class="bg-surface-container-high px-md py-sm rounded-t-xl text-on-surface text-center border border-outline-variant">
+<p class="text-label-sm uppercase tracking-wider text-on-surface-variant">Thứ 6</p>
+<p class="text-headline-sm font-bold">16/08</p>
+</div>
+<div class="space-y-md">
+<div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm">
+<div class="flex items-center gap-xs mb-sm text-primary">
+<span class="material-symbols-outlined text-[20px]">wb_twilight</span>
+<span class="text-label-md font-bold uppercase">Bữa sáng</span>
+</div>
+<p class="text-body-md font-semibold text-on-surface">Mì Quảng tôm thịt</p>
+<p class="text-body-sm text-on-surface-variant">Sữa tươi tiệt trùng</p>
+</div>
+<div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm">
+<div class="flex items-center gap-xs mb-sm text-primary">
+<span class="material-symbols-outlined text-[20px]">sunny</span>
+<span class="text-label-md font-bold uppercase">Bữa trưa</span>
+</div>
+<div class="space-y-sm">
+<div>
+<p class="text-body-md font-semibold text-on-surface">Cơm trắng</p>
+<p class="text-body-sm text-on-surface-variant">Canh cải thảo nấu thịt</p>
+</div>
+<div class="p-sm bg-error-container border-2 border-error rounded-lg">
+<div class="flex items-center gap-xs text-on-error-container mb-1">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+<span class="text-label-sm font-bold uppercase">Cảnh báo dị ứng</span>
+</div>
+<p class="text-body-md font-bold text-on-error-container">Cá thu chiên sốt cà</p>
+<p class="text-label-sm text-on-error-container mt-1 italic">Chứa: Hải sản (Cá biển)</p>
+</div>
+<p class="text-body-sm text-on-surface-variant">Tráng miệng: Thanh long</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm">
+<div class="flex items-center gap-xs mb-sm text-primary">
+<span class="material-symbols-outlined text-[20px]">bakery_dining</span>
+<span class="text-label-md font-bold uppercase">Xế chiều</span>
+</div>
+<p class="text-body-md font-semibold text-on-surface">Pizza mini xúc xích</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Legend & Info -->
+<footer class="h-16 bg-surface-container-lowest border-t border-outline-variant px-lg flex items-center justify-between">
+<div class="flex items-center gap-lg">
+<div class="flex items-center gap-xs">
+<div class="w-3 h-3 rounded-full bg-error"></div>
+<span class="text-label-sm text-on-surface-variant">Món ăn chứa tác nhân gây dị ứng đã đăng ký</span>
+</div>
+<div class="flex items-center gap-xs">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="text-label-sm text-on-surface-variant">Món ăn đạt chuẩn dinh dưỡng học đường</span>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">info</span>
+<p class="text-label-sm text-on-surface-variant italic">Thực đơn có thể thay đổi tùy thuộc vào nguồn cung ứng thực phẩm sạch trong ngày.</p>
+</div>
+</footer>
+</main>
+</body></html>

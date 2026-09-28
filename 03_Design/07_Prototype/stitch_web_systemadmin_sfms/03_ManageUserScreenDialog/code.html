@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tạo tài khoản người dùng mới - sfms</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-tint": "#006781",
+                      "inverse-on-surface": "#eef0ff",
+                      "on-secondary-fixed": "#0b1c30",
+                      "tertiary-fixed-dim": "#ffb86f",
+                      "on-surface": "#131b2e",
+                      "on-background": "#131b2e",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-low": "#f2f3ff",
+                      "primary-fixed": "#b9eaff",
+                      "inverse-primary": "#81d1f0",
+                      "on-primary-container": "#d3f1ff",
+                      "surface-container-highest": "#dae2fd",
+                      "on-error-container": "#93000a",
+                      "primary-fixed-dim": "#81d1f0",
+                      "primary-container": "#0e7490",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "secondary-container": "#d0e1fb",
+                      "surface-variant": "#dae2fd",
+                      "inverse-surface": "#283044",
+                      "surface": "#faf8ff",
+                      "on-tertiary-fixed": "#2c1600",
+                      "on-tertiary-container": "#ffe8d6",
+                      "on-secondary": "#ffffff",
+                      "secondary": "#505f76",
+                      "error": "#ba1a1a",
+                      "error-container": "#ffdad6",
+                      "on-error": "#ffffff",
+                      "surface-bright": "#faf8ff",
+                      "surface-container": "#eaedff",
+                      "on-primary-fixed-variant": "#004d62",
+                      "primary": "#005a71",
+                      "outline-variant": "#bec8cd",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary": "#794602",
+                      "outline": "#6f787d",
+                      "surface-dim": "#d2d9f4",
+                      "tertiary-container": "#965e1c",
+                      "tertiary-fixed": "#ffdcbd",
+                      "secondary-fixed": "#d3e4fe",
+                      "on-secondary-container": "#54647a",
+                      "on-primary-fixed": "#001f29",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "on-tertiary-fixed-variant": "#693c00",
+                      "on-surface-variant": "#3f484c",
+                      "surface-container-high": "#e2e7ff",
+                      "background": "#faf8ff",
+                      "on-primary": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "1rem",
+                      "component-padding-y": "0.5rem",
+                      "container-margin": "2rem",
+                      "section-gap": "1.5rem",
+                      "component-padding-x": "1rem"
+              },
+              "fontFamily": {
+                      "headline-md": ["Be Vietnam Pro"],
+                      "display": ["Be Vietnam Pro"],
+                      "body-lg": ["Be Vietnam Pro"],
+                      "title-md": ["Be Vietnam Pro"],
+                      "body-md": ["Be Vietnam Pro"],
+                      "headline-lg": ["Be Vietnam Pro"],
+                      "label-md": ["Be Vietnam Pro"],
+                      "label-sm": ["Be Vietnam Pro"],
+                      "title-lg": ["Be Vietnam Pro"],
+                      "headline-lg-mobile": ["Be Vietnam Pro"]
+              },
+              "fontSize": {
+                      "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                      "display": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                      "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                      "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+                      "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                      "headline-lg": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                      "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                      "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                      "title-lg": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                      "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #bec8cd; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #6f787d; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased overflow-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- App Shell Container -->
+<div class="flex h-screen w-full">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-[260px] bg-surface border-r border-outline-variant flex flex-col p-gutter gap-section-gap z-30">
+<!-- Brand / Header -->
+<div class="flex items-center gap-3 px-component-padding-x py-component-padding-y">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="font-display text-[20px] font-bold">s</span>
+</div>
+<div>
+<h1 class="font-display text-display font-bold text-primary text-[24px] leading-tight tracking-tight">sfms</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Hệ thống Quản trị</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 flex flex-col gap-1">
+<!-- Inactive Tab -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors opacity-90 duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">dashboard</span>
+<span class="font-label-md text-label-md">Tổng quan</span>
+</a>
+<!-- Active Tab -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-secondary-container text-on-secondary-container font-bold transition-all duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">manage_accounts</span>
+<span class="font-label-md text-label-md">Người dùng &amp; Vai trò</span>
+</a>
+<!-- Inactive Tabs -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors opacity-90 duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">school</span>
+<span class="font-label-md text-label-md">Trường học</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors opacity-90 duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">settings</span>
+<span class="font-label-md text-label-md">Cấu hình hệ thống</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors opacity-90 duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">policy</span>
+<span class="font-label-md text-label-md">Giám sát &amp; Audit</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-[260px] flex flex-col h-full relative">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-20 flex justify-between items-center h-16 px-container-margin bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+<div class="flex items-center gap-4">
+<h2 class="font-title-lg text-title-lg text-on-surface">Quản lý người dùng</h2>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Background Content (Blurred User List) -->
+<div class="flex-1 p-container-margin overflow-auto filter blur-sm grayscale-[30%] pointer-events-none select-none">
+<!-- Action Bar Fake -->
+<div class="flex justify-between items-center mb-section-gap">
+<div class="relative w-72">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full h-10 pl-10 pr-4 rounded-md border border-outline-variant bg-surface-container-lowest text-body-md" disabled="" type="text" value="Tìm kiếm..."/>
+</div>
+<button class="h-10 px-4 rounded-md bg-primary text-on-primary font-label-md flex items-center gap-2" disabled="">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                        Thêm người dùng
+                    </button>
+</div>
+<!-- Data Table Fake -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low border-b border-outline-variant">
+<tr>
+<th class="px-4 py-3 font-label-md text-on-surface-variant">Họ và tên</th>
+<th class="px-4 py-3 font-label-md text-on-surface-variant">Email</th>
+<th class="px-4 py-3 font-label-md text-on-surface-variant">Vai trò</th>
+<th class="px-4 py-3 font-label-md text-on-surface-variant">Trạng thái</th>
+<th class="px-4 py-3"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr>
+<td class="px-4 py-3 text-body-md text-on-surface">Nguyễn Văn A</td>
+<td class="px-4 py-3 text-body-md text-on-surface-variant">nva@example.com</td>
+<td class="px-4 py-3"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-surface-container-high text-on-surface">System Admin</span></td>
+<td class="px-4 py-3"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-[#ecfdf5] text-[#065f46]">Hoạt động</span></td>
+<td class="px-4 py-3 text-right"><span class="material-symbols-outlined text-outline">more_vert</span></td>
+</tr>
+<tr>
+<td class="px-4 py-3 text-body-md text-on-surface">Trần Thị B</td>
+<td class="px-4 py-3 text-body-md text-on-surface-variant">ttb@school.edu.vn</td>
+<td class="px-4 py-3"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-surface-container-high text-on-surface">School Admin</span></td>
+<td class="px-4 py-3"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-[#ecfdf5] text-[#065f46]">Hoạt động</span></td>
+<td class="px-4 py-3 text-right"><span class="material-symbols-outlined text-outline">more_vert</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+<!-- Modal Overlay -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-on-background/50 backdrop-blur-[2px] transition-opacity">
+<!-- Dialog Content (UC-026) -->
+<div aria-labelledby="modal-title" aria-modal="true" class="bg-surface-container-lowest rounded-xl w-full max-w-lg shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-outline-variant transform transition-all flex flex-col" role="dialog">
+<!-- Header -->
+<div class="px-6 py-5 border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-title-lg text-title-lg text-on-surface" id="modal-title">Tạo tài khoản người dùng mới</h3>
+<button class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-full p-1 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Body (Form) -->
+<div class="p-6 overflow-y-auto">
+<form class="space-y-5" onsubmit="event.preventDefault();">
+<!-- Họ tên Field -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md text-on-surface" for="fullName">
+                            Họ tên <span class="text-error">*</span>
+</label>
+<input class="w-full h-10 px-3 py-2 bg-surface-container-lowest border border-outline-variant rounded-md font-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-shadow" id="fullName" name="fullName" placeholder="Nhập họ và tên đầy đủ" required="" type="text"/>
+</div>
+<!-- Email Field -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md text-on-surface" for="email">
+                            Email <span class="text-error">*</span>
+</label>
+<input class="w-full h-10 px-3 py-2 bg-surface-container-lowest border border-outline-variant rounded-md font-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-shadow" id="email" name="email" placeholder="ví dụ: nguyenvan.a@truonghoc.edu.vn" required="" type="email"/>
+</div>
+<!-- Số điện thoại Field -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md text-on-surface" for="phone">
+                            Số điện thoại
+                        </label>
+<input class="w-full h-10 px-3 py-2 bg-surface-container-lowest border border-outline-variant rounded-md font-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-shadow" id="phone" name="phone" placeholder="Nhập số điện thoại (không bắt buộc)" type="tel"/>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+<!-- Vai trò Field -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md text-on-surface" for="role">
+                                Vai trò <span class="text-error">*</span>
+</label>
+<div class="relative">
+<select class="w-full h-10 pl-3 pr-10 bg-surface-container-lowest border border-outline-variant rounded-md font-body-md text-on-surface appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-shadow cursor-pointer" id="role" name="role" required="">
+<option disabled="" selected="" value="">Chọn vai trò...</option>
+<option value="system_admin">System Admin</option>
+<option value="school_admin">School Admin</option>
+<option value="teacher">Giáo viên</option>
+<option value="staff">Nhân viên</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline">expand_more</span>
+</div>
+</div>
+<!-- Trường liên kết (Conditional Logic) -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md text-on-surface" for="school">
+                                Trường liên kết
+                            </label>
+<div class="relative">
+<select class="w-full h-10 pl-3 pr-10 bg-surface border border-outline-variant rounded-md font-body-md text-on-surface appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-shadow cursor-pointer" id="school" name="school">
+<option disabled="" selected="" value="">Chọn trường...</option>
+<option value="school_1">Trường THPT Chuyên Hà Nội</option>
+<option value="school_2">Trường THCS Lê Lợi</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline">expand_more</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant italic mt-1">
+                                * Chỉ hiển thị/bắt buộc đối với vai trò cấp trường học.
+                            </p>
+</div>
+</div>
+</form>
+</div>
+<!-- Footer / Actions -->
+<div class="px-6 py-4 bg-surface-container-low border-t border-outline-variant rounded-b-xl flex justify-end gap-3">
+<button class="h-10 px-4 rounded-md border border-outline bg-surface-container-lowest text-on-surface font-label-md hover:bg-surface-container transition-colors focus:outline-none focus:ring-2 focus:ring-outline/50" type="button">
+                    Hủy
+                </button>
+<button class="h-10 px-4 rounded-md bg-primary-container text-on-primary-container font-label-md hover:bg-primary hover:text-on-primary transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-container/50" type="button">
+                    Tạo tài khoản
+                </button>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lịch sử Dinh dưỡng - SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline": "#6f787d",
+                    "outline-variant": "#bec8cd",
+                    "on-error-container": "#93000a",
+                    "surface-variant": "#d3e4fe",
+                    "on-tertiary-container": "#ffe9d4",
+                    "secondary-container": "#6cf8bb",
+                    "secondary-fixed": "#6ffbbe",
+                    "primary": "#005a71",
+                    "surface-container-lowest": "#ffffff",
+                    "on-background": "#0b1c30",
+                    "surface": "#f8f9ff",
+                    "on-tertiary": "#ffffff",
+                    "inverse-primary": "#81d1f0",
+                    "surface-dim": "#cbdbf5",
+                    "tertiary-container": "#965f00",
+                    "on-secondary-fixed": "#002113",
+                    "error-container": "#ffdad6",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-tint": "#006781",
+                    "tertiary": "#764900",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed": "#ffddb8",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-container-high": "#dce9ff",
+                    "error": "#ba1a1a",
+                    "primary-fixed-dim": "#81d1f0",
+                    "on-tertiary-fixed": "#2a1700",
+                    "on-error": "#ffffff",
+                    "on-primary-container": "#d3f1ff",
+                    "on-surface": "#0b1c30",
+                    "inverse-surface": "#213145",
+                    "on-secondary-container": "#00714d",
+                    "background": "#f8f9ff",
+                    "secondary": "#006c49",
+                    "primary-container": "#0e7490",
+                    "surface-container-low": "#eff4ff",
+                    "on-primary-fixed": "#001f29",
+                    "on-primary": "#ffffff",
+                    "surface-bright": "#f8f9ff",
+                    "surface-container": "#e5eeff",
+                    "primary-fixed": "#b9eaff",
+                    "on-primary-fixed-variant": "#004d62",
+                    "secondary-fixed-dim": "#4edea3",
+                    "on-surface-variant": "#3f484c",
+                    "on-secondary-fixed-variant": "#005236",
+                    "surface-container-highest": "#d3e4fe"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "section-margin": "24px",
+                    "container-padding": "16px",
+                    "element-gap": "12px",
+                    "grid-gutter": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Be Vietnam Pro"],
+                    "headline-md": ["Be Vietnam Pro"],
+                    "label-sm": ["Be Vietnam Pro"],
+                    "headline-lg": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "headline-lg-mobile": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #f8f9ff;
+            color: #0b1c30;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .chart-bar {
+            transition: height 1s ease-out;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .bento-item-large {
+            grid-column: span 2;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-container-padding h-14 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Lịch sử Dinh dưỡng</h1>
+</div>
+<button class="active:scale-95 transition-transform hover:bg-surface-container-low transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+</header>
+<main class="mt-20 px-container-padding space-y-section-margin">
+<!-- Summary Comparison Card -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 shadow-sm">
+<div class="flex justify-between items-center mb-4">
+<h2 class="font-headline-md text-headline-md text-primary">Tổng quan hôm nay</h2>
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-label-sm text-label-sm">Hoàn thành 97%</span>
+</div>
+<div class="flex items-center justify-between gap-4">
+<div class="flex-1 space-y-1">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Mục tiêu</p>
+<p class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">2000 <span class="text-body-md font-normal text-on-surface-variant">kcal</span></p>
+</div>
+<div class="h-12 w-px bg-outline-variant"></div>
+<div class="flex-1 space-y-1 text-right">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Thực tế</p>
+<p class="font-headline-lg-mobile text-headline-lg-mobile text-primary">1950 <span class="text-body-md font-normal text-on-surface-variant">kcal</span></p>
+</div>
+</div>
+<div class="mt-4 w-full bg-surface-container rounded-full h-2 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 97.5%"></div>
+</div>
+</section>
+<!-- Nutrition Trend Chart (Bento Style) -->
+<section class="space-y-element-gap">
+<div class="flex justify-between items-end">
+<h2 class="font-headline-md text-headline-md text-on-surface">Xu hướng 7 ngày</h2>
+<p class="font-label-sm text-label-sm text-primary">Trung bình: 1920 kcal</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 min-h-[240px] flex flex-col justify-between">
+<div class="flex items-end justify-between h-32 gap-2">
+<!-- Chart Bars -->
+<div class="flex flex-col items-center flex-1 gap-2">
+<div class="w-full bg-primary-fixed-dim rounded-t-lg chart-bar" style="height: 85%"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">T2</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-2">
+<div class="w-full bg-primary-fixed-dim rounded-t-lg chart-bar" style="height: 95%"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">T3</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-2">
+<div class="w-full bg-primary rounded-t-lg chart-bar relative" style="height: 100%">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 bg-on-background text-white text-[10px] px-1 rounded">2100</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold">T4</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-2">
+<div class="w-full bg-primary-fixed-dim rounded-t-lg chart-bar" style="height: 70%"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">T5</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-2">
+<div class="w-full bg-primary-fixed-dim rounded-t-lg chart-bar" style="height: 80%"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">T6</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-2">
+<div class="w-full bg-primary-fixed-dim rounded-t-lg chart-bar" style="height: 60%"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">T7</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-2">
+<div class="w-full bg-primary-fixed-dim rounded-t-lg chart-bar" style="height: 90%"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">CN</span>
+</div>
+</div>
+<!-- Legend -->
+<div class="mt-6 pt-4 border-t border-outline-variant flex gap-4 justify-center">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Vượt mục tiêu</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary-fixed-dim"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Trong mục tiêu</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Weekly Summary Cards -->
+<section class="space-y-element-gap">
+<h2 class="font-headline-md text-headline-md text-on-surface">Chất lượng dinh dưỡng tuần</h2>
+<div class="bento-grid">
+<!-- Protein Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary p-2 bg-primary-fixed rounded-lg">fitness_center</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Excellent</span>
+</div>
+<div class="mt-4">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Đạm (Protein)</p>
+<p class="font-headline-md text-headline-md">Đạt chuẩn</p>
+</div>
+</div>
+<!-- Fiber Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-tertiary p-2 bg-tertiary-fixed rounded-lg">eco</span>
+<span class="font-label-sm text-label-sm text-tertiary font-bold">Good</span>
+</div>
+<div class="mt-4">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Chất xơ (Fiber)</p>
+<p class="font-headline-md text-headline-md">Cần tăng</p>
+</div>
+</div>
+<!-- Vitamins Card (Large) -->
+<div class="bento-item-large bg-surface-container-lowest border border-outline-variant rounded-xl p-4 flex items-center gap-4">
+<div class="w-16 h-16 rounded-full border-4 border-error flex items-center justify-center">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">error</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Vitamin &amp; Khoáng chất</p>
+<span class="font-label-sm text-label-sm text-error font-bold uppercase">Warning</span>
+</div>
+<p class="font-headline-md text-headline-md">Thiếu hụt Vitamin D</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Bổ sung thêm sữa và trứng trong thực đơn tuần tới.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Insights / Tips -->
+<section class="bg-primary-container text-on-primary-container rounded-xl p-4 flex items-start gap-4">
+<span class="material-symbols-outlined mt-1">lightbulb</span>
+<div>
+<p class="font-headline-md text-headline-md font-bold mb-1">Lời khuyên từ chuyên gia</p>
+<p class="font-body-md text-body-md opacity-90">Dựa trên lịch sử 7 ngày, học sinh đang có xu hướng tiêu thụ nhiều tinh bột vào bữa trưa. Hãy cân nhắc điều chỉnh bữa xế bằng trái cây ít đường.</p>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-container-padding py-2 bg-surface border-t border-outline-variant">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors p-2 rounded-xl" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Trang chủ</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors p-2 rounded-xl" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span class="font-label-sm text-label-sm">Thực đơn</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary font-bold hover:bg-surface-container-low transition-colors p-2 rounded-xl" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-label-sm text-label-sm">Dinh dưỡng</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors p-2 rounded-xl" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Cá nhân</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for chart bars
+        window.addEventListener('DOMContentLoaded', () => {
+            const bars = document.querySelectorAll('.chart-bar');
+            bars.forEach(bar => {
+                const finalHeight = bar.style.height;
+                bar.style.height = '0%';
+                setTimeout(() => {
+                    bar.style.height = finalHeight;
+                }, 100);
+            });
+        });
+    </script>
+</body></html>

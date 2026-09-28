@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>SFMS Wireframe — Service Caterers (Web): Food Sample Retention</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root{ --ink:#333; --paper:#fff; --gray:#777; --lightgray:#d7d7d7; --midgray:#aaa; }
+  * { box-sizing: border-box; }
+  html { font-size: 18px; }
+  body { margin:0; font-family:'Patrick Hand', cursive; color:var(--ink); background-color:#f4f4f4; background-image: radial-gradient(#d7d7d7 1px, transparent 1px); background-size: 20px 20px; font-size:18px; }
+  .text-xs   { font-size: 14px; line-height:1.4; }
+  .text-sm   { font-size: 18px; line-height:1.5; }
+  .text-base { font-size: 22px; line-height:1.5; }
+  .text-md   { font-size: 28px; line-height:1.3; }
+  .text-lg   { font-size: 35px; line-height:1.2; }
+  a { color:#3a5a8c; text-decoration:underline; cursor:pointer; }
+
+  .app { display:flex; min-height:100vh; }
+  .sidebar { width:280px; min-width:280px; background:#eee; border-right:3px solid var(--ink); padding:18px 14px; position:sticky; top:0; height:100vh; overflow-y:auto; }
+  .brand { display:flex; align-items:center; gap:8px; margin-bottom:18px; }
+  .side-group { margin-bottom:6px; }
+  .side-group-title { display:flex; align-items:center; gap:8px; font-size:16px; color:var(--gray); text-transform:uppercase; letter-spacing:1px; margin:14px 0 6px 4px; }
+  .side-link { display:flex; align-items:center; gap:10px; padding:8px 10px; margin:2px 0; border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; font-size:18px; color:var(--ink); cursor:pointer; }
+  .side-link:hover { background:#fff; border:2px dashed var(--midgray); }
+  .side-link.active { background:var(--ink); color:#fff; border:2px solid var(--ink); }
+  .side-link.active svg { stroke:#fff; }
+  .side-link.disabled { color:var(--midgray); cursor:default; }
+  .side-link.disabled:hover { background:none; border:none; }
+  .side-note { font-size:13px; color:var(--midgray); margin-left:32px; }
+  .icon { width:20px; height:20px; flex:none; stroke:var(--ink); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .icon-sm { width:16px; height:16px; }
+
+  .main { flex:1; min-width:0; }
+  .topbar { display:flex; align-items:center; justify-content:space-between; padding:14px 26px; border-bottom:3px solid var(--ink); background:#fafafa; }
+  .breadcrumb { font-size:20px; }
+  .breadcrumb .crumb-group { color:var(--gray); }
+  .user-chip { display:flex; align-items:center; gap:8px; font-size:16px; }
+  .content { padding:26px; }
+
+  .card { border:2px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; padding:18px; }
+  .card + .card { margin-top:18px; }
+
+  .btn-primary { background:#333; color:white; border:2px solid #333; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:10px 22px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+  .btn-primary svg { stroke:#fff; }
+  .btn-secondary { background:white; color:#333; border:2px solid #333; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:8px 18px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+
+  .grid-12 { display:grid; grid-template-columns: repeat(12, 1fr); gap:18px; }
+  .col-4 { grid-column: span 4; } .col-6 { grid-column: span 6; } .col-8 { grid-column: span 8; } .col-12 { grid-column: span 12; }
+  @media (max-width: 980px){ .grid-12 > [class*="col-"] { grid-column: span 12; } }
+
+  .badge { display:inline-flex; align-items:center; gap:6px; padding:3px 12px; font-size:16px; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; }
+  .badge-success { border:2px solid var(--ink); background:#fff; }
+  .badge-warning { border:2px dashed var(--ink); background:#fff; }
+  .badge-danger  { border:3px solid var(--ink); background:#fff; }
+  .chip { display:inline-flex; align-items:center; gap:6px; padding:3px 14px; font-size:18px; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; border:2px solid var(--ink); }
+
+  table.sketchy { width:100%; border-collapse:separate; border-spacing:0; font-size:18px; }
+  table.sketchy th, table.sketchy td { text-align:left; padding:8px 12px; border-bottom:2px solid var(--lightgray); }
+  table.sketchy thead th { border-bottom:3px solid var(--ink); color:var(--gray); font-weight:normal; font-size:15px; text-transform:uppercase; letter-spacing:0.5px; }
+  .table-wrap { border:2px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; overflow:hidden; background:#fff; }
+  .table-wrap table.sketchy { margin:0; }
+
+  .screen { display:none; }
+  .screen.active { display:block; }
+  h1.text-lg, h2.text-md { margin:0 0 4px 0; }
+  .page-header { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:20px; flex-wrap:wrap; }
+  .muted { color:var(--gray); }
+  .section-title { display:flex; align-items:center; gap:8px; margin:0 0 12px 0; }
+
+  .alert { display:flex; gap:12px; align-items:flex-start; padding:14px 16px; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; }
+  .alert-danger { border:3px solid var(--ink); }
+  .alert-warning { border:2px dashed var(--ink); }
+  .alert + .alert { margin-top:12px; }
+
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.35); align-items:center; justify-content:center; z-index:50; padding:20px; }
+  .modal-overlay.active { display:flex; }
+  .modal-box { width:100%; max-width:520px; background:#fff; border:3px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; padding:24px; max-height:90vh; overflow-y:auto; }
+  .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  .close-x { cursor:pointer; }
+
+  .field-label { font-size:18px; margin-bottom:6px; display:flex; gap:6px; align-items:center; }
+  .field-block { margin-bottom:16px; }
+  wired-input, wired-textarea, wired-select { width:100%; display:block; }
+
+  .placeholder-x { display:flex; align-items:center; justify-content:center; height:160px; font-size:35px; color:var(--midgray); border:2px dashed var(--midgray); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background:#fafafa; }
+  .state-legend { margin-top:14px; padding:12px 14px; border:2px dotted var(--midgray); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; font-size:14px; color:var(--gray); }
+  .label-preview { border:2px dotted var(--ink); border-radius:10px; padding:12px; font-size:15px; background:#fafafa; }
+  .sig-pad { height:90px; border:2px dashed var(--midgray); border-radius:12px; display:flex; align-items:center; justify-content:center; color:var(--midgray); background:#fafafa; }
+  .countdown { display:flex; flex-direction:column; align-items:center; gap:4px; padding:20px; border:3px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; margin-bottom:16px; }
+  .countdown-value { font-size:44px; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><svg class="icon" viewBox="0 0 24 24"><path d="M4 21 L4 9 L12 3 L20 9 L20 21 Z"/><path d="M9 21 L9 14 L15 14 L15 21"/></svg><span class="text-md">SFMS</span></div>
+    <div class="side-note" style="margin-left:0; margin-bottom:14px;">Service Caterers — Bếp trưởng Nguyễn Văn A</div>
+
+    <div class="side-group"><div class="side-group-title"><svg class="icon" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/></svg>Tổng quan</div><div class="side-link disabled">Dashboard <span class="side-note" style="margin-left:0">(nhóm khác)</span></div></div>
+
+    <div class="side-group">
+      <div class="side-group-title"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3 v6 M12 15 v6 M3 12 h6 M15 12 h6"/></svg>Lưu mẫu Thực phẩm</div>
+      <div class="side-link active" data-screen="dashboard" onclick="showScreen('dashboard')"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3 v6 M12 15 v6 M3 12 h6 M15 12 h6"/></svg>Food Sample Retention Dashboard</div>
+    </div>
+
+    <div class="side-group"><div class="side-group-title"><svg class="icon" viewBox="0 0 24 24"><path d="M9 12 L11 14 L15 9"/><circle cx="12" cy="12" r="9"/></svg>Kiểm tra 3 Bước</div><div class="side-link disabled">Three-Step Inspection <span class="side-note" style="margin-left:0">(nhóm khác)</span></div></div>
+    <div class="side-group"><div class="side-group-title"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20 V8 l8 -4 8 4 v12"/></svg>Nhận hàng &amp; Kho</div><div class="side-link disabled">Receiving/Inventory <span class="side-note" style="margin-left:0">(nhóm khác)</span></div></div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="breadcrumb"><span class="crumb-group">Lưu mẫu Thực phẩm</span> / <span id="crumb-current">Food Sample Retention Dashboard</span></div>
+      <div class="user-chip"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20 a8 8 0 0 1 16 0"/></svg>Bếp trưởng Nguyễn Văn A</div>
+    </div>
+
+    <div class="content">
+
+      <!-- ============ 23: Food Sample Retention Dashboard ============ -->
+      <div class="screen active" id="dashboard">
+        <div class="page-header">
+          <div><h1 class="text-lg">Food Sample Retention Dashboard</h1><div class="muted text-sm">Khuyến nghị dùng Mobile tại bếp</div></div>
+          <button class="btn-primary" onclick="showScreen('form')">Đăng ký Mẫu mới</button>
+        </div>
+
+        <div class="grid-12">
+          <div class="col-6">
+            <div class="card">
+              <div class="page-header" style="margin-bottom:6px"><span class="text-base">Tủ lưu mẫu #1</span><span class="chip">4°C</span></div>
+              <div class="text-sm muted">3 mẫu đang lưu</div>
+              <button class="btn-secondary" style="margin-top:8px" onclick="openModal('temp-modal')">Ghi Nhiệt độ</button>
+              <div class="table-wrap" style="margin-top:12px">
+                <table class="sketchy">
+                  <thead><tr><th>Mẫu</th><th>Trạng thái</th><th></th></tr></thead>
+                  <tbody>
+                    <tr><td>#SP-0707-01 Cơm trưa K.1-5</td><td><span class="badge badge-success">Retained</span></td><td><a onclick="showScreen('detail')">Xem</a></td></tr>
+                    <tr><td>#SP-0706-02 Canh chua cá lóc</td><td><span class="badge badge-success">Retained</span></td><td><a onclick="openModal('transfer-modal')">Chuyển tủ</a></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="card">
+              <div class="page-header" style="margin-bottom:6px"><span class="text-base">Tủ lưu mẫu #2</span><span class="chip">9°C</span></div>
+              <div class="text-sm muted">2 mẫu đang lưu</div>
+              <div class="alert alert-danger" style="margin-top:8px">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/></svg>
+                <div class="text-sm">MSG-020/MSG-059 — nhiệt độ 9°C ngoài phạm vi 2-8°C, kéo dài &gt;30 phút (BR-110).</div>
+              </div>
+              <button class="btn-secondary" style="margin-top:8px" onclick="openModal('temp-modal')">Ghi Nhiệt độ</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="state-legend">Empty: chưa có tủ lưu mẫu nào được cấu hình. Loading: Skeleton. Success: Toast xác nhận ghi nhiệt độ/chuyển tủ thành công.</div>
+      </div>
+
+      <!-- ============ 21: Record Sample Information Form ============ -->
+      <div class="screen" id="form">
+        <div class="page-header"><div><h1 class="text-lg">Record Sample Information Form</h1><div class="muted text-sm">Đã xác minh trong khu vực bếp trường (BR-109) — GPS qua Geolocation API trình duyệt</div></div></div>
+
+        <div class="grid-12">
+          <div class="col-6">
+            <div class="card text-sm">Bữa ăn: Trưa · Món: Cơm trưa Khối 1-5 · Tổng số suất: 320 (chỉ đọc)</div>
+            <div class="field-block" style="margin-top:16px"><div class="field-label">Trọng lượng mẫu (gram) <span style="color:var(--ink)">*</span> (≥ 100g)</div><wired-input placeholder="80"></wired-input></div>
+            <div class="alert alert-danger"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9 L15 15 M15 9 L9 15"/></svg><div class="text-sm">MSG-019 — Trọng lượng 80g nhỏ hơn 100g (BR-107).</div></div>
+            <div class="field-block" style="margin-top:16px"><div class="field-label">Mô tả hộp/túi đựng mẫu <span style="color:var(--ink)">*</span></div><wired-textarea placeholder="Hộp nhựa PP có nắp đậy kín, dán nhãn niêm phong"></wired-textarea></div>
+            <div class="field-block"><div class="field-label">Nhiệt độ tủ lưu mẫu (°C) <span style="color:var(--ink)">*</span> (2-8°C)</div><wired-input placeholder="4"></wired-input></div>
+            <div class="field-block"><div class="field-label">Thời điểm thu mẫu <span style="color:var(--ink)">*</span></div><wired-input placeholder="11:32"></wired-input></div>
+          </div>
+          <div class="col-6">
+            <div class="field-label">In nhãn mẫu (Sample No 4)</div>
+            <div class="label-preview">Bữa ăn: Trưa · Tên mẫu: Cơm trưa Khối 1-5 · Thời điểm: 11:32 07/07 · Người lấy mẫu: Trần Văn Bình</div>
+            <button class="btn-secondary" style="margin-top:8px">In nhãn</button>
+
+            <div class="field-label" style="margin-top:18px">Ảnh hộp mẫu đã dán nhãn <span style="color:var(--ink)">*</span></div>
+            <wired-input type="file"></wired-input>
+            <div class="placeholder-x" style="height:90px; margin-top:8px">Upload ảnh</div>
+
+            <div class="field-label" style="margin-top:18px">Chữ ký số người đăng ký <span style="color:var(--ink)">*</span></div>
+            <div class="sig-pad">Signature pad</div>
+          </div>
+        </div>
+
+        <button class="btn-primary" style="margin-top:18px" onclick="showScreen('detail')">Xác nhận Lưu mẫu</button>
+        <div class="state-legend">Loading: Skeleton. Success: Toast MSG-044 — "Đăng ký lưu mẫu thực phẩm thành công, đồng hồ lưu trữ lạnh đã khởi động".</div>
+      </div>
+
+      <!-- ============ 22: Food Sample Detail ============ -->
+      <div class="screen" id="detail">
+        <div class="page-header"><div><h1 class="text-lg">Food Sample Detail</h1></div></div>
+        <div class="alert alert-warning"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/></svg><div class="text-sm">MSG-059 — Tủ lưu mẫu ghi nhận mở cửa bất thường lúc 14:20 (BR-110).</div></div>
+
+        <div class="grid-12" style="margin-top:16px">
+          <div class="col-6">
+            <div class="card-row" style="margin-bottom:10px"><span class="text-base">Cơm trưa Khối 1-5 — #SP-0707-01</span><span class="badge badge-success">Retained</span></div>
+            <div class="table-wrap">
+              <table class="sketchy">
+                <tbody>
+                  <tr><td>Ngày sản xuất</td><td>07/07/2026</td></tr>
+                  <tr><td>Ngày lưu mẫu</td><td>07/07/2026 · 11:32</td></tr>
+                  <tr><td>Số tham chiếu lô</td><td>LOT-2026-0707-AP01</td></tr>
+                  <tr><td>Trọng lượng mẫu</td><td>120g</td></tr>
+                  <tr><td>Nơi lưu</td><td>Tủ lưu mẫu #1</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="placeholder-x">Ảnh nhãn + hộp mẫu</div>
+            <div class="countdown" style="margin-top:16px">
+              <span class="text-sm muted">Thời gian lưu mẫu còn lại</span>
+              <span class="countdown-value">48 giờ 12 phút</span>
+              <span class="text-xs muted">Tự động tính từ mốc 72 giờ (BR-111)</span>
+            </div>
+          </div>
+        </div>
+        <div class="state-legend">Loading: Skeleton. Error: Alert destructive MSG-004/MSG-005. Trạng thái mẫu: Retained/Retrieved/Disposed (BR-114).</div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Modal: Ghi Nhiệt độ (field #2 của Screen Spec 23) -->
+<div class="modal-overlay" id="temp-modal">
+  <div class="modal-box">
+    <div class="modal-header"><span class="text-md">Ghi Nhiệt độ Tủ lưu mẫu</span><svg class="icon close-x" viewBox="0 0 24 24" onclick="closeModal('temp-modal')"><path d="M6 6 L18 18 M18 6 L6 18"/></svg></div>
+    <div class="field-block"><div class="field-label">Ca ghi nhận</div><wired-select><wired-item value="morning">Sáng</wired-item><wired-item value="afternoon">Chiều</wired-item></wired-select></div>
+    <div class="field-block"><div class="field-label">Nhiệt độ (°C) <span style="color:var(--ink)">*</span></div><wired-input placeholder="VD: 4"></wired-input></div>
+    <button class="btn-primary" onclick="closeModal('temp-modal')">Lưu Nhiệt độ</button>
+  </div>
+</div>
+
+<!-- Modal: Chuyển tủ (field #5 của Screen Spec 23) -->
+<div class="modal-overlay" id="transfer-modal">
+  <div class="modal-box">
+    <div class="modal-header"><span class="text-md">Chuyển tủ Lưu mẫu</span><svg class="icon close-x" viewBox="0 0 24 24" onclick="closeModal('transfer-modal')"><path d="M6 6 L18 18 M18 6 L6 18"/></svg></div>
+    <div class="field-block"><div class="field-label">Tủ đích <span style="color:var(--ink)">*</span></div><wired-select><wired-item value="1">Tủ #1 (còn chỗ, 4°C)</wired-item><wired-item value="2">Tủ #2 (9°C — không an toàn)</wired-item></wired-select></div>
+    <div class="field-block"><div class="field-label">Lý do chuyển tủ <span style="color:var(--ink)">*</span></div><wired-textarea placeholder="VD: Tủ #2 lỗi nhiệt độ, cần chuyển sang tủ ổn định"></wired-textarea></div>
+    <div class="text-xs muted">Hệ thống kiểm tra tủ đích còn chỗ và an toàn nhiệt độ trước khi xác nhận.</div>
+    <button class="btn-primary" style="margin-top:10px" onclick="closeModal('transfer-modal')">Xác nhận Chuyển tủ</button>
+  </div>
+</div>
+
+<script>
+  function showScreen(id){
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.side-link').forEach(l => l.classList.remove('active'));
+    var activeLink = document.querySelector('.side-link[data-screen="' + id + '"]');
+    if (activeLink) activeLink.classList.add('active');
+    var crumbMap = { dashboard:'Food Sample Retention Dashboard', form:'Record Sample Information Form', detail:'Food Sample Detail' };
+    document.getElementById('crumb-current').textContent = crumbMap[id] || id;
+  }
+  function openModal(id){ document.getElementById(id).classList.add('active'); }
+  function closeModal(id){ document.getElementById(id).classList.remove('active'); }
+</script>
+</body>
+</html>

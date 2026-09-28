@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quản lý nhân sự - School Food Management System</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#e0e3e5",
+                        "on-primary-container": "#d3f1ff",
+                        "inverse-primary": "#81d1f0",
+                        "on-error-container": "#93000a",
+                        "primary-fixed-dim": "#81d1f0",
+                        "primary-container": "#0e7490",
+                        "secondary-fixed-dim": "#c4c7c9",
+                        "surface-tint": "#006781",
+                        "inverse-on-surface": "#eef1f3",
+                        "on-secondary-fixed": "#191c1e",
+                        "tertiary-fixed-dim": "#ffb86f",
+                        "on-surface": "#181c1e",
+                        "surface-container-low": "#f1f4f6",
+                        "on-tertiary": "#ffffff",
+                        "on-background": "#181c1e",
+                        "primary-fixed": "#b9eaff",
+                        "secondary": "#5c5f61",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#f7fafc",
+                        "surface-container": "#ebeef0",
+                        "secondary-container": "#e0e3e5",
+                        "surface-variant": "#e0e3e5",
+                        "surface": "#f7fafc",
+                        "inverse-surface": "#2d3133",
+                        "on-tertiary-fixed": "#2c1600",
+                        "on-tertiary-container": "#ffe8d6",
+                        "on-secondary": "#ffffff",
+                        "outline": "#6f787d",
+                        "surface-dim": "#d7dadd",
+                        "tertiary-container": "#965e1c",
+                        "tertiary-fixed": "#ffdcbd",
+                        "on-primary-fixed-variant": "#004d62",
+                        "primary": "#005a71",
+                        "outline-variant": "#bec8cd",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#794602",
+                        "on-surface-variant": "#3f484c",
+                        "surface-container-high": "#e6e8eb",
+                        "background": "#f7fafc",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed": "#e0e3e5",
+                        "on-secondary-container": "#626567",
+                        "on-primary-fixed": "#001f29",
+                        "on-tertiary-fixed-variant": "#693c00",
+                        "on-secondary-fixed-variant": "#444749"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "1rem",
+                        "sidebar-width": "260px",
+                        "section-gap": "1.5rem",
+                        "edge-margin": "2rem",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "table-header": ["Be Vietnam Pro"],
+                        "body-sm": ["Be Vietnam Pro"],
+                        "h1-mobile": ["Be Vietnam Pro"],
+                        "label": ["Be Vietnam Pro"],
+                        "h1": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "h2": ["Be Vietnam Pro"],
+                        "h3": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "table-header": ["13px", { "lineHeight": "18px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "h1-mobile": ["24px", { "lineHeight": "30px", "fontWeight": "700" }],
+                        "label": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "h1": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "h3": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface flex min-h-screen">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full w-[260px] bg-surface-container-low border-r border-outline-variant z-20 hidden md:block">
+<div class="flex flex-col h-full py-6">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-lg">
+                    SF
+                </div>
+<div>
+<h1 class="font-h2 text-h2 font-bold text-primary">SFMS Admin</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">District Authority</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto">
+<ul class="space-y-1">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                            Dashboard
+                        </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined">handshake</span>
+                            Partnership
+                        </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+                            Menu
+                        </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined">groups</span>
+                            Classes &amp; Students
+                        </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined">assignment_late</span>
+                            Incidents &amp; Inspections
+                        </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+                            Reports &amp; Statistics
+                        </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined">campaign</span>
+                            Announcement Management
+                        </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container/10 text-primary font-semibold border-l-4 border-primary font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined">badge</span>
+                            Staff Management
+                        </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined">settings</span>
+                            School Configuration
+                        </a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex-1 ml-0 md:ml-[260px] flex flex-col min-w-0">
+<!-- TopNavBar -->
+<header class="h-16 bg-surface-container-lowest border-b border-outline-variant flex justify-between items-center px-gutter sticky top-0 z-10 shadow-sm">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-on-surface-variant">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="text-sm text-on-surface-variant hidden sm:flex items-center gap-2 font-body-sm text-body-sm">
+<span class="hover:text-primary cursor-pointer transition-colors">Thông báo &amp; Nhân viên</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-on-surface font-semibold">Quản lý nhân sự</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a school administrator in a bright, modern office setting. The lighting is soft and corporate, matching the light-mode minimalist UI aesthetic. The subject is wearing business casual attire." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAXUs628V4foF8f4vUYgEv86aV4YVRMAqZcjckRYhw4TCHjTSh-v42rEsAbLO7RIksPUUUEXWrRmiCHpRKRMYuYY0RHmsRAx8Yrye5Mo2Skfc3fpcI7QPT_70_vkte4uWqmfzpJmy3pwV0hEFmgiMKsYLdD8M4R0QXSDqiumxDerjAEYoxkEZtXsRiS3jcFWKcYMUcrWnjsW3oLBa0Rm1meE-ee4_PZBgj9qtKexM9pIJSbGWN1fqjWfDvh974ngnMSBHjhf5R5FE"/>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 p-edge-margin overflow-x-hidden">
+<div class="max-w-container-max mx-auto space-y-section-gap">
+<!-- Page Header -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<h2 class="font-h1 text-h1 text-on-surface">Quản lý nhân sự</h2>
+<button class="bg-[#0E7490] text-on-primary px-4 py-2 rounded-lg font-body-sm text-body-sm font-semibold flex items-center gap-2 hover:bg-[#0b5c73] transition-colors shadow-sm self-start sm:self-auto">
+<span class="material-symbols-outlined text-[18px]">upload</span>
+                        Tải danh sách lên
+                    </button>
+</div>
+<!-- Filters & Search -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-[0_1px_3px_rgba(0,0,0,0.1)]">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="md:col-span-2 relative focus-within:ring-2 focus-within:ring-primary/20 rounded-lg">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface rounded-lg border border-outline-variant focus:border-primary focus:ring-0 font-body-sm text-body-sm outline-none transition-all" placeholder="Tìm kiếm theo Tên hoặc Email..." type="text"/>
+</div>
+<div class="relative focus-within:ring-2 focus-within:ring-primary/20 rounded-lg">
+<select class="w-full pl-4 pr-10 py-2 bg-surface rounded-lg border border-outline-variant focus:border-primary focus:ring-0 font-body-sm text-body-sm outline-none appearance-none cursor-pointer transition-all">
+<option value="">Tất cả Vai trò</option>
+<option value="teacher">Giáo viên</option>
+<option value="medical">Nhân viên y tế</option>
+<option value="catering">Nhân viên catering</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+<div class="relative focus-within:ring-2 focus-within:ring-primary/20 rounded-lg">
+<select class="w-full pl-4 pr-10 py-2 bg-surface rounded-lg border border-outline-variant focus:border-primary focus:ring-0 font-body-sm text-body-sm outline-none appearance-none cursor-pointer transition-all">
+<option value="">Tất cả Trạng thái</option>
+<option value="active">Active</option>
+<option value="pending">Pending</option>
+<option value="locked">Locked</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0_1px_3px_rgba(0,0,0,0.1)] overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant font-table-header text-table-header text-on-surface-variant">
+<th class="py-3 px-6 font-semibold">Họ tên</th>
+<th class="py-3 px-6 font-semibold">Email</th>
+<th class="py-3 px-6 font-semibold">Vai trò</th>
+<th class="py-3 px-6 font-semibold">Số điện thoại</th>
+<th class="py-3 px-6 font-semibold">Trạng thái</th>
+<th class="py-3 px-6 font-semibold text-center">Hành động</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low font-body-sm text-body-sm text-on-surface">
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="py-4 px-6 font-medium">Nguyen Van A</td>
+<td class="py-4 px-6 text-on-surface-variant">a@school.edu</td>
+<td class="py-4 px-6">Giáo viên</td>
+<td class="py-4 px-6 text-on-surface-variant">0901234567</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#dcfce7] text-[#166534]">
+                                            Active
+                                        </span>
+</td>
+<td class="py-4 px-6 text-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0E7490]"></div>
+</label>
+</td>
+</tr>
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="py-4 px-6 font-medium">Tran Thi B</td>
+<td class="py-4 px-6 text-on-surface-variant">b@school.edu</td>
+<td class="py-4 px-6">Nhân viên y tế</td>
+<td class="py-4 px-6 text-on-surface-variant">0912345678</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#fef08a] text-[#854d0e]">
+                                            Pending
+                                        </span>
+</td>
+<td class="py-4 px-6 text-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0E7490]"></div>
+</label>
+</td>
+</tr>
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="py-4 px-6 font-medium">Le Van C</td>
+<td class="py-4 px-6 text-on-surface-variant">c@school.edu</td>
+<td class="py-4 px-6">Nhân viên catering</td>
+<td class="py-4 px-6 text-on-surface-variant">0923456789</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#fee2e2] text-[#991b1b]">
+                                            Inactive
+                                        </span>
+</td>
+<td class="py-4 px-6 text-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0E7490]"></div>
+</label>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination (Optional/Contextual) -->
+<div class="flex items-center justify-between px-6 py-3 border-t border-surface-container-low bg-surface-bright">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Hiển thị 1 - 3 trong số 3 nhân viên</span>
+<div class="flex gap-2">
+<button class="p-1 rounded hover:bg-surface-container-high text-on-surface-variant disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container-high text-on-surface-variant disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

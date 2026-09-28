@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Duyệt yêu cầu suất ăn</title>
+<!-- Google Fonts: Be Vietnam Pro -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#3d4947",
+                        "primary-fixed": "#b9eaff",
+                        "primary": "#005a71",
+                        "on-tertiary-container": "#e2efec",
+                        "on-surface": "#191c1e",
+                        "secondary-container": "#d0e1fb",
+                        "on-secondary-container": "#54647a",
+                        "inverse-surface": "#2d3133",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#495553",
+                        "tertiary-fixed-dim": "#bcc9c6",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f7f9fb",
+                        "error": "#ba1a1a",
+                        "background": "#f7f9fb",
+                        "outline-variant": "#bec8cd",
+                        "on-primary-fixed-variant": "#004d62",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#0e7490",
+                        "outline": "#6f787d",
+                        "on-tertiary-fixed": "#121e1c",
+                        "surface-container-high": "#e6e8ea",
+                        "tertiary-fixed": "#d8e5e2",
+                        "tertiary-container": "#616d6b",
+                        "surface-tint": "#006781",
+                        "secondary": "#505f76",
+                        "surface": "#f7f9fb",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-primary-fixed": "#001f29",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-secondary": "#ffffff",
+                        "surface-container": "#eceef0",
+                        "on-background": "#191c1e",
+                        "surface-container-low": "#f2f4f6",
+                        "on-surface-variant": "#3f484c",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-primary-container": "#d3f1ff",
+                        "primary-fixed-dim": "#81d1f0",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#d8dadc",
+                        "secondary-fixed": "#d3e4fe",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#81d1f0",
+                        "surface-variant": "#e0e3e5",
+                        "on-secondary-fixed": "#0b1c30"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "xl": "32px",
+                        "margin-mobile": "16px",
+                        "md": "16px",
+                        "margin-tablet": "24px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "title-lg": ["Be Vietnam Pro"],
+                        "label-lg": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "headline-md": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-lg-mobile": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "title-lg": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface h-screen flex flex-col overflow-hidden selection:bg-primary-container selection:text-on-primary">
+<!-- Top App Bar (Task-focused context, overriding global nav shell) -->
+<header class="flex items-center justify-between px-margin-mobile h-14 w-full bg-surface z-10 shrink-0 relative">
+<button class="w-10 h-10 flex items-center justify-start text-on-surface transition-colors rounded-full hover:bg-surface-container-high active:bg-surface-container-highest focus:outline-none">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<h1 class="font-title-lg text-title-lg text-on-surface font-bold text-center flex-1 absolute left-0 right-0 pointer-events-none mx-12 truncate">
+            Duyệt yêu cầu suất ăn
+        </h1>
+<div class="w-10"></div> <!-- Spacer to center title -->
+</header>
+<!-- Filters -->
+<div class="px-margin-mobile py-sm flex gap-sm overflow-x-auto no-scrollbar shrink-0 border-b border-surface-container-highest">
+<button class="bg-primary-container text-on-primary rounded-full px-4 py-2 font-label-lg text-label-lg whitespace-nowrap shadow-sm">
+            Chờ duyệt (3)
+        </button>
+<button class="bg-surface text-on-surface-variant border border-outline-variant rounded-full px-4 py-2 font-label-lg text-label-lg whitespace-nowrap hover:bg-surface-container-low transition-colors">
+            Đã duyệt
+        </button>
+<button class="bg-surface text-on-surface-variant border border-outline-variant rounded-full px-4 py-2 font-label-lg text-label-lg whitespace-nowrap hover:bg-surface-container-low transition-colors">
+            Từ chối
+        </button>
+</div>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto px-margin-mobile py-md pb-xl">
+<div class="flex flex-col gap-4 max-w-2xl mx-auto">
+<!-- Card 1 (Urgent Allergy) -->
+<div class="bg-on-tertiary rounded-xl p-md shadow-[0_2px_8px_rgba(14,116,144,0.04)] border border-outline-variant/20 flex flex-col gap-sm cursor-pointer hover:shadow-[0_4px_12px_rgba(14,116,144,0.08)] transition-all active:scale-[0.98]" onclick="openBottomSheet('card1')">
+<div class="flex justify-between items-start mb-1">
+<div class="flex gap-3 items-center">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container shrink-0 border border-surface-dim">
+<img alt="" class="w-full h-full object-cover" data-alt="A brightly lit, professional portrait of a young male elementary school student with neat dark hair, smiling subtly. The background is a soft, out-of-focus light gray wall in a modern classroom setting. The lighting is soft and flattering, creating a welcoming and trustworthy medical-school context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwjBLv217UJRNDvCCy-AS_cCgFXY-OeWKasuBuQnONE8kWMTCgSVuc0GLuyQvzO1QTNueFuNqj0iGffwZmuVUz33ZrSy0Q2kittQNIutQYl9-EX4IzY3u-zJEplYqsouryftKrmzi5pIes6mSiQr9yWSCJhbcpx4eIyZpepoBZng1PHFubbYVnSwTLfI9SOPy8o-75hh9G9gQgjFNcBzu36hYek_OSlGTF29ZFGY4QuHQxwvY2bTZFE_KPr-awxWXy9_D7NjgOFmo"/>
+</div>
+<div>
+<h2 class="font-title-lg text-title-lg text-on-surface leading-tight">Trần Minh Khôi</h2>
+<span class="font-label-sm text-label-sm text-secondary bg-surface-container-low px-2 py-0.5 rounded-md mt-1 inline-block">Lớp 3A2</span>
+</div>
+</div>
+<span class="bg-secondary-container text-on-secondary-container font-label-sm text-label-sm px-3 py-1 rounded-full whitespace-nowrap">Chờ duyệt</span>
+</div>
+<div class="bg-surface-container-lowest border border-error-container/50 rounded-lg p-3 space-y-3 mt-2">
+<div class="flex items-start gap-3">
+<div class="bg-primary/10 p-1.5 rounded-md text-primary shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-0.5">Loại suất ăn yêu cầu</p>
+<p class="font-body-md text-body-md text-on-surface font-medium">Không hải sản</p>
+</div>
+</div>
+<div class="h-px w-full bg-surface-container-highest"></div>
+<div class="flex items-start gap-3">
+<div class="bg-error/10 p-1.5 rounded-md text-error shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-0.5">Lý do y tế (Quan trọng)</p>
+<p class="font-body-md text-body-md text-error font-medium">Dị ứng tôm, cua nghiêm trọng</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2 (Dietary Preference) -->
+<div class="bg-on-tertiary rounded-xl p-md shadow-[0_2px_8px_rgba(14,116,144,0.04)] border border-outline-variant/20 flex flex-col gap-sm cursor-pointer hover:shadow-[0_4px_12px_rgba(14,116,144,0.08)] transition-all active:scale-[0.98]" onclick="openBottomSheet('card2')">
+<div class="flex justify-between items-start mb-1">
+<div class="flex gap-3 items-center">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container shrink-0 border border-surface-dim">
+<img alt="" class="w-full h-full object-cover" data-alt="A brightly lit, professional portrait of a young female elementary school student with long dark hair tied in a ponytail. She is wearing a light blue school uniform polo shirt. The background is a soft, out-of-focus light gray, emphasizing a clean, modern medical-school UI aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4XJBaFNSFkg0iv0ifm0xdKViCVXbf0qWZ_pywpXboouh5T_Am1NsebQndPBkJJTl5wznK3whj-jjPDxDULB7NERP4Vds7nilp4yLh5U7s4eY44KkGFA7BTo8jECHG2YDKLRMmCkr3mTWJL6uCf6jpi95WJUknP7kxGiBlE5W5sNoXWQhYiLiavLOITiQbEG0UerDomUOpnxJhSZjS0yQX89iDYg6emhTPJbc5GGDBbMtsFkkQsoE2rOiLGF8FHy76hTTVncY0VjU"/>
+</div>
+<div>
+<h2 class="font-title-lg text-title-lg text-on-surface leading-tight">Lê Hoàng Bảo Ngọc</h2>
+<span class="font-label-sm text-label-sm text-secondary bg-surface-container-low px-2 py-0.5 rounded-md mt-1 inline-block">Lớp 1B</span>
+</div>
+</div>
+<span class="bg-secondary-container text-on-secondary-container font-label-sm text-label-sm px-3 py-1 rounded-full whitespace-nowrap">Chờ duyệt</span>
+</div>
+<div class="bg-surface-container-lowest border border-surface-container-highest rounded-lg p-3 space-y-3 mt-2">
+<div class="flex items-start gap-3">
+<div class="bg-primary/10 p-1.5 rounded-md text-primary shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">restaurant_menu</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-0.5">Loại suất ăn yêu cầu</p>
+<p class="font-body-md text-body-md text-on-surface font-medium">Ăn chay (Không thịt, cá)</p>
+</div>
+</div>
+<div class="h-px w-full bg-surface-container-highest"></div>
+<div class="flex items-start gap-3">
+<div class="bg-surface-variant/50 p-1.5 rounded-md text-secondary shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">info</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-0.5">Lý do</p>
+<p class="font-body-md text-body-md text-on-surface font-medium">Truyền thống gia đình</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3 (Mild Intolerance) -->
+<div class="bg-on-tertiary rounded-xl p-md shadow-[0_2px_8px_rgba(14,116,144,0.04)] border border-outline-variant/20 flex flex-col gap-sm cursor-pointer hover:shadow-[0_4px_12px_rgba(14,116,144,0.08)] transition-all active:scale-[0.98]" onclick="openBottomSheet('card3')">
+<div class="flex justify-between items-start mb-1">
+<div class="flex gap-3 items-center">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container shrink-0 border border-surface-dim flex items-center justify-center bg-secondary-container text-on-secondary-container font-title-lg text-title-lg">
+                            NA <!-- Initial avatar fallback -->
+</div>
+<div>
+<h2 class="font-title-lg text-title-lg text-on-surface leading-tight">Nguyễn Tuấn Anh</h2>
+<span class="font-label-sm text-label-sm text-secondary bg-surface-container-low px-2 py-0.5 rounded-md mt-1 inline-block">Lớp 5C</span>
+</div>
+</div>
+<span class="bg-secondary-container text-on-secondary-container font-label-sm text-label-sm px-3 py-1 rounded-full whitespace-nowrap">Chờ duyệt</span>
+</div>
+<div class="bg-surface-container-lowest border border-surface-container-highest rounded-lg p-3 space-y-3 mt-2">
+<div class="flex items-start gap-3">
+<div class="bg-primary/10 p-1.5 rounded-md text-primary shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">local_cafe</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-0.5">Loại suất ăn yêu cầu</p>
+<p class="font-body-md text-body-md text-on-surface font-medium">Không sữa bò (Sữa hạt thay thế)</p>
+</div>
+</div>
+<div class="h-px w-full bg-surface-container-highest"></div>
+<div class="flex items-start gap-3">
+<div class="bg-error-container/50 p-1.5 rounded-md text-error shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">medical_information</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-0.5">Lý do y tế</p>
+<p class="font-body-md text-body-md text-on-surface font-medium">Bất dung nạp Lactose nhẹ</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Sheet Backdrop -->
+<div class="fixed inset-0 bg-on-surface/40 opacity-0 pointer-events-none transition-opacity duration-300 z-40 backdrop-blur-sm" id="backdrop" onclick="closeBottomSheet()"></div>
+<!-- Bottom Sheet -->
+<div class="fixed bottom-0 left-0 right-0 bg-on-tertiary rounded-t-[24px] translate-y-full transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] z-50 shadow-[0_-8px_24px_rgba(14,116,144,0.08)] max-h-[751px] flex flex-col" id="bottomSheet">
+<!-- Drag Handle -->
+<div class="w-full flex justify-center py-3 shrink-0 cursor-grab" onclick="closeBottomSheet()">
+<div class="w-10 h-1.5 bg-outline-variant/40 rounded-full"></div>
+</div>
+<div class="overflow-y-auto px-lg pb-lg pt-2 no-scrollbar">
+<!-- Header Info -->
+<div class="flex items-center gap-4 pb-6">
+<div class="w-16 h-16 rounded-full overflow-hidden bg-surface-container shrink-0 border-2 border-surface">
+<img alt="" class="w-full h-full object-cover" data-alt="A brightly lit, professional portrait of a young male elementary school student with neat dark hair, smiling subtly. The background is a soft, out-of-focus light gray wall in a modern classroom setting. The lighting is soft and flattering, creating a welcoming and trustworthy medical-school context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsp-T0YEFQ6PaO7tOD94ZjIFckOP-Gqp95V6p8dlqUStdMlq924w2JNt4DcJbYUgiSsVYOQTO-CdpfpMVS4-M5SIRucfnTuj8vcbCcJeL1wlhQ1GxuY7hsJ9i-flCGuJdUXDX_qkcBEz0V6ydnCYh2TDBqyvQI7oiZQs6JKEYo4aAnw6BXP-hr73k3zFrs33yEp29uqytgsgpIxYQs6Bv9G6pGstfK1y3HKFMi9U6eOZiutAaf88AOBoZKYWiefP_cMSlT8rfB-d8"/>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-1">Trần Minh Khôi</h2>
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+<span class="font-body-md text-body-md">Học sinh lớp 3A2</span>
+</div>
+</div>
+</div>
+<!-- Details Section -->
+<div class="space-y-6">
+<!-- Request Details Box -->
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface-variant uppercase tracking-wide mb-3">Chi tiết yêu cầu y tế</h3>
+<div class="bg-error-container/20 border border-error/20 rounded-xl p-4 flex gap-4">
+<div class="bg-on-tertiary p-2 rounded-full h-fit shadow-sm">
+<span class="material-symbols-outlined text-error text-[24px]">medical_services</span>
+</div>
+<div>
+<p class="font-title-lg text-title-lg text-error mb-1">Dị ứng tôm, cua</p>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                                 Học sinh có tiền sử sốc phản vệ với các loại hải sản vỏ cứng (tôm, cua, ghẹ). Yêu cầu nhà bếp tuyệt đối không sử dụng chung dụng cụ nấu ăn hoặc dầu chiên đã qua sử dụng với hải sản.
+                             </p>
+</div>
+</div>
+</div>
+<!-- Meal Replacement -->
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface-variant uppercase tracking-wide mb-3">Đề xuất thay thế</h3>
+<div class="bg-surface-container-low rounded-xl p-4 flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-[24px]">restaurant_menu</span>
+<div>
+<p class="font-body-lg text-body-lg text-on-surface font-medium">Thực đơn không hải sản (Mã: NM-04)</p>
+<p class="font-body-md text-body-md text-secondary">Thịt heo, bò, gà, hoặc các loại cá đồng băm nhuyễn.</p>
+</div>
+</div>
+</div>
+<!-- Submitter Info -->
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface-variant uppercase tracking-wide mb-3">Thông tin người gửi</h3>
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3 bg-surface-bright p-3 rounded-lg border border-surface-container">
+<span class="material-symbols-outlined text-secondary">person</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface font-medium">Nguyễn Thị Mai</p>
+<p class="font-label-sm text-label-sm text-secondary">Phụ huynh học sinh</p>
+</div>
+</div>
+<div class="flex items-center gap-3 bg-surface-bright p-3 rounded-lg border border-surface-container">
+<span class="material-symbols-outlined text-secondary">calendar_today</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface font-medium">08:30, 15/10/2023</p>
+<p class="font-label-sm text-label-sm text-secondary">Thời gian gửi yêu cầu</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex gap-4 mt-8 pt-4 border-t border-surface-container-highest bg-on-tertiary">
+<button class="flex-1 bg-surface-bright border border-outline text-on-surface font-label-lg text-label-lg rounded-lg h-12 flex items-center justify-center hover:bg-surface-container-low active:bg-surface-container transition-colors" onclick="closeBottomSheet()">
+                     Từ chối
+                 </button>
+<button class="flex-[2] bg-primary-container text-on-primary font-label-lg text-label-lg rounded-lg h-12 flex items-center justify-center shadow-md hover:brightness-110 active:scale-[0.98] transition-all gap-2" onclick="closeBottomSheet()">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+                     Phê duyệt ngay
+                 </button>
+</div>
+</div>
+</div>
+<script>
+        function openBottomSheet(cardId) {
+            const backdrop = document.getElementById('backdrop');
+            const sheet = document.getElementById('bottomSheet');
+            
+            // In a real app, you'd populate the sheet data based on cardId here.
+            // For design prototype, we just animate it open.
+            
+            backdrop.classList.remove('opacity-0', 'pointer-events-none');
+            sheet.classList.remove('translate-y-full');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeBottomSheet() {
+            const backdrop = document.getElementById('backdrop');
+            const sheet = document.getElementById('bottomSheet');
+            
+            backdrop.classList.add('opacity-0', 'pointer-events-none');
+            sheet.classList.add('translate-y-full');
+            document.body.style.overflow = ''; // Restore background scrolling
+        }
+    </script>
+</body></html>

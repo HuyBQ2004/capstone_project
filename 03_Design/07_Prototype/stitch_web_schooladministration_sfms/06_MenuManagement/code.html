@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Menu Management - sfms</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline": "#6f787d",
+                        "on-surface": "#181c1e",
+                        "on-background": "#181c1e",
+                        "surface-variant": "#e0e3e5",
+                        "surface-bright": "#f7fafc",
+                        "on-tertiary-fixed": "#2c1600",
+                        "on-primary-fixed": "#001f29",
+                        "on-secondary-fixed-variant": "#444749",
+                        "secondary-container": "#e0e3e5",
+                        "on-tertiary-container": "#ffe8d6",
+                        "inverse-on-surface": "#eef1f3",
+                        "surface-container": "#ebeef0",
+                        "on-secondary-container": "#626567",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#0e7490",
+                        "on-error": "#ffffff",
+                        "tertiary": "#794602",
+                        "primary": "#005a71",
+                        "surface-dim": "#d7dadd",
+                        "error": "#ba1a1a",
+                        "on-primary-container": "#d3f1ff",
+                        "outline-variant": "#bec8cd",
+                        "tertiary-fixed": "#ffdcbd",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-tint": "#006781",
+                        "inverse-primary": "#81d1f0",
+                        "secondary": "#5c5f61",
+                        "surface": "#f7fafc",
+                        "on-surface-variant": "#3f484c",
+                        "on-tertiary": "#ffffff",
+                        "background": "#f7fafc",
+                        "tertiary-container": "#965e1c",
+                        "inverse-surface": "#2d3133",
+                        "primary-fixed": "#b9eaff",
+                        "secondary-fixed": "#e0e3e5",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#c4c7c9",
+                        "primary-fixed-dim": "#81d1f0",
+                        "surface-container-high": "#e6e8eb",
+                        "on-tertiary-fixed-variant": "#693c00",
+                        "on-secondary-fixed": "#191c1e",
+                        "tertiary-fixed-dim": "#ffb86f",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f1f4f6",
+                        "on-primary-fixed-variant": "#004d62",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-gap": "1.5rem",
+                        "sidebar-width": "260px",
+                        "edge-margin": "2rem",
+                        "gutter": "1rem",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "h3": ["Be Vietnam Pro", "sans-serif"],
+                        "h1-mobile": ["Be Vietnam Pro", "sans-serif"],
+                        "h1": ["Be Vietnam Pro", "sans-serif"],
+                        "table-header": ["Be Vietnam Pro", "sans-serif"],
+                        "h2": ["Be Vietnam Pro", "sans-serif"],
+                        "label": ["Be Vietnam Pro", "sans-serif"],
+                        "body-sm": ["Be Vietnam Pro", "sans-serif"],
+                        "body-lg": ["Be Vietnam Pro", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "h3": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "h1-mobile": ["24px", { "lineHeight": "30px", "fontWeight": "700" }],
+                        "h1": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "table-header": ["13px", { "lineHeight": "18px", "fontWeight": "600" }],
+                        "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #bec8cd;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-sm text-body-sm antialiased h-screen flex overflow-hidden">
+<!-- SIDEBAR COMPONENT -->
+<nav class="fixed left-0 top-0 h-full w-[260px] bg-secondary-fixed dark:bg-surface-dim border-r border-outline-variant dark:border-outline flex flex-col py-gutter z-50">
+<!-- Header -->
+<div class="px-6 pb-6 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-on-primary font-bold">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">school</span>
+</div>
+<div>
+<h1 class="font-h2 text-h2 font-bold text-primary dark:text-primary-fixed-dim m-0 p-0 leading-tight">sfms</h1>
+<p class="font-label text-label text-on-surface-variant m-0 p-0">School Food Management</p>
+</div>
+</div>
+<!-- Main Navigation -->
+<div class="flex-1 overflow-y-auto px-2 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg font-body-sm text-body-sm hover:bg-surface-container-highest dark:hover:bg-on-surface-variant" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg font-body-sm text-body-sm hover:bg-surface-container-highest dark:hover:bg-on-surface-variant" href="#">
+<span class="material-symbols-outlined">handshake</span>
+<span>Partners</span>
+</a>
+<!-- Active Item: Menu -->
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container/10 text-primary font-bold border-l-4 border-primary rounded-r-lg font-body-sm text-body-sm transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">restaurant_menu</span>
+<span>Menu</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg font-body-sm text-body-sm hover:bg-surface-container-highest dark:hover:bg-on-surface-variant" href="#">
+<span class="material-symbols-outlined">group</span>
+<span>Classes &amp; Students</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg font-body-sm text-body-sm hover:bg-surface-container-highest dark:hover:bg-on-surface-variant" href="#">
+<span class="material-symbols-outlined">report_problem</span>
+<span>Incidents &amp; Inspections</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg font-body-sm text-body-sm hover:bg-surface-container-highest dark:hover:bg-on-surface-variant" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span>Reports &amp; Statistics</span>
+</a>
+</div>
+<!-- Footer Navigation -->
+<div class="px-2 pt-4 border-t border-outline-variant mt-auto">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg font-body-sm text-body-sm hover:bg-surface-container-highest dark:hover:bg-on-surface-variant" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg font-body-sm text-body-sm hover:bg-surface-container-highest dark:hover:bg-on-surface-variant text-error hover:text-error hover:bg-error-container/20" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</nav>
+<!-- MAIN CANVAS -->
+<main class="ml-[260px] flex-1 flex flex-col h-full bg-background overflow-hidden relative">
+<!-- Top App Bar (Optional context for main area, keeping it minimal) -->
+<header class="h-16 px-edge-margin flex items-center justify-between border-b border-outline-variant bg-surface-container-lowest sticky top-0 z-10 shrink-0">
+<h2 class="font-h3 text-h3 text-on-surface m-0">Quản lý thực đơn</h2>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 rounded-full hover:bg-surface-container-low flex items-center justify-center text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="flex items-center gap-3 border-l border-outline-variant pl-4">
+<img class="w-9 h-9 rounded-full object-cover border border-outline-variant" data-alt="A professional headshot of a school administrator in a bright, modern office setting. Clear, realistic, 8k resolution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKFs4vBPeE3tc4Yuw4LFQKuP6OnyyQlCbQ3Ji4F-98HOuvxOsIPvu46hmof2I6MpH-Hz8wka7oswvKT22m8Mv9DvuJ2wuYapxPWEBknPvjUgCbwpYbyGe3KWoFpjxdvHg-lSmAG_zDUdOwr-KIPaTVQ6C6iwPvsRXMfXOcz8mQIU0vvmnpP3plkS8_eqGhAVkfStFNEKxfUgveJY-d2dXvSofqwKUhSwB8yk41BL1PsiwH3KkkLiZkpSfG0plaJ7WRSlv2vGZeegk"/>
+<span class="font-label text-label text-on-surface-variant hidden md:block">Administrator</span>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-section-gap space-y-section-gap">
+<!-- Bento-style Filter Section -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div class="flex flex-col sm:flex-row gap-4 flex-1">
+<!-- Week Filter -->
+<div class="flex flex-col gap-1.5 flex-1 max-w-[200px]">
+<label class="font-label text-label text-on-surface-variant" for="week-select">Chọn tuần</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none" style="font-size: 18px;">calendar_today</span>
+<select class="w-full pl-9 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 appearance-none transition-all" id="week-select">
+<option selected="" value="42">Tuần 42 (Oct 16 - Oct 22)</option>
+<option value="41">Tuần 41</option>
+<option value="40">Tuần 40</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none" style="font-size: 18px;">expand_more</span>
+</div>
+</div>
+<!-- Status Filter -->
+<div class="flex flex-col gap-1.5 flex-1 max-w-[240px]">
+<label class="font-label text-label text-on-surface-variant" for="status-select">Trạng thái thực đơn</label>
+<div class="relative">
+<select class="w-full pl-4 pr-10 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 appearance-none transition-all" id="status-select">
+<option value="draft">Nháp</option>
+<option selected="" value="pending">Chờ duyệt</option>
+<option value="approved">Đã duyệt</option>
+<option value="published">Đã xuất bản</option>
+<option value="rejected">Bị từ chối</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none" style="font-size: 18px;">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-3 shrink-0">
+<button class="px-4 py-2 border border-outline-variant rounded-lg font-label text-label text-on-surface hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-size: 18px;">filter_list_off</span>
+                            Xóa bộ lọc
+                        </button>
+<button class="px-4 py-2 bg-primary text-on-primary rounded-lg font-label text-label shadow-sm hover:bg-primary-container transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-size: 18px;">add</span>
+                            Tạo thực đơn
+                        </button>
+</div>
+</div>
+</section>
+<!-- Data Table Section -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden flex flex-col">
+<!-- Card Header -->
+<div class="px-6 py-4 border-b border-outline-variant bg-surface-container-lowest flex justify-between items-center">
+<h3 class="font-h3 text-h3 text-on-surface m-0">Danh sách thực đơn</h3>
+<div class="flex items-center gap-2">
+<span class="font-label text-label text-on-surface-variant">1 kết quả</span>
+</div>
+</div>
+<!-- Table Wrapper -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low border-b border-outline-variant">
+<tr>
+<th class="py-3 px-6 font-table-header text-table-header text-on-surface-variant whitespace-nowrap">Tuần</th>
+<th class="py-3 px-6 font-table-header text-table-header text-on-surface-variant whitespace-nowrap">Nhà cung cấp</th>
+<th class="py-3 px-6 font-table-header text-table-header text-on-surface-variant">Tóm tắt dinh dưỡng</th>
+<th class="py-3 px-6 font-table-header text-table-header text-on-surface-variant whitespace-nowrap">Trạng thái</th>
+<th class="py-3 px-6 font-table-header text-table-header text-on-surface-variant text-right whitespace-nowrap">Hành động</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-variant">
+<!-- Target Row -->
+<tr class="hover:bg-surface-bright transition-colors group cursor-default">
+<td class="py-4 px-6 font-body-sm text-body-sm text-on-surface font-medium whitespace-nowrap">
+                                    Tuần 42
+                                </td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined" style="font-size: 16px;">storefront</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface">Catering Toàn Cầu</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<div class="flex flex-col gap-1">
+<span class="font-body-sm text-body-sm text-on-surface">~620 kcal/bữa trưa</span>
+<span class="font-label text-label text-on-surface-variant">(đạt chuẩn 6-10 tuổi)</span>
+</div>
+</td>
+<td class="py-4 px-6 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-label text-label border border-tertiary-fixed-dim/30">
+<span class="w-1.5 h-1.5 rounded-full bg-on-tertiary-fixed-variant"></span>
+                                        Pending Approval
+                                    </span>
+</td>
+<td class="py-4 px-6 text-right whitespace-nowrap">
+<button class="inline-flex items-center justify-center px-3 py-1.5 border border-outline-variant rounded hover:bg-surface-container-low text-primary font-label text-label transition-colors focus:ring-2 focus:ring-primary/20 outline-none">
+                                        Xem chi tiết
+                                    </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Footer / Pagination (Placeholder to make it look complete) -->
+<div class="px-6 py-3 border-t border-outline-variant bg-surface-container-lowest flex items-center justify-between">
+<p class="font-label text-label text-on-surface-variant">Đang hiển thị 1 đến 1 của 1 mục</p>
+<div class="flex gap-1">
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant rounded text-outline-variant cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined" style="font-size: 18px;">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant rounded text-outline-variant cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined" style="font-size: 18px;">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+</body></html>

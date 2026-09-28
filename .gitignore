@@ -1,0 +1,44 @@
+# Docker compose (root) — secret cho cloudflared/rag-service
+.env
+.env.*
+!.env.example
+
+/prompt_history
+/hanoicheck
+/report_template
+__pycache__/
+.agent/
+.agents/
+.skills/
+.idea/
+.claude/
+02_Requirements/UC_Specification/
+03_Design/01_Diagrams/01_Class_Diagram/*
+!03_Design/01_Diagrams/01_Class_Diagram/class_diagram_description.md
+!03_Design/01_Diagrams/01_Class_Diagram/data_model.puml
+!03_Design/01_Diagrams/01_Class_Diagram/class_diagram.puml
+03_Design/01_Diagrams/02_Sequence_Diagram/
+03_Design/02_Description/
+06_Document/01_Report/Report 1 v2.0docx
+06_Document/01_Report/Report 2 v3.0.docx
+06_Document/01_Report/Report 3 v2.0.docx
+06_Document/01_Report/Report 4.docx
+agents.md
+skills-lock.json
+02_Requirements/WireFrame/
+02_Requirements/Workflow/
+02_Requirements/01_Diagrams/SYS-WF1-Supplier-Registration-Approval.puml
+02_Requirements/01_Diagrams/UC-MF01-001-Parent-Login.puml
+02_Requirements/01_Diagrams/Usercase (3).drawio 
+
+# Bản dump DB — CHỨA PII (tên học sinh, email phụ huynh, hash mật khẩu). KHÔNG commit.
+_db_backup/
+
+# Artifact tam cua Playwright MCP (anh chup, log console) — khong phai ma nguon.
+.playwright-mcp/
+
+# JVM crash dump — sinh ra khi fork test hết RAM (gặp 09/08/2026: chạy `mvn test`
+# cùng lúc với 8 container compose + Chromium của Playwright). Là hiện tượng của
+# MÁY, không phải mã nguồn.
+hs_err_pid*.log
+replay_pid*.log

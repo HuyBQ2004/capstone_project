@@ -1,0 +1,163 @@
+<mxfile host="Electron">
+  <diagram id="MealDistributionWorkflow" name="3.1.2.11. Meal Serving Workflow">
+    <mxGraphModel dx="1373" dy="963" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1654" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="lane_container" parent="1" style="swimlane;html=1;childLayout=stackLayout;startSize=30;horizontal=1;fillColor=#f5f5f5;horizontalStack=1;resizeParent=1;resizeParentMax=0;resizeNext=0;dropTarget=0;collapsible=0;fontSize=14;fontStyle=1;align=center;" value="Meal Serving Workflow" vertex="1">
+          <mxGeometry height="1440" width="1080" x="50" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_catering" parent="lane_container" style="swimlane;html=1;startSize=40;horizontal=1;collapsible=0;dropTarget=0;fillColor=#B3E5FC;strokeColor=#000000;fontSize=13;fontStyle=1;align=center;fontColor=#000000;" value="&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Kitchen Manager&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="1410" width="320" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="start_node" parent="lane_catering" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fillColor=#000000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="145" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="step_01" parent="lane_catering" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#99ccff;strokeColor=#0066cc;strokeWidth=1.5;fontSize=12;fontColor=#263238;" value="&lt;b&gt;1. Prepare Meal Portions&lt;/b&gt;&lt;br&gt;Follow Allocation List from Work Flow 3.1.2.9&amp;nbsp;" vertex="1">
+          <mxGeometry height="70" width="180" x="70" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="step_02" parent="lane_catering" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFFFFF;strokeColor=#37474F;strokeWidth=1.5;fontSize=12;fontColor=#263238;" value="&lt;b&gt;2. Deliver Meals to Classrooms&lt;/b&gt;&lt;br&gt;Delivering meals to each classroom." vertex="1">
+          <mxGeometry height="70" width="140" x="90" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="step_05" parent="lane_catering" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeWidth=1.5;fontSize=12;fillColor=#99ccff;strokeColor=#0066cc;" value="&lt;b&gt;5. Correct Error&lt;/b&gt;&lt;br&gt;Staff replaces or corrects&lt;br&gt;the meal assignment" vertex="1">
+          <mxGeometry height="70" width="180" x="70" y="434.90999999999997" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_01_to_02" edge="1" parent="lane_catering" source="step_01" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="step_02">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="157.48" y="170" as="sourcePoint" />
+            <mxPoint x="162.51999999999995" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lane_system" parent="lane_container" style="swimlane;html=1;startSize=40;horizontal=1;collapsible=0;dropTarget=0;fillColor=#E1BEE7;strokeColor=#000000;fontSize=13;fontStyle=1;align=center;" value="SFMS" vertex="1">
+          <mxGeometry height="1410" width="440" x="320" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="step_10" parent="lane_system" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=1.5;fontSize=10;fontColor=#000000;" value="&lt;b&gt;10. Potential Safety Incident Reported?&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#0066cc&quot; style=&quot;font-size:9px&quot;&gt;&lt;b&gt;BR-142, BR-146, BR-148&lt;/b&gt;&lt;br/&gt;Luật ATTP 55/2010/QH12 Điều 53&lt;/font&gt;" vertex="1">
+          <mxGeometry height="115" width="200" x="30.57" y="952" as="geometry" />
+        </mxCell>
+        <mxCell id="step_12" parent="lane_system" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;fontSize=12;fontStyle=1;fontColor=#000000;" value="&lt;font style=&quot;&quot;&gt;11. Complete Service&lt;/font&gt;&lt;br&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;Meal distribution is&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;completed successfully&lt;/span&gt;" vertex="1">
+          <mxGeometry height="70" width="130" x="65.57" y="1130" as="geometry" />
+        </mxCell>
+        <mxCell id="step_11" parent="lane_system" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#99ccff;strokeColor=#0066cc;strokeWidth=1.5;fontSize=12;fontColor=#000000;" value="&lt;b&gt;12. Create Incident Notification&lt;br&gt;&lt;/b&gt;Record reported incident and notify responsible parties&lt;b&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="70" width="183.18" x="226.82" y="1130" as="geometry" />
+        </mxCell>
+        <mxCell id="end_node_success" parent="lane_system" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;strokeWidth=2.5;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="115.57" y="1325" as="geometry" />
+        </mxCell>
+        <mxCell id="tzC7slMaKal7OrP739pi-3" edge="1" parent="lane_system" source="step_12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.483;entryY=0.367;entryDx=0;entryDy=0;entryPerimeter=0;" target="end_node_success">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_teacher" parent="lane_container" style="swimlane;html=1;startSize=40;horizontal=1;collapsible=0;dropTarget=0;fillColor=#D5E8D4;strokeColor=#000000;fontSize=13;fontStyle=1;align=center;" value="Teacher" vertex="1">
+          <mxGeometry height="1410" width="320" x="760" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="step_03" parent="lane_teacher" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#99ccff;strokeColor=#0066cc;strokeWidth=1.5;fontSize=12;fontColor=#263238;" value="&lt;b&gt;3. Distribute Meals to Students&lt;/b&gt;&lt;br&gt;Distribute meals to each student follow&amp;nbsp;the list of special meals" vertex="1">
+          <mxGeometry height="70" width="180" x="70" y="309.90999999999997" as="geometry" />
+        </mxCell>
+        <mxCell id="step_04" parent="lane_teacher" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=1.5;fontSize=10;" value="&lt;b&gt;4. Meal Distribution Correct?&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#0066cc&quot; style=&quot;font-size:9px&quot;&gt;&lt;b&gt;BR-123, BR-125, BR-130, BR-065, BR-082&lt;/b&gt;&lt;br/&gt;TTLT 13/2016/TTLT-BYT-BGDĐT Điều 6&lt;/font&gt;" vertex="1">
+          <mxGeometry height="115" width="200" x="60" y="412" as="geometry" />
+        </mxCell>
+        <mxCell id="step_09" parent="lane_teacher" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#99ccff;strokeColor=#0066cc;strokeWidth=1.5;fontSize=12;fontColor=#263238;" value="&lt;b&gt;&amp;nbsp;9. Submit Meal Feedback&lt;/b&gt;&lt;br&gt;Reports student feedback,&lt;br&gt;observations or issues" vertex="1">
+          <mxGeometry height="70" width="180" x="70" y="830" as="geometry" />
+        </mxCell>
+        <mxCell id="step_06" parent="lane_teacher" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFFFFF;strokeColor=#37474F;strokeWidth=1.5;fontSize=12;fontColor=#263238;" value="&lt;b&gt;6. Complete Meal Distribution&amp;nbsp;&lt;/b&gt;&lt;br&gt;Record that the distribution is complete, marking all students who have received the correct portion." vertex="1">
+          <mxGeometry height="70" width="230" x="45" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_04_to_06" edge="1" parent="lane_teacher" source="step_04" style="rounded=1;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;exitX=0.506;exitY=0.967;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="step_06" value="Yes">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="158.71799999999985" y="519.9966666666667" as="sourcePoint" />
+            <mxPoint x="-110" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_start_to_01" edge="1" parent="1" source="start_node" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#37474F;strokeWidth=1.5;fontSize=11;" target="step_01">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_02_to_03" edge="1" parent="1" source="step_02" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#37474F;strokeWidth=1.5;fontSize=11;" target="step_03">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="285" y="379.90999999999997" />
+              <mxPoint x="890" y="379.90999999999997" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_03_to_04" edge="1" parent="1" source="step_03" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#37474F;strokeWidth=1.5;fontSize=11;" target="step_04">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_04_to_05" edge="1" parent="1" source="step_04" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;" target="step_05" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_05_to_03" edge="1" parent="1" source="step_05" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;" target="step_03">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="210" y="430" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_09_to_10" edge="1" parent="1" source="step_09" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#37474F;strokeWidth=1.5;fontSize=11;" target="step_10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_10_to_11" edge="1" parent="1" source="step_10" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;" target="step_11" value="Yes">
+          <mxGeometry relative="1" x="-0.528" y="10" as="geometry">
+            <mxPoint x="-1" as="offset" />
+            <Array as="points">
+              <mxPoint x="680" y="1100" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_10_to_12" edge="1" parent="1" source="step_10" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;" target="step_12" value="No">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="495.57" y="1130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_07_to_08" edge="1" parent="1" source="step_07" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="step_08" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="490" y="820" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="step_07" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFFFFF;strokeColor=#37474F;strokeWidth=1.5;fontSize=12;fontColor=#263238;" value="&lt;b&gt;7. Record Serving Info&lt;/b&gt;&lt;br&gt;Record service time, staff, quantity" vertex="1">
+          <mxGeometry height="70" width="180" x="410" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_06_to_07" edge="1" parent="1" source="step_06" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="step_07">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_08_to_09" edge="1" parent="1" source="step_08" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="step_09">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="step_08" parent="1" style="whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#37474F;fontColor=#263238;rounded=1;arcSize=12;strokeWidth=1.5;" value="&lt;b&gt;8.&amp;nbsp;&lt;/b&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;b&gt;Monitor &amp;amp; Record Meal&amp;nbsp;&lt;/b&gt;&lt;/span&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(38, 50, 56), rgb(188, 198, 203));&quot;&gt;Consumption&lt;/b&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/span&gt;Record whether students actually ate/didn&#39;t eat/ate only a portion." vertex="1">
+          <mxGeometry height="60" width="240" x="850" y="790" as="geometry" />
+        </mxCell>
+        <mxCell id="tzC7slMaKal7OrP739pi-1" edge="1" parent="1" source="step_13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="end_node_success">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="step_13" parent="1" style="whiteSpace=wrap;html=1;fillColor=#99ccff;strokeColor=#0066cc;fontColor=#000000;rounded=1;arcSize=12;strokeWidth=1.5;" value="&lt;div&gt;&lt;b&gt;13. Transfer to WF 3.1.2.12.&amp;nbsp;&lt;/b&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;b&gt;Incident Handling Workflow&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="170" x="603.41" y="1400" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_11_to_13" edge="1" parent="1" source="step_11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="step_13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_14_to_16" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="693.1428571428573" y="1439.962396313364" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label_14_yes" connectable="0" parent="edge_14_to_16" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Yes" vertex="1">
+          <mxGeometry relative="1" x="-0.1617" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_14_to_15" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="615.5700000000002" y="1400" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label_14_no" connectable="0" parent="edge_14_to_15" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="No" vertex="1">
+          <mxGeometry relative="1" x="-0.0061" y="-1" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

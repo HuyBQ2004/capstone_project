@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Xác thực mã OTP - sfms</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#005a71",
+                        "on-background": "#131b2e",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#dfe3e7",
+                        "primary-container": "#0e7490",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#81d1f0",
+                        "on-secondary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#004d62",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#d3e4fe",
+                        "surface-container-high": "#e2e7ff",
+                        "surface-container": "#eaedff",
+                        "on-primary-container": "#d3f1ff",
+                        "surface-dim": "#d2d9f4",
+                        "primary-fixed": "#b9eaff",
+                        "on-surface": "#131b2e",
+                        "surface-tint": "#006781",
+                        "on-tertiary-container": "#e8edf1",
+                        "surface-container-low": "#f2f3ff",
+                        "on-error": "#ffffff",
+                        "secondary": "#505f76",
+                        "tertiary": "#4e5356",
+                        "secondary-container": "#d0e1fb",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "tertiary-fixed-dim": "#c3c7cb",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#eef0ff",
+                        "outline": "#6f787d",
+                        "surface-container-highest": "#dae2fd",
+                        "on-secondary-container": "#54647a",
+                        "background": "#faf8ff",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "tertiary-container": "#666b6f",
+                        "surface-variant": "#dae2fd",
+                        "outline-variant": "#bec8cd",
+                        "on-surface-variant": "#3f484c",
+                        "on-tertiary-fixed": "#171c1f",
+                        "surface-bright": "#faf8ff",
+                        "on-primary-fixed": "#001f29",
+                        "on-tertiary-fixed-variant": "#43474b",
+                        "surface": "#faf8ff",
+                        "primary-fixed-dim": "#81d1f0",
+                        "inverse-surface": "#283044"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "base-unit": "4px",
+                        "container-max-width": "1280px",
+                        "gutter": "24px",
+                        "auth-card-width": "448px"
+                    },
+                    fontFamily: {
+                        "h2": ["Be Vietnam Pro"],
+                        "h1-mobile": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "body-sm": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "h3": ["Be Vietnam Pro"],
+                        "h1": ["Be Vietnam Pro"],
+                        "body-base": ["Be Vietnam Pro"]
+                    },
+                    fontSize: {
+                        "h2": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "h1-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "h3": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "h1": ["36px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-base": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* OTP Input specific styling */
+        .otp-input::-webkit-outer-spin-button,
+        .otp-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .otp-input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface antialiased min-h-screen flex flex-col justify-center items-center p-4">
+<!-- Centered Auth Card -->
+<main class="w-full max-w-[448px] bg-surface-container-lowest rounded-lg shadow-[0_4px_6px_-1px_rgb(0_0_0_0.1),_0_2px_4px_-2px_rgb(0_0_0_0.1)] border border-tertiary-fixed p-6 sm:p-8 relative">
+<!-- Back Button -->
+<button aria-label="Quay lại" class="absolute top-6 left-6 text-secondary hover:text-primary transition-colors flex items-center justify-center p-1 rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<!-- Header Content -->
+<div class="mt-8 mb-6 text-center">
+<h1 class="font-h2 text-h2 text-on-surface mb-2">Xác thực mã OTP</h1>
+<p class="font-body-sm text-body-sm text-secondary">
+                Chúng tôi đã gửi mã xác thực gồm 6 chữ số đến email của bạn.
+            </p>
+</div>
+<!-- OTP Form -->
+<form class="flex flex-col items-center w-full" id="otpForm">
+<!-- OTP Input Group -->
+<div class="flex justify-center gap-2 sm:gap-3 w-full mb-6" id="otpContainer">
+<input class="otp-input w-10 h-12 sm:w-12 sm:h-14 text-center font-h3 text-h3 rounded-lg border border-outline-variant bg-surface-container-lowest focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" max="9" maxlength="1" min="0" required="" type="number"/>
+<input class="otp-input w-10 h-12 sm:w-12 sm:h-14 text-center font-h3 text-h3 rounded-lg border border-outline-variant bg-surface-container-lowest focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" disabled="" max="9" maxlength="1" min="0" required="" type="number"/>
+<input class="otp-input w-10 h-12 sm:w-12 sm:h-14 text-center font-h3 text-h3 rounded-lg border border-outline-variant bg-surface-container-lowest focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" disabled="" max="9" maxlength="1" min="0" required="" type="number"/>
+<input class="otp-input w-10 h-12 sm:w-12 sm:h-14 text-center font-h3 text-h3 rounded-lg border border-outline-variant bg-surface-container-lowest focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" disabled="" max="9" maxlength="1" min="0" required="" type="number"/>
+<input class="otp-input w-10 h-12 sm:w-12 sm:h-14 text-center font-h3 text-h3 rounded-lg border border-outline-variant bg-surface-container-lowest focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" disabled="" max="9" maxlength="1" min="0" required="" type="number"/>
+<input class="otp-input w-10 h-12 sm:w-12 sm:h-14 text-center font-h3 text-h3 rounded-lg border border-outline-variant bg-surface-container-lowest focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" disabled="" max="9" maxlength="1" min="0" required="" type="number"/>
+</div>
+<!-- Countdown text -->
+<p class="font-label-sm text-label-sm text-secondary mb-6 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="schedule">schedule</span>
+                Mã OTP hết hiệu lực sau <span class="font-bold text-on-surface" id="countdownDisplay">02:00</span>
+</p>
+<!-- Submit Button -->
+<button class="w-full h-10 bg-primary-container text-on-primary font-label-md text-label-md rounded-lg shadow-sm hover:brightness-90 transition-all flex justify-center items-center disabled:opacity-50 disabled:cursor-not-allowed" type="submit">
+                Xác minh mã
+            </button>
+</form>
+<!-- Resend Link -->
+<div class="mt-6 text-center">
+<p class="font-body-sm text-body-sm text-secondary">
+                Không nhận được mã? 
+                <button class="font-label-md text-label-md text-secondary opacity-50 cursor-not-allowed ml-1 transition-colors" disabled="" id="resendBtn">
+                    Gửi lại mã OTP
+                </button>
+</p>
+</div>
+</main>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputs = document.querySelectorAll('.otp-input');
+            const form = document.getElementById('otpForm');
+            
+            // OTP Input Logic
+            inputs.forEach((input, index) => {
+                // Focus first input automatically
+                if(index === 0) input.focus();
+
+                input.addEventListener('input', (e) => {
+                    const val = e.target.value;
+                    // Ensure only one digit
+                    if (val.length > 1) {
+                        e.target.value = val.slice(0, 1);
+                    }
+                    
+                    if (val && index < inputs.length - 1) {
+                        inputs[index + 1].disabled = false;
+                        inputs[index + 1].focus();
+                    }
+                });
+
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                        inputs[index].disabled = true;
+                        inputs[index - 1].focus();
+                        inputs[index - 1].value = '';
+                    }
+                });
+                
+                // Allow paste
+                input.addEventListener('paste', (e) => {
+                    e.preventDefault();
+                    const pastedData = e.clipboardData.getData('text').slice(0, 6).replace(/\D/g, '');
+                    if(pastedData) {
+                        for(let i = 0; i < pastedData.length; i++) {
+                            if(inputs[i]) {
+                                inputs[i].disabled = false;
+                                inputs[i].value = pastedData[i];
+                                if(i < inputs.length - 1) inputs[i+1].focus();
+                            }
+                        }
+                    }
+                });
+            });
+
+            // Form Submit Logic
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                let otp = '';
+                let isValid = true;
+                inputs.forEach(input => {
+                    if(!input.value) isValid = false;
+                    otp += input.value;
+                });
+                
+                if(isValid && otp.length === 6) {
+                    // Simulate successful verification and redirect
+                    const btn = form.querySelector('button[type="submit"]');
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = '<span class="material-symbols-outlined animate-spin" data-icon="progress_activity">progress_activity</span>';
+                    btn.disabled = true;
+                    
+                    setTimeout(() => {
+                        window.location.href = '#reset-password'; // Placeholder redirect
+                        // Reset button for demo purposes
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    }, 1000);
+                } else {
+                    // Visual feedback for error
+                    const container = document.getElementById('otpContainer');
+                    container.classList.add('animate-bounce');
+                    setTimeout(() => container.classList.remove('animate-bounce'), 500);
+                }
+            });
+
+            // Countdown Logic
+            const countdownDisplay = document.getElementById('countdownDisplay');
+            const resendBtn = document.getElementById('resendBtn');
+            let timeLeft = 120; // 2 minutes in seconds
+            let timerId;
+
+            function startTimer() {
+                clearInterval(timerId);
+                timeLeft = 120;
+                resendBtn.disabled = true;
+                resendBtn.classList.remove('text-primary', 'hover:underline', 'opacity-100', 'cursor-pointer');
+                resendBtn.classList.add('text-secondary', 'opacity-50', 'cursor-not-allowed');
+                
+                timerId = setInterval(() => {
+                    timeLeft--;
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    countdownDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+                    if (timeLeft <= 0) {
+                        clearInterval(timerId);
+                        countdownDisplay.textContent = "00:00";
+                        resendBtn.disabled = false;
+                        resendBtn.classList.remove('text-secondary', 'opacity-50', 'cursor-not-allowed');
+                        resendBtn.classList.add('text-primary', 'hover:underline', 'opacity-100', 'cursor-pointer');
+                    }
+                }, 1000);
+            }
+
+            startTimer();
+
+            // Resend Logic
+            resendBtn.addEventListener('click', (e) => {
+                if(!resendBtn.disabled) {
+                    // Reset inputs
+                    inputs.forEach((input, index) => {
+                        input.value = '';
+                        if(index > 0) input.disabled = true;
+                    });
+                    inputs[0].focus();
+                    startTimer();
+                }
+            });
+        });
+    </script>
+</body></html>

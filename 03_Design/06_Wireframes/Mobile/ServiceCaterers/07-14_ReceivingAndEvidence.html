@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>SFMS Wireframe — Service Caterers (Mobile): Receiving &amp; Evidence</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root{ --ink:#333; --paper:#fff; --gray:#777; --lightgray:#d7d7d7; --midgray:#aaa; }
+  * { box-sizing: border-box; }
+  html { font-size: 18px; }
+  body {
+    margin:0; font-family:'Patrick Hand', cursive; color:var(--ink);
+    background-color:#f4f4f4;
+    background-image: radial-gradient(#d7d7d7 1px, transparent 1px);
+    background-size: 20px 20px;
+    font-size:18px;
+    min-height:100vh;
+  }
+  .text-xs   { font-size: 14px; line-height:1.4; }
+  .text-sm   { font-size: 18px; line-height:1.5; }
+  .text-base { font-size: 22px; line-height:1.5; }
+  .text-md   { font-size: 28px; line-height:1.3; }
+  .text-lg   { font-size: 35px; line-height:1.2; }
+  a { color:#3a5a8c; text-decoration:underline; cursor:pointer; }
+
+  .note-banner {
+    max-width:900px; margin:14px auto 0; text-align:center;
+    font-family:'Caveat', cursive; font-size:20px; color:#900;
+    padding:0 14px;
+  }
+
+  .wrap { display:flex; flex-direction:column; align-items:center; padding:18px 10px 60px; gap:16px; }
+  .manifest { max-width:390px; font-size:14px; color:var(--gray); text-align:center; }
+
+  /* ---- Phone frame ---- */
+  .phone-frame {
+    width:390px; min-width:390px; background:#e9e9e9; border:3px solid var(--ink);
+    border-radius:34px; padding:14px 10px; box-shadow:0 6px 0 rgba(0,0,0,0.08);
+  }
+  .phone-notch { width:90px; height:14px; background:var(--ink); border-radius:8px; margin:0 auto 8px; }
+  .phone-screen-area { background:#fff; border:2px solid var(--ink); border-radius:18px; overflow:hidden; height:730px; display:flex; flex-direction:column; }
+
+  .appbar {
+    display:flex; align-items:center; justify-content:space-between; gap:8px;
+    padding:12px 14px; border-bottom:3px solid var(--ink); background:#fafafa; flex:none;
+  }
+  .appbar-title { display:flex; align-items:center; gap:8px; }
+  .appbar-actions { display:flex; align-items:center; gap:14px; }
+  .appbar-actions svg { cursor:pointer; }
+  .back-btn { cursor:pointer; display:flex; align-items:center; }
+
+  .content { flex:1; overflow-y:auto; padding:14px; }
+  .fixed-footer { flex:none; padding:12px 14px; border-top:3px solid var(--ink); background:#fafafa; }
+
+  .icon { width:20px; height:20px; flex:none; stroke:var(--ink); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .icon-sm { width:16px; height:16px; }
+
+  /* ---- Card ---- */
+  .card { border:2px solid var(--ink); border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; padding:14px; }
+  .card + .card { margin-top:12px; }
+  .card-row { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+
+  /* ---- Buttons ---- */
+  .btn-primary { background:#333; color:white; border:2px solid #333; border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:10px 20px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+  .btn-primary svg { stroke:#fff; }
+  .btn-secondary { background:white; color:#333; border:2px solid #333; border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:10px 20px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+  .btn-danger { background:white; color:#333; border:3px solid #333; border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; font-family:'Patrick Hand', cursive; font-size:18px; padding:10px 20px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+  .btn-block { width:100%; justify-content:center; }
+  button:disabled { opacity:0.45; cursor:not-allowed; }
+
+  /* ---- Chips / Badges ---- */
+  .chip { display:inline-flex; align-items:center; gap:6px; padding:3px 12px; font-size:15px; border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; }
+  .chip-scheduled { border:2px dotted var(--ink); background:#fff; }
+  .chip-dispatched { border:2px dashed var(--ink); background:#fff; }
+  .chip-progress { border:2px solid var(--ink); background:#fff; }
+  .chip-completed { border:3px solid var(--ink); background:#fff; }
+  .chip-received { border:2px solid var(--ink); background:#fff; }
+  .chip-rejected { border:3px solid var(--ink); background:#fff; }
+  .chip-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; overflow-x:auto; }
+
+  .badge { display:inline-flex; align-items:center; gap:5px; padding:2px 10px; font-size:14px; border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; }
+  .badge-success { border:2px solid var(--ink); }
+  .badge-warning { border:2px dashed var(--ink); }
+  .badge-danger { border:3px solid var(--ink); }
+  .badge-sync { border:2px dashed var(--ink); }
+
+  /* ---- Alerts ---- */
+  .alert { display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; margin-top:10px; }
+  .alert-danger { border:3px solid var(--ink); }
+  .alert-warning { border:2px dashed var(--ink); }
+  .alert-info { border:2px dotted var(--ink); }
+  .alert .icon { margin-top:2px; }
+
+  /* ---- Steps ---- */
+  .step-card { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 14px; border:2px solid var(--ink); border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; background:#fff; margin-bottom:10px; cursor:pointer; }
+  .step-card.disabled { opacity:0.5; cursor:not-allowed; }
+  .step-left { display:flex; align-items:center; gap:10px; }
+  .step-status { font-size:14px; color:var(--gray); }
+
+  /* ---- Form bits ---- */
+  .field-block { margin-bottom:14px; }
+  .field-label { font-size:17px; margin-bottom:5px; display:flex; align-items:center; gap:6px; }
+  wired-input, wired-textarea, wired-select { width:100%; display:block; }
+  .radio-tile { display:flex; align-items:center; gap:10px; padding:10px 12px; border:2px solid var(--lightgray); border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; margin-bottom:8px; cursor:pointer; }
+  .radio-tile.selected { border:2px solid var(--ink); background:#f7f7f7; }
+  .check-row { display:flex; align-items:center; gap:10px; padding:6px 0; }
+  .switch-row { display:flex; align-items:center; justify-content:space-between; padding:8px 0; }
+
+  /* ---- Camera / GPS blocks ---- */
+  .camera-box { height:150px; border:2px dashed var(--midgray); border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; color:var(--midgray); background:#fafafa; }
+  .thumb-strip { display:flex; gap:8px; margin-top:10px; overflow-x:auto; }
+  .thumb-box { width:60px; height:60px; flex:none; border:2px dashed var(--midgray); border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--midgray); font-size:22px; }
+  .gps-box { display:flex; align-items:center; gap:8px; padding:10px 12px; border:2px dotted var(--ink); border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; font-size:15px; margin-bottom:10px; }
+
+  .muted { color:var(--gray); }
+  .section-title { display:flex; align-items:center; gap:8px; margin:14px 0 8px; }
+  ul.plain { list-style:none; margin:0; padding:0; }
+  li.list-row { display:flex; justify-content:space-between; padding:6px 0; border-bottom:2px solid var(--lightgray); font-size:16px; }
+  li.list-row:last-child { border-bottom:none; }
+
+  .state-legend { margin-top:10px; padding:10px 12px; border:2px dotted var(--midgray); border-radius:255px 15px 225px 15px / 15px 225px 15px 255px; font-size:13px; color:var(--gray); }
+
+  /* ---- Modal (bottom sheet) ---- */
+  .modal-overlay { display:none; position:absolute; inset:0; background:rgba(0,0,0,0.35); align-items:flex-end; justify-content:center; z-index:50; }
+  .modal-overlay.active { display:flex; }
+  .sheet-box { width:100%; background:#fff; border-top:3px solid var(--ink); border-radius:22px 22px 0 0; padding:18px 16px; max-height:85%; overflow-y:auto; }
+  .sheet-handle { width:50px; height:6px; background:var(--lightgray); border-radius:4px; margin:0 auto 12px; }
+  .sheet-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+
+  .screen { display:none; height:100%; flex-direction:column; }
+  .screen.active { display:flex; }
+</style>
+</head>
+<body>
+
+<div class="note-banner">Wireframe hand-drawn (skill wireframer) — nhóm màn hình Nhận hàng &amp; Bằng chứng (07-14), actor Service Caterers, nền tảng Mobile. Field/bố cục lấy nguyên văn từ Screen Specification tương ứng — không tự thêm nghiệp vụ.</div>
+
+<div class="wrap">
+<div class="manifest">Điều hướng: Dashboard → Workspace → Verify / Capture Evidence / Reject (bottom-sheet) / Send Receipt → Store Form. Xem file manifest .md cùng tên để đối chiếu checklist.</div>
+
+<div class="phone-frame">
+  <div class="phone-notch"></div>
+  <div class="phone-screen-area" style="position:relative;">
+
+    <!-- ============ 07: Receiving Management Dashboard ============ -->
+    <div class="screen active" id="dashboard">
+      <div class="appbar">
+        <div class="appbar-title text-md">Nhận hàng</div>
+        <div class="appbar-actions">
+          <svg class="icon" viewBox="0 0 24 24" onclick="showScreen('history')"><circle cx="12" cy="12" r="9"/><path d="M12 7 v5 l4 2"/></svg>
+        </div>
+      </div>
+      <div class="content">
+        <div class="chip-row">
+          <span class="chip chip-scheduled text-xs">Lọc: Hôm nay</span>
+          <span class="chip chip-scheduled text-xs">Tất cả nhà cung cấp</span>
+        </div>
+
+        <div class="card">
+          <div class="card-row">
+            <div>
+              <div class="text-base">Cty TNHH Rau Sạch Xanh</div>
+              <div class="text-xs muted">Dự kiến: 07:30</div>
+            </div>
+            <span class="chip chip-scheduled">Scheduled</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-row">
+            <div>
+              <div class="text-base">Cty CP Thực phẩm An Phát</div>
+              <div class="text-xs muted">Dự kiến: 08:00</div>
+            </div>
+            <span class="chip chip-dispatched">Dispatched</span>
+          </div>
+          <button class="btn-primary btn-block" style="margin-top:10px" onclick="showScreen('workspace')">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" stroke="#fff"><path d="M4 20 V8 l8 -4 8 4 v12"/><path d="M9 20 v-6 h6 v6"/></svg>
+            Bắt đầu Nhận hàng
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="card-row">
+            <div>
+              <div class="text-base">Nông trại Ba Vì</div>
+              <div class="text-xs muted">Dự kiến: 06:45</div>
+            </div>
+            <span class="chip chip-progress">In Progress</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-row">
+            <div>
+              <div class="text-base">Cty TNHH Hải sản Miền Trung</div>
+              <div class="text-xs muted">Dự kiến: 06:00</div>
+            </div>
+            <span class="chip chip-completed">Completed</span>
+          </div>
+        </div>
+
+        <div class="state-legend">
+          Empty: không có lịch giao hàng hôm nay → hiển thị illustration + gợi ý xem Lịch sử.<br>
+          Error: SnackBar MSG-004/MSG-005 nếu tải danh sách thất bại. Loading: shimmer cho card list.
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 08: Receive Ingredients Workspace ============ -->
+    <div class="screen" id="workspace">
+      <div class="appbar">
+        <div class="appbar-title text-md"><span class="back-btn" onclick="showScreen('dashboard')"><svg class="icon" viewBox="0 0 24 24"><path d="M15 5 L8 12 L15 19"/></svg></span>Phiên Nhận hàng</div>
+      </div>
+      <div class="content">
+        <div class="card">
+          <div class="text-base">Cty CP Thực phẩm An Phát</div>
+          <div class="text-xs muted">Giờ dự kiến: 08:00 · Trạng thái phiên: Đang tiến hành</div>
+        </div>
+
+        <div class="alert alert-info" style="margin-top:12px">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M9 12 L11 14 L15 9"/><circle cx="12" cy="12" r="9"/></svg>
+          <div class="text-sm">Nhà cung cấp: <b>Approved</b> — đủ điều kiện tiếp tục (BR-070). Bắt buộc kết nối mạng để xác minh.</div>
+        </div>
+
+        <div class="alert alert-warning">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/><circle cx="12" cy="17" r="0.6"/></svg>
+          <div class="text-sm">GPS: ngoài bán kính 50m cho phép (MSG-015). <a>Xác nhận thủ công + nhập lý do</a> (ghi audit log) — BR-079.</div>
+        </div>
+
+        <div class="section-title text-base">
+          <svg class="icon" viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="12" rx="2"/><path d="M9 7 V5 h6 v2"/><circle cx="12" cy="13" r="3"/></svg>
+          Xác thực khuôn mặt nhân viên giao hàng
+        </div>
+        <div class="camera-box text-sm">
+          <svg class="icon" viewBox="0 0 24 24" stroke="var(--midgray)"><rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13.5" r="4"/><path d="M8 7 L9.5 4 h5 L16 7"/></svg>
+          Camera scan khuôn mặt (bắt buộc online)
+        </div>
+
+        <div class="section-title text-base">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M4 6 h16 M4 12 h16 M4 18 h16"/></svg>
+          Các bước của phiên
+        </div>
+
+        <div class="step-card" onclick="showScreen('verify')">
+          <div class="step-left"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20 V8 l8 -4 8 4 v12"/><path d="M9 20 v-6 h6 v6"/></svg><span>Verify Invoice</span></div>
+          <span class="step-status">Đang làm →</span>
+        </div>
+
+        <div class="step-card disabled" title="Chưa có Screen Spec riêng trong nhóm màn hình này">
+          <div class="step-left"><svg class="icon" viewBox="0 0 24 24" stroke="var(--midgray)"><circle cx="12" cy="12" r="8"/><path d="M12 8 v4 l3 2"/></svg><span>Inspect Quality</span></div>
+          <span class="step-status">Ngoài phạm vi nhóm này</span>
+        </div>
+
+        <div class="step-card" onclick="showScreen('capture-evidence')">
+          <div class="step-left"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13.5" r="4"/></svg><span>Capture Evidence</span></div>
+          <span class="step-status">Chưa làm →</span>
+        </div>
+
+        <div class="step-card" onclick="openModal('reject-modal')">
+          <div class="step-left"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9 L15 15 M15 9 L9 15"/></svg><span>Log Rejections</span></div>
+          <span class="step-status">Tuỳ chọn →</span>
+        </div>
+
+        <div class="step-card" onclick="showScreen('record-receiving')">
+          <div class="step-left"><svg class="icon" viewBox="0 0 24 24"><path d="M4 4 h16 v16 h-16 Z"/><path d="M8 12 L11 15 L16 9"/></svg><span>Send Receipt</span></div>
+          <span class="step-status">Chưa làm →</span>
+        </div>
+
+        <div class="badge badge-sync text-xs" style="margin-top:8px">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 12 a8 8 0 0 1 14 -5.5 M20 12 a8 8 0 0 1 -14 5.5"/></svg>
+          Ví dụ badge offline: "Chờ đồng bộ" (BR-196, MSG-078) khi mất mạng ở bước Capture Evidence
+        </div>
+
+        <div class="state-legend">
+          Loading: shimmer khi tải thông tin phiên. Error: MSG-015/MSG-077 chặn nếu GPS lỗi hoặc mất mạng — nút hành động disabled kèm tooltip. Success: SnackBar MSG-041 sau khi hoàn tất phiên.
+        </div>
+      </div>
+      <div class="fixed-footer">
+        <button class="btn-primary btn-block" onclick="showScreen('dashboard')">
+          Hoàn tất Phiên Nhận hàng
+        </button>
+      </div>
+
+      <!-- Modal: Reject Ingredient Batch Form (bottom sheet) -->
+      <div class="modal-overlay" id="reject-modal">
+        <div class="sheet-box">
+          <div class="sheet-handle"></div>
+          <div class="sheet-header">
+            <span class="text-md">Từ chối Lô hàng</span>
+            <svg class="icon" viewBox="0 0 24 24" onclick="closeModal('reject-modal')"><path d="M6 6 L18 18 M18 6 L6 18"/></svg>
+          </div>
+          <div class="card">
+            <div class="text-sm">Lô hàng: <b>Rau cải ngọt — Batch #AP-0821</b></div>
+            <div class="text-xs muted">Số lượng: 40kg · Từ phiên nhận hàng đang hoạt động</div>
+          </div>
+
+          <div class="field-block" style="margin-top:12px">
+            <div class="field-label"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M9 12 L11 14 L15 9"/><circle cx="12" cy="12" r="9"/></svg>Lý do từ chối (chọn ít nhất 1) <span style="color:var(--ink)">*</span></div>
+            <label class="check-row text-sm"><wired-checkbox checked></wired-checkbox> Hết hạn sử dụng</label>
+            <label class="check-row text-sm"><wired-checkbox></wired-checkbox> Sai quy cách đóng gói</label>
+            <label class="check-row text-sm"><wired-checkbox></wired-checkbox> Nhiệt độ chuỗi lạnh không đạt</label>
+            <label class="check-row text-sm"><wired-checkbox></wired-checkbox> Số lượng thiếu so với hoá đơn</label>
+          </div>
+
+          <div class="field-block">
+            <div class="field-label"><svg class="icon icon-sm" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13.5" r="4"/></svg>Ảnh bằng chứng lô hàng bị từ chối</div>
+            <div class="camera-box text-xs" style="height:90px">Chụp ảnh bằng chứng</div>
+          </div>
+
+          <div class="switch-row">
+            <span class="text-sm">Từ chối một phần (Partial Rejection)</span>
+            <wired-toggle></wired-toggle>
+          </div>
+          <wired-input placeholder="Số lượng từ chối (kg)" style="margin-top:6px"></wired-input>
+
+          <button class="btn-danger btn-block" style="margin-top:16px" onclick="closeModal('reject-modal')">
+            <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M6 6 L18 18 M18 6 L6 18"/></svg>
+            Xác nhận Từ chối
+          </button>
+          <div class="text-xs muted" style="text-align:center;margin-top:6px">Bấm sẽ hiện AlertDialog xác nhận — không thể hoàn tác.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 09: Verify Supplier Delivery Panel ============ -->
+    <div class="screen" id="verify">
+      <div class="appbar">
+        <div class="appbar-title text-md"><span class="back-btn" onclick="showScreen('workspace')"><svg class="icon" viewBox="0 0 24 24"><path d="M15 5 L8 12 L15 19"/></svg></span>Xác minh Hồ sơ</div>
+      </div>
+      <div class="content">
+        <div class="card">
+          <div class="card-row">
+            <div class="text-base">Cty CP Thực phẩm An Phát</div>
+            <span class="badge badge-success text-xs"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M5 13 L10 18 L19 6"/></svg>Approved</span>
+          </div>
+        </div>
+
+        <div class="section-title text-base">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M4 4 h16 v16 h-16 Z"/><path d="M4 9 h16"/></svg>
+          Chứng nhận lô hàng
+        </div>
+        <ul class="plain card">
+          <li class="list-row"><span>Số lô AP-0821</span><span class="muted">SX 20/06 · HD 25/06</span></li>
+          <li class="list-row"><span>Số lượng</span><span>120 kg</span></li>
+          <li class="list-row"><span>Chứng chỉ ATTP</span><span>Còn hiệu lực</span></li>
+        </ul>
+
+        <div class="section-title text-base">
+          <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13.5" r="4"/></svg>
+          Xác thực khuôn mặt nhân viên giao hàng
+        </div>
+        <div class="card">
+          <div class="card-row">
+            <span class="text-sm">Kết quả</span>
+            <span class="badge badge-danger text-xs">Failed</span>
+          </div>
+        </div>
+        <div class="alert alert-danger">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9 L15 15 M15 9 L9 15"/></svg>
+          <div class="text-sm">MSG-014 — Xác thực khuôn mặt thất bại. Chuyển luồng <b>Manual Override</b>.</div>
+        </div>
+        <div class="field-block" style="margin-top:10px">
+          <div class="field-label">Lý do override <span style="color:var(--ink)">*</span></div>
+          <wired-textarea placeholder="VD: nhân viên giao hàng thay thế đột xuất, đã gọi xác nhận qua điện thoại"></wired-textarea>
+        </div>
+        <div class="field-block">
+          <div class="field-label">Ảnh bằng chứng override</div>
+          <div class="camera-box text-xs" style="height:90px">Chụp ảnh xác thực thay thế</div>
+        </div>
+
+        <div class="state-legend">Error khác: MSG-013 nếu chứng nhận ATTP hết hạn → chặn nút xác nhận (AlertDialog). Loading: shimmer khi tải chứng nhận.</div>
+      </div>
+      <div class="fixed-footer">
+        <button class="btn-primary btn-block" onclick="showScreen('workspace')">Xác nhận Hồ sơ Hợp lệ</button>
+      </div>
+    </div>
+
+    <!-- ============ 10: Capture Receiving Evidence Screen ============ -->
+    <div class="screen" id="capture-evidence">
+      <div class="appbar">
+        <div class="appbar-title text-md"><span class="back-btn" onclick="showScreen('workspace')"><svg class="icon" viewBox="0 0 24 24"><path d="M15 5 L8 12 L15 19"/></svg></span>Bằng chứng Nhận hàng</div>
+      </div>
+      <div class="content">
+        <div class="gps-box">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 21 C7 16 4 12.5 4 9 a8 8 0 1 1 16 0 c0 3.5 -3 7 -8 12 Z"/><circle cx="12" cy="9" r="2.4"/></svg>
+          21.0278° N, 105.8342° E · 08:12:45 07/07/2026 (tự động, không sửa được)
+        </div>
+
+        <div class="camera-box">
+          <svg class="icon" viewBox="0 0 24 24" stroke="var(--midgray)"><rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13.5" r="4"/><path d="M8 7 L9.5 4 h5 L16 7"/></svg>
+          Camera view — chụp ảnh nguyên liệu / nhãn / bao bì / tài liệu
+        </div>
+        <div class="thumb-strip">
+          <div class="thumb-box">X</div>
+          <div class="thumb-box">X</div>
+          <div class="thumb-box">+</div>
+        </div>
+
+        <div class="alert alert-warning">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 3 L21 20 H3 Z"/><path d="M12 9 v5"/></svg>
+          <div class="text-sm">MSG-009 — Định dạng ảnh không hợp lệ (chỉ nhận JPG/PNG/PDF).</div>
+        </div>
+
+        <div class="state-legend">Empty: chưa chụp ảnh nào → khung ảnh dấu "X" + hướng dẫn. Error khác: MSG-008 (vượt dung lượng), MSG-015 (GPS ngoài khu vực, cho xác nhận thủ công + lý do). Success: SnackBar MSG-041 (online) hoặc MSG-078 kèm badge "Chờ đồng bộ" (offline, BR-196).</div>
+      </div>
+      <div class="fixed-footer">
+        <button class="btn-primary btn-block" onclick="showScreen('workspace')">Lưu Bằng chứng</button>
+      </div>
+    </div>
+
+    <!-- ============ 13: Record Ingredient Receiving (Send Receipt) ============ -->
+    <div class="screen" id="record-receiving">
+      <div class="appbar">
+        <div class="appbar-title text-md"><span class="back-btn" onclick="showScreen('workspace')"><svg class="icon" viewBox="0 0 24 24"><path d="M15 5 L8 12 L15 19"/></svg></span>Xác nhận Nhận hàng</div>
+      </div>
+      <div class="content">
+        <div class="section-title text-base"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20 V8 l8 -4 8 4 v12"/></svg>Nhà cung cấp</div>
+        <div class="card text-sm">Cty CP Thực phẩm An Phát — Approved, hồ sơ hợp lệ (Manual Override đã ghi log)</div>
+
+        <div class="section-title text-base"><svg class="icon" viewBox="0 0 24 24"><path d="M4 4 h16 v16 h-16 Z"/></svg>Chứng nhận &amp; Kết quả kiểm tra</div>
+        <div class="card text-sm">Số lô AP-0821 · 120kg · Chứng chỉ ATTP còn hiệu lực</div>
+
+        <div class="section-title text-base"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13.5" r="4"/></svg>Bằng chứng</div>
+        <div class="card text-sm">2 ảnh đã chụp · GPS 21.0278°N, 105.8342°E · 08:12:45</div>
+
+        <div class="alert alert-warning">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M4 14 h4 v6 h-4 Z M10 9 h4 v11 h-4 Z M16 4 h4 v16 h-4 Z"/></svg>
+          <div class="text-sm">Kiểm tra chuỗi lạnh: <b>6.2°C</b> — vượt ngưỡng 5°C (BR-080).</div>
+        </div>
+
+        <div class="field-block" style="margin-top:10px">
+          <div class="field-label text-sm">Số lô liên kết truy xuất nguồn gốc</div>
+          <div class="card text-sm">LOT-2026-0707-AP01 (chỉ đọc)</div>
+        </div>
+
+        <div class="state-legend">Loading: shimmer khi tổng hợp dữ liệu. Error: MSG-004/MSG-005 nếu lưu thất bại. Success: SnackBar MSG-041.</div>
+      </div>
+      <div class="fixed-footer">
+        <button class="btn-primary btn-block" onclick="showScreen('store-form')">Xác nhận Hoàn tất Phiên Nhận hàng</button>
+      </div>
+    </div>
+
+    <!-- ============ 11: Store Ingredients Form ============ -->
+    <div class="screen" id="store-form">
+      <div class="appbar">
+        <div class="appbar-title text-md">Xếp Kho Nguyên liệu</div>
+      </div>
+      <div class="content">
+        <div class="section-title text-base"><svg class="icon" viewBox="0 0 24 24"><path d="M4 4 h16 v16 h-16 Z"/></svg>Lô hàng chờ xếp kho</div>
+        <div class="card">
+          <div class="card-row"><span class="text-sm">AP-0821 — Rau cải ngọt, 120kg</span><span class="badge badge-warning text-xs">Received</span></div>
+        </div>
+
+        <div class="section-title text-base"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8" rx="1"/><path d="M7 8 v8 M11 8 v8 M15 8 v8"/></svg>Quét mã vạch lô hàng</div>
+        <div class="camera-box text-sm" style="height:90px">Quét mã vạch (bắt buộc)</div>
+
+        <div class="section-title text-base"><svg class="icon" viewBox="0 0 24 24"><path d="M4 12 h16 M4 6 h16 M4 18 h16"/></svg>Chọn khu vực lưu trữ</div>
+        <div class="radio-tile selected"><wired-radio checked></wired-radio> Kho khô (Dry)</div>
+        <div class="radio-tile"><wired-radio></wired-radio> Kho lạnh (Chilled)</div>
+        <div class="radio-tile"><wired-radio></wired-radio> Kho đông (Frozen)</div>
+
+        <div class="alert alert-danger">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9 L15 15 M15 9 L9 15"/></svg>
+          <div class="text-sm">Rau cải ngọt yêu cầu Kho lạnh (2-8°C) — khu vực chọn không khớp nhiệt độ yêu cầu (BR-202). Không thể lưu.</div>
+        </div>
+
+        <div class="state-legend">Empty: không còn lô hàng nào chờ xếp kho. Loading: shimmer. Success: SnackBar xác nhận lưu vị trí thành công.</div>
+      </div>
+      <div class="fixed-footer">
+        <button class="btn-primary btn-block" onclick="showScreen('dashboard')">Xác nhận Vị trí Lưu trữ</button>
+      </div>
+    </div>
+
+    <!-- ============ 14: Receiving History & Reports ============ -->
+    <div class="screen" id="history">
+      <div class="appbar">
+        <div class="appbar-title text-md"><span class="back-btn" onclick="showScreen('dashboard')"><svg class="icon" viewBox="0 0 24 24"><path d="M15 5 L8 12 L15 19"/></svg></span>Lịch sử Nhận hàng</div>
+        <div class="appbar-actions">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 3 v12 M8 11 l4 4 4 -4"/><path d="M4 19 h16"/></svg>
+        </div>
+      </div>
+      <div class="content">
+        <div class="chip-row">
+          <span class="chip chip-scheduled text-xs">7 ngày qua</span>
+          <span class="chip chip-scheduled text-xs">Tất cả nhà cung cấp</span>
+        </div>
+
+        <div class="card">
+          <div class="card-row">
+            <div><div class="text-sm">06/07 · Cty TNHH Hải sản Miền Trung</div><div class="text-xs muted">Lô SF-0706</div></div>
+            <span class="chip chip-received text-xs">Received</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-row">
+            <div><div class="text-sm">05/07 · Nông trại Ba Vì</div><div class="text-xs muted">Lô BV-0705</div></div>
+            <span class="chip chip-rejected text-xs">Rejected</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-row">
+            <div><div class="text-sm">04/07 · Cty CP Thực phẩm An Phát</div><div class="text-xs muted">Lô AP-0704</div></div>
+            <span class="chip chip-received text-xs">Received</span>
+          </div>
+        </div>
+
+        <div class="state-legend">Empty: chưa có lịch sử nhận hàng trong khoảng lọc. Error: SnackBar MSG-004/MSG-005. Xuất báo cáo (PDF/Excel) chỉ giới hạn hoạt động của chính Service Caterers (BR-175/176/178).</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<script>
+  function showScreen(id){
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+  function openModal(id){ document.getElementById(id).classList.add('active'); }
+  function closeModal(id){ document.getElementById(id).classList.remove('active'); }
+</script>
+</body>
+</html>

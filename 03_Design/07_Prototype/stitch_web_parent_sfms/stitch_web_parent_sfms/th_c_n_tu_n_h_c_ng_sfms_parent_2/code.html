@@ -1,0 +1,343 @@
+<!DOCTYPE html><html class="light" lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Thực đơn tuần học đường | SFMS Parent</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-container": "#d3f1ff",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed": "#b9eaff",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed-variant": "#3d4947",
+                    "on-primary-fixed": "#001f29",
+                    "outline": "#6f787d",
+                    "tertiary": "#045e45",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-container": "#affcda",
+                    "surface-container-low": "#eff4ff",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed": "#d8e5e2",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed-dim": "#8bd6b6",
+                    "secondary-fixed-dim": "#bcc9c6",
+                    "surface-container-highest": "#d3e4fe",
+                    "tertiary-container": "#2b775c",
+                    "surface-variant": "#d3e4fe",
+                    "on-secondary-container": "#5b6765",
+                    "tertiary-fixed": "#a6f2d1",
+                    "outline-variant": "#bec8cd",
+                    "on-error": "#ffffff",
+                    "on-surface-variant": "#3f484c",
+                    "surface-tint": "#006781",
+                    "surface-container-lowest": "#ffffff",
+                    "primary": "#005a71",
+                    "secondary": "#55615f",
+                    "background": "#f8f9ff",
+                    "on-background": "#0b1c30",
+                    "inverse-surface": "#213145",
+                    "primary-container": "#0e7490",
+                    "surface-container-high": "#dce9ff",
+                    "secondary-container": "#d8e5e2",
+                    "on-tertiary-fixed": "#002116",
+                    "on-error-container": "#93000a",
+                    "on-surface": "#0b1c30",
+                    "inverse-primary": "#81d1f0",
+                    "inverse-on-surface": "#eaf1ff",
+                    "primary-fixed-dim": "#81d1f0",
+                    "on-secondary-fixed": "#121e1c",
+                    "on-primary-fixed-variant": "#004d62",
+                    "surface-bright": "#f8f9ff",
+                    "surface": "#f8f9ff",
+                    "on-tertiary-fixed-variant": "#00513b",
+                    "surface-container": "#e5eeff",
+                    "surface-dim": "#cbdbf5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "container-max": "1280px",
+                    "sm": "16px",
+                    "md": "24px",
+                    "xl": "48px",
+                    "sidebar-width": "280px",
+                    "lg": "32px",
+                    "xs": "8px",
+                    "base": "4px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "headline-md": ["Be Vietnam Pro"],
+                    "headline-sm": ["Be Vietnam Pro"],
+                    "headline-lg-mobile": ["Be Vietnam Pro"],
+                    "display-lg": ["Be Vietnam Pro"],
+                    "label-md": ["Be Vietnam Pro"],
+                    "headline-lg": ["Be Vietnam Pro"],
+                    "body-sm": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .student-switcher:hover { background-color: rgba(0, 103, 129, 0.05); }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-surface border-r border-outline-variant flex flex-col p-md z-50">
+<div class="mb-lg">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">SFMS Parent</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Hệ thống quản lý ăn uống</p>
+</div>
+<nav class="flex-grow space-y-xs">
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Tổng quan</span>
+</a>
+<a class="flex items-center gap-sm p-sm text-primary font-bold bg-secondary-container rounded-lg" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span class="font-body-md text-body-md">Thực đơn tuần</span>
+</a>
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-body-md text-body-md">Chỉ số dinh dưỡng</span>
+</a>
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">health_and_safety</span>
+<span class="font-body-md text-body-md">Hồ sơ sức khỏe</span>
+</a>
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-body-md text-body-md">Hóa đơn</span>
+</a>
+</nav>
+<div class="mt-auto space-y-xs border-t border-outline-variant pt-md">
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md">Cài đặt</span>
+</a>
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body-md text-body-md">Đăng xuất</span>
+</a>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-280px)] h-16 bg-surface border-b border-outline-variant flex justify-between items-center px-lg z-40">
+<div class="flex items-center gap-sm">
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">SFMS Parent</span>
+</div>
+<div class="flex items-center gap-lg">
+<div class="flex items-center gap-base">
+<button class="p-xs text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-xs text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+</div>
+<div class="flex items-center gap-sm student-switcher cursor-pointer p-xs rounded-lg transition-all">
+<div class="text-right">
+<p class="font-label-md text-label-md text-on-surface">Nguyễn Minh Anh - Lớp 4A</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant text-xs">Học sinh tiểu học</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest border border-outline-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A clean, professional portrait of a young Vietnamese primary school student with a friendly smile, wearing a neat white school uniform with a red scarf. The background is a soft, out-of-focus classroom setting with warm natural light, following a modern medical and institutional photography style with high clarity and calming teal tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbar43jOgckrKCVSPESx_vnaKs0V5e8b85doyjRuKTtmvVX0NuBgDCqBABn79jqSNTdYjQbbGPUMkWAUf9hD3eOdwQu8m46ViPPNOE-LcpKX1_2PE2u-4caKBnyC1ZLCjiutVBFwpIwBJyiNPRVJvbyuusBYOYHO3KZykDt6q5mZO065HdAso-LW7bpRtk3XHpSwRu69vPRBJ_u5j6nt6wF5511VSirYD9YdUwsLlN3coD89WliOE">
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">expand_more</span>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-[280px] pt-16 p-lg">
+<div class="max-w-container-max mx-auto">
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-lg">
+<div>
+<nav class="flex items-center gap-xs text-on-surface-variant font-label-sm text-label-sm mb-xs">
+<span>Trang chủ</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-primary">Thực đơn tuần</span>
+</nav>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Thực đơn tuần học đường</h2>
+</div>
+<button class="flex items-center gap-xs px-md py-sm border border-primary text-primary font-label-md text-label-md rounded-xl hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">download</span>
+                    Tải PDF thực đơn
+                </button>
+</div>
+<!-- Day Selector (Tabs) -->
+<div class="bg-surface rounded-xl border border-outline-variant p-base flex gap-base mb-lg">
+<button class="flex-1 py-md px-sm text-center rounded-lg font-label-md text-label-md transition-all hover:bg-surface-container-low text-on-surface-variant">
+                    Thứ 2
+                    <span class="block font-body-sm text-[12px] opacity-70">12/10</span>
+</button>
+<button class="flex-1 py-md px-sm text-center rounded-lg font-label-md text-label-md transition-all bg-primary-container text-white shadow-sm">
+                    Thứ 3
+                    <span class="block font-body-sm text-[12px] opacity-90">13/10</span>
+</button>
+<button class="flex-1 py-md px-sm text-center rounded-lg font-label-md text-label-md transition-all hover:bg-surface-container-low text-on-surface-variant">
+                    Thứ 4
+                    <span class="block font-body-sm text-[12px] opacity-70">14/10</span>
+</button>
+<button class="flex-1 py-md px-sm text-center rounded-lg font-label-md text-label-md transition-all hover:bg-surface-container-low text-on-surface-variant">
+                    Thứ 5
+                    <span class="block font-body-sm text-[12px] opacity-70">15/10</span>
+</button>
+<button class="flex-1 py-md px-sm text-center rounded-lg font-label-md text-label-md transition-all hover:bg-surface-container-low text-on-surface-variant">
+                    Thứ 6
+                    <span class="block font-body-sm text-[12px] opacity-70">16/10</span>
+</button>
+</div>
+<!-- Food Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+<!-- Card 1: Standard -->
+<div class="bg-surface rounded-xl border border-outline-variant overflow-hidden flex flex-col group">
+<div class="h-48 overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A high-quality culinary photograph of a traditional Vietnamese meal featuring tender Char Siu pork slices glazed in a rich red sauce, served alongside perfectly steamed jasmine rice and a vibrant mix of blanched seasonal vegetables. The lighting is bright and clean, emphasizing fresh textures and colors against a minimalist white ceramic plate, professional medical-grade hygiene aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQ2en9_Wb0uUK5w-GbBrkBH4F9JK2W7KQDD6kVDZCJGhtBUcmQEnWSG57OvuMZYOT0s-A70rQX-2vg0fc8JNLyDG2wLMIUA1_Cz3j9hh8UtxtTL08ktTFZ3gtgQTi9yd2TrGolExeaO7CGZLvbwAi1qDQ5jod1cQKVRm6j4W8l54AaDiJHWE1gL6yj8NcomMVzK_a-5rs3xOxYf44c0FtrbXaBAi9mmLQT2I9b1QXg_eDOV7r973M">
+<div class="absolute top-sm right-sm bg-white/90 backdrop-blur px-sm py-xs rounded-full border border-outline-variant">
+<span class="font-label-sm text-label-sm text-primary">Món chính</span>
+</div>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<div class="mb-md">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-xs">Cơm xá xíu &amp; Rau củ</h3>
+<div class="flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">local_fire_department</span>
+<span class="font-body-sm text-body-sm">450 kcal</span>
+</div>
+</div>
+<button class="mt-auto w-full py-sm border border-outline-variant text-on-surface-variant font-label-md text-label-md rounded-lg hover:border-primary hover:text-primary transition-all">
+                            Xem chi tiết dinh dưỡng
+                        </button>
+</div>
+</div>
+<!-- Card 2: Allergy Alert -->
+<div class="bg-error-container/20 rounded-xl border-2 border-error overflow-hidden flex flex-col relative">
+<div class="h-48 overflow-hidden relative">
+<img class="w-full h-full object-cover grayscale-[0.3]" data-alt="Golden-brown crispy fried chicken wings coated in a savory peanut butter glaze, garnished with crushed peanuts and green onions. The shot is detailed and focused, highlighting the crunchy texture, set on a clean modern plate. The overall lighting is bright and professional, maintaining the sterile and clinical design language of a health management system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSBUAwekcVOOS4c_2wFha3UXRNNEAQ0-nycqCIIyJthPuogJbVHvCU60mg3751umX8PzumC8glx6yAfe1t1s5KFXXKeYvtGEGt1hW3BmyMozn1UfzfutB1W-TC34K-BLVKn7NcTV3ClLGl7-97TQFuLLHPIAYkwr7kPRkW1MNQURfIgk7CZFrVUHTGzISRzwOnIBfxbhxyVAUjsekj3Y6yJTILstbmanyteUdezMUsjAAdUm6SORg">
+<div class="absolute inset-0 bg-error/10"></div>
+<div class="absolute top-sm right-sm bg-error text-white px-sm py-xs rounded-full flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+<span class="font-label-sm text-label-sm">Dị ứng</span>
+</div>
+</div>
+<div class="p-md flex flex-col flex-grow bg-error-container/10">
+<div class="bg-error-container p-sm rounded-lg mb-md border border-error/20 flex gap-sm">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">error</span>
+<p class="font-label-sm text-label-sm text-on-error-container leading-tight">
+                                Cảnh báo: Có chứa thành phần dị ứng (Đậu phộng) - Không an toàn
+                            </p>
+</div>
+<div class="mb-md">
+<h3 class="font-headline-sm text-headline-sm text-error mb-xs">Gà chiên bơ lạc</h3>
+<div class="flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">local_fire_department</span>
+<span class="font-body-sm text-body-sm">520 kcal</span>
+</div>
+</div>
+<button class="mt-auto w-full py-sm border border-error text-error font-label-md text-label-md rounded-lg hover:bg-error hover:text-white transition-all">
+                            Xem chi tiết dinh dưỡng
+                        </button>
+</div>
+</div>
+<!-- Card 3: Standard -->
+<div class="bg-surface rounded-xl border border-outline-variant overflow-hidden flex flex-col group">
+<div class="h-48 overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A comforting bowl of Vietnamese pumpkin soup with minced meat, showing soft cubes of bright orange pumpkin and savory bits of pork in a clear, nutritious broth. Garnished with fresh cilantro. The photography style is clinical and clean, featuring soft shadows and high-key lighting to emphasize food safety and freshness, consistent with a medical school cafeteria theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWusUBbzmS179nhExGi8t0kqaIMrRdE3Ze5tsSUBH4SfvAPzGm8qypdcehRHg8ps1wVfO3p6vf-dNa0SjibKsUAL6NSJGZoLHc1y8XQMPKMfRW6tc7xfKaJMMjOCuJ7XoOnXxUPqWSA9Dm9YIBIpNkN3DoGhKcrCjhslEBH3kpveYwLaqSmEROQ1Pla0rF6cDmgHmp7qKnem803vvFRHbhhWjx9-eD_Di2elFhVr-vBbATNk3-Zb8">
+<div class="absolute top-sm right-sm bg-white/90 backdrop-blur px-sm py-xs rounded-full border border-outline-variant">
+<span class="font-label-sm text-label-sm text-primary">Canh</span>
+</div>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<div class="mb-md">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-xs">Canh bí đỏ thịt băm</h3>
+<div class="flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">local_fire_department</span>
+<span class="font-body-sm text-body-sm">120 kcal</span>
+</div>
+</div>
+<button class="mt-auto w-full py-sm border border-outline-variant text-on-surface-variant font-label-md text-label-md rounded-lg hover:border-primary hover:text-primary transition-all">
+                            Xem chi tiết dinh dưỡng
+                        </button>
+</div>
+</div>
+</div>
+<!-- Nutritional Summary Table -->
+<div class="mt-xl bg-surface border border-outline-variant rounded-xl overflow-hidden">
+<div class="p-lg border-b border-outline-variant bg-surface-container-low">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Tóm tắt dinh dưỡng ngày 13/10</h3>
+</div>
+<div class="p-lg grid grid-cols-1 md:grid-cols-4 gap-lg">
+<div class="text-center md:border-r border-outline-variant">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-xs">Tổng năng lượng</p>
+<p class="font-headline-md text-headline-md text-primary">1,090 <span class="text-body-sm font-normal">kcal</span></p>
+</div>
+<div class="text-center md:border-r border-outline-variant">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-xs">Chất đạm (Protein)</p>
+<p class="font-headline-md text-headline-md text-tertiary">42 <span class="text-body-sm font-normal">g</span></p>
+</div>
+<div class="text-center md:border-r border-outline-variant">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-xs">Chất béo (Fat)</p>
+<p class="font-headline-md text-headline-md text-secondary">35 <span class="text-body-sm font-normal">g</span></p>
+</div>
+<div class="text-center">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-xs">Tinh bột (Carbs)</p>
+<p class="font-headline-md text-headline-md text-primary">125 <span class="text-body-sm font-normal">g</span></p>
+</div>
+</div>
+</div>
+<!-- Footer Note -->
+<div class="mt-md flex items-start gap-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px] mt-xs">info</span>
+<p class="font-body-sm text-body-sm italic">
+                    Dữ liệu dinh dưỡng được cung cấp bởi tổ chuyên môn dinh dưỡng nhà trường. Các thành phần dị ứng được đánh dấu dựa trên hồ sơ y tế học sinh đã đăng ký. Vui lòng liên hệ bộ phận y tế nếu có thay đổi về tình trạng sức khỏe của con.
+                </p>
+</div>
+</div>
+</main>
+<script>
+        // Micro-interactions
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => {
+                btn.classList.add('scale-95');
+            });
+            btn.addEventListener('mouseup', () => {
+                btn.classList.remove('scale-95');
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.classList.remove('scale-95');
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Wireframe — Inspection & Compliance (Medical Staff, Web)</title>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<style>
+  * { box-sizing:border-box; } html{font-size:18px;}
+  body { margin:0; font-family:'Patrick Hand',cursive; color:#333; background-image: radial-gradient(#d7d7d7 1px, transparent 1px); background-size:20px 20px; }
+  .app { display:flex; min-height:100vh; }
+  .sidebar { width:260px; background:white; border-right:2px solid #333; padding:16px 12px; }
+  .brand { font-family:'Caveat',cursive; font-size:30px; font-weight:700; margin-bottom:16px; padding-left:6px; }
+  .side-group-title { font-size:13px; text-transform:uppercase; color:#888; margin:10px 0 4px 6px; }
+  .side-item { padding:8px 10px; border-radius:8px; font-size:16px; cursor:pointer; }
+  .side-item.active { background:#333; color:white; }
+  .side-item.static { color:#999; cursor:default; }
+  .main { flex:1; padding:26px 30px; }
+  .page-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px; }
+  .page-title { font-size:26px; display:flex; gap:8px; align-items:center; }
+  .screen { display:none; } .screen.visible { display:block; }
+  .stepper { display:flex; gap:6px; margin-bottom:16px; }
+  .step { flex:1; text-align:center; border:2px solid #333; border-radius:10px; padding:8px; font-size:14px; background:white; }
+  .step.active { background:#333; color:white; }
+  .card { background:white; border:2px solid #333; border-radius:14px; padding:16px; margin-bottom:14px; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .checklist-item { display:flex; gap:8px; align-items:center; padding:6px 0; border-bottom:1px dashed #ccc; }
+  .upload-box { border:2px dashed #333; border-radius:12px; padding:20px; text-align:center; color:#666; margin:10px 0; }
+  .filter-bar { display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap; }
+  table { width:100%; border-collapse:collapse; background:white; }
+  th,td { border:2px solid #333; padding:8px 10px; font-size:15px; text-align:left; }
+  th { background:#f0f0f0; }
+  .badge { display:inline-flex; gap:4px; align-items:center; padding:2px 8px; border-radius:8px; font-size:13px; border:2px solid #333; }
+  .badge.success { border-width:3px; } .badge.danger { border-width:3px; border-style:double; } .badge.warning { border-style:dashed; }
+  .banner { border:3px solid #333; border-radius:10px; padding:10px 14px; margin-bottom:14px; display:flex; gap:8px; align-items:center; }
+  .tabs { display:flex; gap:8px; margin-bottom:14px; }
+  .tab-btn { border:2px solid #333; border-radius:10px 10px 0 0; padding:8px 16px; cursor:pointer; background:white; }
+  .tab-btn.active { background:#333; color:white; }
+  .btn-primary { background:#333; color:white; border:2px solid #333; border-radius:255px 15px 225px 15px/15px 225px 15px 255px; font-family:'Patrick Hand',cursive; font-size:17px; padding:10px 20px; cursor:pointer; }
+  .btn-secondary { background:white; color:#333; border:2px solid #333; border-radius:255px 15px 225px 15px/15px 225px 15px 255px; font-family:'Patrick Hand',cursive; font-size:17px; padding:10px 20px; cursor:pointer; }
+  .icon { width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; }
+  .toast { position:fixed; bottom:24px; right:24px; background:#333; color:white; padding:12px 20px; border-radius:10px; display:none; align-items:center; gap:8px; }
+  .toast.show { display:flex; }
+  .note { font-size:13px; color:#666; }
+  .list-doc { display:flex; justify-content:space-between; padding:8px; border:2px solid #333; border-radius:10px; margin-bottom:8px; cursor:pointer; }
+  .chart-placeholder { border:2px dashed #333; border-radius:10px; padding:40px; text-align:center; color:#666; }
+</style>
+</head>
+<body>
+
+<svg style="display:none">
+  <symbol id="ic-chart" viewBox="0 0 24 24"><path d="M4 20V10M12 20V4M20 20v-7"/></symbol>
+  <symbol id="ic-check-list" viewBox="0 0 24 24"><path d="M9 11l2 2 4-4"/><rect x="3" y="4" width="18" height="16" rx="2"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 24 24"><path d="M4 4h12a2 2 0 012 2v14H6a2 2 0 01-2-2V4z"/><path d="M8 8h8M8 12h8"/></symbol>
+  <symbol id="ic-warn" viewBox="0 0 24 24"><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v4M12 17h.01"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24"><path d="M4 12l6 6L20 6" stroke-linecap="round"/></symbol>
+  <symbol id="ic-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 20h16"/></symbol>
+  <symbol id="ic-export" viewBox="0 0 24 24"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M4 15v4a2 2 0 002 2h12a2 2 0 002-2v-4"/></symbol>
+  <symbol id="ic-file" viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5"/></symbol>
+</svg>
+
+<div class="app">
+  <div class="sidebar">
+    <div class="brand">SFMS · MS</div>
+    <div class="side-group-title">Kiểm tra & Giám sát ATTP</div>
+    <div class="side-item active" data-go="screen-compliance">Monitor Food Safety Dashboard</div>
+    <div class="side-item" data-go="screen-conduct">Conduct Food Safety Inspection</div>
+    <div class="side-item" data-go="screen-records">Food Inspection Records</div>
+    <div class="side-item" data-go="screen-reports">View Food Safety Reports</div>
+    <div class="side-item" data-go="screen-policy">View School Policy</div>
+    <div class="side-group-title">Khác</div>
+    <div class="side-item static">Health Record (xem wireframe 01_DashboardHealthRecord)</div>
+  </div>
+  <div class="main">
+
+    <!-- 23 Compliance Dashboard -->
+    <div class="screen visible" id="screen-compliance">
+      <div class="page-header"><span class="page-title"><svg class="icon" style="width:24px;height:24px"><use href="#ic-chart"/></svg> Compliance Dashboard</span></div>
+      <div class="banner"><svg class="icon"><use href="#ic-warn"/></svg> Kitchen Quarantine đang KHÔNG active — bếp vận hành bình thường. (Banner này cố định, không tự ẩn khi active — MSG-024)</div>
+      <div class="grid2">
+        <div class="card"><b>Trạng thái 3 bước kiểm tra hôm nay</b><p>Step 1 ✓ Passed · Step 2 ✓ Passed · Step 3: Đang giữ ấm ≥60°C (đạt)</p></div>
+        <div class="card"><b>Điểm checklist vệ sinh hàng ngày</b><p style="font-size:30px;">92%</p></div>
+        <div class="card"><b>Ảnh xác minh</b><div class="upload-box" style="margin:0;">[Image Placeholder]</div></div>
+        <div class="card"><b>Cảnh báo bước kiểm tra thất bại/quá hạn</b><p class="note">Không có cảnh báo nào đang mở.</p><button class="btn-secondary" onclick="toast('Xem chi tiết cảnh báo — không có dữ liệu.')">Xem chi tiết cảnh báo</button></div>
+      </div>
+      <div style="display:flex; gap:10px; margin-top:6px;">
+        <button class="btn-secondary" data-go="screen-policy">View School Policy</button>
+        <button class="btn-secondary" data-go="screen-reports">View Food Safety Reports</button>
+      </div>
+    </div>
+
+    <!-- 12 Conduct Food Safety Inspection -->
+    <div class="screen" id="screen-conduct">
+      <div class="page-header"><span class="page-title"><svg class="icon" style="width:24px;height:24px"><use href="#ic-check-list"/></svg> Conduct Food Safety Inspection</span><button class="btn-secondary">New Inspection</button></div>
+      <div class="stepper">
+        <div class="step active">1. Sanitation Checklist</div>
+        <div class="step">2. Pest Control</div>
+        <div class="step">3. Staff Health</div>
+        <div class="step">4. Ảnh & Submit</div>
+      </div>
+      <div class="card">
+        <b>Kitchen Safety and Sanitation Checklist</b>
+        <div class="checklist-item"><wired-checkbox checked></wired-checkbox> Đồng phục đầy đủ (găng/khẩu trang/lưới tóc)</div>
+        <div class="checklist-item"><wired-checkbox checked></wired-checkbox> Vệ sinh nơi làm việc đạt chuẩn</div>
+        <div class="checklist-item"><wired-checkbox></wired-checkbox> Điều kiện bảo quản thực phẩm đạt chuẩn</div>
+      </div>
+      <div class="card">
+        <div class="checklist-item"><wired-checkbox checked></wired-checkbox> Xác minh chứng nhận kiểm soát côn trùng còn hiệu lực (hết hạn: 15/09/2026)</div>
+        <div class="checklist-item"><wired-checkbox checked></wired-checkbox> Xác minh khám sức khỏe nhân viên bếp còn hiệu lực (hết hạn: 01/12/2026)</div>
+      </div>
+      <div class="upload-box"><svg class="icon" style="width:24px;height:24px"><use href="#ic-upload"/></svg><br>Upload ảnh bằng chứng vệ sinh bếp (bắt buộc ≥1 ảnh)</div>
+      <button class="btn-primary" onclick="submitInspection()">Submit Checklist</button>
+      <div class="banner" id="quarantine-banner" style="display:none; margin-top:14px;"><svg class="icon"><use href="#ic-warn"/></svg> MSG-024: Điểm &lt;60% — Kitchen Quarantine đã kích hoạt, khóa vận hành bếp.</div>
+    </div>
+
+    <!-- 11 Food Inspection Records -->
+    <div class="screen" id="screen-records">
+      <div class="page-header"><span class="page-title">Food Inspection Records</span></div>
+      <div class="filter-bar">
+        <wired-combo selected="Tất cả các bước"><wired-item value="all">Tất cả các bước</wired-item><wired-item value="1">Step 1</wired-item><wired-item value="2">Step 2</wired-item><wired-item value="3">Step 3</wired-item></wired-combo>
+        <wired-input placeholder="Tìm theo thực đơn/món"></wired-input>
+      </div>
+      <table>
+        <thead><tr><th>Ngày</th><th>Trạng thái</th><th>Nhân viên phụ trách</th></tr></thead>
+        <tbody>
+          <tr><td>30/06/2026</td><td><span class="badge success">Passed</span></td><td>Trần Văn Bếp</td></tr>
+          <tr><td>29/06/2026</td><td><span class="badge danger">Failed</span></td><td>Lê Thị Phụ Bếp</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 15 View Food Safety Reports (gộp Compliance Report) -->
+    <div class="screen" id="screen-reports">
+      <div class="page-header"><span class="page-title">View Food Safety Reports</span><button class="btn-secondary" onclick="toast('Đã xuất báo cáo (PDF/Excel).')"><svg class="icon" style="width:14px;height:14px"><use href="#ic-export"/></svg> Export</button></div>
+      <div class="tabs">
+        <div class="tab-btn active">Monthly Kitchen Audits</div>
+        <div class="tab-btn">Pest Control Log</div>
+        <div class="tab-btn">Refrigerator Temperature Logs</div>
+      </div>
+      <div class="filter-bar"><wired-input placeholder="Khoảng ngày"></wired-input></div>
+      <div class="chart-placeholder">[Chart Placeholder — Monthly Kitchen Audit Trend]</div>
+      <h3 style="margin-top:20px;">Compliance Summary Dashboard</h3>
+      <div class="grid3">
+        <div class="card">Audit hàng tháng<br><span class="badge success">Đạt</span></div>
+        <div class="card">Pest control<br><span class="badge warning">Sắp hết hạn</span></div>
+        <div class="card">Khám SK nhân viên<br><span class="badge success">Đạt</span></div>
+      </div>
+    </div>
+
+    <!-- 16 View School Policy -->
+    <div class="screen" id="screen-policy">
+      <div class="page-header"><span class="page-title"><svg class="icon" style="width:22px;height:22px"><use href="#ic-book"/></svg> View School Policy</span></div>
+      <div class="grid2">
+        <div>
+          <div class="list-doc" onclick="toast('Mở nội dung: Quy định vệ sinh bếp ăn bán trú')"><span><svg class="icon" style="width:14px;height:14px"><use href="#ic-file"/></svg> Quy định vệ sinh bếp ăn bán trú</span><span class="note">01/01/2026</span></div>
+          <div class="list-doc" onclick="toast('Mở nội dung: Quy trình xử lý dị ứng thực phẩm')"><span><svg class="icon" style="width:14px;height:14px"><use href="#ic-file"/></svg> Quy trình xử lý dị ứng thực phẩm</span><span class="note">15/02/2026</span></div>
+        </div>
+        <div class="card">Chọn 1 chính sách bên trái để xem nội dung đầy đủ (PDF/Text viewer, chỉ đọc).</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"><svg class="icon" style="stroke:white"><use href="#ic-check"/></svg><span id="toast-text"></span></div>
+
+<script>
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('visible'));
+  document.getElementById(id).classList.add('visible');
+  document.querySelectorAll('.side-item[data-go]').forEach(b=>b.classList.toggle('active', b.dataset.go===id));
+}
+document.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>showScreen(el.dataset.go)));
+function toast(msg){ const t=document.getElementById('toast'); document.getElementById('toast-text').textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600); }
+function submitInspection(){
+  document.getElementById('quarantine-banner').style.display='flex';
+  toast('Đã tính điểm checklist — xem banner trạng thái bên dưới (demo: Failed).');
+}
+</script>
+</body>
+</html>

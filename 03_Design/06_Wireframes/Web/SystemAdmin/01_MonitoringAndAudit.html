@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SFMS Wireframe — System Admin — Monitoring &amp; Audit</title>
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#333333;
+    --ink-light:#666666;
+    --paper:#ffffff;
+    --dot:#d7d7d7;
+    --gray-100:#f2f2f2;
+    --gray-200:#e6e6e6;
+    --gray-300:#cccccc;
+    --sketchy-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    --link-blue:#4a5b7a;
+  }
+  *{box-sizing:border-box;}
+  html{font-size:18px;}
+  body{
+    margin:0;
+    font-family:'Patrick Hand', cursive;
+    color:var(--ink);
+    background-color:#fbfbfb;
+    background-image: radial-gradient(var(--dot) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  .text-xs{font-size:14px;line-height:1.4;}
+  .text-sm{font-size:18px;line-height:1.5;}
+  .text-base{font-size:22px;line-height:1.5;}
+  .text-md{font-size:28px;line-height:1.3;}
+  .text-lg{font-size:35px;line-height:1.2;}
+  .text-xl{font-size:44px;line-height:1.1;}
+
+  a{color:var(--link-blue); text-decoration:underline; cursor:pointer;}
+
+  .btn-primary{
+    background:#333;color:#fff;border:2px solid #333;
+    border-radius: var(--sketchy-radius);
+    font-family:'Patrick Hand', cursive; font-size:18px;
+    padding:10px 22px;cursor:pointer;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn-secondary{
+    background:#fff;color:#333;border:2px solid #333;
+    border-radius: var(--sketchy-radius);
+    font-family:'Patrick Hand', cursive; font-size:18px;
+    padding:10px 22px;cursor:pointer;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn-primary:hover, .btn-secondary:hover{ filter:brightness(0.95); }
+  .btn-sm{ padding:6px 14px; font-size:15px; }
+
+  .sketchy-box{
+    border:2px solid #333;
+    border-radius: var(--sketchy-radius);
+    background:#fff;
+  }
+
+  /* ===== App shell ===== */
+  .app{ display:flex; min-height:100vh; }
+  .sidebar{
+    width:280px; flex-shrink:0; background:#fff; border-right:2px solid #333;
+    padding:18px 14px; position:sticky; top:0; height:100vh; overflow-y:auto;
+  }
+  .sidebar-logo{ display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+  .sidebar-logo .text-md{ margin:0; }
+  .sidebar-actor{ color:var(--ink-light); margin:0 0 18px 0; }
+  .nav-group{ margin-bottom:14px; }
+  .nav-group-title{
+    text-transform:uppercase; letter-spacing:1px; font-size:14px;
+    color:var(--ink-light); margin:0 0 6px 4px;
+  }
+  .nav-item{
+    display:flex; align-items:center; gap:10px;
+    padding:8px 10px; border-radius:10px; color:var(--ink);
+    text-decoration:none; font-size:18px; margin-bottom:2px;
+  }
+  .nav-item.disabled{ color:#b3b3b3; cursor:not-allowed; }
+  .nav-item.active{
+    background:var(--gray-100); border-left:3px solid #333; font-weight:bold;
+    text-decoration: underline;
+  }
+  .nav-item.clickable:hover{ background:var(--gray-100); cursor:pointer; }
+  .nav-item svg{ flex-shrink:0; }
+
+  .main{ flex:1; min-width:0; }
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 26px; border-bottom:2px solid #333; background:#fff;
+  }
+  .breadcrumb{ color:var(--ink-light); font-size:18px; }
+  .breadcrumb b{ color:var(--ink); }
+  .topbar-right{ display:flex; align-items:center; gap:14px; }
+  .avatar{
+    width:38px; height:38px; border-radius:50%; border:2px solid #333;
+    display:flex; align-items:center; justify-content:center; background:#fff;
+  }
+
+  .content{ padding:26px; }
+  .page-header{
+    display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; flex-wrap:wrap; gap:10px;
+  }
+  .page-title{ display:flex; align-items:center; gap:12px; margin:0; }
+
+  .screen{ display:none; }
+  .screen.active{ display:block; }
+
+  .grid-12{ display:grid; grid-template-columns:repeat(12,1fr); gap:18px; }
+  .col-3{grid-column:span 3;} .col-4{grid-column:span 4;} .col-6{grid-column:span 6;}
+  .col-8{grid-column:span 8;} .col-12{grid-column:span 12;}
+  @media(max-width:1100px){ .grid-12 > div{ grid-column:span 12 !important; } }
+
+  .card{
+    border:2px solid #333; border-radius: var(--sketchy-radius); background:#fff;
+    padding:16px 18px;
+  }
+  .card-title{ display:flex; align-items:center; gap:8px; margin:0 0 10px 0; }
+
+  .filter-bar{
+    display:flex; flex-wrap:wrap; gap:14px; align-items:flex-end;
+    border:2px solid #333; border-radius: var(--sketchy-radius); background:#fff;
+    padding:16px 18px; margin-bottom:18px;
+  }
+  .filter-field{ display:flex; flex-direction:column; gap:4px; min-width:180px; }
+  .filter-field label{ font-size:15px; color:var(--ink-light); display:flex; align-items:center; gap:6px; }
+
+  table.wf-table{ width:100%; border-collapse:collapse; }
+  table.wf-table th, table.wf-table td{
+    border-bottom:1.5px dashed #999; text-align:left; padding:9px 10px; font-size:18px;
+  }
+  table.wf-table th{ color:var(--ink-light); font-size:15px; text-transform:uppercase; letter-spacing:0.5px; border-bottom:2px solid #333; }
+  table.wf-table tr.row-clickable:hover{ background:var(--gray-100); cursor:pointer; }
+
+  .badge{
+    display:inline-flex; align-items:center; gap:5px;
+    border-radius:12px; padding:3px 10px; font-size:15px; border:2px solid #333; background:#fff;
+  }
+  .badge-success{ border-style:solid; }
+  .badge-success::before{ content:"\2713"; font-weight:bold; }
+  .badge-danger{ border-style:double; border-width:4px; }
+  .badge-danger::before{ content:"\2716"; font-weight:bold; }
+  .badge-warning{ border-style:dashed; }
+  .badge-warning::before{ content:"!"; font-weight:bold; }
+  .badge-info{ border-style:dotted; border-width:3px; }
+  .badge-info::before{ content:"i"; font-style:italic; font-weight:bold; }
+
+  .readonly-note{
+    display:flex; align-items:center; gap:8px; color:var(--ink-light);
+    font-size:15px; margin-top:10px; padding-top:10px; border-top:1.5px dashed #999;
+  }
+
+  .pagination{ display:flex; gap:8px; justify-content:flex-end; align-items:center; margin-top:14px; }
+  .page-btn{
+    width:34px; height:34px; border:2px solid #333; border-radius:8px; background:#fff;
+    display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:16px;
+  }
+  .page-btn.active{ background:#333; color:#fff; }
+
+  .chart-box{
+    border:2px dashed #666; border-radius: var(--sketchy-radius); background:#fff;
+    padding:14px; height:200px; display:flex; flex-direction:column; justify-content:flex-end;
+  }
+  .chart-bars{ display:flex; align-items:flex-end; gap:6px; height:140px; }
+  .chart-bars .bar{ flex:1; background: repeating-linear-gradient(45deg,#333,#333 3px,#fff 3px,#fff 6px); border:1.5px solid #333; border-top:none; }
+  .chart-line-svg{ width:100%; height:140px; }
+  .chart-caption{ font-size:14px; color:var(--ink-light); margin-top:6px; text-align:center; }
+
+  .kpi-value{ font-size:35px; margin:2px 0; }
+  .kpi-label{ font-size:15px; color:var(--ink-light); }
+  .trend{ font-size:15px; display:flex; align-items:center; gap:4px; }
+
+  .modal-overlay{
+    display:none; position:fixed; inset:0; background:rgba(0,0,0,0.35); z-index:50;
+    align-items:stretch; justify-content:flex-end;
+  }
+  .modal-overlay.active{ display:flex; }
+  .sheet{
+    width:520px; max-width:92vw; background:#fff; border-left:2px solid #333;
+    height:100%; overflow-y:auto; padding:22px; position:relative;
+  }
+  .sheet-close{
+    position:absolute; top:16px; right:16px; cursor:pointer; border:2px solid #333;
+    border-radius:50%; width:34px; height:34px; display:flex; align-items:center; justify-content:center; background:#fff;
+  }
+  .stack-trace{
+    background:#f2f2f2; border:1.5px dashed #666; border-radius:8px; padding:12px;
+    font-family: monospace; font-size:14px; white-space:pre-wrap; color:#333; line-height:1.5;
+  }
+
+  .draft-banner{
+    display:flex; align-items:center; gap:10px; background:#f2f2f2; border:2px dashed #666;
+    border-radius:10px; padding:8px 16px; font-size:14px; color:var(--ink-light); margin-bottom:16px;
+  }
+
+  .icon{ display:inline-block; vertical-align:middle; }
+
+  .assumption-tag{
+    font-size:12px; color:var(--ink-light); border:1px dashed #999; border-radius:6px;
+    padding:1px 6px; margin-left:6px;
+  }
+
+  hr.sep{ border:none; border-top:2px dashed #999; margin:18px 0; }
+</style>
+</head>
+<body>
+
+<!-- ============ Inline SVG doodle icon defs (reused via <use>) ============ -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="ic-dashboard" viewBox="0 0 24 24"><path d="M4 4 L11 4 L11 11 L4 11 Z M13 4 L20 4 L20 8 L13 8 Z M13 10 L20 10 L20 20 L13 20 Z M4 13 L11 13 L11 20 L4 20 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="ic-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 21c1-4.5 5-6 8-6s7 1.5 8 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="ic-school" viewBox="0 0 24 24"><path d="M2 9 L12 4 L22 9 L12 14 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M6 11.5 V17 C6 18.5 9 19.5 12 19.5 C15 19.5 18 18.5 18 17 V11.5" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="ic-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="ic-eye" viewBox="0 0 24 24"><path d="M2 12c2.5-5 7-7 10-7s7.5 2 10 7c-2.5 5-7 7-10 7s-7.5-2-10-7Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="ic-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="ic-report" viewBox="0 0 24 24"><path d="M6 2h9l4 4v16H6Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 11h6M9 15h6M9 7h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="ic-log" viewBox="0 0 24 24"><path d="M4 4h16v16H4Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M7 8h10M7 12h10M7 16h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="ic-server" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="4" y="14" width="16" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="7.5" cy="7" r="0.8" fill="currentColor"/><circle cx="7.5" cy="17" r="0.8" fill="currentColor"/></symbol>
+    <symbol id="ic-error" viewBox="0 0 24 24"><path d="M12 2 22 20H2Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 9v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="17" r="1" fill="currentColor"/></symbol>
+    <symbol id="ic-stats" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 12 L12 4 A8 8 0 0 1 19 12 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="ic-backup" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M12 3v5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="ic-filter" viewBox="0 0 24 24"><path d="M3 5h18l-7 8v6l-4 2v-8Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="ic-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="ic-ip" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7 11h.01M12 11h.01M17 11h.01M7 15h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="ic-download" viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5M4 20h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="ic-warning" viewBox="0 0 24 24"><path d="M12 3 22 20H2Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 9v5M12 17h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="ic-cloud" viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1-1-7.9A5 5 0 0 1 16 9a4 4 0 0 1 1 8H7Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="ic-history" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l4 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="ic-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="ic-plug" viewBox="0 0 24 24"><path d="M9 3v5M15 3v5M6 8h12l-1 5a5 5 0 0 1-10 0Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 17v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="ic-search" viewBox="0 0 24 24"><circle cx="10" cy="10" r="6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="ic-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="ic-pulse" viewBox="0 0 24 24"><path d="M2 12h4l2-7 4 14 2-7h8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="ic-doc" viewBox="0 0 24 24"><path d="M7 2h7l4 4v16H7Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 12h6M10 16h6M10 8h2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="ic-bell" viewBox="0 0 24 24"><path d="M6 10a6 6 0 0 1 12 0v5l2 3H4l2-3Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 21a2 2 0 0 0 4 0" stroke="currentColor" stroke-width="1.6"/></symbol>
+  </defs>
+</svg>
+
+<div class="app">
+
+  <!-- ============ SIDEBAR (System Admin — full menu, only "Giam sat & Audit" clickable) ============ -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <svg class="icon" width="26" height="26"><use href="#ic-school"/></svg>
+      <p class="text-md">SFMS Admin</p>
+    </div>
+    <p class="sidebar-actor text-xs">Dang nhap: System Admin</p>
+
+    <div class="nav-group">
+      <p class="nav-group-title">Tong quan</p>
+      <div class="nav-item disabled"><svg class="icon" width="20" height="20"><use href="#ic-dashboard"/></svg> System Administrator Dashboard</div>
+    </div>
+
+    <div class="nav-group">
+      <p class="nav-group-title">Quan ly Nguoi dung &amp; Vai tro</p>
+      <div class="nav-item disabled"><svg class="icon" width="20" height="20"><use href="#ic-user"/></svg> User Account List</div>
+      <div class="nav-item disabled"><svg class="icon" width="20" height="20"><use href="#ic-user"/></svg> Role List</div>
+      <div class="nav-item disabled"><svg class="icon" width="20" height="20"><use href="#ic-lock"/></svg> Manage Permission List</div>
+    </div>
+
+    <div class="nav-group">
+      <p class="nav-group-title">Quan ly Truong hoc</p>
+      <div class="nav-item disabled"><svg class="icon" width="20" height="20"><use href="#ic-school"/></svg> School List</div>
+      <div class="nav-item disabled"><svg class="icon" width="20" height="20"><use href="#ic-school"/></svg> School Detail</div>
+    </div>
+
+    <div class="nav-group">
+      <p class="nav-group-title">Cau hinh He thong</p>
+      <div class="nav-item disabled"><svg class="icon" width="20" height="20"><use href="#ic-lock"/></svg> Security Policies</div>
+      <div class="nav-item disabled"><svg class="icon" width="20" height="20"><use href="#ic-plug"/></svg> AI Settings / External Integrations</div>
+    </div>
+
+    <div class="nav-group">
+      <p class="nav-group-title">Giam sat &amp; Audit</p>
+      <div class="nav-item clickable active" id="nav-audit" onclick="showScreen('screen-audit-logs')"><svg class="icon" width="20" height="20"><use href="#ic-log"/></svg> Audit Logs</div>
+      <div class="nav-item clickable" id="nav-activity" onclick="showScreen('screen-activity-monitoring')"><svg class="icon" width="20" height="20"><use href="#ic-pulse"/></svg> System Activity Monitoring</div>
+      <div class="nav-item clickable" id="nav-status" onclick="showScreen('screen-system-status')"><svg class="icon" width="20" height="20"><use href="#ic-server"/></svg> System Status Screen</div>
+      <div class="nav-item clickable" id="nav-errors" onclick="showScreen('screen-error-logs')"><svg class="icon" width="20" height="20"><use href="#ic-error"/></svg> Error Logs Screen</div>
+      <div class="nav-item clickable" id="nav-usage" onclick="showScreen('screen-usage-statistics')"><svg class="icon" width="20" height="20"><use href="#ic-stats"/></svg> Usage Statistics Screen</div>
+    </div>
+
+    <div class="nav-group">
+      <p class="nav-group-title">Bao cao &amp; Thong ke</p>
+      <div class="nav-item disabled"><svg class="icon" width="20" height="20"><use href="#ic-report"/></svg> Analytics Dashboard</div>
+      <div class="nav-item disabled"><svg class="icon" width="20" height="20"><use href="#ic-doc"/></svg> Export Report</div>
+      <div class="nav-item disabled"><svg class="icon" width="20" height="20"><use href="#ic-calendar"/></svg> Schedule Automated Report</div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="main">
+    <div class="topbar">
+      <div class="breadcrumb" id="breadcrumb">Giam sat &amp; Audit / <b>Audit Logs</b></div>
+      <div class="topbar-right">
+        <svg class="icon" width="22" height="22"><use href="#ic-bell"/></svg>
+        <div class="avatar"><svg class="icon" width="18" height="18"><use href="#ic-user"/></svg></div>
+        <span class="text-sm">Nguyen Van Nam</span>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ======================================================= -->
+      <!-- SCREEN 1: AUDIT LOGS (UC-106)                            -->
+      <!-- ======================================================= -->
+      <section class="screen active" id="screen-audit-logs">
+        <div class="draft-banner">
+          <svg class="icon" width="18" height="18"><use href="#ic-warning"/></svg>
+          Nguon Screen Spec dang o trang thai Draft, chua qua QA — xem manifest kem theo.
+        </div>
+
+        <div class="page-header">
+          <h2 class="page-title text-lg"><svg class="icon" width="30" height="30"><use href="#ic-log"/></svg> Audit Logs</h2>
+          <button class="btn-secondary" onclick="alert('Xuat file CSV/PDF audit log (giả định — xem ghi chú Screen Spec)')">
+            <svg class="icon" width="18" height="18"><use href="#ic-download"/></svg> Export CSV/PDF
+          </button>
+        </div>
+
+        <div class="filter-bar">
+          <div class="filter-field">
+            <label><svg class="icon" width="16" height="16"><use href="#ic-calendar"/></svg> Date range</label>
+            <wired-input value="01/06/2026 - 07/06/2026" style="width:220px"></wired-input>
+          </div>
+          <div class="filter-field">
+            <label><svg class="icon" width="16" height="16"><use href="#ic-user"/></svg> User ID / Ten</label>
+            <wired-search-input placeholder="Tim theo ten hoac ID..." style="width:200px"></wired-search-input>
+          </div>
+          <div class="filter-field">
+            <label><svg class="icon" width="16" height="16"><use href="#ic-filter"/></svg> Action category</label>
+            <wired-select style="width:180px">
+              <wired-item value="all">Tat ca hanh dong</wired-item>
+              <wired-item value="create">Create</wired-item>
+              <wired-item value="update">Update</wired-item>
+              <wired-item value="delete">Delete</wired-item>
+              <wired-item value="approve">Approve</wired-item>
+              <wired-item value="reject">Reject</wired-item>
+              <wired-item value="login">Login</wired-item>
+            </wired-select>
+          </div>
+          <div class="filter-field">
+            <label><svg class="icon" width="16" height="16"><use href="#ic-ip"/></svg> IP Address</label>
+            <wired-input placeholder="vd: 192.168.1.10" style="width:170px"></wired-input>
+          </div>
+          <button class="btn-primary btn-sm"><svg class="icon" width="16" height="16"><use href="#ic-search"/></svg> Loc</button>
+        </div>
+
+        <div class="card">
+          <table class="wf-table">
+            <thead>
+              <tr><th>Timestamp</th><th>User</th><th>IP Address</th><th>Action</th><th>Resource</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>07/06/2026 08:12:03</td><td>nguyen.van.nam</td><td>10.0.4.21</td><td>Login</td><td>Auth Service</td><td><span class="badge badge-success">Success</span></td></tr>
+              <tr><td>07/06/2026 08:20:41</td><td>tran.thi.hoa</td><td>10.0.4.55</td><td>Update</td><td>School #12 - Tieu hoc Hoa Sen</td><td><span class="badge badge-success">Success</span></td></tr>
+              <tr><td>07/06/2026 09:02:17</td><td>le.van.minh</td><td>10.0.5.03</td><td>Delete</td><td>Role "Truong ca"</td><td><span class="badge badge-danger">Failed</span></td></tr>
+              <tr><td>06/06/2026 17:44:09</td><td>pham.thi.lan</td><td>172.16.2.9</td><td>Approve</td><td>Menu #204</td><td><span class="badge badge-success">Success</span></td></tr>
+              <tr><td>06/06/2026 15:10:52</td><td>nguyen.van.nam</td><td>10.0.4.21</td><td>Create</td><td>User "hoang.thi.mai"</td><td><span class="badge badge-success">Success</span></td></tr>
+              <tr><td>06/06/2026 11:05:37</td><td>do.van.duc</td><td>10.0.5.61</td><td>Reject</td><td>Incident #88</td><td><span class="badge badge-success">Success</span></td></tr>
+              <tr><td>05/06/2026 22:31:00</td><td>unknown</td><td>203.0.113.7</td><td>Login</td><td>Auth Service</td><td><span class="badge badge-danger">Failed</span></td></tr>
+            </tbody>
+          </table>
+          <div class="readonly-note">
+            <svg class="icon" width="16" height="16"><use href="#ic-lock"/></svg>
+            Bang chi doc — khong co hanh dong Edit/Delete tren tung dong (BR-162: nhat ky bat bien, BR-172: bao ve toan ven).
+          </div>
+          <div class="pagination">
+            <div class="page-btn active">1</div>
+            <div class="page-btn">2</div>
+            <div class="page-btn">3</div>
+            <div class="page-btn">&gt;</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================= -->
+      <!-- SCREEN 2: SYSTEM ACTIVITY MONITORING (UC-057)            -->
+      <!-- ======================================================= -->
+      <section class="screen" id="screen-activity-monitoring">
+        <div class="draft-banner">
+          <svg class="icon" width="18" height="18"><use href="#ic-warning"/></svg>
+          Nguon Screen Spec dang o trang thai Draft, chua qua QA — xem manifest kem theo.
+        </div>
+
+        <div class="page-header">
+          <h2 class="page-title text-lg"><svg class="icon" width="30" height="30"><use href="#ic-pulse"/></svg> System Activity Monitoring</h2>
+        </div>
+
+        <div class="grid-12">
+          <div class="col-4">
+            <div class="card">
+              <p class="card-title text-base"><svg class="icon" width="20" height="20"><use href="#ic-chart"/></svg> CPU load</p>
+              <div class="chart-box">
+                <svg class="chart-line-svg" viewBox="0 0 240 120" preserveAspectRatio="none">
+                  <polyline points="0,90 30,70 60,80 90,50 120,60 150,35 180,45 210,25 240,40" fill="none" stroke="#333" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <p class="chart-caption">Hien tai: 47% (trung binh 24h)</p>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card">
+              <p class="card-title text-base"><svg class="icon" width="20" height="20"><use href="#ic-chart"/></svg> RAM load</p>
+              <div class="chart-box">
+                <svg class="chart-line-svg" viewBox="0 0 240 120" preserveAspectRatio="none">
+                  <polyline points="0,60 30,55 60,65 90,58 120,70 150,66 180,72 210,68 240,74" fill="none" stroke="#333" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <p class="chart-caption">Hien tai: 63% (12GB / 19GB)</p>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card">
+              <p class="card-title text-base"><svg class="icon" width="20" height="20"><use href="#ic-chart"/></svg> Disk I/O</p>
+              <div class="chart-box">
+                <svg class="chart-line-svg" viewBox="0 0 240 120" preserveAspectRatio="none">
+                  <polyline points="0,100 30,95 60,60 90,80 120,40 150,55 180,30 210,50 240,20" fill="none" stroke="#333" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <p class="chart-caption">Hien tai: 12 MB/s doc/ghi</p>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="card">
+              <p class="card-title text-base"><svg class="icon" width="20" height="20"><use href="#ic-user"/></svg> Active user sessions</p>
+              <p class="kpi-value">1,284</p>
+              <p class="kpi-label trend"><svg class="icon" width="14" height="14"><use href="#ic-pulse"/></svg> phien dang hoat dong (cap nhat gan thoi gian thuc)</p>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="card">
+              <p class="card-title text-base"><svg class="icon" width="20" height="20"><use href="#ic-server"/></svg> Database query pool load</p>
+              <wired-progress value="68" style="width:100%"></wired-progress>
+              <p class="kpi-label" style="margin-top:6px;">68% pool dang su dung (68/100 connections)</p>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="card">
+              <p class="card-title text-base"><svg class="icon" width="20" height="20"><use href="#ic-report"/></svg> Bao cao tong hop hang tuan (BR-165)</p>
+              <p class="text-sm">Bao cao suc khoe he thong tuan 27 (30/06 - 06/07/2026) da san sang.</p>
+              <a onclick="alert('Xem bao cao tuan (lien ket ngoai pham vi wireframe nay)')">Xem bao cao tuan &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================= -->
+      <!-- SCREEN 3: SYSTEM STATUS SCREEN (UC-149) + tab Backup     -->
+      <!-- ======================================================= -->
+      <section class="screen" id="screen-system-status">
+        <div class="draft-banner">
+          <svg class="icon" width="18" height="18"><use href="#ic-warning"/></svg>
+          Nguon Screen Spec dang o trang thai Draft, chua qua QA — xem manifest kem theo.
+        </div>
+
+        <div class="page-header">
+          <h2 class="page-title text-lg"><svg class="icon" width="30" height="30"><use href="#ic-server"/></svg> System Status Screen</h2>
+          <button class="btn-secondary" onclick="alert('Xuat System Status (CSV/PDF) — AF1 Export')">
+            <svg class="icon" width="18" height="18"><use href="#ic-download"/></svg> Export
+          </button>
+        </div>
+
+        <wired-tabs selected="health" style="width:100%" onselected="handleStatusTab(event)">
+          <wired-tab name="health" label="Health Check" id="tab-health"></wired-tab>
+          <wired-tab name="backup" label="Backup Management" id="tab-backup"></wired-tab>
+        </wired-tabs>
+
+        <div id="tab-panel-health" style="margin-top:18px;">
+          <div class="grid-12">
+            <div class="col-3">
+              <div class="card">
+                <p class="card-title text-base"><svg class="icon" width="18" height="18"><use href="#ic-server"/></svg> Database</p>
+                <span class="badge badge-success">Online</span>
+                <p class="text-xs" style="margin-top:8px;">Kiem tra gan nhat: 2 phut truoc</p>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="card">
+                <p class="card-title text-base"><svg class="icon" width="18" height="18"><use href="#ic-plug"/></svg> Email Service</p>
+                <span class="badge badge-success">Online</span>
+                <p class="text-xs" style="margin-top:8px;">Kiem tra gan nhat: 2 phut truoc</p>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="card">
+                <p class="card-title text-base"><svg class="icon" width="18" height="18"><use href="#ic-cloud"/></svg> Firebase</p>
+                <span class="badge badge-danger">Offline</span>
+                <p class="text-xs" style="margin-top:8px;">Mat ket noi gan nhat: 07/06 08:41</p>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="card">
+                <p class="card-title text-base"><svg class="icon" width="18" height="18"><use href="#ic-plug"/></svg> Gemini AI</p>
+                <span class="badge badge-success">Online</span>
+                <p class="text-xs" style="margin-top:8px;">Kiem tra gan nhat: 2 phut truoc</p>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="card">
+                <p class="card-title text-base"><svg class="icon" width="18" height="18"><use href="#ic-ip"/></svg> GPS Service</p>
+                <span class="badge badge-success">Online</span>
+                <p class="text-xs" style="margin-top:8px;">Kiem tra gan nhat: 2 phut truoc</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-panel-backup" style="margin-top:18px; display:none;">
+          <div class="card">
+            <p class="card-title text-base"><svg class="icon" width="20" height="20"><use href="#ic-backup"/></svg> Backup Management <span class="assumption-tag">panel bundled - UC-149 BR-160</span></p>
+
+            <div class="grid-12">
+              <div class="col-4">
+                <p class="text-xs" style="color:var(--ink-light)">Lich backup</p>
+                <p class="text-base"><svg class="icon" width="16" height="16"><use href="#ic-calendar"/></svg> Chu nhat, 02:00 sang (hang tuan)</p>
+              </div>
+              <div class="col-4">
+                <p class="text-xs" style="color:var(--ink-light)">Trang thai lan gan nhat</p>
+                <p class="text-base"><span class="badge badge-success">Thanh cong</span> — 30/06/2026 02:03</p>
+              </div>
+              <div class="col-4">
+                <p class="text-xs" style="color:var(--ink-light)">Vi tri luu tru</p>
+                <p class="text-base"><svg class="icon" width="16" height="16"><use href="#ic-cloud"/></svg> Cloud off-site (chi tiet credential an)</p>
+              </div>
+            </div>
+
+            <hr class="sep">
+
+            <p class="text-sm" style="display:flex; align-items:center; gap:6px;">
+              <svg class="icon" width="16" height="16"><use href="#ic-warning"/></svg>
+              Dung luong backup da dung
+            </p>
+            <wired-progress value="92" style="width:100%"></wired-progress>
+            <p class="text-xs" style="margin-top:4px;"><span class="badge badge-warning">Canh bao</span> 92% dung luong da su dung — gan dat nguong toi da</p>
+
+            <hr class="sep">
+
+            <p class="card-title text-base" style="margin-top:0;"><svg class="icon" width="18" height="18"><use href="#ic-history"/></svg> Lich su cac lan backup gan day <span class="assumption-tag">gia dinh</span></p>
+            <table class="wf-table">
+              <thead><tr><th>Thoi gian</th><th>Ket qua</th><th>Dung luong</th></tr></thead>
+              <tbody>
+                <tr><td>30/06/2026 02:00</td><td><span class="badge badge-success">Thanh cong</span></td><td>4.2 GB</td></tr>
+                <tr><td>23/06/2026 02:00</td><td><span class="badge badge-success">Thanh cong</span></td><td>4.0 GB</td></tr>
+                <tr><td>16/06/2026 02:00</td><td><span class="badge badge-danger">That bai</span></td><td>—</td></tr>
+                <tr><td>09/06/2026 02:00</td><td><span class="badge badge-success">Thanh cong</span></td><td>3.8 GB</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================= -->
+      <!-- SCREEN 4: ERROR LOGS SCREEN (UC-111) + Sheet detail       -->
+      <!-- ======================================================= -->
+      <section class="screen" id="screen-error-logs">
+        <div class="draft-banner">
+          <svg class="icon" width="18" height="18"><use href="#ic-warning"/></svg>
+          Nguon Screen Spec dang o trang thai Draft, chua qua QA — xem manifest kem theo.
+        </div>
+
+        <div class="page-header">
+          <h2 class="page-title text-lg"><svg class="icon" width="30" height="30"><use href="#ic-error"/></svg> Error Logs Screen</h2>
+        </div>
+
+        <div class="filter-bar">
+          <div class="filter-field">
+            <label><svg class="icon" width="16" height="16"><use href="#ic-filter"/></svg> Severity</label>
+            <wired-select style="width:170px">
+              <wired-item value="all">Tat ca</wired-item>
+              <wired-item value="critical">Critical</wired-item>
+              <wired-item value="high">High</wired-item>
+              <wired-item value="medium">Medium</wired-item>
+              <wired-item value="low">Low</wired-item>
+            </wired-select>
+          </div>
+          <div class="filter-field">
+            <label><svg class="icon" width="16" height="16"><use href="#ic-calendar"/></svg> Date range</label>
+            <wired-input value="01/06/2026 - 07/06/2026" style="width:220px"></wired-input>
+          </div>
+          <button class="btn-primary btn-sm"><svg class="icon" width="16" height="16"><use href="#ic-search"/></svg> Loc</button>
+        </div>
+
+        <div class="card">
+          <table class="wf-table">
+            <thead>
+              <tr><th>Timestamp</th><th>Error Message</th><th>Severity</th><th>Module/Class</th><th>Path</th></tr>
+            </thead>
+            <tbody>
+              <tr class="row-clickable" onclick="openErrorDetail(this)"
+                  data-msg="NullPointerException: menuPlan is null"
+                  data-module="MenuService.MenuPlanController"
+                  data-path="/api/v1/menu-plans/204/approve"
+                  data-time="07/06/2026 09:41:12"
+                  data-severity="Critical">
+                <td>07/06/2026 09:41:12</td><td>NullPointerException: menuPlan is null</td><td><span class="badge badge-danger">Critical</span></td><td>MenuService.MenuPlanController</td><td>/api/v1/menu-plans/204/approve</td>
+              </tr>
+              <tr class="row-clickable" onclick="openErrorDetail(this)"
+                  data-msg="TimeoutException: Gemini AI request exceeded 15000ms"
+                  data-module="AIIntegration.GeminiClient"
+                  data-path="/api/v1/ai/menu-suggestion"
+                  data-time="07/06/2026 08:55:03"
+                  data-severity="High">
+                <td>07/06/2026 08:55:03</td><td>TimeoutException: Gemini AI request exceeded 15000ms</td><td><span class="badge badge-danger">High</span></td><td>AIIntegration.GeminiClient</td><td>/api/v1/ai/menu-suggestion</td>
+              </tr>
+              <tr class="row-clickable" onclick="openErrorDetail(this)"
+                  data-msg="ValidationException: Ma so thue khong hop le"
+                  data-module="SchoolService.SchoolValidator"
+                  data-path="/api/v1/schools/95/update"
+                  data-time="06/06/2026 16:20:47"
+                  data-severity="Medium">
+                <td>06/06/2026 16:20:47</td><td>ValidationException: Ma so thue khong hop le</td><td><span class="badge badge-warning">Medium</span></td><td>SchoolService.SchoolValidator</td><td>/api/v1/schools/95/update</td>
+              </tr>
+              <tr class="row-clickable" onclick="openErrorDetail(this)"
+                  data-msg="DeprecationWarning: legacy export endpoint duoc goi"
+                  data-module="ReportService.ExportController"
+                  data-path="/api/v1/reports/export-legacy"
+                  data-time="05/06/2026 10:02:31"
+                  data-severity="Low">
+                <td>05/06/2026 10:02:31</td><td>DeprecationWarning: legacy export endpoint duoc goi</td><td><span class="badge badge-info">Low</span></td><td>ReportService.ExportController</td><td>/api/v1/reports/export-legacy</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ======================================================= -->
+      <!-- SCREEN 5: USAGE STATISTICS SCREEN (UC-150)               -->
+      <!-- ======================================================= -->
+      <section class="screen" id="screen-usage-statistics">
+        <div class="draft-banner">
+          <svg class="icon" width="18" height="18"><use href="#ic-warning"/></svg>
+          Nguon Screen Spec dang o trang thai Draft, chua qua QA — xem manifest kem theo.
+        </div>
+
+        <div class="page-header">
+          <h2 class="page-title text-lg"><svg class="icon" width="30" height="30"><use href="#ic-stats"/></svg> Usage Statistics Screen</h2>
+        </div>
+
+        <div class="filter-bar">
+          <div class="filter-field">
+            <label><svg class="icon" width="16" height="16"><use href="#ic-calendar"/></svg> Date range</label>
+            <wired-input value="01/06/2026 - 07/06/2026" style="width:220px"></wired-input>
+          </div>
+          <div class="filter-field">
+            <label><svg class="icon" width="16" height="16"><use href="#ic-user"/></svg> Role</label>
+            <wired-select style="width:190px">
+              <wired-item value="all">Tat ca role</wired-item>
+              <wired-item value="admin">System Admin</wired-item>
+              <wired-item value="school">School Administration</wired-item>
+              <wired-item value="teacher">Teacher</wired-item>
+              <wired-item value="parent">Parent</wired-item>
+              <wired-item value="caterer">Service Caterer</wired-item>
+            </wired-select>
+          </div>
+          <button class="btn-primary btn-sm"><svg class="icon" width="16" height="16"><use href="#ic-search"/></svg> Loc</button>
+        </div>
+
+        <div class="grid-12">
+          <div class="col-8">
+            <div class="card">
+              <p class="card-title text-base"><svg class="icon" width="20" height="20"><use href="#ic-chart"/></svg> Active users theo ngay/tuan</p>
+              <div class="chart-box" style="height:220px;">
+                <div class="chart-bars">
+                  <div class="bar" style="height:55%"></div>
+                  <div class="bar" style="height:70%"></div>
+                  <div class="bar" style="height:48%"></div>
+                  <div class="bar" style="height:85%"></div>
+                  <div class="bar" style="height:62%"></div>
+                  <div class="bar" style="height:40%"></div>
+                  <div class="bar" style="height:30%"></div>
+                </div>
+              </div>
+              <p class="chart-caption">T2 - CN (tuan 27) — dinh: 2,140 active users (thu 5)</p>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card">
+              <p class="card-title text-base"><svg class="icon" width="20" height="20"><use href="#ic-log"/></svg> Top use case</p>
+              <table class="wf-table">
+                <thead><tr><th>Use case</th><th>Luot goi</th></tr></thead>
+                <tbody>
+                  <tr><td>Xem thuc don</td><td>8,420</td></tr>
+                  <tr><td>Diem danh</td><td>6,110</td></tr>
+                  <tr><td>Bao cao su co</td><td>2,305</td></tr>
+                  <tr><td>Duyet thuc don</td><td>1,742</td></tr>
+                  <tr><td>Dang nhap</td><td>1,290</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="card">
+              <p class="card-title text-base"><svg class="icon" width="20" height="20"><use href="#ic-server"/></svg> Dung luong luu tru su dung</p>
+              <div style="display:flex; align-items:center; gap:18px;">
+                <svg width="110" height="110" viewBox="0 0 36 36">
+                  <circle cx="18" cy="18" r="15.5" fill="none" stroke="#e6e6e6" stroke-width="4"/>
+                  <circle cx="18" cy="18" r="15.5" fill="none" stroke="#333" stroke-width="4"
+                    stroke-dasharray="65 100" stroke-dashoffset="25" stroke-linecap="round" transform="rotate(-90 18 18)"/>
+                  <text x="18" y="21" text-anchor="middle" font-size="8" fill="#333" font-family="Patrick Hand">65%</text>
+                </svg>
+                <div>
+                  <p class="kpi-value" style="font-size:28px; margin:0;">325 GB / 500 GB</p>
+                  <p class="kpi-label">Da su dung toan he thong</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="card">
+              <p class="card-title text-base"><svg class="icon" width="20" height="20"><use href="#ic-chart"/></svg> API request count</p>
+              <div class="chart-box">
+                <svg class="chart-line-svg" viewBox="0 0 240 120" preserveAspectRatio="none">
+                  <polyline points="0,80 30,60 60,65 90,40 120,50 150,30 180,42 210,20 240,35" fill="none" stroke="#333" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <p class="chart-caption">128,450 requests trong 7 ngay qua</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============ Error Detail Sheet (modal trượt từ phải) ============ -->
+<div class="modal-overlay" id="error-detail-overlay">
+  <div class="sheet">
+    <div class="sheet-close" onclick="closeErrorDetail()"><svg class="icon" width="16" height="16"><use href="#ic-close"/></svg></div>
+    <p class="card-title text-md"><svg class="icon" width="22" height="22"><use href="#ic-error"/></svg> Chi tiet loi</p>
+
+    <p class="text-xs" style="color:var(--ink-light)">Thoi gian</p>
+    <p class="text-base" id="detail-time">—</p>
+
+    <p class="text-xs" style="color:var(--ink-light)">Muc do nghiem trong</p>
+    <p class="text-base" id="detail-severity">—</p>
+
+    <p class="text-xs" style="color:var(--ink-light)">Module/Class</p>
+    <p class="text-base" id="detail-module">—</p>
+
+    <p class="text-xs" style="color:var(--ink-light)">Path</p>
+    <p class="text-base" id="detail-path">—</p>
+
+    <hr class="sep">
+
+    <p class="card-title text-base"><svg class="icon" width="18" height="18"><use href="#ic-doc"/></svg> Stack trace</p>
+    <div class="stack-trace" id="detail-stack">—</div>
+
+    <hr class="sep">
+
+    <p class="card-title text-base"><svg class="icon" width="18" height="18"><use href="#ic-lock"/></svg> Request metadata (BR-164 — thong tin nhay cam da ma hoa)</p>
+    <div class="stack-trace">userId: 4821
+sessionId: sess_9f21ac3e (session bi anh huong)
+ip: 10.0.4.21
+userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+requestId: req_7788ffab</div>
+
+    <hr class="sep">
+    <p class="card-title text-base"><svg class="icon" width="18" height="18"><use href="#ic-user"/></svg> Session anh huong</p>
+    <p class="text-sm">1 session dang hoat dong bi anh huong boi loi nay.</p>
+  </div>
+</div>
+
+<script>
+  function showScreen(id){
+    document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+    document.getElementById(id).classList.add('active');
+
+    document.querySelectorAll('.nav-item.clickable').forEach(function(n){ n.classList.remove('active'); });
+
+    var map = {
+      'screen-audit-logs': {nav:'nav-audit', label:'Audit Logs'},
+      'screen-activity-monitoring': {nav:'nav-activity', label:'System Activity Monitoring'},
+      'screen-system-status': {nav:'nav-status', label:'System Status Screen'},
+      'screen-error-logs': {nav:'nav-errors', label:'Error Logs Screen'},
+      'screen-usage-statistics': {nav:'nav-usage', label:'Usage Statistics Screen'}
+    };
+    var info = map[id];
+    if(info){
+      document.getElementById(info.nav).classList.add('active');
+      document.getElementById('breadcrumb').innerHTML = 'Giam sat &amp; Audit / <b>' + info.label + '</b>';
+    }
+    window.scrollTo(0,0);
+  }
+
+  function handleStatusTab(e){
+    var selected = e.target.selected;
+    var healthPanel = document.getElementById('tab-panel-health');
+    var backupPanel = document.getElementById('tab-panel-backup');
+    if(selected === 1){
+      healthPanel.style.display = 'none';
+      backupPanel.style.display = 'block';
+    } else {
+      healthPanel.style.display = 'block';
+      backupPanel.style.display = 'none';
+    }
+  }
+
+  // Fallback: wired-tabs custom event name can vary by version; also bind click on wired-tab directly.
+  document.addEventListener('DOMContentLoaded', function(){
+    var tabHealth = document.getElementById('tab-health');
+    var tabBackup = document.getElementById('tab-backup');
+    if(tabHealth){
+      tabHealth.addEventListener('click', function(){
+        document.getElementById('tab-panel-health').style.display = 'block';
+        document.getElementById('tab-panel-backup').style.display = 'none';
+      });
+    }
+    if(tabBackup){
+      tabBackup.addEventListener('click', function(){
+        document.getElementById('tab-panel-health').style.display = 'none';
+        document.getElementById('tab-panel-backup').style.display = 'block';
+      });
+    }
+  });
+
+  function openErrorDetail(row){
+    document.getElementById('detail-time').textContent = row.getAttribute('data-time');
+    document.getElementById('detail-severity').innerHTML = '<span class="badge badge-' + severityClass(row.getAttribute('data-severity')) + '">' + row.getAttribute('data-severity') + '</span>';
+    document.getElementById('detail-module').textContent = row.getAttribute('data-module');
+    document.getElementById('detail-path').textContent = row.getAttribute('data-path');
+    document.getElementById('detail-stack').textContent =
+      row.getAttribute('data-msg') + '\n    at ' + row.getAttribute('data-module') + '.handle(' + row.getAttribute('data-module').split('.').pop() + '.java:142)\n    at RequestDispatcher.invoke(RequestDispatcher.java:58)\n    at Filter.doFilter(SecurityFilter.java:31)\n    ... 12 more';
+    document.getElementById('error-detail-overlay').classList.add('active');
+  }
+  function closeErrorDetail(){
+    document.getElementById('error-detail-overlay').classList.remove('active');
+  }
+  function severityClass(sev){
+    if(sev === 'Critical' || sev === 'High') return 'danger';
+    if(sev === 'Medium') return 'warning';
+    return 'info';
+  }
+</script>
+
+</body>
+</html>

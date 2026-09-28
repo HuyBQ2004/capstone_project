@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SFMS Medical - Không gian điều tra sự cố</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                            "surface-tint": "#006781",
+                            "tertiary-fixed-dim": "#c4c7c9",
+                            "on-error-container": "#93000a",
+                            "surface-variant": "#dae2fd",
+                            "surface": "#faf8ff",
+                            "secondary-fixed-dim": "#b7c8e1",
+                            "surface-container": "#eaedff",
+                            "secondary-container": "#d0e1fb",
+                            "on-primary": "#ffffff",
+                            "on-surface": "#131b2e",
+                            "primary-container": "#0e7490",
+                            "tertiary-fixed": "#e0e3e5",
+                            "surface-bright": "#faf8ff",
+                            "surface-dim": "#d2d9f4",
+                            "on-secondary-fixed": "#0b1c30",
+                            "on-error": "#ffffff",
+                            "background": "#faf8ff",
+                            "error": "#ba1a1a",
+                            "surface-container-highest": "#dae2fd",
+                            "surface-container-lowest": "#ffffff",
+                            "outline-variant": "#bec8cd",
+                            "secondary": "#505f76",
+                            "primary-fixed": "#b9eaff",
+                            "on-tertiary-container": "#eaecee",
+                            "inverse-surface": "#283044",
+                            "tertiary-container": "#686b6d",
+                            "surface-container-high": "#e2e7ff",
+                            "on-secondary-fixed-variant": "#38485d",
+                            "primary": "#005a71",
+                            "on-tertiary": "#ffffff",
+                            "on-secondary-container": "#54647a",
+                            "secondary-fixed": "#d3e4fe",
+                            "on-primary-fixed": "#001f29",
+                            "tertiary": "#505355",
+                            "on-primary-container": "#d3f1ff",
+                            "outline": "#6f787d",
+                            "on-tertiary-fixed": "#191c1e",
+                            "on-background": "#131b2e",
+                            "on-tertiary-fixed-variant": "#444749",
+                            "error-container": "#ffdad6",
+                            "on-secondary": "#ffffff",
+                            "on-primary-fixed-variant": "#004d62",
+                            "inverse-on-surface": "#eef0ff",
+                            "inverse-primary": "#81d1f0",
+                            "primary-fixed-dim": "#81d1f0",
+                            "surface-container-low": "#f2f3ff",
+                            "on-surface-variant": "#3f484c"
+                    },
+                    "borderRadius": {
+                            "DEFAULT": "0.25rem",
+                            "lg": "0.5rem",
+                            "xl": "0.75rem",
+                            "full": "9999px"
+                    },
+                    "spacing": {
+                            "base": "4px",
+                            "xl": "32px",
+                            "column-gutter": "16px",
+                            "md": "16px",
+                            "sm": "8px",
+                            "xs": "4px",
+                            "lg": "24px",
+                            "container-padding": "24px"
+                    },
+                    "fontFamily": {
+                            "body-md": ["Be Vietnam Pro"],
+                            "title-sm": ["Be Vietnam Pro"],
+                            "display-lg": ["Be Vietnam Pro"],
+                            "label-caps": ["Be Vietnam Pro"],
+                            "display-lg-mobile": ["Be Vietnam Pro"],
+                            "body-sm": ["Be Vietnam Pro"],
+                            "data-tabular": ["Be Vietnam Pro"],
+                            "headline-md": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                            "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                            "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                            "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                            "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                            "display-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "700"}],
+                            "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                            "data-tabular": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                            "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for clean look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #faf8ff; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #bec8cd; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6f787d; 
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased h-screen overflow-hidden flex">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-screen flex flex-col p-md z-40 bg-surface border-r border-outline-variant w-64 hidden md:flex">
+<!-- Header -->
+<div class="flex items-center gap-sm mb-lg">
+<img class="w-10 h-10 rounded-lg object-cover" data-alt="A minimalist, highly detailed logo for a modern medical system. The logo features a stylized caduceus or cross integrated with modern geometric shapes. The color palette primarily uses deep teal (primary container) and crisp white, evoking a sense of cleanliness, trust, and clinical efficiency. High resolution, sharp edges, suitable for a healthcare application dashboard header." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtiPFQaREZtm1D5qZ8imfXNQTEOFJXdO8pQW6kIVTuOOfFD2E99TpMhVIoe8PLgk2gTU_TKPd4oK72v1xBiIPj9GBx7mZ69nrG2UcyRTb4YAEIYnFSZ4a0pncd7xSatDBaHmHuZCu3boNMhvmrPEWOZFcPyDAQmsfg5mGNRMncb07MWeUfV5ysBJAKl4_VxVlip1nqCAZ7hhpXP_PKeNNjeKC6sROevClV1sUb04BkRXpTbekGyNyqxKKgv9CcKmvEG5fooB4LeA4"/>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary-container">SFMS Medical</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Hệ thống y tế học đường</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<div class="flex flex-col gap-xs flex-grow">
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-highest transition-all rounded-lg cursor-pointer duration-200 ease-in-out font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+                Trang chủ
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-highest transition-all rounded-lg cursor-pointer duration-200 ease-in-out font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="medical_services">medical_services</span>
+                Hồ sơ sức khỏe
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-highest transition-all rounded-lg cursor-pointer duration-200 ease-in-out font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
+                Suất ăn đặc biệt
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-highest transition-all rounded-lg cursor-pointer duration-200 ease-in-out font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="sanitizer">sanitizer</span>
+                Kiểm tra vệ sinh
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-highest transition-all rounded-lg cursor-pointer duration-200 ease-in-out font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
+                Quản lý vi phạm
+            </a>
+<!-- Active Tab -->
+<a class="flex items-center gap-md bg-secondary-container text-on-secondary-container rounded-lg px-md py-sm font-semibold cursor-pointer duration-200 ease-in-out font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="report_problem">report_problem</span>
+                Quản lý sự cố
+            </a>
+</div>
+<!-- Footer Links -->
+<div class="flex flex-col gap-xs mt-auto border-t border-outline-variant pt-md">
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-highest transition-all rounded-lg cursor-pointer duration-200 ease-in-out font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+                Hỗ trợ
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-highest transition-all rounded-lg cursor-pointer duration-200 ease-in-out font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                Đăng xuất
+            </a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-grow flex flex-col md:ml-64 h-full">
+<!-- TopNavBar (Mobile only for this layout context, but keeping header structural logic) -->
+<header class="flex justify-between items-center px-lg py-sm w-full sticky top-0 z-50 bg-surface-lowest border-b border-outline-variant">
+<div class="flex items-center gap-md">
+<button class="md:hidden text-on-surface-variant">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div>
+<h2 class="font-title-sm text-title-sm text-on-surface">Không gian điều tra sự cố</h2>
+<span class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px] text-error">warning</span>
+                        INC-2023-001
+                    </span>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:bg-surface-container-low p-sm rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-surface-variant border border-outline-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a medical administrator or doctor in a clinical setting. They are wearing a clean white coat or professional medical attire. The background is slightly blurred, featuring a modern hospital corridor or office with cool, light tones. Soft, even lighting highlights a calm and authoritative expression, suitable for a healthcare platform profile picture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaZyqgxtBu5q1ywlklZrTok_bzbrQcDaIMjOy0IUiYV5uAe42tntLwXnBL0PIxEZFf7HO1Oe-S2cO6jx8oVCdWWHX6MEOVzUlV7frBKe-PWDl4cyc_tknErHoi8_a9v0F71zxuszHhGxKHIvFjVxqusYuykI4enmjCHBPleytDNueQOHJDN3kx0iIXWVdbfOWFsPzec-2GRQOQkhY_TYFeOUNX_u1TwagqstwtsLywY7r8G9aP72LspjwlRD7UHFZGXbVAw80CKpk"/>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<div class="flex-grow overflow-y-auto p-lg bg-surface-bright">
+<div class="max-w-5xl mx-auto space-y-xl">
+<!-- Stepper Progress -->
+<div class="relative flex items-center justify-between w-full mb-8">
+<!-- Line -->
+<div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[2px] bg-outline-variant z-0"></div>
+<!-- Active Line (Example: 50% progress) -->
+<div class="absolute left-0 top-1/2 -translate-y-1/2 w-[50%] h-[2px] bg-primary-container z-0 transition-all duration-500"></div>
+<!-- Step 1 (Completed) -->
+<div class="relative z-10 flex flex-col items-center gap-xs">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-title-sm shadow-sm ring-4 ring-surface-bright">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface w-24 text-center">Truy xuất mẫu</span>
+</div>
+<!-- Step 2 (Completed) -->
+<div class="relative z-10 flex flex-col items-center gap-xs">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-title-sm shadow-sm ring-4 ring-surface-bright">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface w-24 text-center">Bằng chứng</span>
+</div>
+<!-- Step 3 (Active) -->
+<div class="relative z-10 flex flex-col items-center gap-xs">
+<div class="w-8 h-8 rounded-full bg-surface-bright border-2 border-primary-container text-primary-container flex items-center justify-center font-title-sm ring-4 ring-surface-bright">
+                            3
+                        </div>
+<span class="font-label-caps text-label-caps text-primary-container font-bold w-24 text-center">Root Cause</span>
+</div>
+<!-- Step 4 (Pending) -->
+<div class="relative z-10 flex flex-col items-center gap-xs">
+<div class="w-8 h-8 rounded-full bg-surface-bright border-2 border-outline-variant text-outline-variant flex items-center justify-center font-title-sm ring-4 ring-surface-bright">
+                            4
+                        </div>
+<span class="font-label-caps text-label-caps text-on-surface-variant w-24 text-center">CAPA</span>
+</div>
+</div>
+<!-- Bento Grid Layout for Steps Content -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-md">
+<!-- Left Column: Step 1 & 2 summaries -->
+<div class="lg:col-span-4 flex flex-col gap-md">
+<!-- Step 1 Card -->
+<div class="bg-surface-lowest border border-outline-variant rounded-lg p-md shadow-[0_4px_6px_-1px_rgb(0,0,0,0.1),0_2px_4px_-2px_rgb(0,0,0,0.1)]">
+<div class="flex items-center gap-sm mb-sm text-primary-container">
+<span class="material-symbols-outlined">inventory_2</span>
+<h3 class="font-title-sm text-title-sm">Bước 1: Truy xuất mẫu</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-md">Đã yêu cầu xuất kho mẫu lưu nghiệm ngày 12/10.</p>
+<button class="w-full h-10 border border-outline text-on-surface rounded flex items-center justify-center gap-xs hover:bg-surface-variant transition-colors font-data-tabular">
+<span class="material-symbols-outlined text-[18px]">open_in_new</span>
+                                Xem chi tiết Dialog
+                            </button>
+</div>
+<!-- Step 2 Card -->
+<div class="bg-surface-lowest border border-outline-variant rounded-lg p-md shadow-[0_4px_6px_-1px_rgb(0,0,0,0.1),0_2px_4px_-2px_rgb(0,0,0,0.1)]">
+<div class="flex items-center gap-sm mb-sm text-primary-container">
+<span class="material-symbols-outlined">add_a_photo</span>
+<h3 class="font-title-sm text-title-sm">Bước 2: Bằng chứng</h3>
+</div>
+<div class="grid grid-cols-2 gap-xs mb-md">
+<div class="aspect-square bg-surface-variant rounded border border-outline-variant flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A close-up, high-resolution clinical photograph showing a petri dish or a specialized sample container on a sterile stainless steel laboratory bench. The lighting is bright, cool, and shadowless, emphasizing hygiene and medical scrutiny. The background is slightly out of focus, revealing clean white walls and subtle medical equipment. Focus is on the visual evidence of the sample." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7-jFWxqa1tb142nKW-eZvvO4MlK0d4eienJ4Nm5iQktfVzooaK_TkSf31YGuWog_7icvRNTw8OJEVX6kKogtxF5_2SYRlhp2q6zSmyqxePJkqSRO2f_ZIRFvbs-5x76eHjVBTHuCMYP7YkusVAxvzFzbWR-O2dI9Fu6BZE2_xZSM8yGWvkjRBMqODULJ0zYw-d103wGxmINxx3J_HyvJ9NLZVTGxzRZ_zNxDqDmGO4AU5aHzhEmVj0rqFehOzTTN4yH1z1iR5pQQ"/>
+</div>
+<div class="aspect-square bg-surface-container-low rounded border border-outline-variant border-dashed flex flex-col items-center justify-center text-on-surface-variant cursor-pointer hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">upload</span>
+<span class="font-label-caps text-[10px]">Tải lên</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Active Step (Step 3 & 4 Preview) -->
+<div class="lg:col-span-8 flex flex-col gap-md">
+<!-- Step 3 Card (Active) -->
+<div class="bg-surface-lowest border-l-4 border-l-primary-container border-y border-r border-outline-variant rounded-r-lg p-lg shadow-[0_4px_6px_-1px_rgb(0,0,0,0.1),0_2px_4px_-2px_rgb(0,0,0,0.1)] flex-grow">
+<div class="flex justify-between items-start mb-md">
+<div>
+<div class="flex items-center gap-sm text-on-surface mb-xs">
+<span class="material-symbols-outlined">psychology</span>
+<h3 class="font-title-sm text-title-sm">Bước 3: Nguyên nhân gốc rễ (Root Cause)</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Phân tích chi tiết nguyên nhân dẫn đến sự cố. Sử dụng phương pháp 5 Whys hoặc biểu đồ xương cá (Fishbone).</p>
+</div>
+<span class="px-sm py-xs bg-primary-fixed text-on-primary-fixed rounded text-[12px] font-bold">Đang xử lý</span>
+</div>
+<div class="space-y-sm">
+<label class="font-data-tabular text-data-tabular text-on-surface">Mô tả phân tích (Bắt buộc)</label>
+<textarea class="w-full h-48 border border-outline-variant rounded-lg p-sm bg-surface text-body-md focus:outline-none focus:ring-2 focus:ring-primary-container focus:border-transparent resize-none" placeholder="Nhập chi tiết quá trình phân tích nguyên nhân..."></textarea>
+</div>
+<div class="mt-md flex justify-end">
+<button class="h-10 px-lg bg-primary-container text-on-primary font-title-sm rounded hover:bg-primary transition-colors flex items-center gap-xs">
+                                    Lưu phân tích
+                                    <span class="material-symbols-outlined text-[18px]">save</span>
+</button>
+</div>
+</div>
+<!-- Step 4 Teaser -->
+<div class="bg-surface border border-outline-variant rounded-lg p-md opacity-75">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-sm text-on-surface-variant">
+<span class="material-symbols-outlined">assignment_turned_in</span>
+<h3 class="font-title-sm text-title-sm">Bước 4: Đề xuất biện pháp khắc phục CAPA</h3>
+</div>
+<button class="h-10 px-md border border-outline text-on-surface rounded hover:bg-surface-variant transition-colors font-data-tabular flex items-center gap-xs" disabled="">
+                                    Mở form CAPA
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Action -->
+<footer class="bg-surface-lowest border-t border-outline-variant p-md flex justify-between items-center z-10 sticky bottom-0">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Trạng thái: Đang điều tra</span>
+<div class="flex gap-sm">
+<button class="h-10 px-lg border border-secondary text-secondary rounded hover:bg-surface-variant transition-colors font-title-sm">
+                    Hủy bỏ
+                </button>
+<button class="h-10 px-lg bg-primary-container text-on-primary font-title-sm rounded hover:bg-primary transition-colors flex items-center gap-xs opacity-50 cursor-not-allowed">
+                    Hoàn tất điều tra
+                    <span class="material-symbols-outlined text-[18px]">done_all</span>
+</button>
+</div>
+</footer>
+</main>
+</body></html>

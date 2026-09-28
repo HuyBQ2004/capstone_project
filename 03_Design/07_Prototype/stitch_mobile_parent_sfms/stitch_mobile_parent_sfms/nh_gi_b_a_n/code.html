@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Đánh giá bữa ăn - SFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#81d1f0",
+                    "on-primary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-variant": "#d3e4fe",
+                    "on-secondary-fixed-variant": "#005236",
+                    "on-primary-fixed-variant": "#004d62",
+                    "on-secondary": "#ffffff",
+                    "surface-container": "#e5eeff",
+                    "on-primary-fixed": "#001f29",
+                    "on-error-container": "#93000a",
+                    "primary-fixed": "#b9eaff",
+                    "on-tertiary-fixed": "#2a1700",
+                    "inverse-primary": "#81d1f0",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "inverse-surface": "#213145",
+                    "surface-dim": "#cbdbf5",
+                    "surface-container-lowest": "#ffffff",
+                    "primary": "#005a71",
+                    "secondary-fixed-dim": "#4edea3",
+                    "surface-container-high": "#dce9ff",
+                    "on-primary-container": "#d3f1ff",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-secondary-fixed": "#002113",
+                    "background": "#f8f9ff",
+                    "surface-bright": "#f8f9ff",
+                    "surface-tint": "#006781",
+                    "on-tertiary-container": "#ffe9d4",
+                    "on-surface": "#0b1c30",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed": "#ffddb8",
+                    "tertiary-container": "#965f00",
+                    "surface-container-highest": "#d3e4fe",
+                    "primary-container": "#0e7490",
+                    "on-secondary-container": "#00714d",
+                    "outline-variant": "#bec8cd",
+                    "surface-container-low": "#eff4ff",
+                    "secondary": "#006c49",
+                    "outline": "#6f787d",
+                    "surface": "#f8f9ff",
+                    "secondary-fixed": "#6ffbbe",
+                    "error-container": "#ffdad6",
+                    "tertiary": "#764900",
+                    "secondary-container": "#6cf8bb",
+                    "on-background": "#0b1c30",
+                    "on-surface-variant": "#3f484c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "element-gap": "12px",
+                    "container-padding": "16px",
+                    "base": "4px",
+                    "section-margin": "24px",
+                    "grid-gutter": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "headline-lg-mobile": ["Be Vietnam Pro"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "label-sm": ["Be Vietnam Pro"],
+                    "headline-md": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        font-family: 'Be Vietnam Pro', sans-serif;
+        background-color: #f8f9ff;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        vertical-align: middle;
+      }
+      .star-active {
+        font-variation-settings: 'FILL' 1 !important;
+        color: #EAB308; /* Tailwind yellow-500 for a warm medical feel */
+      }
+      .tag-selected {
+        background-color: #005a71;
+        color: #ffffff;
+        border-color: #005a71;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen pb-24">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-container-padding h-14 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant active:scale-95 transition-transform" data-icon="arrow_back">arrow_back</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">SFMS</h1>
+</div>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-primary" data-icon="notifications">notifications</span>
+</div>
+</header>
+<main class="mt-20 px-container-padding max-w-lg mx-auto">
+<!-- Main Content Area -->
+<div class="space-y-section-margin">
+<!-- Header Section -->
+<section class="text-center space-y-2">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">Đánh giá bữa ăn hôm nay</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Ý kiến của bạn giúp chúng tôi cải thiện chất lượng dinh dưỡng cho học sinh.</p>
+</section>
+<!-- Meal Detail Card (Context) -->
+<div class="bg-surface border border-outline-variant rounded-xl p-4 flex items-center gap-4">
+<div class="w-16 h-16 rounded-lg bg-cover bg-center" data-alt="A professional high-angle culinary shot of a balanced school lunch featuring grilled chicken breast, steamed broccoli, and brown rice. The lighting is bright and clean, mimicking a professional medical or health-focused environment. The overall aesthetic is minimalist, fresh, and highly organized with a clinical yet appetizing clarity." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBWkq5l7d-ShC2FIakw-jBeZuQP1bJK6WHvY83J350e_IBGrupFrykbjgHi6EQmwXVlgvhD_pdf7NjFihuARMIqyEa9yyU67GpAxofUZ8LYrfB2TR2Yi4JdSfkNTyui6h_iZ7Oczf7CIywDQr0Q6mgEkQKlzMOiJlZPGTvIGF4qbhi1pqArp22mRgOdygIJixs8qnTD3295cyiCVCBRO5JATnWCWVxGd_fMX5bbiUyyWdshHv6a_Wk6YxTIHOJ91WVznsRuVGq8Tx4')"></div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Bữa trưa: Gà nướng sốt nấm</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Học sinh: Nguyễn Minh Anh - Lớp 3A</p>
+</div>
+</div>
+<!-- Rating Area -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 space-y-6">
+<!-- Stars Selection -->
+<div class="flex flex-col items-center gap-4">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Mức độ hài lòng</span>
+<div class="flex gap-2" id="star-rating-container">
+<button class="star-btn material-symbols-outlined text-4xl text-outline transition-colors" data-star="1">star</button>
+<button class="star-btn material-symbols-outlined text-4xl text-outline transition-colors" data-star="2">star</button>
+<button class="star-btn material-symbols-outlined text-4xl text-outline transition-colors" data-star="3">star</button>
+<button class="star-btn material-symbols-outlined text-4xl text-outline transition-colors" data-star="4">star</button>
+<button class="star-btn material-symbols-outlined text-4xl text-outline transition-colors" data-star="5">star</button>
+</div>
+</div>
+<!-- Suggestion Tags -->
+<div class="space-y-3">
+<p class="font-body-md text-body-md text-on-surface font-medium text-center">Điều gì làm bạn ấn tượng?</p>
+<div class="flex flex-wrap justify-center gap-2">
+<button class="tag-btn px-4 py-2 border border-outline-variant rounded-full font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-low transition-colors">Ngon miệng</button>
+<button class="tag-btn px-4 py-2 border border-outline-variant rounded-full font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-low transition-colors">Đầy đặn</button>
+<button class="tag-btn px-4 py-2 border border-outline-variant rounded-full font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-low transition-colors">Hơi nguội</button>
+<button class="tag-btn px-4 py-2 border border-outline-variant rounded-full font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-low transition-colors">Vị hơi mặn</button>
+<button class="tag-btn px-4 py-2 border border-outline-variant rounded-full font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-low transition-colors">Trình bày đẹp</button>
+</div>
+</div>
+<!-- Textarea -->
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm text-on-surface font-medium block" for="feedback">Ý kiến phản hồi khác</label>
+<textarea class="w-full bg-surface border border-outline-variant rounded-lg p-3 font-body-md text-body-md focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all placeholder:text-outline" id="feedback" placeholder="Chia sẻ thêm cảm nhận của con về bữa ăn..." rows="4"></textarea>
+</div>
+<!-- Action Button -->
+<button class="w-full bg-primary-container text-on-primary py-4 rounded-xl font-headline-md text-headline-md shadow-sm active:scale-[0.98] transition-transform flex items-center justify-center gap-2" id="submit-btn">
+<span>Gửi đánh giá</span>
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+<!-- Additional Medical Disclaimer/Safety Info -->
+<div class="flex items-start gap-3 p-4 bg-surface-container rounded-lg border border-primary-fixed">
+<span class="material-symbols-outlined text-primary" data-icon="verified_user">verified_user</span>
+<p class="font-body-md text-body-md text-on-primary-fixed-variant leading-tight">
+                    Mọi đánh giá đều được bộ phận dinh dưỡng học đường tiếp nhận trực tiếp để đảm bảo tiêu chuẩn an toàn thực phẩm.
+                </p>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Mobile Anchor) -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-container-padding py-2 bg-surface border-t border-outline-variant">
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">Trang chủ</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary font-bold" href="#">
+<span class="material-symbols-outlined" data-icon="restaurant_menu" style="font-variation-settings: 'FILL' 1;">restaurant_menu</span>
+<span class="font-label-sm text-label-sm">Thực đơn</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-sm text-label-sm">Dinh dưỡng</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Cá nhân</span>
+</a>
+</nav>
+<script>
+        // Interactive Logic for Rating Stars
+        const stars = document.querySelectorAll('.star-btn');
+        stars.forEach((star, index) => {
+            star.addEventListener('click', () => {
+                const rating = parseInt(star.getAttribute('data-star'));
+                stars.forEach((s, i) => {
+                    if (i < rating) {
+                        s.classList.add('star-active');
+                    } else {
+                        s.classList.remove('star-active');
+                    }
+                });
+            });
+        });
+
+        // Interactive Logic for Suggestion Tags
+        const tags = document.querySelectorAll('.tag-btn');
+        tags.forEach(tag => {
+            tag.addEventListener('click', () => {
+                tag.classList.toggle('tag-selected');
+                tag.classList.toggle('border-outline-variant');
+                tag.classList.toggle('text-on-surface-variant');
+            });
+        });
+
+        // Submit Interaction
+        const submitBtn = document.getElementById('submit-btn');
+        submitBtn.addEventListener('click', () => {
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = `
+                <span class="animate-spin material-symbols-outlined">sync</span>
+                <span>Đang xử lý...</span>
+            `;
+            submitBtn.classList.add('opacity-80', 'pointer-events-none');
+
+            setTimeout(() => {
+                submitBtn.innerHTML = `
+                    <span class="material-symbols-outlined">check_circle</span>
+                    <span>Đã gửi thành công!</span>
+                `;
+                submitBtn.classList.remove('bg-primary-container');
+                submitBtn.classList.add('bg-secondary');
+                
+                setTimeout(() => {
+                    // Reset or Redirect logic
+                    alert("Cảm ơn bạn đã đóng góp ý kiến!");
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.classList.remove('opacity-80', 'pointer-events-none', 'bg-secondary');
+                    submitBtn.classList.add('bg-primary-container');
+                    // Reset stars and tags
+                    stars.forEach(s => s.classList.remove('star-active'));
+                    tags.forEach(t => {
+                        t.classList.remove('tag-selected');
+                        t.classList.add('border-outline-variant', 'text-on-surface-variant');
+                    });
+                    document.getElementById('feedback').value = '';
+                }, 1500);
+            }, 1000);
+        });
+    </script>
+</body></html>

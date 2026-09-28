@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Danh sách người dùng - sfms</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#006781",
+                        "inverse-on-surface": "#eef0ff",
+                        "on-secondary-fixed": "#0b1c30",
+                        "tertiary-fixed-dim": "#ffb86f",
+                        "on-surface": "#131b2e",
+                        "on-background": "#131b2e",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f2f3ff",
+                        "primary-fixed": "#b9eaff",
+                        "inverse-primary": "#81d1f0",
+                        "on-primary-container": "#d3f1ff",
+                        "surface-container-highest": "#dae2fd",
+                        "on-error-container": "#93000a",
+                        "primary-fixed-dim": "#81d1f0",
+                        "primary-container": "#0e7490",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "secondary-container": "#d0e1fb",
+                        "surface-variant": "#dae2fd",
+                        "inverse-surface": "#283044",
+                        "surface": "#faf8ff",
+                        "on-tertiary-fixed": "#2c1600",
+                        "on-tertiary-container": "#ffe8d6",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#505f76",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#faf8ff",
+                        "surface-container": "#eaedff",
+                        "on-primary-fixed-variant": "#004d62",
+                        "primary": "#005a71",
+                        "outline-variant": "#bec8cd",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#794602",
+                        "outline": "#6f787d",
+                        "surface-dim": "#d2d9f4",
+                        "tertiary-container": "#965e1c",
+                        "tertiary-fixed": "#ffdcbd",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-secondary-container": "#54647a",
+                        "on-primary-fixed": "#001f29",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-tertiary-fixed-variant": "#693c00",
+                        "on-surface-variant": "#3f484c",
+                        "surface-container-high": "#e2e7ff",
+                        "background": "#faf8ff",
+                        "on-primary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "1rem",
+                        "component-padding-y": "0.5rem",
+                        "container-margin": "2rem",
+                        "section-gap": "1.5rem",
+                        "component-padding-x": "1rem"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Be Vietnam Pro"],
+                        "display": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "title-md": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "title-lg": ["Be Vietnam Pro"],
+                        "headline-lg-mobile": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "title-lg": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #F8FAFC;
+        }
+        
+        /* Shadcn styling */
+        .shadcn-input {
+            border: 1px solid #E2E8F0;
+            background-color: white;
+            transition: all 0.2s;
+        }
+        .shadcn-input:focus {
+            outline: none;
+            border-color: #0E7490;
+            box-shadow: 0 0 0 2px rgba(14, 116, 144, 0.2);
+        }
+        .shadcn-button {
+            transition: all 0.2s;
+        }
+        .shadcn-button:hover {
+            opacity: 0.9;
+        }
+        .shadcn-table-header {
+            background-color: #F8FAFC;
+            border-bottom: 1px solid #E2E8F0;
+        }
+        .shadcn-table-row {
+            border-bottom: 1px solid #E2E8F0;
+            transition: background-color 0.2s;
+        }
+        .shadcn-table-row:hover {
+            background-color: #F8FAFC;
+        }
+        
+        /* Custom Checkbox */
+        .shadcn-checkbox {
+            appearance: none;
+            width: 1rem;
+            height: 1rem;
+            border: 1px solid #E2E8F0;
+            border-radius: 0.25rem;
+            background-color: white;
+            cursor: pointer;
+            position: relative;
+        }
+        .shadcn-checkbox:checked {
+            background-color: #0E7490;
+            border-color: #0E7490;
+        }
+        .shadcn-checkbox:checked::after {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 1px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body class="text-on-surface antialiased flex h-screen overflow-hidden">
+<!-- SideNavBar -->
+<aside class="bg-surface dark:bg-inverse-surface border-r border-outline-variant dark:border-outline fixed left-0 top-0 h-full w-[260px] flex flex-col p-gutter gap-section-gap z-50">
+<!-- Brand -->
+<div class="flex items-center gap-3 px-2">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary font-bold text-lg">s</div>
+<div>
+<h1 class="font-display text-display font-bold text-primary dark:text-inverse-primary text-xl leading-none">sfms</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Hệ thống Quản trị</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex-1 flex flex-col gap-1 mt-4">
+<a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-surface-container-high transition-colors text-on-surface-variant font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">dashboard</span>
+                Tổng quan
+            </a>
+<!-- Expanded Section -->
+<div class="flex flex-col">
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">manage_accounts</span>
+                    Người dùng &amp; Vai trò
+                    <span class="material-symbols-outlined ml-auto text-[18px]">expand_more</span>
+</a>
+<div class="flex flex-col ml-9 mt-1 gap-1 border-l border-outline-variant pl-2">
+<a class="px-3 py-1.5 rounded-md bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary font-bold font-label-md text-label-md opacity-90 transition-all duration-150" href="#">
+                        Danh sách tài khoản
+                    </a>
+<a class="px-3 py-1.5 rounded-md hover:bg-surface-container-high transition-colors text-on-surface-variant font-label-md text-label-md" href="#">
+                        Phân quyền
+                    </a>
+</div>
+</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-surface-container-high transition-colors text-on-surface-variant font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">school</span>
+                Trường học
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-surface-container-high transition-colors text-on-surface-variant font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">settings</span>
+                Cấu hình hệ thống
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-surface-container-high transition-colors text-on-surface-variant font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">policy</span>
+                Giám sát &amp; Audit
+            </a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[260px] flex-1 flex flex-col h-full bg-[#F8FAFC]">
+<!-- TopAppBar -->
+<header class="bg-surface/80 dark:bg-inverse-surface backdrop-blur-md border-b border-outline-variant dark:border-outline sticky top-0 z-40 flex justify-between items-center h-16 px-container-margin w-full">
+<div class="flex items-center">
+<h2 class="font-headline-md text-headline-md text-primary font-bold">Danh sách tài khoản</h2>
+</div>
+<!-- Global Search & Actions -->
+<div class="flex items-center gap-4">
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="shadcn-input pl-10 pr-4 py-1.5 rounded-md text-sm w-64 font-body-md text-body-md" placeholder="Tìm kiếm hệ thống..." type="text"/>
+</div>
+<button class="w-8 h-8 rounded-full hover:bg-surface-container-high flex items-center justify-center text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<div class="flex items-center gap-2 cursor-pointer group">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm">
+                        AD
+                    </div>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px] group-hover:text-primary transition-colors">expand_more</span>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="flex-1 overflow-auto p-container-margin">
+<!-- Filter Bar & Actions -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+<div class="flex flex-wrap items-center gap-3">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="shadcn-input pl-9 pr-3 py-2 rounded-md text-sm w-64 font-body-md text-body-md" placeholder="Tên / Email..." type="text"/>
+</div>
+<select class="shadcn-input px-3 py-2 rounded-md text-sm font-body-md text-body-md text-on-surface min-w-[140px] appearance-none bg-no-repeat bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-[position:right_8px_center] bg-[length:16px_16px] pr-8">
+<option value="">Tất cả vai trò</option>
+<option value="admin">Quản trị viên</option>
+<option value="manager">Quản lý trường</option>
+<option value="staff">Nhân viên</option>
+</select>
+<select class="shadcn-input px-3 py-2 rounded-md text-sm font-body-md text-body-md text-on-surface min-w-[160px] appearance-none bg-no-repeat bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-[position:right_8px_center] bg-[length:16px_16px] pr-8">
+<option value="">Tất cả trường</option>
+<option value="s1">THPT Nguyễn Trãi</option>
+<option value="s2">THCS Lê Lợi</option>
+</select>
+<select class="shadcn-input px-3 py-2 rounded-md text-sm font-body-md text-body-md text-on-surface min-w-[140px] appearance-none bg-no-repeat bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-[position:right_8px_center] bg-[length:16px_16px] pr-8">
+<option value="">Trạng thái</option>
+<option value="active">Hoạt động</option>
+<option value="pending">Chờ duyệt</option>
+<option value="inactive">Khóa</option>
+</select>
+<button class="bg-surface text-on-surface border border-outline-variant hover:bg-surface-container-high px-3 py-2 rounded-md text-sm font-label-md flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                        Lọc
+                    </button>
+</div>
+<button class="bg-[#0E7490] text-white px-4 py-2 rounded-md text-sm font-label-md flex items-center gap-2 shadcn-button whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                    Tạo tài khoản
+                </button>
+</div>
+<!-- Data Table Card -->
+<div class="bg-white rounded-lg border border-[#E2E8F0] overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="shadcn-table-header">
+<tr>
+<th class="p-4 w-12 text-center">
+<input class="shadcn-checkbox" type="checkbox"/>
+</th>
+<th class="p-4 font-title-md text-title-md text-on-surface-variant font-semibold">Họ tên</th>
+<th class="p-4 font-title-md text-title-md text-on-surface-variant font-semibold">Email</th>
+<th class="p-4 font-title-md text-title-md text-on-surface-variant font-semibold">Vai trò</th>
+<th class="p-4 font-title-md text-title-md text-on-surface-variant font-semibold">Trường liên kết</th>
+<th class="p-4 font-title-md text-title-md text-on-surface-variant font-semibold">Trạng thái</th>
+<th class="p-4 font-title-md text-title-md text-on-surface-variant font-semibold text-right">Thao tác</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md text-on-surface">
+<!-- Row 1: Active -->
+<tr class="shadcn-table-row">
+<td class="p-4 text-center">
+<input class="shadcn-checkbox" type="checkbox"/>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs">
+                                            NV
+                                        </div>
+<div>
+<p class="font-medium">Nguyễn Văn A</p>
+<p class="text-xs text-on-surface-variant">ID: USR-001</p>
+</div>
+</div>
+</td>
+<td class="p-4 text-on-surface-variant">nva@example.com</td>
+<td class="p-4">Quản trị viên</td>
+<td class="p-4 text-on-surface-variant">Hệ thống chung</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
+                                        Hoạt động
+                                    </span>
+</td>
+<td class="p-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<!-- Toggle Switch -->
+<button aria-checked="true" class="relative inline-flex h-5 w-9 items-center rounded-full bg-[#0E7490] transition-colors focus:outline-none focus:ring-2 focus:ring-[#0E7490] focus:ring-offset-2" role="switch">
+<span class="inline-block h-3 w-3 translate-x-5 transform rounded-full bg-white transition-transform"></span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-[#0E7490] hover:bg-surface-container-high rounded-md transition-colors" title="Sửa">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-error hover:bg-error-container rounded-md transition-colors" title="Khóa">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Pending -->
+<tr class="shadcn-table-row">
+<td class="p-4 text-center">
+<input class="shadcn-checkbox" type="checkbox"/>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xs">
+                                            TB
+                                        </div>
+<div>
+<p class="font-medium">Trần Thị B</p>
+<p class="text-xs text-on-surface-variant">ID: USR-002</p>
+</div>
+</div>
+</td>
+<td class="p-4 text-on-surface-variant">ttb@truong.edu.vn</td>
+<td class="p-4">Quản lý trường</td>
+<td class="p-4">THPT Nguyễn Trãi</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800 border border-amber-200">
+                                        Chờ duyệt
+                                    </span>
+</td>
+<td class="p-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button aria-checked="false" class="relative inline-flex h-5 w-9 items-center rounded-full bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-[#0E7490] focus:ring-offset-2" role="switch">
+<span class="inline-block h-3 w-3 translate-x-1 transform rounded-full bg-white transition-transform"></span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-[#0E7490] hover:bg-surface-container-high rounded-md transition-colors" title="Sửa">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Inactive -->
+<tr class="shadcn-table-row">
+<td class="p-4 text-center">
+<input class="shadcn-checkbox" type="checkbox"/>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center font-bold text-xs">
+                                            LC
+                                        </div>
+<div>
+<p class="font-medium text-on-surface-variant">Lê Văn C</p>
+<p class="text-xs text-on-surface-variant/70">ID: USR-003</p>
+</div>
+</div>
+</td>
+<td class="p-4 text-on-surface-variant">lvc@truong.edu.vn</td>
+<td class="p-4 text-on-surface-variant">Nhân viên</td>
+<td class="p-4 text-on-surface-variant">THCS Lê Lợi</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 border border-red-200">
+                                        Khóa
+                                    </span>
+</td>
+<td class="p-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button aria-checked="false" class="relative inline-flex h-5 w-9 items-center rounded-full bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-[#0E7490] focus:ring-offset-2" role="switch">
+<span class="inline-block h-3 w-3 translate-x-1 transform rounded-full bg-white transition-transform"></span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-[#0E7490] hover:bg-surface-container-high rounded-md transition-colors" title="Sửa">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Footer: Pagination & Export -->
+<div class="p-4 border-t border-[#E2E8F0] bg-white flex flex-col sm:flex-row items-center justify-between gap-4">
+<div class="text-sm text-on-surface-variant font-body-md">
+                        Hiển thị 1 đến 10 của 45 kết quả
+                    </div>
+<div class="flex items-center gap-4">
+<button class="text-[#0E7490] hover:bg-surface-container-high px-3 py-1.5 rounded-md text-sm font-label-md flex items-center gap-1 transition-colors border border-transparent hover:border-[#0E7490]/20">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                            Xuất Excel
+                        </button>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded-md border border-[#E2E8F0] text-on-surface-variant hover:bg-surface-container-high disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-md bg-[#0E7490] text-white text-sm font-medium flex items-center justify-center">1</button>
+<button class="w-8 h-8 rounded-md hover:bg-surface-container-high text-on-surface text-sm font-medium flex items-center justify-center border border-transparent">2</button>
+<button class="w-8 h-8 rounded-md hover:bg-surface-container-high text-on-surface text-sm font-medium flex items-center justify-center border border-transparent">3</button>
+<span class="text-on-surface-variant">...</span>
+<button class="p-1 rounded-md border border-[#E2E8F0] text-on-surface-variant hover:bg-surface-container-high">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

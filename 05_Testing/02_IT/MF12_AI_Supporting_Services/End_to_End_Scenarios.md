@@ -1,0 +1,32 @@
+# Integration Test Case — End-to-End Scenarios (MF12 AI & Supporting Services)
+
+---
+
+## Feature: End-to-End Cross-Module Scenarios
+
+### 1. General Information
+
+| Field | Value |
+|---|---|
+| Feature | End-to-End Cross-Module Scenarios |
+| Test requirement | Verify the full AI lifecycle across modules (MF05 uses AI → System Admin sees the audit trail → the same user sees their conversation history, UC-119), the complete checklist-edit → kitchen-score → compliance-report → history chain that spans MF12 and MF07, and the FE↔BE contract snapshot guaranteeing that switching `baseURL` from mock to real backend requires no FE code change across all 6 core MF12 resources. |
+| Number of TCs | 3 |
+
+### 2. Testing Round Summary
+
+| Testing Round | Passed | Failed | Pending | N/A |
+|---|---|---|---|---|
+| Round 1 | 0 | 0 | 3 | 0 |
+| Round 2 | 0 | 0 | 3 | 0 |
+| Round 3 | 0 | 0 | 3 | 0 |
+
+### 3. Test Cases
+
+| Test Case ID | Test Case Description | Test Case Procedure | Expected Results | Pre-conditions | Round 1 | Test date | Tester | Round 2 | Test date | Tester | Round 3 | Test date | Tester | Note |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **AI Lifecycle: MF05 Uses AI → Audit Trail → Conversation History (UC-119)** | | | | | | | | | | | | | | |
+| MF12-TC-E2E-001 | Test the full AI usage lifecycle: a Caterer uses AI Assist inside MF05, a System Admin sees the corresponding audit entry, the same Caterer sees their own conversation history, and another user does not. | 1. Login Caterer → `POST /api/v1/menus/{code}/ai-suggest` (MF05).<br>2. Login System Admin → `GET /audit-logs?search=AI` → assert.<br>3. Login the SAME Caterer → `GET /ai/conversations` → assert.<br>4. Login Medical Staff → `GET /ai/conversations` → assert.<br>5. Check the hash chain after the sequence. | 1. Step 1 → HTTP 200; 1 `ai_requests` row with `module='MF05_MENU'`, prompt already redacted.<br>2. Step 2 → an audit row exists for the AI call with `actor` = the caterer, `ip` non-null (BR-170).<br>3. Step 3 → the Caterer sees EXACTLY their own conversation (linked by user id, never by name).<br>4. Step 4 → Medical does NOT see the Caterer's conversation (cross-ref `MF12-TC-SEC-005`).<br>5. Step 5 → `GET /audit-logs/integrity` → `valid: true` (hash chain intact after a real operation sequence).<br>6. No prompt/response content appears in application logs (cross-ref `MF12-TC-SEC-007`). | Clean DB + seeded MF01 (3 users), MF02 (`SCH-001`), MF05 (`MENU-2026-30`), `FX-022` fake Gemini. | Pending | | | Pending | | | Pending | | | HIGH; BR-157, BR-170, ADR-M12-01; blocked by L6 + MF05 CF-13; CI nightly |
+| **Checklist Edit → Kitchen Score → Compliance Report → History (Cross-Module MF12↔MF07)** | | | | | | | | | | | | | | |
+| MF12-TC-E2E-002 | Test the complete chain: Medical Staff edits the checklist (UC-186, MF07-owned table), the kitchen is scored using the updated criteria (UC-014, MF07), a weekly compliance report is sent (UC-185), School Admin is notified, and the report can be reviewed later (UC-190) — with the OLD scoring session unaffected. | 1. Medical `SCH-001` → `POST /checklist-groups` add a new group + `DELETE` (hide) an old group.<br>2. MF07 → `POST /kitchen-inspections` scoring with the NEW item set.<br>3. Medical → `POST /sent-reports/compliance` for the period containing that session.<br>4. Inspect the event to MF10.<br>5. Medical → `GET /sent-reports` (UC-190) → `GET /{code}` → `download`.<br>6. Inspect historical data for the hidden group. | 1. Step 1 → new group `is_active=true`, old group `is_active=false`; existing `checklist_item_results` are untouched.<br>2. Step 2 → the new session uses the NEW item set (no hidden group); `score` is computed server-side (MF07 C11).<br>3. Step 3 → HTTP 200 MSG-091; `payload.avgScore` computed from the REAL session in step 2.<br>4. Step 4 → event `ComplianceReportSent` published exactly once (L28 — never from the client).<br>5. Step 5 → the report is visible; detail returns a SNAPSHOT (cross-ref `MF12-TC-024`); both PDF and XLSX download (cross-ref `MF12-TC-INT-015`); each download has an audit row (BR-177).<br>6. Step 6 → the OLD session (before step 1) still renders the hidden group's full item set.<br>7. All links traverse by ID: `checklist_items.code` → `checklist_item_results.item_id` → `kitchen_inspections.code` → `sent_reports.payload` — never joined by group/item NAME. | Medical `SCH-001` account; MF07 kitchen inspection endpoint reachable; existing checklist groups. | Pending | | | Pending | | | Pending | | | CRITICAL; BR-210, BR-100/104 (MF07), BR-209, BR-158/159, BR-177; boundary L7/CF-3 — scoring detail tested in `MF07-TC-011`; CI nightly |
+| **FE↔BE Contract Snapshot** | | | | | | | | | | | | | | |
+| MF12-TC-E2E-003 | Test that the response key shape of all 6 core MF12 resources matches the FE mock server's contract exactly, so switching `baseURL` from mock to real backend requires no FE code change. | 1. Call `GET` for `audit-logs`, `error-logs`, `integrations`, `security-policies`, `sent-reports`, `checklist-groups`.<br>2. Recursively extract the key set of each response.<br>3. Compare against the locked key snapshot from `mock-server.ts` (`src/test/resources/contracts/mf12-mock-keys.json`).<br>4. Verify value formats per D4/C13. | 1. Backend key set is a SUPERSET of (or equal to) the mock key set — no missing keys.<br>2. All 24 contracted field names present (C13): `actor`, `ip`, `action`, `resource`, `result`, `timestamp`, `severity`, `module`, `path`, `stackTrace`, `sessionInfo`, `endpoint`, `endpointPlaceholder`, `connected`, `statusNote`, `purpose`, `lastTestedAt`, `reportType`, `period`, `rangeLabel`, `sentAt`, `sentBy`, `avgScore`, `threeStepSummary`, `counts`.<br>3. Pagination responses carry exactly the 5 contracted keys, no wrapper.<br>4. `timestamp`/`sentAt`/`lastTestedAt`/`updatedAt` are ISO instants; `date` matches `^\d{4}-\d{2}-\d{2}$`, never `dd/MM/yyyy` (D4).<br>5. `period` = `"Weekly"`/`"Daily"` (`ReportPeriod`, outside D6 — cross-ref `MF12-TC-027`).<br>6. Every path is under `/api/v1` (D3).<br>7. `security-policies` never returns from the PUBLIC endpoint (cross-ref `MF12-TC-SEC-013`). | Backend running with full MF12 seed data across all 6 resources. | Pending | | | Pending | | | Pending | | | HIGH; contract snapshot compares KEYS only, not values; step 4's format checks are mandatory since D4/D6 can change value formats without changing keys; runs on every PR |

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sổ lưu mẫu thực phẩm</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-high": "#e6e8ea",
+                      "error": "#ba1a1a",
+                      "on-tertiary-fixed-variant": "#3d4947",
+                      "secondary-fixed": "#d3e4fe",
+                      "tertiary": "#495553",
+                      "on-error-container": "#93000a",
+                      "tertiary-fixed-dim": "#bcc9c6",
+                      "surface": "#f7f9fb",
+                      "outline-variant": "#bec8cd",
+                      "inverse-primary": "#81d1f0",
+                      "tertiary-fixed": "#d8e5e2",
+                      "primary": "#005a71",
+                      "surface-dim": "#d8dadc",
+                      "secondary": "#505f76",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-highest": "#e0e3e5",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "primary-container": "#0e7490",
+                      "tertiary-container": "#616d6b",
+                      "inverse-surface": "#2d3133",
+                      "secondary-container": "#d0e1fb",
+                      "primary-fixed": "#b9eaff",
+                      "on-secondary-fixed": "#0b1c30",
+                      "surface-container": "#eceef0",
+                      "on-tertiary-fixed": "#121e1c",
+                      "surface-bright": "#f7f9fb",
+                      "on-primary": "#ffffff",
+                      "outline": "#6f787d",
+                      "surface-variant": "#e0e3e5",
+                      "on-surface": "#191c1e",
+                      "on-primary-fixed-variant": "#004d62",
+                      "surface-tint": "#006781",
+                      "on-secondary-container": "#54647a",
+                      "on-primary-container": "#d3f1ff",
+                      "on-error": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "primary-fixed-dim": "#81d1f0",
+                      "on-surface-variant": "#3f484c",
+                      "error-container": "#ffdad6",
+                      "background": "#f7f9fb",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "on-tertiary-container": "#e2efec",
+                      "on-primary-fixed": "#001f29",
+                      "on-secondary": "#ffffff",
+                      "surface-container-low": "#f2f4f6",
+                      "inverse-on-surface": "#eff1f3",
+                      "on-background": "#191c1e"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xl": "32px",
+                      "sm": "8px",
+                      "margin-mobile": "16px",
+                      "lg": "24px",
+                      "base": "4px",
+                      "margin-tablet": "24px",
+                      "gutter": "16px",
+                      "xs": "4px",
+                      "md": "16px"
+              },
+              "fontFamily": {
+                      "headline-lg": ["Be Vietnam Pro"],
+                      "title-lg": ["Be Vietnam Pro"],
+                      "headline-md": ["Be Vietnam Pro"],
+                      "body-md": ["Be Vietnam Pro"],
+                      "headline-lg-mobile": ["Be Vietnam Pro"],
+                      "body-lg": ["Be Vietnam Pro"],
+                      "label-lg": ["Be Vietnam Pro"],
+                      "label-sm": ["Be Vietnam Pro"]
+              },
+              "fontSize": {
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["26px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface-dim w-full top-0 sticky z-40 flat no shadows flex items-center px-md h-14 w-full">
+<button class="mr-4 text-on-surface-variant hover:bg-surface-container-high active:opacity-80 transition-opacity p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<h1 class="font-title-lg text-title-lg text-on-surface flex-1">Sổ lưu mẫu thực phẩm</h1>
+</header>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto px-margin-mobile py-lg pb-32">
+<div class="mb-lg flex justify-between items-end">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-shadow" placeholder="Tìm kiếm mẫu..." type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Card 1: Active -->
+<article class="bg-surface-container-lowest rounded-xl p-md border border-outline-variant shadow-sm flex flex-col gap-sm relative overflow-hidden group">
+<div class="flex justify-between items-start mb-2">
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-label-sm text-label-sm inline-flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                        Đang lưu trữ
+                    </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">24/10/2023</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-on-surface mb-1">Cơm rang thập cẩm</h3>
+<div class="flex flex-col gap-1 font-body-md text-body-md text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[18px]">barcode</span>
+<span>Số lô: <strong class="text-on-surface">L024-1023</strong></span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[18px]">person</span>
+<span>Người lưu: Nguyễn Văn A</span>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-outline-variant flex justify-end gap-2">
+<button class="px-4 py-2 rounded-lg font-label-lg text-label-lg text-primary hover:bg-surface-container transition-colors">Chi tiết</button>
+</div>
+</article>
+<!-- Card 2: Investigating -->
+<article class="bg-surface-container-lowest rounded-xl p-md border border-outline-variant shadow-sm flex flex-col gap-sm relative overflow-hidden group">
+<div class="flex justify-between items-start mb-2">
+<span class="bg-error-container text-on-error-container px-3 py-1 rounded-full font-label-sm text-label-sm inline-flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+                        Đang điều tra
+                    </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">23/10/2023</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-on-surface mb-1">Thịt kho trứng</h3>
+<div class="flex flex-col gap-1 font-body-md text-body-md text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[18px]">barcode</span>
+<span>Số lô: <strong class="text-on-surface">L023-1023</strong></span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[18px]">person</span>
+<span>Người lưu: Trần Thị B</span>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-outline-variant flex justify-end gap-2">
+<button class="px-4 py-2 rounded-lg font-label-lg text-label-lg text-primary hover:bg-surface-container transition-colors">Chi tiết</button>
+</div>
+</article>
+<!-- Card 3: Destroyed -->
+<article class="bg-surface-container-lowest rounded-xl p-md border border-outline-variant shadow-sm flex flex-col gap-sm relative overflow-hidden group opacity-75">
+<div class="flex justify-between items-start mb-2">
+<span class="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full font-label-sm text-label-sm inline-flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+                        Đã hủy
+                    </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">20/10/2023</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-on-surface mb-1">Canh chua cá lóc</h3>
+<div class="flex flex-col gap-1 font-body-md text-body-md text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[18px]">barcode</span>
+<span>Số lô: <strong class="text-on-surface">L020-1023</strong></span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[18px]">person</span>
+<span>Người lưu: Lê Văn C</span>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-outline-variant flex justify-end gap-2">
+<button class="px-4 py-2 rounded-lg font-label-lg text-label-lg text-primary hover:bg-surface-container transition-colors">Lịch sử</button>
+</div>
+</article>
+<!-- Card 4: Active -->
+<article class="bg-surface-container-lowest rounded-xl p-md border border-outline-variant shadow-sm flex flex-col gap-sm relative overflow-hidden group">
+<div class="flex justify-between items-start mb-2">
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-label-sm text-label-sm inline-flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                        Đang lưu trữ
+                    </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">24/10/2023</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-on-surface mb-1">Sữa chua tráng miệng</h3>
+<div class="flex flex-col gap-1 font-body-md text-body-md text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[18px]">barcode</span>
+<span>Số lô: <strong class="text-on-surface">L024-1023-B</strong></span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[18px]">person</span>
+<span>Người lưu: Nguyễn Văn A</span>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-outline-variant flex justify-end gap-2">
+<button class="px-4 py-2 rounded-lg font-label-lg text-label-lg text-primary hover:bg-surface-container transition-colors">Chi tiết</button>
+</div>
+</article>
+</div>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed bottom-24 right-6 bg-primary-container text-on-primary-container rounded-2xl w-14 h-14 flex items-center justify-center shadow-md hover:opacity-90 active:scale-95 transition-all z-40">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">scan</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="bg-surface-container dark:bg-inverse-surface shadow-sm fixed bottom-0 w-full z-50 rounded-t-xl fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe md:hidden border-t border-outline-variant">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-all active:scale-95 duration-200 group">
+<span class="material-symbols-outlined mb-1 group-hover:text-primary transition-colors">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-all active:scale-95 duration-200 group">
+<span class="material-symbols-outlined mb-1 group-hover:text-primary transition-colors">medical_services</span>
+<span class="font-label-sm text-label-sm">Health</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary-fixed-dim text-on-secondary-container dark:text-on-secondary-fixed-variant rounded-full px-4 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-all active:scale-95 duration-200">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+<span class="font-label-sm text-label-sm font-semibold">Meals</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-all active:scale-95 duration-200 group">
+<span class="material-symbols-outlined mb-1 group-hover:text-primary transition-colors">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</button>
+</nav>
+</body></html>

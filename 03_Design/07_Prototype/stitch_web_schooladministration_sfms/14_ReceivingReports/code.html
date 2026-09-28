@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Báo cáo nhận hàng nguyên liệu - SFMS</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "danger": "#EF4444",
+                        "on-secondary-container": "#5e6367",
+                        "inverse-surface": "#2d3133",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "secondary-container": "#dce0e4",
+                        "on-tertiary-fixed-variant": "#38485d",
+                        "primary-fixed": "#b9eaff",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#bec8cd",
+                        "on-primary-fixed-variant": "#004d62",
+                        "background": "#f7f9fb",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f7f9fb",
+                        "on-secondary-fixed-variant": "#43474b",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#5c6c83",
+                        "surface-tint": "#006781",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#e0e3e5",
+                        "tertiary": "#44546a",
+                        "on-tertiary-container": "#e3edff",
+                        "primary": "#005a71",
+                        "primary-container": "#0e7490",
+                        "outline": "#6f787d",
+                        "on-tertiary-fixed": "#0b1c30",
+                        "surface-container-high": "#e6e8ea",
+                        "tertiary-fixed-dim": "#b7c8e1",
+                        "surface-container-low": "#f2f4f6",
+                        "on-surface-variant": "#3f484c",
+                        "surface-container": "#eceef0",
+                        "on-background": "#191c1e",
+                        "surface": "#f7f9fb",
+                        "on-primary-fixed": "#001f29",
+                        "secondary-fixed-dim": "#c3c7cb",
+                        "success": "#10B981",
+                        "border": "#E2E8F0",
+                        "tertiary-fixed": "#d3e4fe",
+                        "secondary": "#5a5f62",
+                        "on-secondary-fixed": "#171c1f",
+                        "surface-variant": "#e0e3e5",
+                        "info": "#3B82F6",
+                        "warning": "#F59E0B",
+                        "secondary-fixed": "#dfe3e7",
+                        "inverse-primary": "#81d1f0",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#d8dadc",
+                        "on-primary-container": "#d3f1ff",
+                        "primary-fixed-dim": "#81d1f0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "topbar-height": "64px",
+                        "margin-desktop": "32px",
+                        "sidebar-width": "280px",
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "display": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "body-sm": ["Be Vietnam Pro"],
+                        "title-lg": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-sm": ["Be Vietnam Pro"],
+                        "title-md": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "26px", "fontWeight": "400" }],
+                        "display": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "title-lg": ["18px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-sm": ["11px", { "lineHeight": "16px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "500" }],
+                        "headline-lg": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #f7f9fb; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .icon-fill { font-variation-settings: 'FILL' 1; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-sidebar-width bg-surface-container-lowest border-r border-outline-variant flex flex-col z-20">
+<div class="h-topbar-height flex items-center px-6 border-b border-outline-variant/30">
+<span class="font-headline-sm text-headline-sm font-bold text-primary">SFMS</span>
+<span class="ml-2 text-xs text-on-surface-variant">Quản lý suất ăn học đường</span>
+</div>
+<nav class="flex-1 py-4 flex flex-col gap-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Tổng quan</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">handshake</span>
+<span>Đối tác</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span>Thực đơn</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span>Lớp &amp; Học sinh</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">report_problem</span>
+<span>Sự cố &amp; Kiểm tra</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-primary font-bold border-l-4 border-primary transition-colors duration-200 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span>Báo cáo &amp; Thống kê</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant/30 py-4">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Cài đặt</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Đăng xuất</span>
+</a>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 h-topbar-height w-[calc(100%-280px)] bg-surface-container-lowest border-b border-outline-variant flex justify-between items-center px-margin-desktop z-10">
+<div class="flex items-center gap-6">
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">Trung tâm báo cáo</h1>
+<nav class="hidden md:flex gap-4">
+<a class="text-on-secondary-container hover:text-primary transition-colors font-title-md text-title-md" href="#">Báo cáo &amp; Thống kê</a>
+<span class="text-on-secondary-container">/</span>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-title-md text-title-md" href="#">Trung tâm báo cáo</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">help</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-danger rounded-full"></span>
+</button>
+<div class="h-6 w-px bg-outline-variant mx-2"></div>
+<div class="flex items-center gap-3 cursor-pointer">
+<div class="text-right hidden sm:block">
+<p class="font-title-md text-title-md text-on-surface">Admin</p>
+</div>
+<img class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="A small, professional avatar portrait of an administrative user in a corporate setting, soft lighting, neutral background, realistic photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBusBBp4gfp-eb_XBJcFiyVnm1wMzKm7cbFPlVOQ47zLblqJKfxsSZF6_o5zdDG8o36-lwFn8MdYW4cYj5gCrvlGCu4Br0xzNCoL4fOjEkC7VnxIq7QQ77tKT2KJCSPx7m9Sx6zNsJ8p0z_R1XvS4VK-ktkW4aZESIuvs_zLdIe1FYEUJr4ztYZE8eo_vfaz-JS6E0APCY10Vuk1rNBCskpVqP_MX3d2ftqUB3Ypxhs8nk-wFQpFQ6f0LN8Qko0QnblcCC8LFC3_aE"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-sidebar-width pt-topbar-height p-margin-desktop min-h-screen">
+<!-- Page Header -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-gutter gap-4">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Báo cáo nhận hàng nguyên liệu</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Theo dõi quá trình nhập và kiểm định chất lượng nguyên liệu</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-surface-container-lowest border border-border text-primary rounded-lg hover:bg-surface-container-low transition-colors font-title-md text-title-md">
+<span class="material-symbols-outlined text-[20px]">file_download</span>
+                    Xuất Excel
+                </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg hover:bg-primary-container transition-colors font-title-md text-title-md">
+<span class="material-symbols-outlined text-[20px]">picture_as_pdf</span>
+                    Xuất PDF
+                </button>
+</div>
+</div>
+<!-- Filters -->
+<div class="bg-surface-container-lowest border border-border rounded-xl p-6 mb-gutter">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2">Khoảng thời gian</label>
+<div class="relative">
+<input class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2 text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="date" value="2023-10-01"/>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-on-surface-variant pointer-events-none">calendar_month</span>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2">Nhà cung cấp</label>
+<div class="relative">
+<select class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2 text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none appearance-none">
+<option>Tất cả nhà cung cấp</option>
+<option selected="">Công ty thực phẩm Sạch HN</option>
+<option>Hợp tác xã rau sạch VinEco</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2">Kết quả kiểm tra</label>
+<div class="relative">
+<select class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2 text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none appearance-none">
+<option>Tất cả kết quả</option>
+<option>Đạt</option>
+<option>Từ chối</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+<div class="mt-6 flex justify-end">
+<button class="px-6 py-2 bg-secondary-container text-primary rounded-lg font-title-md text-title-md hover:bg-surface-container-high transition-colors">Áp dụng bộ lọc</button>
+</div>
+</div>
+<!-- Data Table Card -->
+<div class="bg-surface-container-lowest border border-border rounded-xl overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface border-b border-border">
+<th class="py-3 px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Ngày nhận</th>
+<th class="py-3 px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Nhà cung cấp</th>
+<th class="py-3 px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Tên nguyên liệu</th>
+<th class="py-3 px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right">Khối lượng</th>
+<th class="py-3 px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-center">GPS giao hàng</th>
+<th class="py-3 px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Kết quả kiểm tra</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md text-on-surface divide-y divide-border">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 px-6 whitespace-nowrap">19/10/2023 06:30</td>
+<td class="py-4 px-6">Công ty thực phẩm Sạch HN</td>
+<td class="py-4 px-6 font-medium">Thịt lợn ba chỉ</td>
+<td class="py-4 px-6 text-right">50 kg</td>
+<td class="py-4 px-6 text-center">
+<button class="text-success hover:text-primary transition-colors" title="Đúng vị trí nhà bếp">
+<span class="material-symbols-outlined icon-fill">location_on</span>
+</button>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success/10 text-success font-title-md text-[13px]">
+<span class="w-1.5 h-1.5 rounded-full bg-success"></span>
+                                    Đạt
+                                </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 px-6 whitespace-nowrap">19/10/2023 06:45</td>
+<td class="py-4 px-6">Hợp tác xã rau sạch VinEco</td>
+<td class="py-4 px-6 font-medium">Rau cải chíp</td>
+<td class="py-4 px-6 text-right">120 kg</td>
+<td class="py-4 px-6 text-center">
+<button class="text-success hover:text-primary transition-colors">
+<span class="material-symbols-outlined icon-fill">location_on</span>
+</button>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success/10 text-success font-title-md text-[13px]">
+<span class="w-1.5 h-1.5 rounded-full bg-success"></span>
+                                    Đạt
+                                </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors bg-error-container/20">
+<td class="py-4 px-6 whitespace-nowrap">19/10/2023 07:15</td>
+<td class="py-4 px-6">Công ty Hải Sản Biển Đông</td>
+<td class="py-4 px-6 font-medium">Cá điêu hồng phi lê</td>
+<td class="py-4 px-6 text-right">45 kg</td>
+<td class="py-4 px-6 text-center">
+<button class="text-success hover:text-primary transition-colors">
+<span class="material-symbols-outlined icon-fill">location_on</span>
+</button>
+</td>
+<td class="py-4 px-6">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-error/10 text-error font-title-md text-[13px] w-max">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                                        Từ chối
+                                    </span>
+<span class="text-xs text-error">Nguyên liệu không tươi, có mùi lạ</span>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 px-6 whitespace-nowrap">18/10/2023 06:20</td>
+<td class="py-4 px-6">Công ty thực phẩm Sạch HN</td>
+<td class="py-4 px-6 font-medium">Gạo tẻ ST25</td>
+<td class="py-4 px-6 text-right">200 kg</td>
+<td class="py-4 px-6 text-center">
+<button class="text-success hover:text-primary transition-colors">
+<span class="material-symbols-outlined icon-fill">location_on</span>
+</button>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success/10 text-success font-title-md text-[13px]">
+<span class="w-1.5 h-1.5 rounded-full bg-success"></span>
+                                    Đạt
+                                </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-border flex items-center justify-between bg-surface-container-lowest">
+<div class="font-body-sm text-body-sm text-on-surface-variant">
+                    Hiển thị 1 đến 4 trong số 128 kết quả
+                </div>
+<div class="flex gap-1">
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant text-on-surface-variant hover:bg-surface-container-low disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary text-on-primary font-title-md text-title-md">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant text-on-surface hover:bg-surface-container-low font-title-md text-title-md">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant text-on-surface hover:bg-surface-container-low font-title-md text-title-md">3</button>
+<span class="w-8 h-8 flex items-center justify-center text-on-surface-variant">...</span>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant text-on-surface-variant hover:bg-surface-container-low">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

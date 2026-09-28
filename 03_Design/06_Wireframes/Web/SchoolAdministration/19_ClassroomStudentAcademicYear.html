@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<title>SFMS Wireframe — Classroom, Student &amp; Academic Year Management (School Administration)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/wired-elements?module"></script>
+<style>
+  * { box-sizing: border-box; }
+  html { font-size: 18px; }
+  body {
+    margin: 0; font-size: 18px; font-family: 'Patrick Hand', cursive; color: #333;
+    background-image: radial-gradient(#d7d7d7 1px, transparent 1px);
+    background-size: 20px 20px;
+    min-height: 100vh;
+  }
+  .text-xs   { font-size: 14px; line-height: 1.4; }
+  .text-sm   { font-size: 18px; line-height: 1.5; }
+  .text-base { font-size: 22px; line-height: 1.5; }
+  .text-md   { font-size: 28px; line-height: 1.3; }
+  .text-lg   { font-size: 35px; line-height: 1.2; }
+  .text-xl   { font-size: 44px; line-height: 1.1; }
+
+  a.sketch-link { color: #45607a; text-decoration: underline; cursor: pointer; }
+
+  .btn-primary {
+    background: #333; color: white; border: 2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family: 'Patrick Hand', cursive; font-size: 18px;
+    padding: 10px 22px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-secondary {
+    background: white; color: #333; border: 2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family: 'Patrick Hand', cursive; font-size: 18px;
+    padding: 10px 22px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-danger {
+    background: #fff; color: #333; border: 3px double #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family: 'Patrick Hand', cursive; font-size: 18px;
+    padding: 10px 22px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-ghost {
+    background: transparent; color: #333; border: 2px dashed #999;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family: 'Patrick Hand', cursive; font-size: 18px;
+    padding: 10px 22px; cursor: pointer;
+  }
+  .btn-primary:disabled, .btn-secondary:disabled {
+    opacity: 0.45; cursor: not-allowed;
+  }
+  button svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+  .icon { width: 18px; height: 18px; flex-shrink: 0; }
+  .icon-lg { width: 32px; height: 32px; }
+
+  .sketch-box {
+    border: 2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    background: white;
+  }
+  .sketch-box-alt {
+    border: 2px solid #333;
+    border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px;
+    background: white;
+  }
+
+  /* App shell */
+  .app-shell { display: flex; min-height: 100vh; }
+  .sidebar {
+    width: 260px; flex-shrink: 0; background: #fff; border-right: 2px solid #333;
+    padding: 18px 14px; position: fixed; top: 0; bottom: 0; left: 0; overflow-y: auto;
+  }
+  .sidebar-brand { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .sidebar-brand svg { width: 30px; height: 30px; }
+  .sidebar-role { font-size: 14px; color: #666; margin-bottom: 18px; padding-left: 2px; }
+  .nav-group-title {
+    font-family: 'Caveat', cursive; font-size: 20px; color: #777; margin: 16px 0 6px 4px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px; padding: 9px 10px; margin-bottom: 4px;
+    border-radius: 10px; cursor: pointer; font-size: 18px; color: #333;
+  }
+  .nav-item.disabled { color: #aaa; cursor: not-allowed; }
+  .nav-item.disabled svg { stroke: #aaa; }
+  .nav-item.active { background: #ececec; border: 1.5px dashed #333; }
+  .nav-item:not(.disabled):hover { background: #f2f2f2; }
+  .nav-item svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+  .main {
+    margin-left: 260px; flex: 1; padding: 26px 34px; max-width: 1180px;
+  }
+
+  .breadcrumb { font-size: 14px; color: #666; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .breadcrumb a { color: #45607a; text-decoration: underline; cursor: pointer; }
+
+  .page-header {
+    display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;
+    gap: 12px; margin-bottom: 18px;
+  }
+  .page-title { display: flex; align-items: center; gap: 10px; }
+  .page-title svg { width: 30px; height: 30px; }
+  .header-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  .filter-bar { display: flex; gap: 14px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+  .filter-bar > * { min-width: 200px; }
+
+  table.doodle-table { width: 100%; border-collapse: collapse; background: white; }
+  table.doodle-table th, table.doodle-table td {
+    border-bottom: 1.5px dashed #999; padding: 10px 8px; text-align: left; font-size: 18px;
+  }
+  table.doodle-table th { font-family: 'Caveat', cursive; font-size: 20px; color: #444; border-bottom: 2px solid #333; }
+  table.doodle-table tr:hover td { background: #fafafa; }
+  .table-wrap { overflow-x: auto; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; font-size: 14px;
+    border-radius: 20px; border: 1.5px solid #333; background: #fff;
+  }
+  .badge svg { width: 13px; height: 13px; }
+  .badge-draft { border-style: dashed; }
+  .badge-active { border-width: 2.5px; }
+  .badge-closed { border-style: dotted; border-width: 2.5px; }
+  .badge-archived { background: #eee; color: #777; }
+  .badge-warning { border-style: dashed; }
+  .badge-success { border-width: 2.5px; }
+
+  .card-section { padding: 18px; margin-bottom: 16px; }
+  .card-section h3 { margin-top: 0; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .grid-cols-12 { display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px; }
+  .col-span-4 { grid-column: span 4; }
+  .col-span-6 { grid-column: span 6; }
+  .col-span-8 { grid-column: span 8; }
+  @media (max-width: 900px) {
+    .grid-2, .grid-cols-12 { grid-template-columns: 1fr; }
+    .col-span-4, .col-span-6, .col-span-8 { grid-column: span 1; }
+  }
+
+  .field { margin-bottom: 16px; }
+  .field-label { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+  .field-label svg { width: 18px; height: 18px; flex-shrink: 0; }
+  wired-input, wired-textarea, wired-select, wired-combo { display: block; width: 100%; }
+
+  .alert {
+    display: flex; gap: 10px; padding: 12px 14px; border-radius: 10px; margin-bottom: 14px;
+    border: 2px solid #333; background: #fff; align-items: flex-start;
+  }
+  .alert-info { border-style: solid; }
+  .alert-warning { border-style: dashed; }
+  .alert-danger { border-width: 3px; }
+  .alert svg { width: 22px; height: 22px; flex-shrink: 0; margin-top: 2px; }
+
+  .empty-state { text-align: center; padding: 46px 20px; color: #555; }
+  .empty-state svg { width: 64px; height: 64px; margin-bottom: 12px; stroke: #999; }
+
+  .stepper { display: flex; align-items: center; gap: 6px; margin-bottom: 22px; flex-wrap: wrap; }
+  .step { display: flex; align-items: center; gap: 8px; font-size: 16px; color: #777; }
+  .step-num {
+    width: 26px; height: 26px; border-radius: 50%; border: 2px solid #999; color: #999;
+    display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;
+  }
+  .step.active { color: #333; font-weight: bold; }
+  .step.active .step-num { border-color: #333; border-width: 2.5px; color: #333; }
+  .step.done .step-num { background: #333; color: #fff; border-color: #333; }
+  .step-sep { color: #bbb; }
+
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(40,40,40,0.35); display: none;
+    align-items: center; justify-content: center; z-index: 100; padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    max-width: 520px; width: 100%; padding: 24px; max-height: 88vh; overflow-y: auto;
+  }
+  .modal-close-row { text-align: right; }
+
+  .toolbar-note { font-size: 14px; color: #777; margin-bottom: 10px; }
+
+  .checklist-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+
+  .kv-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed #ccc; }
+  .kv-row .k { color: #555; }
+
+  .readonly-tag { font-size: 13px; color: #777; border: 1.5px dotted #999; border-radius: 8px; padding: 1px 8px; }
+
+  .float-note {
+    position: fixed; bottom: 14px; right: 18px; max-width: 340px; font-family: 'Caveat', cursive;
+    font-size: 18px; color: #900; background: #fff9f9; border: 2px dashed #900; border-radius: 12px;
+    padding: 8px 12px; z-index: 50;
+  }
+
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .muted-row { opacity: 0.5; }
+  .strike { text-decoration: line-through; color: #999; }
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+  <!-- ============ SIDEBAR ============ -->
+  <div class="sidebar">
+    <div class="sidebar-brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2 L21 6 V11 C21 16.5 17 20.5 12 22 C7 20.5 3 16.5 3 11 V6 Z"/>
+        <path d="M9 12 L11 14 L15 9" stroke-width="1.8"/>
+      </svg>
+      <span class="text-md" style="font-family:'Caveat',cursive;">SFMS</span>
+    </div>
+    <div class="sidebar-role">
+      <svg class="icon" style="width:14px;height:14px;vertical-align:-2px;" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></svg>
+      School Administration
+    </div>
+
+    <div class="nav-group-title">Chung</div>
+    <div class="nav-item disabled" title="Ngoài phạm vi wireframe này">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 L12 3 L21 11"/><path d="M5 10 V20 H19 V10"/></svg>
+      Dashboard
+    </div>
+
+    <div class="nav-group-title">Lớp / Học sinh</div>
+    <div class="nav-item" data-nav="classroom-management" onclick="showScreen('classroom-management')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9 H21"/><path d="M8 4 V9"/></svg>
+      Classroom Management
+    </div>
+    <div class="nav-item" data-nav="student-profile-management" onclick="showScreen('student-profile-management')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg>
+      Student Profile Management
+    </div>
+
+    <div class="nav-group-title">Năm học</div>
+    <div class="nav-item" data-nav="ay-list" onclick="showScreen('ay-list')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10 H21"/><path d="M8 3 V7"/><path d="M16 3 V7"/></svg>
+      Academic Year List
+    </div>
+
+    <div class="nav-group-title">Khác (ngoài phạm vi)</div>
+    <div class="nav-item disabled">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4 H20 V16 H8 L4 20 Z"/></svg>
+      Announcements
+    </div>
+    <div class="nav-item disabled">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7 V12 L15 15"/></svg>
+      Incident Dashboard
+    </div>
+  </div>
+
+  <!-- ============ MAIN ============ -->
+  <div class="main">
+
+  <!-- =========================================================
+       SCREEN 1: Classroom Management (19)
+  ========================================================== -->
+  <div class="screen active" id="classroom-management">
+    <div class="breadcrumb">
+      <a onclick="showScreen('classroom-management')">Lớp / Học sinh</a> <span>&gt;</span> <span>Classroom Management</span>
+    </div>
+    <div class="page-header">
+      <div class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9 H21"/><path d="M8 4 V9"/></svg>
+        <h2 class="text-lg">Classroom Management</h2>
+      </div>
+      <div class="header-actions">
+        <button class="btn-secondary" onclick="alert('Xuất Excel/CSV danh sách lớp (mock)')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 V15"/><path d="M7 10 L12 15 L17 10"/><path d="M4 19 H20"/></svg>
+          Export Excel/CSV
+        </button>
+        <button class="btn-primary" onclick="showScreen('create-classroom')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5 V19"/><path d="M5 12 H19"/></svg>
+          Create Classroom
+        </button>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+      <wired-search-input placeholder="Tìm theo tên lớp..." style="min-width:280px;"></wired-search-input>
+      <wired-combo selected="Tất cả cấp lớp" style="min-width:200px;">
+        <wired-item value="all">Tất cả cấp lớp</wired-item>
+        <wired-item value="1">Cấp 1</wired-item>
+        <wired-item value="5">Cấp 5</wired-item>
+        <wired-item value="9">Cấp 9</wired-item>
+        <wired-item value="12">Cấp 12</wired-item>
+      </wired-combo>
+    </div>
+
+    <div class="sketch-box table-wrap" style="padding:6px 12px;">
+      <table class="doodle-table">
+        <thead>
+          <tr><th>Class Name</th><th>Grade Level</th><th>Student Capacity</th><th>Homeroom Teacher</th></tr>
+        </thead>
+        <tbody>
+          <tr onclick="showScreen('classroom-detail')" style="cursor:pointer;">
+            <td>1A1</td><td>1</td><td>32 / 40</td><td>Nguyễn Thị Hoa</td>
+          </tr>
+          <tr onclick="showScreen('classroom-detail')" style="cursor:pointer;">
+            <td>1A2</td><td>1</td><td>35 / 40</td><td>Trần Văn Bình</td>
+          </tr>
+          <tr onclick="showScreen('classroom-detail')" style="cursor:pointer;">
+            <td>5B1</td><td>5</td><td>40 / 45</td><td>Lê Thị Mai</td>
+          </tr>
+          <tr onclick="showScreen('classroom-detail')" style="cursor:pointer;">
+            <td>9C1</td><td>9</td><td>38 / 42</td><td>Phạm Văn Đức</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-xs" style="color:#777;">Trạng thái Success — bảng hiển thị đầy đủ. Empty state minh hoạ ở khung dưới (không phải trạng thái hiện tại).</p>
+    <div class="sketch-box empty-state" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4"><rect x="3" y="4" width="18" height="16" rx="2"/></svg>
+      <p>Chưa có lớp học nào — tạo lớp đầu tiên</p>
+      <button class="btn-primary" onclick="showScreen('create-classroom')">Create Classroom</button>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       SCREEN 2: Classroom Detail (20)
+  ========================================================== -->
+  <div class="screen" id="classroom-detail">
+    <div class="breadcrumb">
+      <a onclick="showScreen('classroom-management')">Classroom Management</a> <span>&gt;</span> <span>1A1</span>
+    </div>
+    <div class="page-header">
+      <div class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/></svg>
+        <h2 class="text-lg">Lớp 1A1</h2>
+      </div>
+      <div class="header-actions">
+        <button class="btn-secondary" onclick="toggleEdit()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 L4 16 L15 5 L19 9 L8 20 Z"/></svg>
+          Edit
+        </button>
+      </div>
+    </div>
+
+    <div class="alert alert-danger" id="capacity-alert" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8"><path d="M12 2 L22 20 H2 Z"/><path d="M12 9 V13"/><circle cx="12" cy="16.5" r="0.6" fill="#333"/></svg>
+      <div><strong>MSG-010</strong> — Sức chứa mới không được nhỏ hơn số học sinh hiện có (32 học sinh đang học).</div>
+    </div>
+
+    <div class="grid-cols-12">
+      <div class="col-span-4">
+        <div class="sketch-box card-section">
+          <h3 class="text-md">Thông tin lớp</h3>
+          <div class="kv-row"><span class="k">Class Name</span><span id="cd-name">1A1</span></div>
+          <div class="kv-row"><span class="k">Grade Level</span><span>1</span></div>
+          <div class="kv-row"><span class="k">Max Capacity</span><span id="cd-capacity">40</span></div>
+
+          <div id="cd-edit-form" style="display:none; margin-top:14px;">
+            <div class="field">
+              <div class="field-label text-sm">Tên lớp</div>
+              <wired-input value="1A1"></wired-input>
+            </div>
+            <div class="field">
+              <div class="field-label text-sm">Cấp lớp</div>
+              <wired-combo selected="1"><wired-item value="1">1</wired-item><wired-item value="12">12</wired-item></wired-combo>
+            </div>
+            <div class="field">
+              <div class="field-label text-sm">Sức chứa tối đa</div>
+              <wired-input type="number" value="40" oninput="checkCapacity(this.value)"></wired-input>
+              <div class="text-xs" style="color:#777;">Không được nhỏ hơn 32 (số học sinh hiện có)</div>
+            </div>
+            <button class="btn-primary" onclick="saveClassroomEdit()">Lưu</button>
+          </div>
+
+          <wired-divider style="margin:14px 0;"></wired-divider>
+          <h3 class="text-md">Homeroom Teacher</h3>
+          <div class="kv-row"><span class="k">Hiện tại</span><span>Nguyễn Thị Hoa</span></div>
+          <button class="btn-secondary" style="margin-top:8px; width:100%; justify-content:center;" onclick="openModal('assign-teacher-modal')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg>
+            Assign/Reassign
+          </button>
+        </div>
+      </div>
+
+      <div class="col-span-8">
+        <div class="sketch-box card-section">
+          <h3 class="text-md">Danh sách học sinh trong lớp</h3>
+          <div class="table-wrap">
+            <table class="doodle-table">
+              <thead><tr><th>Tên học sinh</th><th>School Reg No</th></tr></thead>
+              <tbody>
+                <tr><td>Nguyễn Minh An</td><td>SR-2026-0011</td></tr>
+                <tr><td>Trần Bảo Châu</td><td>SR-2026-0012</td></tr>
+                <tr><td>Lê Gia Hân</td><td>SR-2026-0013</td></tr>
+                <tr><td>Phạm Đức Huy</td><td>SR-2026-0014</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Assign Homeroom Teacher (part of Classroom Detail, UC-008) -->
+  <div class="modal-overlay" id="assign-teacher-modal">
+    <div class="sketch-box modal-box">
+      <div class="modal-close-row"><a class="sketch-link" onclick="closeModal('assign-teacher-modal')">Đóng ×</a></div>
+      <h3 class="text-md">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg>
+        Assign Homeroom Teacher — Lớp 1A1
+      </h3>
+      <div class="field">
+        <div class="field-label text-sm">Chọn giáo viên (active, role Teacher)</div>
+        <wired-combo selected="Trần Văn Bình" id="teacher-select" onselected="checkTeacherConflict(event)">
+          <wired-item value="hoa">Nguyễn Thị Hoa (đang là GVCN lớp này)</wired-item>
+          <wired-item value="binh">Trần Văn Bình (đang là GVCN lớp 1A2)</wired-item>
+          <wired-item value="mai">Lê Thị Mai (chưa chủ nhiệm lớp nào)</wired-item>
+        </wired-combo>
+      </div>
+      <div class="alert alert-danger" id="teacher-conflict-alert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8"><path d="M12 2 L22 20 H2 Z"/><path d="M12 9 V13"/><circle cx="12" cy="16.5" r="0.6" fill="#333"/></svg>
+        <div><strong>MSG-011</strong> — Giáo viên "Trần Văn Bình" đã được gán làm GVCN lớp 1A2. Xác nhận reassign (chuyển giáo viên khỏi lớp cũ)?</div>
+      </div>
+      <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:12px;">
+        <button class="btn-ghost" onclick="closeModal('assign-teacher-modal')">Huỷ</button>
+        <button class="btn-primary" onclick="closeModal('assign-teacher-modal'); alert('MSG-034 — Phân công giáo viên chủ nhiệm thành công.')">Xác nhận</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       SCREEN 3: Create Classroom (21) — Dialog style
+  ========================================================== -->
+  <div class="screen" id="create-classroom">
+    <div class="breadcrumb">
+      <a onclick="showScreen('classroom-management')">Classroom Management</a> <span>&gt;</span> <span>Create Classroom</span>
+    </div>
+    <div style="max-width:520px; margin: 10px auto;">
+      <div class="sketch-box card-section">
+        <h2 class="text-md" style="display:flex; align-items:center; gap:8px;">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><path d="M12 5 V19"/><path d="M5 12 H19"/></svg>
+          Tạo lớp học mới
+        </h2>
+
+        <!-- Blocking rule: no Active academic year -->
+        <div class="alert alert-danger" id="no-active-year-alert" style="display:none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8"><path d="M12 2 L22 20 H2 Z"/><path d="M12 9 V13"/><circle cx="12" cy="16.5" r="0.6" fill="#333"/></svg>
+          <div>
+            <strong>MSG-081</strong> — Trường chưa có năm học nào ở trạng thái Active. Không thể tạo lớp (BR-192).
+            <br /><a class="sketch-link" onclick="showScreen('ay-list')">Đi tới Academic Year List để kích hoạt năm học</a>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="field-label text-sm">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/></svg>
+            Tên lớp
+          </div>
+          <wired-input placeholder="VD: 6A1"></wired-input>
+        </div>
+        <div class="field">
+          <div class="field-label text-sm">Cấp lớp (Grade Level)</div>
+          <wired-combo selected="6">
+            <wired-item value="1">1</wired-item>
+            <wired-item value="6">6</wired-item>
+            <wired-item value="9">9</wired-item>
+            <wired-item value="12">12</wired-item>
+          </wired-combo>
+        </div>
+        <div class="field">
+          <div class="field-label text-sm">Sức chứa tối đa</div>
+          <wired-input type="number" value="40" placeholder="≤ 50"></wired-input>
+          <div class="text-xs" style="color:#777;">MSG-010 nếu vượt 50 (BR-025)</div>
+        </div>
+        <div class="field">
+          <div class="field-label text-sm">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/></svg>
+            Năm học áp dụng
+          </div>
+          <wired-combo selected="2026-2027" id="cc-year-select">
+            <wired-item value="2026-2027">2026-2027 (Active)</wired-item>
+          </wired-combo>
+          <div class="text-xs" style="color:#777;">Bắt buộc có năm học Active — read-only nếu chỉ có 1 năm Active (BR-192)</div>
+        </div>
+
+        <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:16px;">
+          <button class="btn-ghost" onclick="showScreen('classroom-management')">Huỷ</button>
+          <button class="btn-primary" onclick="showScreen('classroom-management'); alert('MSG-033 — Tạo lớp thành công.')">Tạo lớp</button>
+        </div>
+
+        <wired-divider style="margin:16px 0 10px;"></wired-divider>
+        <label style="display:flex; align-items:center; gap:8px; font-size:14px; color:#777;">
+          <wired-checkbox onchange="toggleNoActiveYearDemo(this.checked)"></wired-checkbox>
+          (demo) Minh hoạ trạng thái: trường chưa có năm học Active
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       SCREEN 4: Student Profile Management (22)
+  ========================================================== -->
+  <div class="screen" id="student-profile-management">
+    <div class="breadcrumb">
+      <a onclick="showScreen('student-profile-management')">Lớp / Học sinh</a> <span>&gt;</span> <span>Student Profile Management</span>
+    </div>
+    <div class="page-header">
+      <div class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg>
+        <h2 class="text-lg">Student Profile Management</h2>
+      </div>
+      <div class="header-actions">
+        <button class="btn-secondary" onclick="alert('Xuất Excel/CSV danh sách học sinh (mock)')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><path d="M12 3 V15"/><path d="M7 10 L12 15 L17 10"/><path d="M4 19 H20"/></svg>
+          Export Excel/CSV
+        </button>
+        <button class="btn-secondary" onclick="showScreen('bulk-import')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><path d="M12 15 V3"/><path d="M7 8 L12 3 L17 8"/><path d="M4 19 H20"/></svg>
+          Bulk Import
+        </button>
+        <button class="btn-primary" onclick="showScreen('create-student-profile')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M12 5 V19"/><path d="M5 12 H19"/></svg>
+          Create Student Profile
+        </button>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+      <wired-search-input placeholder="Tìm theo tên học sinh..." style="min-width:280px;"></wired-search-input>
+      <wired-combo selected="Tất cả lớp" style="min-width:200px;">
+        <wired-item value="all">Tất cả lớp/khối</wired-item>
+        <wired-item value="1a1">1A1</wired-item>
+        <wired-item value="5b1">5B1</wired-item>
+      </wired-combo>
+    </div>
+
+    <div class="sketch-box table-wrap" style="padding:6px 12px;">
+      <table class="doodle-table">
+        <thead><tr><th>Tên</th><th>School Registration Number</th><th>Lớp</th><th>Liên hệ phụ huynh</th></tr></thead>
+        <tbody>
+          <tr onclick="showScreen('student-profile-detail')" style="cursor:pointer;">
+            <td>Nguyễn Minh An</td><td>SR-2026-0011</td><td>1A1</td><td>Nguyễn Văn Sơn — 0912xxxxxx</td>
+          </tr>
+          <tr onclick="showScreen('student-profile-detail')" style="cursor:pointer;">
+            <td>Trần Bảo Châu</td><td>SR-2026-0012</td><td>1A1</td><td>Trần Thị Lan — 0987xxxxxx</td>
+          </tr>
+          <tr onclick="showScreen('student-profile-detail')" style="cursor:pointer;">
+            <td>Lê Gia Hân</td><td>SR-2026-0013</td><td>1A1</td><td>Lê Văn Tùng — 0977xxxxxx</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-xs" style="color:#777;">Trạng thái Success. Empty: "Chưa có học sinh nào — tạo hồ sơ đầu tiên hoặc nhập hàng loạt".</p>
+  </div>
+
+  <!-- =========================================================
+       SCREEN 5: Student Profile Detail (23)
+  ========================================================== -->
+  <div class="screen" id="student-profile-detail">
+    <div class="breadcrumb">
+      <a onclick="showScreen('student-profile-management')">Student Profile Management</a> <span>&gt;</span> <span>Nguyễn Minh An</span>
+    </div>
+    <div class="page-header">
+      <div class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg>
+        <h2 class="text-lg">Nguyễn Minh An</h2>
+      </div>
+      <div class="header-actions">
+        <button class="btn-primary" onclick="alert('MSG-029 — Cập nhật hồ sơ học sinh thành công.')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M4 12 L10 18 L20 6"/></svg>
+          Lưu
+        </button>
+      </div>
+    </div>
+
+    <div class="alert alert-danger" id="student-capacity-alert" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8"><path d="M12 2 L22 20 H2 Z"/><path d="M12 9 V13"/><circle cx="12" cy="16.5" r="0.6" fill="#333"/></svg>
+      <div><strong>MSG-010</strong> — Lớp mới đã đạt sức chứa tối đa 50 học sinh, không thể chuyển vào.</div>
+    </div>
+
+    <div class="sketch-box card-section" style="max-width:640px;">
+      <h3 class="text-md">Thông tin học sinh</h3>
+      <div class="field">
+        <div class="field-label text-sm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg>
+          Họ tên
+        </div>
+        <wired-input value="Nguyễn Minh An"></wired-input>
+      </div>
+      <div class="field">
+        <div class="field-label text-sm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10 H21"/></svg>
+          Ngày sinh
+        </div>
+        <wired-calendar style="max-width:260px;"></wired-calendar>
+      </div>
+
+      <wired-divider style="margin:14px 0;"></wired-divider>
+      <h3 class="text-md">Lớp</h3>
+      <div class="field">
+        <div class="field-label text-sm">Classroom</div>
+        <wired-combo selected="1A1" onselected="alert('Nếu lớp mới vượt sức chứa 50 → MSG-010 (demo tĩnh)')">
+          <wired-item value="1a1">1A1 (32/40)</wired-item>
+          <wired-item value="1a2">1A2 (35/40)</wired-item>
+          <wired-item value="full">5B1 (50/50 — đầy)</wired-item>
+        </wired-combo>
+      </div>
+      <div class="field">
+        <div class="field-label text-sm">School Registration Number / Student Admission Code</div>
+        <wired-input value="SR-2026-0011" disabled></wired-input>
+        <span class="readonly-tag">read-only — mã tự sinh</span>
+      </div>
+
+      <wired-divider style="margin:14px 0;"></wired-divider>
+      <h3 class="text-md">Phụ huynh liên kết</h3>
+      <div class="kv-row">
+        <span class="k">Nguyễn Văn Sơn — 0912xxxxxx</span>
+        <a class="sketch-link" onclick="showScreen('parent-account-detail')">Xem chi tiết</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       SCREEN: Create Student Profile (bundled, không có Screen Spec riêng)
+  ========================================================== -->
+  <div class="screen" id="create-student-profile">
+    <div class="breadcrumb">
+      <a onclick="showScreen('student-profile-management')">Student Profile Management</a> <span>&gt;</span> <span>Create Student Profile</span>
+    </div>
+    <div class="alert alert-warning">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8"><path d="M12 2 L22 20 H2 Z"/><path d="M12 9 V13"/><circle cx="12" cy="16.5" r="0.6" fill="#333"/></svg>
+      <div><strong>Ghi chú nguồn</strong> — "Create Student Profile" (UC-025) không có Screen Specification riêng trong bộ 14 file. Form dưới đây chỉ dựng từ field xuất hiện trong ghi chú "bundled" của 3 file 25_ParentAccountDetail / 26_LinkParentAccount / 27_LinkedStudentsList — cần bổ sung Screen Spec chính thức cho phần thông tin học sinh (Họ tên/Ngày sinh/Lớp) trước khi coi là đầy đủ.</div>
+    </div>
+
+    <div class="stepper">
+      <div class="step done"><div class="step-num">1</div>Thông tin học sinh</div>
+      <span class="step-sep">›</span>
+      <div class="step active"><div class="step-num">2</div>Tìm/Liên kết Parent Account (UC-025 bước 5)</div>
+    </div>
+
+    <div class="sketch-box card-section" style="max-width:600px;">
+      <h3 class="text-md">Bước 2 — Tìm kiếm phụ huynh theo email</h3>
+      <p class="text-xs" style="color:#777;">Field bên dưới lấy nguyên từ Business Logic của <em>26_LinkParentAccount.md</em> — bước 5 Normal Flow UC-025.</p>
+      <button class="btn-secondary" style="margin-bottom:14px;" onclick="showScreen('link-parent-account')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5"/></svg>
+        Đi tới bước Link Parent Account
+      </button>
+      <a class="sketch-link" onclick="showScreen('student-profile-management')">Huỷ, quay lại danh sách</a>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       SCREEN 6: Bulk Import Student Profiles (24)
+  ========================================================== -->
+  <div class="screen" id="bulk-import">
+    <div class="breadcrumb">
+      <a onclick="showScreen('student-profile-management')">Student Profile Management</a> <span>&gt;</span> <span>Bulk Import Student Profiles</span>
+    </div>
+    <div class="page-title" style="margin-bottom:14px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><path d="M12 15 V3"/><path d="M7 8 L12 3 L17 8"/><path d="M4 19 H20"/></svg>
+      <h2 class="text-lg">Bulk Import Student Profiles</h2>
+    </div>
+
+    <div class="stepper">
+      <div class="step done"><div class="step-num">1</div>Tải template</div><span class="step-sep">›</span>
+      <div class="step done"><div class="step-num">2</div>Upload</div><span class="step-sep">›</span>
+      <div class="step active"><div class="step-num">3</div>Xem kết quả validate</div><span class="step-sep">›</span>
+      <div class="step"><div class="step-num">4</div>Xác nhận</div>
+    </div>
+
+    <div class="sketch-box card-section">
+      <a class="sketch-link" style="display:inline-flex; align-items:center; gap:6px;">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#45607a" stroke-width="1.6"><path d="M12 15 V3"/><path d="M7 8 L12 3 L17 8"/><path d="M4 19 H20"/></svg>
+        Tải template
+      </a>
+      <wired-divider style="margin:14px 0;"></wired-divider>
+
+      <div class="field">
+        <div class="field-label text-sm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><path d="M12 3 V15"/><path d="M7 10 L12 15 L17 10"/><path d="M4 19 H20"/></svg>
+          File đã chọn
+        </div>
+        <div class="sketch-box-alt" style="padding:8px 12px; display:inline-block;">DanhSachHocSinh_1A2_2026.xlsx</div>
+      </div>
+      <button class="btn-primary" style="margin-bottom:16px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M4 12 L10 18 L20 6"/></svg>
+        Tải lên &amp; Kiểm tra
+      </button>
+
+      <h3 class="text-md">Bảng tóm tắt validation</h3>
+      <div style="display:flex; gap:20px; margin-bottom:12px;">
+        <div class="sketch-box" style="padding:10px 16px;">Tổng dòng: <strong>20</strong></div>
+        <div class="sketch-box" style="padding:10px 16px;">Hợp lệ: <strong>17</strong></div>
+        <div class="sketch-box" style="padding:10px 16px;">Không hợp lệ: <strong>2</strong></div>
+        <div class="sketch-box" style="padding:10px 16px;">Trùng lặp: <strong>1</strong></div>
+      </div>
+
+      <h3 class="text-md">Danh sách dòng lỗi chi tiết</h3>
+      <div class="table-wrap">
+        <table class="doodle-table">
+          <thead><tr><th>Dòng</th><th>Tên học sinh</th><th>Mã lỗi</th><th>Mô tả</th></tr></thead>
+          <tbody>
+            <tr><td>7</td><td>Đỗ Văn Kiên</td><td>MSG-012</td><td>Mã học sinh không hợp lệ / đã dùng</td></tr>
+            <tr><td>14</td><td>Vũ Thị Ngọc</td><td>MSG-012</td><td>Mã học sinh trùng với dòng 3</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <button class="btn-primary" style="margin-top:16px;" onclick="alert('MSG-035 — Nhập hàng loạt thành công. Email xác minh đã gửi cho tài khoản phụ huynh mới (BR-010).'); showScreen('student-profile-management')">
+        Xác nhận nhập
+      </button>
+      <span class="text-xs" style="color:#777; margin-left:10px;">Chỉ enable khi có ≥ 1 dòng hợp lệ</span>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       SCREEN 7: Parent Account Detail (25)
+  ========================================================== -->
+  <div class="screen" id="parent-account-detail">
+    <div class="breadcrumb">
+      <a onclick="showScreen('student-profile-detail')">Student Profile Detail</a> <span>&gt;</span> <span>Parent Account Detail</span>
+    </div>
+    <div class="page-header">
+      <div class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg>
+        <h2 class="text-lg">Nguyễn Văn Sơn</h2>
+      </div>
+      <span class="badge badge-success">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><path d="M4 12 L10 18 L20 6"/></svg>
+        Verified
+      </span>
+    </div>
+
+    <div class="alert alert-danger" id="link-limit-alert" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8"><path d="M12 2 L22 20 H2 Z"/><path d="M12 9 V13"/><circle cx="12" cy="16.5" r="0.6" fill="#333"/></svg>
+      <div>Phụ huynh đã đạt giới hạn liên kết tối đa (5 học sinh) — chặn thêm, cần xác minh thủ công (AF1 UC-025).</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="sketch-box card-section">
+        <h3 class="text-md">Thông tin liên hệ</h3>
+        <div class="kv-row"><span class="k">Họ tên phụ huynh</span><span>Nguyễn Văn Sơn</span></div>
+        <div class="kv-row"><span class="k">Email</span><span>sonnguyen.pk@gmail.com</span></div>
+        <div class="kv-row"><span class="k">Số điện thoại</span><span>0912345678</span></div>
+        <div class="kv-row"><span class="k">Trạng thái xác minh email</span>
+          <span class="badge badge-success"><svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><path d="M4 12 L10 18 L20 6"/></svg>Verified</span>
+        </div>
+      </div>
+      <div class="sketch-box card-section">
+        <h3 class="text-md">Danh sách học sinh liên kết (tối đa 5)</h3>
+        <div class="table-wrap">
+          <table class="doodle-table">
+            <tbody>
+              <tr><td>Nguyễn Minh An — SR-2026-0011</td></tr>
+              <tr><td>Nguyễn Gia Bảo — SR-2025-0044</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <a class="sketch-link" onclick="showScreen('linked-students-list')">Xem đầy đủ (Linked Students List)</a>
+        <br/>
+        <button class="btn-secondary" style="margin-top:10px;" onclick="showScreen('link-parent-account')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><path d="M12 5 V19"/><path d="M5 12 H19"/></svg>
+          Link thêm học sinh
+        </button>
+      </div>
+    </div>
+
+    <label style="display:flex; align-items:center; gap:8px; font-size:14px; color:#777; margin-top:14px;">
+      <wired-checkbox onchange="document.getElementById('link-limit-alert').style.display = this.checked ? 'flex' : 'none'"></wired-checkbox>
+      (demo) Minh hoạ trạng thái: đã đạt giới hạn liên kết tối đa
+    </label>
+  </div>
+
+  <!-- =========================================================
+       SCREEN 8: Link Parent Account (26)
+  ========================================================== -->
+  <div class="screen" id="link-parent-account">
+    <div class="breadcrumb">
+      <span>Create Student Profile</span> <span>&gt;</span> <span>Link Parent Account</span>
+      <span class="text-xs" style="margin-left:10px; color:#999;">(cũng mở được từ Parent Account Detail)</span>
+    </div>
+    <div class="sketch-box card-section" style="max-width:560px;">
+      <h3 class="text-md">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5"/></svg>
+        Tìm kiếm tài khoản phụ huynh
+      </h3>
+      <div class="field">
+        <div class="field-label text-sm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7 L12 13 L21 7"/></svg>
+          Email phụ huynh
+        </div>
+        <wired-input value="lananh.tran@gmail.com" placeholder="email@domain.com"></wired-input>
+      </div>
+
+      <div class="sketch-box-alt" style="padding:14px; margin-bottom:14px;">
+        <strong>Đã tìm thấy tài khoản</strong>
+        <div class="kv-row"><span class="k">Họ tên</span><span>Trần Lan Anh</span></div>
+        <div class="kv-row"><span class="k">SĐT</span><span>0987654321</span></div>
+      </div>
+
+      <div class="text-xs" style="color:#777; margin-bottom:6px;">Nhánh khác (nếu email chưa tồn tại) — form tạo phụ huynh mới:</div>
+      <div class="field">
+        <div class="field-label text-sm">Họ tên (nếu tạo mới)</div>
+        <wired-input placeholder="Họ và tên phụ huynh" disabled></wired-input>
+      </div>
+      <div class="field">
+        <div class="field-label text-sm">Số điện thoại (nếu tạo mới)</div>
+        <wired-input placeholder="09xxxxxxxx" disabled></wired-input>
+      </div>
+
+      <div class="alert alert-warning">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8"><path d="M12 2 L22 20 H2 Z"/><path d="M12 9 V13"/><circle cx="12" cy="16.5" r="0.6" fill="#333"/></svg>
+        <div>Cảnh báo giới hạn liên kết — hiện khi phụ huynh đã có 5 học sinh liên kết (AF1); khi đó chặn link, yêu cầu xác minh thủ công.</div>
+      </div>
+
+      <div style="display:flex; gap:10px; justify-content:flex-end;">
+        <button class="btn-ghost" onclick="showScreen('parent-account-detail')">Huỷ</button>
+        <button class="btn-primary" onclick="showScreen('parent-account-detail'); alert('Liên kết thành công (nhánh email đã tồn tại).')">Xác nhận liên kết</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       SCREEN 9: Linked Students List (27)
+  ========================================================== -->
+  <div class="screen" id="linked-students-list">
+    <div class="breadcrumb">
+      <a onclick="showScreen('parent-account-detail')">Parent Account Detail</a> <span>&gt;</span> <span>Linked Students List</span>
+    </div>
+    <div class="page-title" style="margin-bottom:14px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg>
+      <h2 class="text-lg">Học sinh liên kết — Nguyễn Văn Sơn</h2>
+    </div>
+
+    <div class="sketch-box table-wrap" style="padding:6px 12px;">
+      <table class="doodle-table">
+        <thead><tr><th>Tên</th><th>School Reg No</th><th>Lớp</th><th>Trạng thái</th><th></th></tr></thead>
+        <tbody>
+          <tr>
+            <td onclick="showScreen('student-profile-detail')" style="cursor:pointer;">Nguyễn Minh An</td>
+            <td>SR-2026-0011</td><td>1A1</td><td>Đang học</td>
+            <td><a class="sketch-link" onclick="if(confirm('Xác nhận gỡ liên kết học sinh này khỏi phụ huynh?')) alert('Đã gỡ liên kết (demo)')">Gỡ liên kết</a></td>
+          </tr>
+          <tr>
+            <td onclick="showScreen('student-profile-detail')" style="cursor:pointer;">Nguyễn Gia Bảo</td>
+            <td>SR-2025-0044</td><td>5B1</td><td>Đang học</td>
+            <td><a class="sketch-link" onclick="if(confirm('Xác nhận gỡ liên kết học sinh này khỏi phụ huynh?')) alert('Đã gỡ liên kết (demo)')">Gỡ liên kết</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert alert-warning" style="margin-top:14px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8"><path d="M12 2 L22 20 H2 Z"/><path d="M12 9 V13"/><circle cx="12" cy="16.5" r="0.6" fill="#333"/></svg>
+      <div><strong>[Giả định — cần team xác nhận]</strong> Action "gỡ liên kết" là suy luận, Normal Flow gốc UC-025 không mô tả rõ hành vi này.</div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       SCREEN 10: Academic Year List (41)
+  ========================================================== -->
+  <div class="screen" id="ay-list">
+    <div class="breadcrumb">
+      <a onclick="showScreen('ay-list')">Năm học</a> <span>&gt;</span> <span>Academic Year List</span>
+    </div>
+    <div class="page-header">
+      <div class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10 H21"/><path d="M8 3 V7"/><path d="M16 3 V7"/></svg>
+        <h2 class="text-lg">Academic Year List</h2>
+      </div>
+      <div class="header-actions">
+        <button class="btn-primary" onclick="showScreen('ay-create')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M12 5 V19"/><path d="M5 12 H19"/></svg>
+          Create Academic Year
+        </button>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+      <wired-combo selected="Tất cả trạng thái" style="min-width:220px;">
+        <wired-item value="all">Tất cả trạng thái</wired-item>
+        <wired-item value="draft">Draft</wired-item>
+        <wired-item value="active">Active</wired-item>
+        <wired-item value="closed">Closed</wired-item>
+        <wired-item value="archived">Archived</wired-item>
+      </wired-combo>
+    </div>
+
+    <div class="sketch-box table-wrap" style="padding:6px 12px;">
+      <table class="doodle-table">
+        <thead><tr><th>Year Label</th><th>Start Date</th><th>End Date</th><th>Status</th><th>Số lớp</th></tr></thead>
+        <tbody>
+          <tr onclick="openAyDetail('2026-2027')" style="cursor:pointer;">
+            <td>2026-2027</td><td>01/09/2026</td><td>31/05/2027</td>
+            <td><span class="badge badge-active"><svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><path d="M4 12 L10 18 L20 6"/></svg>Active</span></td>
+            <td>18</td>
+          </tr>
+          <tr onclick="openAyDetail('2027-2028')" style="cursor:pointer;">
+            <td>2027-2028</td><td>01/09/2027</td><td>31/05/2028</td>
+            <td><span class="badge badge-draft">Draft</span></td>
+            <td>0</td>
+          </tr>
+          <tr onclick="openAyDetail('2025-2026')" style="cursor:pointer;">
+            <td>2025-2026</td><td>01/09/2025</td><td>31/05/2026</td>
+            <td><span class="badge badge-closed">Closed</span></td>
+            <td>17</td>
+          </tr>
+          <tr onclick="openAyDetail('2024-2025')" style="cursor:pointer;">
+            <td>2024-2025</td><td>01/09/2024</td><td>31/05/2025</td>
+            <td><span class="badge badge-archived">Archived</span></td>
+            <td>16</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-xs" style="color:#777;">Success — kể cả năm học Archived vẫn hiển thị, đọc-only (BR-195).</p>
+  </div>
+
+  <!-- =========================================================
+       SCREEN 11: Create Academic Year (42)
+  ========================================================== -->
+  <div class="screen" id="ay-create">
+    <div class="breadcrumb">
+      <a onclick="showScreen('ay-list')">Academic Year List</a> <span>&gt;</span> <span>Create Academic Year</span>
+    </div>
+    <div style="max-width:520px; margin:10px auto;">
+      <div class="sketch-box card-section">
+        <h2 class="text-md">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10 H21"/></svg>
+          Tạo năm học mới
+        </h2>
+        <div class="field">
+          <div class="field-label text-sm">Year Label</div>
+          <wired-input placeholder='VD: "2027-2028"'></wired-input>
+        </div>
+        <div class="field">
+          <div class="field-label text-sm">Start Date</div>
+          <wired-calendar style="max-width:260px;"></wired-calendar>
+        </div>
+        <div class="field">
+          <div class="field-label text-sm">End Date</div>
+          <wired-calendar style="max-width:260px;"></wired-calendar>
+        </div>
+        <div class="field">
+          <label style="display:flex; align-items:center; gap:8px;">
+            <wired-checkbox></wired-checkbox>
+            Sao chép cấu trúc lớp từ năm học trước
+          </label>
+          <div class="text-xs" style="color:#777;">Chỉ sao chép tên/cấp/sức chứa, KHÔNG chuyển học sinh (BR-194)</div>
+        </div>
+        <button class="btn-primary" style="width:100%; justify-content:center;" onclick="showScreen('ay-list'); alert('MSG-082 — Tạo năm học thành công. Năm học được lưu ở trạng thái Draft.')">
+          Tạo năm học
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       SCREEN 12: Academic Year Detail (43)
+  ========================================================== -->
+  <div class="screen" id="ay-detail">
+    <div class="breadcrumb">
+      <a onclick="showScreen('ay-list')">Academic Year List</a> <span>&gt;</span> <span id="ayd-breadcrumb-label">2026-2027</span>
+    </div>
+    <div class="page-header">
+      <div class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10 H21"/></svg>
+        <h2 class="text-lg" id="ayd-title">2026-2027</h2>
+        <span class="badge badge-active" id="ayd-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><path d="M4 12 L10 18 L20 6"/></svg>Active</span>
+      </div>
+      <div class="header-actions" id="ayd-actions">
+        <button class="btn-secondary" id="ayd-promote-btn" onclick="showScreen('ay-promote')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><path d="M12 19 V5"/><path d="M6 11 L12 5 L18 11"/></svg>
+          Promote Students
+        </button>
+        <button class="btn-danger" id="ayd-close-btn" onclick="openAyDialog('close')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><rect x="4" y="10" width="16" height="10" rx="1.5"/><path d="M8 10 V7 a4 4 0 0 1 8 0 v3"/></svg>
+          Close
+        </button>
+        <button class="btn-primary" id="ayd-activate-btn" style="display:none;" onclick="openAyDialog('activate')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M4 12 L10 18 L20 6"/></svg>
+          Activate
+        </button>
+      </div>
+    </div>
+
+    <div class="kv-row" style="max-width:420px;"><span class="k">Start / End Date</span><span id="ayd-dates">01/09/2026 — 31/05/2027</span></div>
+
+    <div class="alert alert-danger" id="ayd-msg080" style="display:none; margin-top:14px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8"><path d="M12 2 L22 20 H2 Z"/><path d="M12 9 V13"/><circle cx="12" cy="16.5" r="0.6" fill="#333"/></svg>
+      <div><strong>MSG-080</strong> — Trường đã có năm học Active khác (2026-2027). Không thể Activate năm học này cho tới khi năm hiện tại được Close.</div>
+    </div>
+
+    <div class="sketch-box card-section" style="margin-top:16px;">
+      <h3 class="text-md">Danh sách lớp thuộc năm học này</h3>
+      <div class="table-wrap">
+        <table class="doodle-table">
+          <thead><tr><th>Class Name</th><th>Grade Level</th><th>Capacity</th><th>Homeroom Teacher</th></tr></thead>
+          <tbody id="ayd-class-table-body">
+            <tr><td>1A1</td><td>1</td><td>32/40</td><td>Nguyễn Thị Hoa</td></tr>
+            <tr><td>1A2</td><td>1</td><td>35/40</td><td>Trần Văn Bình</td></tr>
+            <tr><td>5B1</td><td>5</td><td>40/45</td><td>Lê Thị Mai</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-xs" id="ayd-readonly-note" style="display:none; color:#900;">
+        BR-193 — Năm học đã Closed: toàn bộ Classroom liên quan chuyển read-only.
+      </p>
+    </div>
+
+    <div style="margin-top:16px;">
+      <div class="text-xs" style="color:#777; margin-bottom:6px;">Demo chuyển trạng thái để xem rule chặn:</div>
+      <button class="btn-ghost" onclick="setAyState('draft-blocked')">Xem: Draft (bị chặn Activate — MSG-080)</button>
+      <button class="btn-ghost" onclick="setAyState('active')">Xem: Active</button>
+      <button class="btn-ghost" onclick="setAyState('closed')">Xem: Closed (BR-193 read-only)</button>
+    </div>
+  </div>
+
+  <!-- Modal: Activate/Close Academic Year Dialog (44) -->
+  <div class="modal-overlay" id="ay-dialog">
+    <div class="sketch-box modal-box" id="ay-dialog-box">
+      <div class="modal-close-row"><a class="sketch-link" onclick="closeModal('ay-dialog')">Đóng ×</a></div>
+      <h3 class="text-md" id="ay-dialog-title">Activate Academic Year</h3>
+      <div class="kv-row"><span class="k">Year Label</span><span id="ay-dialog-label">2027-2028</span></div>
+      <div class="kv-row"><span class="k">Trạng thái</span>
+        <span id="ay-dialog-status-from">Draft</span> → <span id="ay-dialog-status-to">Active</span>
+      </div>
+
+      <div class="alert alert-info" id="ay-dialog-activate-alert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8 V13"/><circle cx="12" cy="16" r="0.6" fill="#333"/></svg>
+        <div>Sẽ bị chặn nếu trường còn năm học Active khác (BR-191).</div>
+      </div>
+      <div class="alert alert-warning" id="ay-dialog-close-alert" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8"><path d="M12 2 L22 20 H2 Z"/><path d="M12 9 V13"/><circle cx="12" cy="16.5" r="0.6" fill="#333"/></svg>
+        <div>Toàn bộ Classroom thuộc năm học này sẽ chuyển read-only (BR-193). Dữ liệu lịch sử vẫn giữ nguyên. Cảnh báo nếu còn thao tác đang chờ xử lý (pending operations).</div>
+      </div>
+
+      <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:14px;">
+        <button class="btn-ghost" onclick="closeModal('ay-dialog')">Huỷ</button>
+        <button class="btn-primary" id="ay-dialog-confirm-btn" onclick="confirmAyDialog()">Xác nhận</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       SCREEN 13: Promote Students Workspace (45)
+  ========================================================== -->
+  <div class="screen" id="ay-promote">
+    <div class="breadcrumb">
+      <a onclick="showScreen('ay-detail')">Academic Year Detail</a> <span>&gt;</span> <span>Promote Students Workspace</span>
+    </div>
+    <div class="page-title" style="margin-bottom:14px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><path d="M12 19 V5"/><path d="M6 11 L12 5 L18 11"/></svg>
+      <h2 class="text-lg">Promote Students Workspace</h2>
+    </div>
+
+    <div class="stepper">
+      <div class="step done"><div class="step-num">1</div>Chọn khối/lớp nguồn-đích</div><span class="step-sep">›</span>
+      <div class="step active"><div class="step-num">2</div>Xem &amp; loại trừ danh sách</div><span class="step-sep">›</span>
+      <div class="step"><div class="step-num">3</div>Xác nhận</div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:16px;">
+      <div class="field">
+        <div class="field-label text-sm">Chọn khối/lớp nguồn (năm học hiện tại — 2026-2027)</div>
+        <wired-combo selected="1A1 (khối 1)">
+          <wired-item value="1a1">1A1 (khối 1)</wired-item>
+          <wired-item value="5b1">5B1 (khối 5)</wired-item>
+        </wired-combo>
+      </div>
+      <div class="field">
+        <div class="field-label text-sm">Chọn lớp đích (năm học mới — 2027-2028)</div>
+        <wired-combo selected="2A1 (khối 2)">
+          <wired-item value="2a1">2A1 (khối 2) — 0/40</wired-item>
+        </wired-combo>
+        <div class="text-xs" style="color:#777;">Sức chứa lớp đích không được vượt 50 (MSG-010)</div>
+      </div>
+    </div>
+
+    <div class="alert alert-danger" id="promote-capacity-alert" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8"><path d="M12 2 L22 20 H2 Z"/><path d="M12 9 V13"/><circle cx="12" cy="16.5" r="0.6" fill="#333"/></svg>
+      <div><strong>MSG-010</strong> — Lớp đích 2A1 sẽ vượt sức chứa tối đa nếu lên lớp toàn bộ 32 học sinh đã chọn (giới hạn 30 chỗ trống còn lại).</div>
+    </div>
+
+    <div class="sketch-box card-section">
+      <h3 class="text-md">Danh sách học sinh bị ảnh hưởng (mặc định tất cả được chọn)</h3>
+      <div class="table-wrap">
+        <table class="doodle-table">
+          <thead><tr><th></th><th>Tên</th><th>Lớp hiện tại</th><th>Lớp đích dự kiến</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><wired-checkbox checked></wired-checkbox></td>
+              <td>Nguyễn Minh An</td><td>1A1</td><td>2A1</td>
+            </tr>
+            <tr>
+              <td><wired-checkbox checked></wired-checkbox></td>
+              <td>Trần Bảo Châu</td><td>1A1</td><td>2A1</td>
+            </tr>
+            <tr class="muted-row">
+              <td><wired-checkbox onchange="toggleHoldback(this)"></wired-checkbox></td>
+              <td class="strike">Lê Gia Hân (lưu ban)</td><td>1A1</td><td>giữ nguyên 1A1</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-xs" style="color:#777;">Bỏ chọn = loại trừ cá nhân (học sinh lưu ban) — giữ nguyên liên kết lớp cũ, xử lý thủ công sau qua Classroom Detail/Update Classroom (AF1).</p>
+
+      <button class="btn-primary" style="margin-top:12px;" onclick="showScreen('ay-detail'); alert('MSG-084 — Lên lớp hàng loạt thành công.')">
+        Xác nhận lên lớp
+      </button>
+    </div>
+  </div>
+
+  </div><!-- /main -->
+</div><!-- /app-shell -->
+
+<div class="float-note">Wireframe hand-drawn (wireframer-skill) — Draft, chưa qua QA. Xem manifest .md kèm theo để biết chi tiết nguồn từng màn.</div>
+
+<script>
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById(id);
+    if (target) target.classList.add('active');
+    document.querySelectorAll('.nav-item[data-nav]').forEach(n => n.classList.remove('active'));
+    let navKey = null;
+    if (id === 'classroom-management' || id === 'classroom-detail' || id === 'create-classroom') navKey = 'classroom-management';
+    if (id.startsWith('student-profile') || id === 'create-student-profile' || id === 'bulk-import' || id.startsWith('parent-account') || id === 'link-parent-account' || id === 'linked-students-list') navKey = 'student-profile-management';
+    if (id.startsWith('ay-')) navKey = 'ay-list';
+    if (navKey) {
+      const navEl = document.querySelector('.nav-item[data-nav="' + navKey + '"]');
+      if (navEl) navEl.classList.add('active');
+    }
+    window.scrollTo(0, 0);
+  }
+
+  function openModal(id) { document.getElementById(id).classList.add('open'); }
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+  function toggleEdit() {
+    const form = document.getElementById('cd-edit-form');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+  }
+  function checkCapacity(val) {
+    document.getElementById('capacity-alert').style.display = (parseInt(val) < 32) ? 'flex' : 'none';
+  }
+  function saveClassroomEdit() {
+    alert('Đã lưu thay đổi lớp (demo). Toast xác nhận Update Classroom thành công.');
+    toggleEdit();
+  }
+  function checkTeacherConflict(e) {
+    const val = e && e.detail && e.detail.selected;
+    document.getElementById('teacher-conflict-alert').style.display = (val === 'binh') ? 'flex' : 'none';
+  }
+
+  function toggleNoActiveYearDemo(checked) {
+    document.getElementById('no-active-year-alert').style.display = checked ? 'flex' : 'none';
+    document.getElementById('cc-year-select').style.opacity = checked ? '0.4' : '1';
+  }
+
+  function toggleHoldback(cb) {
+    const row = cb.closest('tr');
+    row.classList.toggle('muted-row');
+  }
+
+  // Academic Year Detail state demo
+  function openAyDetail(year) {
+    if (year === '2027-2028') setAyState('draft-blocked');
+    else if (year === '2025-2026') setAyState('closed');
+    else if (year === '2024-2025') setAyState('archived');
+    else setAyState('active');
+    showScreen('ay-detail');
+  }
+
+  function setAyState(state) {
+    const title = document.getElementById('ayd-title');
+    const crumb = document.getElementById('ayd-breadcrumb-label');
+    const badge = document.getElementById('ayd-badge');
+    const msg080 = document.getElementById('ayd-msg080');
+    const activateBtn = document.getElementById('ayd-activate-btn');
+    const closeBtn = document.getElementById('ayd-close-btn');
+    const promoteBtn = document.getElementById('ayd-promote-btn');
+    const readonlyNote = document.getElementById('ayd-readonly-note');
+
+    if (state === 'draft-blocked') {
+      title.textContent = '2027-2028'; crumb.textContent = '2027-2028';
+      badge.className = 'badge badge-draft'; badge.innerHTML = 'Draft';
+      msg080.style.display = 'flex';
+      activateBtn.style.display = 'inline-flex'; activateBtn.disabled = true;
+      closeBtn.style.display = 'none'; promoteBtn.style.display = 'none';
+      readonlyNote.style.display = 'none';
+    } else if (state === 'active') {
+      title.textContent = '2026-2027'; crumb.textContent = '2026-2027';
+      badge.className = 'badge badge-active';
+      badge.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><path d="M4 12 L10 18 L20 6"/></svg>Active';
+      msg080.style.display = 'none';
+      activateBtn.style.display = 'none';
+      closeBtn.style.display = 'inline-flex'; promoteBtn.style.display = 'inline-flex';
+      readonlyNote.style.display = 'none';
+    } else if (state === 'closed') {
+      title.textContent = '2025-2026'; crumb.textContent = '2025-2026';
+      badge.className = 'badge badge-closed'; badge.innerHTML = 'Closed';
+      msg080.style.display = 'none';
+      activateBtn.style.display = 'none'; closeBtn.style.display = 'none'; promoteBtn.style.display = 'none';
+      readonlyNote.style.display = 'block';
+    } else if (state === 'archived') {
+      title.textContent = '2024-2025'; crumb.textContent = '2024-2025';
+      badge.className = 'badge badge-archived'; badge.innerHTML = 'Archived';
+      msg080.style.display = 'none';
+      activateBtn.style.display = 'none'; closeBtn.style.display = 'none'; promoteBtn.style.display = 'none';
+      readonlyNote.style.display = 'block';
+    }
+  }
+
+  let ayDialogMode = 'activate';
+  function openAyDialog(mode) {
+    ayDialogMode = mode;
+    const title = document.getElementById('ay-dialog-title');
+    const from = document.getElementById('ay-dialog-status-from');
+    const to = document.getElementById('ay-dialog-status-to');
+    const activateAlert = document.getElementById('ay-dialog-activate-alert');
+    const closeAlert = document.getElementById('ay-dialog-close-alert');
+    const confirmBtn = document.getElementById('ay-dialog-confirm-btn');
+    if (mode === 'activate') {
+      title.textContent = 'Activate Academic Year';
+      from.textContent = 'Draft'; to.textContent = 'Active';
+      activateAlert.style.display = 'flex'; closeAlert.style.display = 'none';
+      confirmBtn.className = 'btn-primary';
+    } else {
+      title.textContent = 'Close Academic Year';
+      from.textContent = 'Active'; to.textContent = 'Closed';
+      activateAlert.style.display = 'none'; closeAlert.style.display = 'flex';
+      confirmBtn.className = 'btn-danger';
+    }
+    openModal('ay-dialog');
+  }
+  function confirmAyDialog() {
+    closeModal('ay-dialog');
+    if (ayDialogMode === 'activate') {
+      alert('MSG-080 — Trường đã có năm học Active khác (demo minh hoạ rule chặn). Không thể Activate.');
+    } else {
+      alert('MSG-083 — Cập nhật trạng thái thành công. Toàn bộ Classroom thuộc năm học chuyển read-only (BR-193).');
+      setAyState('closed');
+    }
+  }
+
+  document.getElementById('promote-capacity-alert') && (function(){
+    // static demo toggle via checkbox in stepper area could be added; kept simple/static per spec.
+  })();
+</script>
+</body>
+</html>

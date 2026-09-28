@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>School Food Management System - Upload Staff List</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-highest": "#e0e3e5",
+                    "on-primary-container": "#d3f1ff",
+                    "inverse-primary": "#81d1f0",
+                    "on-error-container": "#93000a",
+                    "primary-fixed-dim": "#81d1f0",
+                    "primary-container": "#0e7490",
+                    "secondary-fixed-dim": "#c4c7c9",
+                    "surface-tint": "#006781",
+                    "inverse-on-surface": "#eef1f3",
+                    "on-secondary-fixed": "#191c1e",
+                    "tertiary-fixed-dim": "#ffb86f",
+                    "on-surface": "#181c1e",
+                    "surface-container-low": "#f1f4f6",
+                    "on-tertiary": "#ffffff",
+                    "on-background": "#181c1e",
+                    "primary-fixed": "#b9eaff",
+                    "secondary": "#5c5f61",
+                    "error-container": "#ffdad6",
+                    "error": "#ba1a1a",
+                    "on-error": "#ffffff",
+                    "surface-bright": "#f7fafc",
+                    "surface-container": "#ebeef0",
+                    "secondary-container": "#e0e3e5",
+                    "surface-variant": "#e0e3e5",
+                    "surface": "#f7fafc",
+                    "inverse-surface": "#2d3133",
+                    "on-tertiary-fixed": "#2c1600",
+                    "on-tertiary-container": "#ffe8d6",
+                    "on-secondary": "#ffffff",
+                    "outline": "#6f787d",
+                    "surface-dim": "#d7dadd",
+                    "tertiary-container": "#965e1c",
+                    "tertiary-fixed": "#ffdcbd",
+                    "on-primary-fixed-variant": "#004d62",
+                    "primary": "#005a71",
+                    "outline-variant": "#bec8cd",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary": "#794602",
+                    "on-surface-variant": "#3f484c",
+                    "surface-container-high": "#e6e8eb",
+                    "background": "#f7fafc",
+                    "on-primary": "#ffffff",
+                    "secondary-fixed": "#e0e3e5",
+                    "on-secondary-container": "#626567",
+                    "on-primary-fixed": "#001f29",
+                    "on-tertiary-fixed-variant": "#693c00",
+                    "on-secondary-fixed-variant": "#444749"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "1rem",
+                    "sidebar-width": "260px",
+                    "section-gap": "1.5rem",
+                    "edge-margin": "2rem",
+                    "container-max": "1440px"
+            },
+            "fontFamily": {
+                    "table-header": ["Be Vietnam Pro"],
+                    "body-sm": ["Be Vietnam Pro"],
+                    "h1-mobile": ["Be Vietnam Pro"],
+                    "label": ["Be Vietnam Pro"],
+                    "h1": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "h2": ["Be Vietnam Pro"],
+                    "h3": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "table-header": ["13px", {"lineHeight": "18px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "h1-mobile": ["24px", {"lineHeight": "30px", "fontWeight": "700"}],
+                    "label": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "h1": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "h3": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-sm antialiased h-screen flex overflow-hidden">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full w-[260px] bg-surface-container-low border-r border-outline-variant flex flex-col py-6 z-20">
+<div class="px-6 mb-8 flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">admin_panel_settings</span>
+</div>
+<div>
+<h2 class="font-h3 text-h3 font-bold text-primary">SFMS Admin</h2>
+<p class="font-label text-label text-on-surface-variant">District Authority</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto w-full">
+<ul class="flex flex-col gap-1 w-full">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors w-full" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors w-full" href="#">
+<span class="material-symbols-outlined">handshake</span>
+<span>Partnership</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors w-full" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span>Menu</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors w-full" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span>Classes &amp; Students</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors w-full" href="#">
+<span class="material-symbols-outlined">assignment_late</span>
+<span>Incidents &amp; Inspections</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors w-full" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<span>Reports &amp; Statistics</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors w-full" href="#">
+<span class="material-symbols-outlined">campaign</span>
+<span>Announcement Management</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container/10 text-primary font-semibold border-l-4 border-primary w-full" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">badge</span>
+<span>Staff Management</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors w-full" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>School Configuration</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col ml-[260px] h-full overflow-hidden">
+<!-- TopAppBar -->
+<header class="h-16 bg-surface-container-lowest border-b border-outline-variant flex justify-between items-center px-gutter shrink-0 shadow-sm z-10">
+<div class="flex items-center gap-2">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Announcement Management &amp; Staff</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">chevron_right</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Staff Management</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">chevron_right</span>
+<span class="font-body-sm text-body-sm font-semibold text-primary">Upload Staff List</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative focus-within:ring-2 focus-within:ring-primary/20 rounded-full bg-surface-container-low px-3 py-1.5 flex items-center gap-2 border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-48 text-on-surface placeholder:text-on-surface-variant outline-none" placeholder="Search..." type="text"/>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-2 rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-2 rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-secondary-container border border-outline-variant overflow-hidden">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="A small, circular avatar portrait of a professional school administrator in a modern office setting. The lighting is bright and even, indicating a light-mode corporate UI. The focus is sharp on the person's face." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRQ7C2Ah0VGJRuX5fO84WY5BLIz91YArY8-ckohKYgUaA2ACmUwEzPzNW6DZ9aw0kagapPgIA7sqskvEE04o8Wb8GMh4eh-4bV2gWjrTYtJGB7q7j3ICedyX02WUD3jHMXzl1Z1md7O4k7NX1EBVYMmxPjMF0kbshugpsumBCRmeETjWXZIXwi_OyafWQ1qQoHgqn4f5Tjl0GL6c5JTsP1aEkFB-MqEXYjcKtZC5q2Xz2TBYwFR5hwhHz7UwSn8q13AtP5eUMFINw"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<main class="flex-1 overflow-y-auto p-edge-margin bg-background">
+<div class="max-w-container-max mx-auto space-y-6">
+<!-- Page Header -->
+<div class="flex items-center justify-between">
+<h1 class="font-h1 text-h1 text-on-surface">Tải danh sách nhân viên</h1>
+<div class="flex gap-3">
+<button class="px-4 py-2 border border-outline-variant rounded-lg text-primary font-medium hover:bg-surface-container transition-colors">Hủy</button>
+<button class="px-4 py-2 bg-surface-container-highest text-on-surface-variant rounded-lg font-medium cursor-not-allowed opacity-70 flex items-center gap-2" disabled="">
+<span class="material-symbols-outlined">check_circle</span>
+                            Xác nhận nhập
+                        </button>
+</div>
+</div>
+<!-- Stepper -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm">
+<div class="flex items-center justify-between relative">
+<div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 bg-surface-container-high -z-10"></div>
+<!-- Step 1: Done -->
+<div class="flex flex-col items-center gap-2 bg-surface-container-lowest px-4">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold border-2 border-surface-container-lowest z-10 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<span class="font-label text-label font-medium text-primary">Tải template</span>
+</div>
+<!-- Step 2: Active -->
+<div class="flex flex-col items-center gap-2 bg-surface-container-lowest px-4">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold border-2 border-surface-container-lowest z-10 shadow-sm ring-4 ring-primary-container/20">
+                                2
+                            </div>
+<span class="font-label text-label font-bold text-primary-container">Tải lên file</span>
+</div>
+<!-- Step 3: Pending -->
+<div class="flex flex-col items-center gap-2 bg-surface-container-lowest px-4">
+<div class="w-8 h-8 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-medium border-2 border-surface-container-lowest z-10 shadow-sm">
+                                3
+                            </div>
+<span class="font-label text-label text-on-surface-variant">Xác minh dữ liệu</span>
+</div>
+<!-- Step 4: Pending -->
+<div class="flex flex-col items-center gap-2 bg-surface-container-lowest px-4">
+<div class="w-8 h-8 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-medium border-2 border-surface-container-lowest z-10 shadow-sm">
+                                4
+                            </div>
+<span class="font-label text-label text-on-surface-variant">Xác nhận nhập</span>
+</div>
+</div>
+</div>
+<!-- Main Content Grid -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Left Column: Upload & Summary -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-6">
+<!-- Drag & Drop Zone -->
+<div class="bg-surface-container-lowest border-2 border-dashed border-primary/30 rounded-xl p-8 flex flex-col items-center justify-center text-center hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="w-16 h-16 rounded-full bg-primary-container/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-4xl text-primary">cloud_upload</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface mb-2">Kéo &amp; thả file vào đây</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6">hoặc click để chọn file từ máy tính</p>
+<div class="flex items-center gap-2 text-xs text-on-surface-variant bg-surface-container-low px-3 py-1.5 rounded-full">
+<span class="material-symbols-outlined text-[16px]">info</span>
+                                Hỗ trợ: .xlsx, .csv (Tối đa 5MB)
+                            </div>
+</div>
+<!-- Validation Summary Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
+<h3 class="font-h3 text-h3 text-on-surface mb-4 pb-3 border-b border-outline-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">analytics</span>
+                                Kết quả kiểm tra file
+                            </h3>
+<div class="grid grid-cols-3 gap-4 mb-4">
+<div class="bg-surface-container-low rounded-lg p-3 text-center">
+<div class="text-2xl font-bold text-on-surface">120</div>
+<div class="font-label text-label text-on-surface-variant">Tổng số</div>
+</div>
+<div class="bg-[#d3f1ff]/50 rounded-lg p-3 text-center border border-[#d3f1ff]">
+<div class="text-2xl font-bold text-[#005a71]">117</div>
+<div class="font-label text-label text-[#005a71]">Hợp lệ</div>
+</div>
+<div class="bg-error-container/50 rounded-lg p-3 text-center border border-error-container">
+<div class="text-2xl font-bold text-error">3</div>
+<div class="font-label text-label text-error">Lỗi</div>
+</div>
+</div>
+<div class="bg-error-container/20 border border-error/20 rounded-lg p-3 flex items-start gap-3">
+<span class="material-symbols-outlined text-error mt-0.5">error</span>
+<div>
+<h4 class="font-label text-label font-bold text-error">Phát hiện dữ liệu không hợp lệ</h4>
+<p class="font-body-sm text-sm text-on-surface-variant">Vui lòng kiểm tra và chỉnh sửa các dòng báo lỗi trong bảng bên phải trước khi tiếp tục.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Error Table -->
+<div class="col-span-12 lg:col-span-8">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden flex flex-col h-full">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low/50">
+<h3 class="font-h3 text-h3 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-error">warning</span>
+                                    Chi tiết lỗi (3)
+                                </h3>
+<button class="text-primary font-medium text-sm flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                                    Tải báo cáo lỗi
+                                </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant font-table-header text-table-header text-on-surface-variant">
+<th class="p-3 w-16 text-center">Dòng #</th>
+<th class="p-3 w-1/4">Tên nhân viên</th>
+<th class="p-3 w-1/4">Email</th>
+<th class="p-3">Mô tả lỗi</th>
+<th class="p-3 w-16 text-center">Hành động</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm divide-y divide-outline-variant/50">
+<tr class="hover:bg-surface-bright transition-colors group bg-error-container/5">
+<td class="p-3 text-center font-medium">12</td>
+<td class="p-3 text-on-surface">Nguyễn Văn A</td>
+<td class="p-3 text-on-surface-variant">nguyenvana@school.edu.vn</td>
+<td class="p-3">
+<div class="flex items-start gap-1.5">
+<span class="material-symbols-outlined text-error text-[16px] mt-0.5">cancel</span>
+<span class="text-error font-medium">Email đã tồn tại - MSG-006</span>
+</div>
+</td>
+<td class="p-3 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-bright transition-colors group bg-error-container/5">
+<td class="p-3 text-center font-medium">45</td>
+<td class="p-3 text-on-surface">Trần Thị B</td>
+<td class="p-3 text-on-surface-variant">tranthib_missing_domain</td>
+<td class="p-3">
+<div class="flex items-start gap-1.5">
+<span class="material-symbols-outlined text-error text-[16px] mt-0.5">cancel</span>
+<span class="text-error font-medium">Định dạng email không hợp lệ - MSG-002</span>
+</div>
+</td>
+<td class="p-3 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-bright transition-colors group bg-error-container/5">
+<td class="p-3 text-center font-medium">89</td>
+<td class="p-3 text-on-surface">Lê Văn C</td>
+<td class="p-3 text-on-surface-variant">levanc@school.edu.vn</td>
+<td class="p-3">
+<div class="flex items-start gap-1.5">
+<span class="material-symbols-outlined text-error text-[16px] mt-0.5">cancel</span>
+<span class="text-error font-medium">Vai trò không hợp lệ - BR-013</span>
+</div>
+<div class="text-xs text-on-surface-variant mt-1 ml-5">Giá trị 'SuperAdmin' không tồn tại.</div>
+</td>
+<td class="p-3 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-outline-variant bg-surface-container-low mt-auto flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">Đang hiển thị 3 lỗi</span>
+<div class="flex items-center gap-2">
+<button class="p-1 rounded hover:bg-surface-container-high text-outline disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<span class="font-medium">1 / 1</span>
+<button class="p-1 rounded hover:bg-surface-container-high text-outline disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

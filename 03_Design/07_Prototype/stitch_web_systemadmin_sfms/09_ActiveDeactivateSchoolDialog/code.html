@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Xác nhận tạm dừng hoạt động trường học</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "inverse-primary": "#81d1f0",
+                        "on-primary-fixed-variant": "#004d62",
+                        "on-surface": "#181c1e",
+                        "on-tertiary-container": "#ffe8d6",
+                        "surface-tint": "#006781",
+                        "primary-fixed-dim": "#81d1f0",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-tertiary-fixed-variant": "#693c00",
+                        "secondary": "#505f76",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-error-container": "#93000a",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f1f4f6",
+                        "inverse-surface": "#2d3133",
+                        "primary-fixed": "#b9eaff",
+                        "surface": "#f7fafc",
+                        "tertiary-fixed": "#ffdcbd",
+                        "on-secondary-container": "#54647a",
+                        "secondary-fixed": "#d3e4fe",
+                        "tertiary-fixed-dim": "#ffb86f",
+                        "primary": "#005a71",
+                        "surface-container-high": "#e6e8eb",
+                        "on-surface-variant": "#3f484c",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#001f29",
+                        "tertiary": "#794602",
+                        "tertiary-container": "#965e1c",
+                        "surface-container": "#ebeef0",
+                        "surface-dim": "#d7dadd",
+                        "background": "#f7fafc",
+                        "secondary-container": "#d0e1fb",
+                        "surface-bright": "#f7fafc",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#2c1600",
+                        "on-primary-container": "#d3f1ff",
+                        "on-background": "#181c1e",
+                        "outline": "#6f787d",
+                        "inverse-on-surface": "#eef1f3",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#e0e3e5",
+                        "primary-container": "#0e7490",
+                        "outline-variant": "#bec8cd"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "section-gap": "32px",
+                        "base": "4px",
+                        "container-margin": "24px",
+                        "gutter": "16px"
+                    },
+                    fontFamily: {
+                        "label-sm": ["Be Vietnam Pro"],
+                        "h1-mobile": ["Be Vietnam Pro"],
+                        "h2": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "h3": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "h1": ["Be Vietnam Pro"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .font-h1 { font-family: 'Be Vietnam Pro', sans-serif; font-size: 30px; line-height: 36px; letter-spacing: -0.02em; font-weight: 700; }
+        .font-h2 { font-family: 'Be Vietnam Pro', sans-serif; font-size: 24px; line-height: 32px; letter-spacing: -0.01em; font-weight: 600; }
+        .font-h3 { font-family: 'Be Vietnam Pro', sans-serif; font-size: 20px; line-height: 28px; font-weight: 600; }
+        .font-body-lg { font-family: 'Be Vietnam Pro', sans-serif; font-size: 16px; line-height: 24px; font-weight: 400; }
+        .font-body-md { font-family: 'Be Vietnam Pro', sans-serif; font-size: 14px; line-height: 20px; font-weight: 400; }
+        .font-label-md { font-family: 'Be Vietnam Pro', sans-serif; font-size: 14px; line-height: 20px; font-weight: 500; }
+        .font-label-sm { font-family: 'Be Vietnam Pro', sans-serif; font-size: 12px; line-height: 16px; font-weight: 500; }
+        
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-surface-variant min-h-screen flex items-center justify-center p-container-margin">
+<!-- Modal Overlay -->
+<div aria-modal="true" class="fixed inset-0 bg-on-background/40 backdrop-blur-sm flex items-center justify-center z-50 p-4" role="dialog">
+<!-- Modal Content -->
+<div class="bg-surface-container-lowest rounded-xl shadow-lg w-full max-w-lg border border-outline-variant overflow-hidden flex flex-col">
+<!-- Modal Body -->
+<div class="p-container-margin flex flex-col gap-gutter">
+<!-- Icon & Header -->
+<div class="flex flex-col items-center text-center gap-4">
+<div class="w-16 h-16 rounded-full bg-error-container flex items-center justify-center border-4 border-surface-container-lowest shadow-sm -mt-12 mb-2 relative">
+<span class="material-symbols-outlined text-[32px] text-error" style="font-variation-settings: 'FILL' 1;">
+                            warning
+                        </span>
+</div>
+<div>
+<h2 class="font-h2 text-on-surface mb-2">Xác nhận tạm dừng hoạt động trường học</h2>
+<p class="font-body-lg text-on-surface-variant">
+                            Bạn đang thực hiện thay đổi trạng thái cho trường: <strong class="text-on-surface font-semibold">Trường Tiểu học Ánh Dương</strong> (Hoạt động <span class="material-symbols-outlined align-middle text-sm mx-1">arrow_forward</span> Tạm dừng).
+                        </p>
+</div>
+</div>
+<!-- Warning Card -->
+<div class="bg-[#fef2f2] border border-[#fecaca] rounded-lg p-4 mt-2 flex gap-3 items-start">
+<span class="material-symbols-outlined text-error flex-shrink-0 mt-0.5" style="font-variation-settings: 'FILL' 1;">
+                        error
+                    </span>
+<div>
+<span class="font-label-md text-error block mb-1">CẢNH BÁO RỦI RO LÂY LAN</span>
+<p class="font-body-md text-[#991b1b]">
+                            Hành động này sẽ cascade tạm dừng hoạt động đối với tất cả các lớp học, nhân viên trường (Giáo viên, Nhân viên y tế) và học sinh trực thuộc trường này.
+                        </p>
+</div>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="bg-surface-container-low p-4 flex justify-end gap-3 border-t border-outline-variant">
+<button class="px-6 py-2.5 rounded border border-outline-variant text-on-surface-variant font-label-md hover:bg-surface-container-highest hover:text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1" type="button">
+                    Quay lại
+                </button>
+<button class="px-6 py-2.5 rounded bg-error text-on-error font-label-md hover:bg-[#a31515] transition-colors focus:outline-none focus:ring-2 focus:ring-error focus:ring-offset-1 shadow-sm flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">block</span>
+                    Xác nhận tạm dừng
+                </button>
+</div>
+</div>
+</div>
+</body></html>

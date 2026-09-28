@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thực hiện kiểm tra vệ sinh mới - SFMS</title>
+<!-- Google Fonts: Be Vietnam Pro -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS Config -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#e6eeff",
+                        "primary-fixed-dim": "#81d1f0",
+                        "tertiary-container": "#686b6d",
+                        "on-primary-fixed": "#001f29",
+                        "on-tertiary": "#ffffff",
+                        "primary-container": "#0e7490",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed": "#0b1c30",
+                        "background": "#f8f9ff",
+                        "on-tertiary-fixed": "#191c1e",
+                        "surface-dim": "#d0dbed",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-primary-fixed-variant": "#004d62",
+                        "outline": "#6f787d",
+                        "on-secondary-container": "#54647a",
+                        "tertiary-fixed": "#e0e3e5",
+                        "surface": "#f8f9ff",
+                        "surface-bright": "#f8f9ff",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-surface-variant": "#3f484c",
+                        "on-background": "#121c2a",
+                        "surface-container-low": "#eff4ff",
+                        "secondary-fixed": "#d3e4fe",
+                        "inverse-on-surface": "#eaf1ff",
+                        "outline-variant": "#bec8cd",
+                        "secondary": "#505f76",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#dee9fc",
+                        "secondary-container": "#d0e1fb",
+                        "surface-variant": "#d9e3f6",
+                        "primary-fixed": "#b9eaff",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "surface-container-highest": "#d9e3f6",
+                        "on-surface": "#121c2a",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "tertiary": "#505355",
+                        "on-tertiary-container": "#eaecee",
+                        "primary": "#005a71",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#81d1f0",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#006781",
+                        "on-primary-container": "#d3f1ff",
+                        "inverse-surface": "#27313f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "topbar-height": "64px",
+                        "sidebar-width": "280px",
+                        "gutter": "16px",
+                        "section-gap": "32px",
+                        "container-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "h3": ["Be Vietnam Pro"],
+                        "h2": ["Be Vietnam Pro"],
+                        "h1": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "body-sm": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "h3": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "h1": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background antialiased h-screen overflow-hidden flex font-body-lg">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-[280px] h-topbar-height flex justify-between items-center px-gutter z-40 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md border-b border-outline-variant dark:border-outline shadow-sm text-primary dark:text-primary-fixed-dim font-h3 text-h3 font-body-lg text-body-lg">
+<div class="flex items-center gap-4">
+<!-- Search Bar (on_left) -->
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant dark:text-on-secondary-container pointer-events-none" data-icon="search">search</span>
+<input class="w-64 pl-10 pr-4 py-2 bg-surface-container dark:bg-surface-container-high border-none rounded-full text-body-sm text-on-surface focus:ring-2 focus:ring-primary/20 focus:outline-none transition-all placeholder:text-on-surface-variant/60" placeholder="Tìm kiếm..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<!-- Trailing Icon Actions -->
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-full hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors cursor-pointer active:opacity-80 text-on-surface-variant dark:text-on-secondary-container relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-error rounded-full border-2 border-surface"></span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors cursor-pointer active:opacity-80 text-on-surface-variant dark:text-on-secondary-container">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+<!-- Profile Avatar -->
+<div class="h-9 w-9 rounded-full bg-secondary-container border border-outline-variant overflow-hidden cursor-pointer active:opacity-80 flex items-center justify-center shrink-0">
+<img alt="Medical Staff Avatar" class="object-cover w-full h-full" data-alt="A professional headshot of a female medical staff member wearing a clean white coat against a soft, well-lit hospital background. The lighting is high-key and modern, emphasizing trust and hygiene in a corporate medical setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBH5AQHW49zU_EWNV4gBWMMa3q0zAPhMmSpoG6GzvN5zLuj2LOADPsxr-0f6MGCUvCGNREhg2SqJpruhZVGCWG21Lw3jveQ8O8CHMNiHs65xQZ7EB07U0lAzLyu_SxNUSv1fKeeW0JtnrcPZpWctmZQRdU3Mrck7UCxoRlkDAFLhffrZCPMMiaz37yrfU_03XnnNloeZmhIyI5vnoNTQSKZEgUk-G_Uel0r9W1vdYsp5Xl8vNHVq_NzKGeIoVZjqzid8uyjoNjZbh8"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="fixed top-0 left-0 h-full w-sidebar-width flex flex-col p-4 z-50 bg-surface-container-lowest dark:bg-surface-dim border-r border-outline-variant dark:border-outline font-label-md text-label-md">
+<!-- Header -->
+<div class="flex items-center gap-3 px-3 py-4 mb-4">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center shrink-0 shadow-sm border border-outline-variant/30">
+<img alt="SFMS Logo" class="object-contain w-7 h-7" data-alt="A minimalist, modern logo icon for SFMS (School Food Management System) featuring a stylized medical cross intertwined with a simple abstract leaf, using a clean cyan and white color palette, professional and clinical." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9-OVydX3pkZ2YzqwdK9Ta_h0__puM1kUcj15Iprf50QZsrtaf7tlNgN8qSFXKWxkHNIzfJaGl6MEa4nqB3NT9HQTGsODKMSX8wktaG6-skLIPh6Gx64h3s_5WisdLJRZVcN9vwG8Nc5XqHlZxVxBEzt9iNREoi2vbdtUJGJT4K-QrixNOhMZ3FvFd7gISR-Es7jfAaY_zu_waDQV-dAxBxkqGqeVPwNahffIDoEb2QyP9UhCzJkDdumwx_2xQYohUgZqyaj1yvjw"/>
+</div>
+<div class="flex flex-col">
+<span class="font-h3 text-h3 font-bold text-primary dark:text-primary-fixed-dim truncate">Hệ thống SFMS</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate">Quản lý y tế học đường</span>
+</div>
+</div>
+<!-- Navigation Links -->
+<div class="flex-1 overflow-y-auto space-y-1 pr-1 custom-scrollbar">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container dark:hover:bg-surface-container-highest active:scale-95 duration-150 transition-all" href="#">
+<span class="material-symbols-outlined shrink-0" data-icon="home">home</span>
+<span class="truncate">Trang chủ</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container dark:hover:bg-surface-container-highest active:scale-95 duration-150 transition-all" href="#">
+<span class="material-symbols-outlined shrink-0" data-icon="medical_services">medical_services</span>
+<span class="truncate">Hồ sơ sức khỏe</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container dark:hover:bg-surface-container-highest active:scale-95 duration-150 transition-all" href="#">
+<span class="material-symbols-outlined shrink-0" data-icon="restaurant">restaurant</span>
+<span class="truncate">Suất ăn đặc biệt</span>
+</a>
+<!-- Active Tab -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-secondary-container dark:bg-primary-container text-on-secondary-container dark:text-on-primary-container font-semibold active:scale-95 duration-150 transition-all shadow-sm" href="#">
+<span class="material-symbols-outlined shrink-0" data-icon="fact_check" data-weight="fill">fact_check</span>
+<span class="truncate">Kiểm tra vệ sinh</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container dark:hover:bg-surface-container-highest active:scale-95 duration-150 transition-all" href="#">
+<span class="material-symbols-outlined shrink-0" data-icon="inventory_2">inventory_2</span>
+<span class="truncate">Lưu mẫu thực phẩm</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container dark:hover:bg-surface-container-highest active:scale-95 duration-150 transition-all" href="#">
+<span class="material-symbols-outlined shrink-0" data-icon="gavel">gavel</span>
+<span class="truncate">Quản lý vi phạm</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container dark:hover:bg-surface-container-highest active:scale-95 duration-150 transition-all" href="#">
+<span class="material-symbols-outlined shrink-0" data-icon="report_problem">report_problem</span>
+<span class="truncate">Quản lý sự cố</span>
+</a>
+</div>
+<!-- Footer -->
+<div class="pt-4 border-t border-outline-variant/50 mt-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-error hover:bg-error-container/50 active:scale-95 duration-150 transition-all font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined shrink-0" data-icon="logout">logout</span>
+<span class="truncate">Đăng xuất</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="ml-[280px] mt-[64px] flex-1 overflow-y-auto bg-background p-container-padding">
+<div class="max-w-5xl mx-auto space-y-section-gap">
+<!-- Page Header -->
+<div>
+<h1 class="font-h1 text-h1 text-on-background">Thực hiện kiểm tra vệ sinh mới</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-1">Đánh giá và lưu trữ thông tin kiểm tra an toàn thực phẩm hàng ngày.</p>
+</div>
+<!-- Bento Grid Layout for Form -->
+<form class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Left Column: Checklist & Notes (8 cols) -->
+<div class="lg:col-span-8 flex flex-col gap-6">
+<!-- Checklist Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-6">
+<div class="flex items-center gap-3 mb-6 border-b border-outline-variant/50 pb-4">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="rule">rule</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-background">Checklist tuân thủ</h3>
+</div>
+<div class="space-y-4">
+<!-- Item 1 -->
+<label class="flex items-start gap-4 p-4 rounded-lg border border-outline-variant/40 hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center h-6">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary focus:ring-2 focus:ring-offset-0 bg-surface-container-lowest checked:border-primary transition-all" type="checkbox"/>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors">Trang phục nhân viên bếp</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Đầy đủ mũ, khẩu trang, tạp dề, găng tay theo tiêu chuẩn.</span>
+</div>
+</label>
+<!-- Item 2 -->
+<label class="flex items-start gap-4 p-4 rounded-lg border border-outline-variant/40 hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center h-6">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary focus:ring-2 focus:ring-offset-0 bg-surface-container-lowest checked:border-primary transition-all" type="checkbox"/>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors">Vệ sinh khu chế biến</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Sàn nhà, bàn bếp, dụng cụ được làm sạch và khử trùng.</span>
+</div>
+</label>
+<!-- Item 3 -->
+<label class="flex items-start gap-4 p-4 rounded-lg border border-outline-variant/40 hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center h-6">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary focus:ring-2 focus:ring-offset-0 bg-surface-container-lowest checked:border-primary transition-all" type="checkbox"/>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors">Kiểm soát côn trùng &amp; động vật gây hại</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Không có dấu hiệu, lưới chắn hoạt động tốt.</span>
+</div>
+</label>
+<!-- Item 4 -->
+<label class="flex items-start gap-4 p-4 rounded-lg border border-outline-variant/40 hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center h-6">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary focus:ring-2 focus:ring-offset-0 bg-surface-container-lowest checked:border-primary transition-all" type="checkbox"/>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors">Hồ sơ khám sức khỏe định kỳ</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Tất cả nhân viên ca làm việc có hồ sơ hợp lệ.</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Notes Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-6">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-[20px] text-primary" data-icon="edit_note">edit_note</span>
+<h3 class="font-h3 text-h3 text-on-background">Ghi chú</h3>
+</div>
+<textarea class="w-full rounded-lg border border-outline-variant bg-background p-4 text-body-lg text-on-surface focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-y min-h-[120px] placeholder:text-on-surface-variant/60" placeholder="Nhập ghi chú chi tiết về các vấn đề phát hiện hoặc lưu ý thêm..." rows="4"></textarea>
+</div>
+</div>
+<!-- Right Column: Evidence (4 cols) -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<!-- Evidence Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-6 h-full flex flex-col">
+<div class="flex items-center gap-3 mb-6 border-b border-outline-variant/50 pb-4">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="photo_camera">photo_camera</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-background">Minh chứng</h3>
+</div>
+<!-- Upload Dropzone -->
+<div class="border-2 border-dashed border-outline-variant/60 rounded-xl bg-surface-container-low hover:bg-surface-container-high transition-colors flex flex-col items-center justify-center p-8 text-center cursor-pointer mb-6">
+<div class="w-12 h-12 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center mb-4 text-primary">
+<span class="material-symbols-outlined text-[24px]" data-icon="cloud_upload">cloud_upload</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface mb-1">Tải ảnh lên hoặc kéo thả</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">PNG, JPG, tối đa 5MB/ảnh</span>
+<input accept="image/*" class="hidden" multiple="" type="file"/>
+</div>
+<!-- Preview Area -->
+<div class="flex-1">
+<h4 class="font-label-md text-label-md text-on-surface-variant mb-3">Đã tải lên (2)</h4>
+<div class="grid grid-cols-2 gap-3">
+<!-- Thumb 1 -->
+<div class="relative group rounded-lg overflow-hidden border border-outline-variant aspect-square">
+<img alt="Bằng chứng 1" class="object-cover w-full h-full" data-alt="A close-up photograph of a meticulously clean stainless steel commercial kitchen counter, bright fluorescent lighting reflecting off the sanitary surface, representing impeccable food safety standards." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSpC197dqbpXBpfdz0K4hXqaPN4at80iF6CeLBMZBL6tXJ4A8dfxsyVQ53r2fq8a2jr3smjm8lkMBQZ6oknFxamPNwLiak4TFLKIn-e-QYElMP_qESGaT6ZV2waO6F1T-8EBBrEGlcmas0r_SDHlpwnM7kVg0T50cM5lPNDCuG95ShBpdJ3_4_7p58KRWOXYHv67cwJPXLILXD7jL9aCaBLM1lhtvQ9J9EOrP9iHOjKUUEY0KHXuHQZoD4t2VJKc75mU933BFcJeE"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="p-1.5 rounded-full bg-white/20 hover:bg-error text-white transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<!-- Thumb 2 -->
+<div class="relative group rounded-lg overflow-hidden border border-outline-variant aspect-square">
+<img alt="Bằng chứng 2" class="object-cover w-full h-full" data-alt="A photo showing kitchen staff wearing standard protective gear: a crisp white apron, blue disposable hairnet, and clear sanitary gloves while preparing food in a bright, modern hospital cafeteria kitchen." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-01T-4ykrTeHcPnT0yCOo3QYxfInbvV8KiZhZzpn6pJSx22s2V6l4qnpgMDDUANeO6BGVHufLxlyzdXo2VxLxCpClFjFv_pizHDC9aan4SlXxN8TtRcSp7uxapD6WYPNkzViZt_DSfZzKRpt5CKyzsYeYwwGkhIwWj9gy9ldh8nY2dA9uwFd_31V4JK1YoXnm780rH5HhO8qBbvmwyzKAYRVW21fR1_k9jByOYVYm2upK4cDOXqpPg_l4A_kdn1u9VUB_CBB9uik"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="p-1.5 rounded-full bg-white/20 hover:bg-error text-white transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</form>
+<!-- Actions Footer -->
+<div class="flex items-center justify-end gap-4 pt-6 border-t border-outline-variant/50">
+<button class="px-6 py-2.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button">
+                    Hủy
+                </button>
+<button class="px-6 py-2.5 rounded-lg font-label-md text-label-md bg-primary text-on-primary hover:bg-primary/90 shadow-sm transition-all active:scale-95 flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="save">save</span>
+                    Lưu &amp; Nộp kết quả
+                </button>
+</div>
+</div>
+</main>
+</body></html>

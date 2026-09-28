@@ -1,0 +1,829 @@
+@startuml SFMS_ERD_CrowsFoot
+' ============================================================
+' Crow's Foot Entity-Relationship Diagram
+' School Food Safety Management Support System (SFMS)
+' Version : 1.0
+' Date    : 28/06/2026
+' Source  : class_diagram_description.md + business_rules.md
+' ============================================================
+
+skinparam linetype ortho
+skinparam nodesep 60
+skinparam ranksep 80
+skinparam entityFontSize 12
+skinparam entityFontStyle Bold
+skinparam entityBackgroundColor #FAFAFA
+skinparam entityBorderColor #555555
+skinparam arrowColor #444444
+skinparam packageBackgroundColor #F8F8FF
+skinparam packageBorderColor #AAAACC
+
+hide circle
+hide methods
+
+' ─────────────────────────────────────────────────────────────
+' PACKAGE 1: User & Access Control
+' ─────────────────────────────────────────────────────────────
+package "User & Access Control" #EEF2FF {
+
+  entity "users" as User {
+    * user_id       : UUID <<PK>>
+    --
+    email           : VARCHAR(255) <<UNIQUE, NOT NULL>>
+    password_hash   : VARCHAR(255) <<NOT NULL>>
+    status          : ENUM('PENDING_VERIFICATION','ACTIVE','INACTIVE','LOCKED')
+    failed_login_count : SMALLINT DEFAULT 0
+    lockout_expiry  : TIMESTAMP
+    last_login_at   : TIMESTAMP
+    is_first_login  : BOOLEAN DEFAULT TRUE
+    is_email_verified : BOOLEAN DEFAULT FALSE
+    created_at      : TIMESTAMP DEFAULT NOW()
+  }
+
+  entity "roles" as Role {
+    * role_id   : UUID <<PK>>
+    --
+    role_name   : VARCHAR(100) <<UNIQUE, NOT NULL>>
+    is_default  : BOOLEAN DEFAULT FALSE
+    created_at  : TIMESTAMP DEFAULT NOW()
+  }
+
+  entity "permissions" as Permission {
+    * permission_id   : UUID <<PK>>
+    --
+    permission_code   : VARCHAR(100) <<UNIQUE, NOT NULL>>
+    description       : TEXT
+  }
+
+  entity "user_roles" as UserRole {
+    * user_id   : UUID <<PK, FK>>
+    * role_id   : UUID <<PK, FK>>
+  }
+
+  entity "role_permissions" as RolePermission {
+    * role_id       : UUID <<PK, FK>>
+    * permission_id : UUID <<PK, FK>>
+  }
+
+  entity "audit_logs" as AuditLog {
+    * log_id          : UUID <<PK>>
+    --
+    actor_id          : UUID <<FK>>
+    action            : VARCHAR(100) <<NOT NULL>>
+    target_entity_type : VARCHAR(100)
+    target_entity_id  : UUID
+    timestamp         : TIMESTAMP DEFAULT NOW()
+    ip_address        : VARCHAR(45)
+    details           : TEXT
+  }
+}
+
+' ─────────────────────────────────────────────────────────────
+' PACKAGE 2: Organization
+' ─────────────────────────────────────────────────────────────
+package "Organization" #FFF9E6 {
+
+  entity "schools" as School {
+    * school_id          : UUID <<PK>>
+    --
+    school_name          : VARCHAR(255) <<NOT NULL>>
+    address              : TEXT
+    representative_name  : VARCHAR(255)
+    email                : VARCHAR(255) <<UNIQUE>>
+    phone                : VARCHAR(20)
+    tax_id               : VARCHAR(50) <<UNIQUE>>
+    gps_latitude         : DECIMAL(10,7)
+    gps_longitude        : DECIMAL(10,7)
+    status               : ENUM('PENDING','ACTIVE','INACTIVE')
+    created_at           : TIMESTAMP DEFAULT NOW()
+  }
+
+  entity "classrooms" as Classroom {
+    * classroom_id       : UUID <<PK>>
+    --
+    school_id            : UUID <<FK>>
+    homeroom_teacher_id  : UUID <<FK, NULLABLE>>
+    class_name           : VARCHAR(100) <<NOT NULL>>
+    grade_level          : SMALLINT <<CHECK 1..12>>
+    capacity             : SMALLINT <<CHECK <= 50>>
+    current_enrollment   : SMALLINT DEFAULT 0
+    status               : ENUM('ACTIVE','INACTIVE')
+  }
+
+  entity "staff_accounts" as Staff {
+    * staff_id   : UUID <<PK>>
+    --
+    user_id      : UUID <<FK>>
+    school_id    : UUID <<FK>>
+    full_name    : VARCHAR(255) <<NOT NULL>>
+    role         : VARCHAR(100)
+    department   : VARCHAR(100)
+    is_active    : BOOLEAN DEFAULT TRUE
+  }
+}
+
+' ─────────────────────────────────────────────────────────────
+' PACKAGE 3: Student & Health
+' ─────────────────────────────────────────────────────────────
+package "Student & Health" #EDFDF3 {
+
+  entity "students" as Student {
+    * student_id     : UUID <<PK>>
+    --
+    classroom_id     : UUID <<FK>>
+    full_name        : VARCHAR(255) <<NOT NULL>>
+    date_of_birth    : DATE
+    grade_level      : SMALLINT
+    school_reg_no    : VARCHAR(100) <<UNIQUE>>
+    admission_code   : VARCHAR(100) <<UNIQUE>>
+    is_active        : BOOLEAN DEFAULT TRUE
+  }
+
+  entity "parents" as Parent {
+    * parent_id  : UUID <<PK>>
+    --
+    user_id      : UUID <<FK>>
+    full_name    : VARCHAR(255) <<NOT NULL>>
+    phone        : VARCHAR(20)
+    email        : VARCHAR(255)
+  }
+
+  entity "parent_students" as ParentStudent {
+    * parent_id  : UUID <<PK, FK>>
+    * student_id : UUID <<PK, FK>>
+  }
+
+  entity "allergy_profiles" as AllergyProfile {
+    * profile_id      : UUID <<PK>>
+    --
+    student_id        : UUID <<FK>>
+    allergen_list     : TEXT
+    severity_level    : ENUM('LOW','MEDIUM','HIGH')
+    dietary_category  : ENUM('HALAL','VEGETARIAN','GLUTEN_FREE','NUT_FREE','OTHER')
+    status            : ENUM('PENDING','VERIFIED','REJECTED')
+    verified_by       : UUID <<FK, NULLABLE>>
+    verified_at       : TIMESTAMP
+    supporting_docs   : TEXT
+    created_at        : TIMESTAMP DEFAULT NOW()
+  }
+
+  entity "student_health_records" as HealthRecord {
+    * record_id         : UUID <<PK>>
+    --
+    student_id          : UUID <<FK>>
+    medical_conditions  : TEXT
+    medications         : TEXT
+    emergency_contact   : VARCHAR(255)
+    clinical_notes      : TEXT
+    appended_at         : TIMESTAMP DEFAULT NOW()
+    appended_by         : UUID <<FK>>
+  }
+
+  entity "special_meal_requests" as SpecialMealRequest {
+    * request_id   : UUID <<PK>>
+    --
+    student_id     : UUID <<FK>>
+    requested_by   : UUID <<FK>>
+    status         : ENUM('PENDING','APPROVED','REJECTED')
+    reason         : TEXT
+    reviewed_by    : UUID <<FK, NULLABLE>>
+    reviewed_at    : TIMESTAMP
+    created_at     : TIMESTAMP DEFAULT NOW()
+  }
+}
+
+' ─────────────────────────────────────────────────────────────
+' PACKAGE 4: Supplier & Partner
+' ─────────────────────────────────────────────────────────────
+package "Supplier & Partner" #FFF0F5 {
+
+  entity "suppliers" as Supplier {
+    * supplier_id        : UUID <<PK>>
+    --
+    user_id              : UUID <<FK>>
+    company_name         : VARCHAR(255) <<NOT NULL>>
+    business_license_no  : VARCHAR(100) <<UNIQUE>>
+    contact_person       : VARCHAR(255)
+    email                : VARCHAR(255)
+    phone                : VARCHAR(20)
+    address              : TEXT
+    status               : ENUM('PENDING','APPROVED','REJECTED','SUSPENDED')
+    approved_at          : TIMESTAMP
+    approved_by          : UUID <<FK, NULLABLE>>
+  }
+
+  entity "service_caterers" as Caterer {
+    * caterer_id        : UUID <<PK>>
+    --
+    user_id             : UUID <<FK>>
+    company_name        : VARCHAR(255) <<NOT NULL>>
+    business_reg_no     : VARCHAR(100) <<UNIQUE>>
+    office_address      : TEXT
+    contact_person      : VARCHAR(255)
+    email               : VARCHAR(255)
+    phone               : VARCHAR(20)
+    status              : ENUM('PENDING','APPROVED','REJECTED','SUSPENDED')
+  }
+
+  entity "school_suppliers" as SchoolSupplier {
+    * school_id    : UUID <<PK, FK>>
+    * supplier_id  : UUID <<PK, FK>>
+    partnered_at   : TIMESTAMP DEFAULT NOW()
+  }
+
+  entity "school_caterers" as SchoolCaterer {
+    * school_id   : UUID <<PK, FK>>
+    * caterer_id  : UUID <<PK, FK>>
+    contracted_at : TIMESTAMP DEFAULT NOW()
+  }
+
+  entity "compliance_documents" as ComplianceDoc {
+    * doc_id       : UUID <<PK>>
+    --
+    owner_id       : UUID <<NOT NULL>>
+    owner_type     : ENUM('SUPPLIER','CATERER')
+    document_type  : ENUM('FOOD_SAFETY_CERT','BUSINESS_LICENSE','PRODUCT_ORIGIN','HEALTH_CERT')
+    file_name      : VARCHAR(255)
+    uploaded_at    : TIMESTAMP DEFAULT NOW()
+    expiry_date    : DATE
+    status         : ENUM('VALID','EXPIRING_SOON','EXPIRED')
+  }
+
+  entity "delivery_persons" as DeliveryPerson {
+    * delivery_person_id : UUID <<PK>>
+    --
+    supplier_id          : UUID <<FK>>
+    full_name            : VARCHAR(255) <<NOT NULL>>
+    national_id          : VARCHAR(50) <<UNIQUE>>
+    phone                : VARCHAR(20)
+    vehicle_plate        : VARCHAR(20)
+    biometric_status     : ENUM('PENDING_REGISTRATION','REGISTERED','NOT_REGISTERED')
+  }
+}
+
+' ─────────────────────────────────────────────────────────────
+' PACKAGE 5: Ingredient & Inventory
+' ─────────────────────────────────────────────────────────────
+package "Ingredient & Inventory" #F0F8FF {
+
+  entity "deliveries" as Delivery {
+    * delivery_id    : UUID <<PK>>
+    --
+    supplier_id      : UUID <<FK>>
+    school_id        : UUID <<FK>>
+    driver_id        : UUID <<FK, NULLABLE>>
+    scheduled_date   : DATE
+    vehicle_plate    : VARCHAR(20)
+    status           : ENUM('SCHEDULED','DISPATCHED','IN_PROGRESS','COMPLETED','CANCELLED')
+    confirmed_at     : TIMESTAMP
+  }
+
+  entity "ingredient_batches" as Batch {
+    * batch_id          : UUID <<PK>>
+    --
+    delivery_id         : UUID <<FK>>
+    supplier_id         : UUID <<FK>>
+    product_name        : VARCHAR(255) <<NOT NULL>>
+    lot_number          : VARCHAR(100) <<NOT NULL>>
+    production_date     : DATE
+    expiration_date     : DATE <<NOT NULL>>
+    quantity            : DECIMAL(10,3) <<NOT NULL>>
+    unit                : VARCHAR(50)
+    certificates        : TEXT
+    status              : ENUM('RECEIVED','QUARANTINED','REJECTED','CONSUMED')
+  }
+
+  entity "receiving_records" as ReceivingRecord {
+    * record_id          : UUID <<PK>>
+    --
+    batch_id             : UUID <<FK>>
+    received_by          : UUID <<FK>>
+    received_at          : TIMESTAMP DEFAULT NOW()
+    gps_latitude         : DECIMAL(10,7)
+    gps_longitude        : DECIMAL(10,7)
+    evidence_photos      : TEXT
+    checklist_result     : BOOLEAN
+    notes                : TEXT
+    location_verified    : BOOLEAN DEFAULT FALSE
+  }
+
+  entity "inventory_items" as Inventory {
+    * inventory_id    : UUID <<PK>>
+    --
+    school_id         : UUID <<FK>>
+    batch_id          : UUID <<FK>>
+    ingredient_name   : VARCHAR(255) <<NOT NULL>>
+    quantity          : DECIMAL(10,3)
+    unit              : VARCHAR(50)
+    storage_zone      : VARCHAR(100)
+    expiration_date   : DATE
+    status            : ENUM('AVAILABLE','LOW_STOCK','EXPIRED','QUARANTINED')
+  }
+
+  entity "purchase_requests" as PurchaseRequest {
+    * request_id         : UUID <<PK>>
+    --
+    school_id            : UUID <<FK>>
+    requested_by         : UUID <<FK>>
+    total_amount         : DECIMAL(15,2)
+    status               : ENUM('PENDING','APPROVED','REJECTED')
+    requires_dual_auth   : BOOLEAN DEFAULT FALSE
+    created_at           : TIMESTAMP DEFAULT NOW()
+  }
+}
+
+' ─────────────────────────────────────────────────────────────
+' PACKAGE 6: Menu & Diet
+' ─────────────────────────────────────────────────────────────
+package "Menu & Diet" #F5F0FF {
+
+  entity "menus" as Menu {
+    * menu_id          : UUID <<PK>>
+    --
+    school_id          : UUID <<FK>>
+    caterer_id         : UUID <<FK>>
+    scheduled_week     : DATE <<NOT NULL>>
+    status             : ENUM('DRAFT','PENDING_APPROVAL','APPROVED','REJECTED','PUBLISHED')
+    submitted_at       : TIMESTAMP
+    approved_by        : UUID <<FK, NULLABLE>>
+    approved_at        : TIMESTAMP
+    total_budget       : DECIMAL(15,2)
+    rejection_reason   : TEXT
+  }
+
+  entity "dishes" as Dish {
+    * dish_id         : UUID <<PK>>
+    --
+    menu_id           : UUID <<FK>>
+    dish_name         : VARCHAR(255) <<NOT NULL>>
+    meal_type         : ENUM('BREAKFAST','LUNCH','SNACK')
+    serving_date      : DATE
+    ingredient_list   : TEXT
+    allergen_list     : TEXT
+    is_special_dish   : BOOLEAN DEFAULT FALSE
+  }
+
+  entity "nutrition_info" as NutritionInfo {
+    * nutrition_id   : UUID <<PK>>
+    --
+    dish_id          : UUID <<FK, UNIQUE>>
+    calories         : DECIMAL(8,2)
+    protein          : DECIMAL(8,2)
+    carbohydrate     : DECIMAL(8,2)
+    fat              : DECIMAL(8,2)
+    vitamins         : TEXT
+    minerals         : TEXT
+  }
+
+  entity "special_meal_plans" as SpecialMealPlan {
+    * plan_id                   : UUID <<PK>>
+    --
+    student_id                  : UUID <<FK>>
+    menu_id                     : UUID <<FK>>
+    caterer_id                  : UUID <<FK>>
+    dietary_category            : ENUM('HALAL','VEGETARIAN','GLUTEN_FREE','NUT_FREE','OTHER')
+    recipes                     : TEXT
+    cooking_instructions        : TEXT
+    separate_utensils_required  : BOOLEAN DEFAULT TRUE
+    allergen_overlap_check      : BOOLEAN DEFAULT FALSE
+  }
+}
+
+' ─────────────────────────────────────────────────────────────
+' PACKAGE 7: Food Safety Inspection
+' ─────────────────────────────────────────────────────────────
+package "Food Safety Inspection" #FFF5EE {
+
+  entity "inspection_sessions" as InspectionSession {
+    * session_id     : UUID <<PK>>
+    --
+    menu_id          : UUID <<FK>>
+    caterer_id       : UUID <<FK>>
+    school_id        : UUID <<FK>>
+    conducted_by     : UUID <<FK>>
+    session_date     : DATE <<NOT NULL>>
+    overall_status   : ENUM('IN_PROGRESS','PASSED','FAILED','CANCELLED')
+    created_at       : TIMESTAMP DEFAULT NOW()
+  }
+
+  entity "inspection_steps" as InspectionStep {
+    * step_id             : UUID <<PK>>
+    --
+    session_id            : UUID <<FK>>
+    step_number           : SMALLINT <<CHECK 1..3>>
+    step_name             : VARCHAR(100)
+    status                : ENUM('PENDING','PASSED','FAILED','RE_INSPECTION_REQUIRED')
+    conducted_by          : UUID <<FK>>
+    conducted_at          : TIMESTAMP
+    gps_latitude          : DECIMAL(10,7)
+    gps_longitude         : DECIMAL(10,7)
+    evidence_photos       : TEXT
+    notes                 : TEXT
+    core_temperature      : DECIMAL(5,2)
+    holding_temperature   : DECIMAL(5,2)
+  }
+
+  entity "non_conformance_records" as NonConformance {
+    * record_id    : UUID <<PK>>
+    --
+    step_id        : UUID <<FK>>
+    session_id     : UUID <<FK>>
+    description    : TEXT <<NOT NULL>>
+    detected_at    : TIMESTAMP DEFAULT NOW()
+    resolved_at    : TIMESTAMP
+    status         : ENUM('OPEN','IN_PROGRESS','RESOLVED')
+  }
+
+  entity "corrective_action_requests" as CorrectiveAction {
+    * request_id         : UUID <<PK>>
+    --
+    non_conformance_id   : UUID <<FK>>
+    assigned_to          : UUID <<FK>>
+    deadline             : TIMESTAMP
+    description          : TEXT
+    status               : ENUM('PENDING','SUBMITTED','PENDING_APPROVAL','APPROVED','REJECTED','LATE_SUBMISSION')
+    submitted_at         : TIMESTAMP
+    approved_by          : UUID <<FK, NULLABLE>>
+    approved_at          : TIMESTAMP
+  }
+
+  entity "daily_food_safety_monitoring" as DailyMonitoring {
+    * monitoring_id              : UUID <<PK>>
+    --
+    school_id                    : UUID <<FK>>
+    monitored_by                 : UUID <<FK>>
+    monitoring_date              : DATE <<NOT NULL>>
+    hygiene_score                : DECIMAL(5,2)
+    pest_control_status          : VARCHAR(100)
+    kitchen_audit_result         : TEXT
+    staff_health_clearance_valid : BOOLEAN
+    refrigerator_temp_ok         : BOOLEAN
+    notes                        : TEXT
+  }
+}
+
+' ─────────────────────────────────────────────────────────────
+' PACKAGE 8: Food Sample Retention
+' ─────────────────────────────────────────────────────────────
+package "Food Sample Retention" #F0FFF4 {
+
+  entity "food_sample_records" as SampleRecord {
+    * sample_id              : UUID <<PK>>
+    --
+    school_id                : UUID <<FK>>
+    menu_id                  : UUID <<FK>>
+    inspection_session_id    : UUID <<FK>>
+    dish_name                : VARCHAR(255)
+    collected_by             : UUID <<FK>>
+    collection_time          : TIMESTAMP DEFAULT NOW()
+    retention_start_time     : TIMESTAMP
+    retention_expiry_time    : TIMESTAMP
+    storage_location         : VARCHAR(255)
+    storage_temperature      : DECIMAL(5,2)
+    label_info               : TEXT
+    evidence_photos          : TEXT
+    gps_latitude             : DECIMAL(10,7)
+    gps_longitude            : DECIMAL(10,7)
+    status                   : ENUM('RETAINED','RETRIEVED','DISPOSED')
+  }
+
+  entity "sample_disposal_records" as DisposalRecord {
+    * disposal_id   : UUID <<PK>>
+    --
+    sample_id       : UUID <<FK>>
+    disposed_by     : UUID <<FK>>
+    disposal_time   : TIMESTAMP DEFAULT NOW()
+    method          : VARCHAR(255)
+    witness_id      : UUID <<FK>>
+  }
+
+  entity "sample_retrieval_records" as RetrievalRecord {
+    * retrieval_id       : UUID <<PK>>
+    --
+    sample_id            : UUID <<FK>>
+    retrieved_by         : UUID <<FK>>
+    retrieval_time       : TIMESTAMP DEFAULT NOW()
+    linked_incident_id   : UUID <<FK, NULLABLE>>
+    purpose              : TEXT
+  }
+
+  entity "refrigerator_monitors" as RefrigeratorMonitor {
+    * monitor_id          : UUID <<PK>>
+    --
+    school_id             : UUID <<FK>>
+    current_temperature   : DECIMAL(5,2)
+    last_checked          : TIMESTAMP
+    is_alarm_active       : BOOLEAN DEFAULT FALSE
+    alarm_triggered_at    : TIMESTAMP
+  }
+}
+
+' ─────────────────────────────────────────────────────────────
+' PACKAGE 9: Meal Serving & Distribution
+' ─────────────────────────────────────────────────────────────
+package "Meal Serving & Distribution" #FFFAF0 {
+
+  entity "meal_service_sessions" as MealSession {
+    * session_id                : UUID <<PK>>
+    --
+    school_id                   : UUID <<FK>>
+    caterer_id                  : UUID <<FK>>
+    menu_id                     : UUID <<FK>>
+    scheduled_time              : TIMESTAMP
+    actual_start_time           : TIMESTAMP
+    status                      : ENUM('PLANNED','IN_PROGRESS','COMPLETED','DELAYED')
+    delay_notification_sent     : BOOLEAN DEFAULT FALSE
+  }
+
+  entity "meal_distribution_records" as DistributionRecord {
+    * record_id              : UUID <<PK>>
+    --
+    session_id               : UUID <<FK>>
+    student_id               : UUID <<FK>>
+    classroom_id             : UUID <<FK>>
+    dish_id                  : UUID <<FK>>
+    is_special_meal          : BOOLEAN DEFAULT FALSE
+    allergy_alert_triggered  : BOOLEAN DEFAULT FALSE
+    distributed_at           : TIMESTAMP DEFAULT NOW()
+    confirmed_by             : UUID <<FK>>
+    confirmed_at             : TIMESTAMP
+  }
+
+  entity "meal_feedbacks" as MealFeedback {
+    * feedback_id              : UUID <<PK>>
+    --
+    session_id                 : UUID <<FK>>
+    submitted_by               : UUID <<FK>>
+    submitter_type             : ENUM('PARENT','TEACHER')
+    star_rating                : SMALLINT <<CHECK 1..5>>
+    quality_concern_tags       : TEXT
+    comment                    : TEXT
+    submitted_at               : TIMESTAMP DEFAULT NOW()
+    illness_keywords_detected  : BOOLEAN DEFAULT FALSE
+    editable_until             : TIMESTAMP
+  }
+}
+
+' ─────────────────────────────────────────────────────────────
+' PACKAGE 10: Incident Management
+' ─────────────────────────────────────────────────────────────
+package "Incident Management" #FFF0F0 {
+
+  entity "food_safety_incidents" as Incident {
+    * incident_id          : UUID <<PK>>
+    --
+    school_id              : UUID <<FK>>
+    reported_by            : UUID <<FK>>
+    reported_at            : TIMESTAMP DEFAULT NOW()
+    status                 : ENUM('REPORTED','UNDER_INVESTIGATION','CAPA_ASSIGNED','CAPA_PENDING_APPROVAL','VALIDATED','CLOSED')
+    severity               : ENUM('LOW','MEDIUM','HIGH')
+    affected_student_count : INTEGER
+    symptom_description    : TEXT
+    auto_triggered         : BOOLEAN DEFAULT FALSE
+    closed_by              : UUID <<FK, NULLABLE>>
+    closed_at              : TIMESTAMP
+  }
+
+  entity "incident_investigations" as Investigation {
+    * investigation_id       : UUID <<PK>>
+    --
+    incident_id              : UUID <<FK>>
+    investigated_by          : UUID <<FK>>
+    root_cause               : TEXT
+    evidence_list            : TEXT
+    investigation_started    : TIMESTAMP
+    investigation_completed  : TIMESTAMP
+  }
+
+  entity "capas" as CAPA {
+    * capa_id              : UUID <<PK>>
+    --
+    incident_id            : UUID <<FK>>
+    investigation_id       : UUID <<FK>>
+    assigned_to            : UUID <<FK>>
+    description            : TEXT
+    corrective_actions     : TEXT
+    preventive_actions     : TEXT
+    deadline               : TIMESTAMP
+    status                 : ENUM('ASSIGNED','IN_PROGRESS','SUBMITTED','PENDING_APPROVAL','APPROVED','REJECTED')
+    submitted_at           : TIMESTAMP
+    approved_by            : UUID <<FK, NULLABLE>>
+    approved_at            : TIMESTAMP
+    is_late_submission     : BOOLEAN DEFAULT FALSE
+  }
+
+  entity "incident_reports" as IncidentReport {
+    * report_id          : UUID <<PK>>
+    --
+    incident_id          : UUID <<FK, UNIQUE>>
+    generated_by         : UUID <<FK>>
+    generated_at         : TIMESTAMP DEFAULT NOW()
+    report_content       : TEXT
+    affected_students    : TEXT
+    traceability_data    : TEXT
+    capa_status          : VARCHAR(100)
+  }
+
+  entity "incident_batch_quarantines" as IncidentBatchQuarantine {
+    * incident_id : UUID <<PK, FK>>
+    * batch_id    : UUID <<PK, FK>>
+    quarantined_at : TIMESTAMP DEFAULT NOW()
+  }
+}
+
+' ─────────────────────────────────────────────────────────────
+' PACKAGE 11: Notification & Announcement
+' ─────────────────────────────────────────────────────────────
+package "Notification & Announcement" #F8F0FF {
+
+  entity "notifications" as Notification {
+    * notification_id  : UUID <<PK>>
+    --
+    target_user_id     : UUID <<FK>>
+    title              : VARCHAR(255)
+    body               : TEXT
+    type               : ENUM('MENU_PUBLISHED','INSPECTION_ALERT','INCIDENT_ALERT','ALLERGY_ALERT','MEAL_DISTRIBUTION','FOOD_RECALL','CAPA_ASSIGNED')
+    priority           : ENUM('NORMAL','CRITICAL')
+    sent_at            : TIMESTAMP DEFAULT NOW()
+    delivery_status    : ENUM('PENDING','SENT','FAILED','FALLBACK_EMAIL')
+    retry_count        : SMALLINT DEFAULT 0
+    channel            : ENUM('PUSH','EMAIL','SMS')
+  }
+
+  entity "announcements" as Announcement {
+    * announcement_id  : UUID <<PK>>
+    --
+    school_id          : UUID <<FK>>
+    created_by         : UUID <<FK>>
+    title              : VARCHAR(255) <<NOT NULL>>
+    content            : TEXT
+    status             : ENUM('DRAFT','PUBLISHED','ARCHIVED')
+    published_at       : TIMESTAMP
+  }
+
+  entity "announcement_revisions" as AnnouncementRevision {
+    * revision_id      : UUID <<PK>>
+    --
+    announcement_id    : UUID <<FK>>
+    revised_by         : UUID <<FK>>
+    revised_at         : TIMESTAMP DEFAULT NOW()
+    previous_content   : TEXT
+  }
+}
+
+' ─────────────────────────────────────────────────────────────
+' PACKAGE 12: AI & Supporting Services
+' ─────────────────────────────────────────────────────────────
+package "AI & Supporting Services" #E8F5FF {
+
+  entity "ai_conversations" as AIConversation {
+    * conversation_id  : UUID <<PK>>
+    --
+    user_id            : UUID <<FK>>
+    started_at         : TIMESTAMP DEFAULT NOW()
+    context            : TEXT
+  }
+
+  entity "ai_messages" as AIMessage {
+    * message_id       : UUID <<PK>>
+    --
+    conversation_id    : UUID <<FK>>
+    role               : ENUM('USER','ASSISTANT')
+    content            : TEXT <<NOT NULL>>
+    timestamp          : TIMESTAMP DEFAULT NOW()
+  }
+
+  entity "ai_menu_recommendations" as AIRecommendation {
+    * recommendation_id   : UUID <<PK>>
+    --
+    requested_by          : UUID <<FK>>
+    caterer_id            : UUID <<FK>>
+    requested_at          : TIMESTAMP DEFAULT NOW()
+    inventory_snapshot    : TEXT
+    nutrition_targets     : TEXT
+    allergy_profiles      : TEXT
+    budget_ceiling        : DECIMAL(15,2)
+    suggested_dishes      : TEXT
+    nutrition_analysis    : TEXT
+    allergen_flags        : TEXT
+  }
+}
+
+' ============================================================
+' RELATIONSHIPS
+' ============================================================
+
+' --- User & Access Control ---
+User          ||--o{ UserRole          : "is assigned"
+Role          ||--o{ UserRole          : "assigned to"
+Role          ||--o{ RolePermission    : "has"
+Permission    ||--o{ RolePermission    : "granted via"
+User          ||--o{ AuditLog          : "generates"
+
+' --- Organization ---
+User          ||--o{ Staff             : "has profile"
+School        ||--o{ Classroom         : "contains"
+School        ||--o{ Staff             : "employs"
+Staff         |o--o| Classroom         : "homeroom of"
+
+' --- Student & Health ---
+User          ||--o| Parent            : "has profile"
+Classroom     ||--o{ Student           : "enrolled in"
+Parent        ||--o{ ParentStudent     : "linked to"
+Student       ||--o{ ParentStudent     : "linked from"
+Student       ||--o| AllergyProfile    : "has"
+Student       ||--o{ HealthRecord      : "has"
+Student       ||--o{ SpecialMealRequest : "requests"
+Staff         ||--o{ AllergyProfile    : "verifies"
+
+' --- Supplier & Partner ---
+User          ||--o| Supplier          : "has profile"
+User          ||--o| Caterer           : "has profile"
+School        ||--o{ SchoolSupplier    : "partners with"
+Supplier      ||--o{ SchoolSupplier    : "serves"
+School        ||--o{ SchoolCaterer     : "contracts"
+Caterer       ||--o{ SchoolCaterer     : "contracted by"
+Supplier      ||--o{ ComplianceDoc     : "maintains (supplier)"
+Caterer       ||--o{ ComplianceDoc     : "maintains (caterer)"
+Supplier      ||--o{ DeliveryPerson    : "employs"
+
+' --- Ingredient & Inventory ---
+Supplier      ||--o{ Delivery          : "sends"
+School        ||--o{ Delivery          : "receives"
+DeliveryPerson ||--o{ Delivery         : "assigned to"
+Delivery      ||--o{ Batch             : "contains"
+Batch         ||--|| ReceivingRecord   : "has"
+Batch         ||--o| Inventory         : "stored as"
+School        ||--o{ Inventory         : "stores"
+School        ||--o{ PurchaseRequest   : "requests"
+Staff         ||--o{ PurchaseRequest   : "created by"
+
+' --- Menu & Diet ---
+School        ||--o{ Menu              : "owns"
+Caterer       ||--o{ Menu              : "creates"
+Staff         ||--o| Menu              : "approves"
+Menu          ||--o{ Dish              : "contains"
+Dish          ||--|| NutritionInfo     : "has"
+Menu          ||--o{ SpecialMealPlan   : "includes"
+Student       ||--o{ SpecialMealPlan   : "for"
+Caterer       ||--o{ SpecialMealPlan   : "prepared by"
+
+' --- Food Safety Inspection ---
+Menu          ||--o{ InspectionSession : "inspected via"
+Caterer       ||--o{ InspectionSession : "conducted by"
+School        ||--o{ InspectionSession : "at"
+Staff         ||--o{ InspectionSession : "conducted by"
+InspectionSession ||--|{ InspectionStep : "has exactly 3"
+InspectionStep    ||--o| NonConformance   : "triggers"
+NonConformance    ||--|| CorrectiveAction  : "generates"
+School        ||--o{ DailyMonitoring   : "monitored at"
+Staff         ||--o{ DailyMonitoring   : "monitored by"
+
+' --- Food Sample Retention ---
+School        ||--o{ SampleRecord      : "stores at"
+Menu          ||--o{ SampleRecord      : "linked to"
+InspectionSession ||--o{ SampleRecord  : "linked to"
+Staff         ||--o{ SampleRecord      : "collected by"
+SampleRecord  ||--o| DisposalRecord    : "disposed via"
+SampleRecord  ||--o| RetrievalRecord   : "retrieved via"
+Staff         ||--o{ DisposalRecord    : "disposed by"
+Staff         ||--o{ RetrievalRecord   : "retrieved by"
+Incident      ||--o{ RetrievalRecord   : "linked to"
+School        ||--o{ RefrigeratorMonitor : "monitored at"
+
+' --- Meal Serving & Distribution ---
+School        ||--o{ MealSession       : "hosts"
+Caterer       ||--o{ MealSession       : "serves"
+Menu          ||--o{ MealSession       : "based on"
+MealSession   ||--o{ DistributionRecord : "has"
+Student       ||--o{ DistributionRecord : "for"
+Classroom     ||--o{ DistributionRecord : "in"
+Dish          ||--o{ DistributionRecord : "served as"
+Staff         ||--o{ DistributionRecord : "confirmed by"
+MealSession   ||--o{ MealFeedback      : "about"
+User          ||--o{ MealFeedback      : "submitted by"
+
+' --- Incident Management ---
+School        ||--o{ Incident          : "reported at"
+User          ||--o{ Incident          : "reported by"
+Incident      ||--|| Investigation     : "triggers"
+Investigation ||--|{ CAPA              : "generates"
+Incident      ||--|| IncidentReport    : "has"
+MealSession   ||--o{ Incident          : "linked to"
+Batch         ||--o{ IncidentBatchQuarantine : "quarantined by"
+Incident      ||--o{ IncidentBatchQuarantine : "quarantines"
+
+' --- Notification & Announcement ---
+User          ||--o{ Notification      : "receives"
+School        ||--o{ Announcement      : "publishes"
+Staff         ||--o{ Announcement      : "created by"
+Announcement  ||--o{ AnnouncementRevision : "has"
+Staff         ||--o{ AnnouncementRevision : "revised by"
+
+' --- AI & Supporting Services ---
+User          ||--o{ AIConversation    : "starts"
+AIConversation ||--|{ AIMessage        : "contains"
+User          ||--o{ AIRecommendation  : "requests"
+Caterer       ||--o{ AIRecommendation  : "applied to"
+
+@enduml
